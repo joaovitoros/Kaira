@@ -1,0 +1,1207 @@
+﻿Total: 986 frases em 36 intencoes
+
+# Rascunho de intencoes - para validacao
+
+Gerado a partir de respostas.json (253 frases originais) + candidatas aceitas
+(cumprimentar/despedida/agradecimento) de dois datasets externos.
+
+Legenda de origem:
+- (orig) = frase que ja existe em respostas.json
+- (ds)   = dataset Apache-2.0 (RichardSakaguchiMS/brazilian-customer-service-conversations)
+- (tat)  = Tatoeba (CC BY 2.0 FR)
+
+
+## agradecimento  (619 frases, 95 respostas candidatas)
+- (orig) obrigada
+- (orig) obrigado pela sua ajuda
+- (orig) muito bem obrigado
+- (ds) beleza obrigado pela ajuda
+- (ds) ok td bem obrigado pela ajuda
+- (ds) ok ta bom obrigado pela ajuda
+- (ds) ok obrigado pela ajuda
+- (ds) ta bom obrigado pela ajuda
+- (ds) ok obrigado vc e um show de atendente
+- (ds) ta bom obrigado
+- (ds) ok obrigado vou dar uma olhada
+- (ds) ta bom obrigado pela explicacao
+- (ds) beleza obrigado td bem agora
+- (ds) ok beleza muito obrigado pela ajuda
+- (ds) muito obrigado vc foi super prestativo ate mais
+- (ds) ta bom show muito obrigado pela ajuda
+- (ds) ok obrigado espero que resolva td
+- (ds) muito obrigado vc e um show de atendente
+- (ds) seria show obrigado
+- (ds) ok obrigado espero que resolva mesmo
+- (ds) sim ta bom obrigado pela ajuda
+- (ds) ta bom obrigado espero que resolvam logo
+- (ds) beleza obrigado pela ajuda td bem agora
+- (ds) sim ta bom muito obrigado pela ajuda
+- (ds) beleza vlw mesmo
+- (ds) beleza obrigado pela ajuda td resolvido entao
+- (ds) muito obrigado vc foi super prestativo
+- (ds) valeu mesmo tchau
+- (ds) certo obrigado pela ajuda td bem agora
+- (ds) ok obrigado show de bola
+- (ds) ok ta bom eu aceito obrigado pela ajuda
+- (ds) show seria otimo muito obrigado pela ajuda
+- (ds) ok show obrigado pela ajuda
+- (ds) sim td ok agora obrigado pela ajuda
+- (ds) valeu mesmo ate logo
+- (ds) beleza entendi valeu pela ajuda
+- (ds) beleza obrigado espero que dessa vez resolvam mesmo
+- (ds) ok obrigado
+- (ds) ta bom show de bola obrigado pela ajuda
+- (ds) beleza obrigado por tudo vc foi muito ajudativo
+- (ds) ok obrigado vc foi muito prestativo
+- (ds) show obrigado vc e um cara muito atencioso
+- (ds) ok obrigado pela ajuda eu aguardo o retorno
+- (ds) ta bom obrigado espero que resolvam mesmo
+- (ds) ta bom vou aguardar obrigado pela ajuda
+- (ds) beleza obrigado acho que td ficou claro agora
+- (ds) beleza obrigado tchau
+- (ds) valeu mesmo ta bom tchau
+- (ds) blz obrigado
+- (ds) ta obrigado espero que resolvam logo
+- (ds) show obrigado estou ansioso para resolver isso logo
+- (ds) ok obrigado vai ser muito util
+- (ds) otimo muito obrigado pela ajuda
+- (ds) ok obrigado espero que de tudo certo
+- (ds) show vou aproveitar muito obrigado pela dica
+- (ds) td bem valeu mesmo ate a proxima
+- (ds) ok td bem muito obrigado pela atencao
+- (ds) tudo bem obrigado pela ajuda
+- (ds) certo vou tentar agora mesmo obrigado pela ajuda
+- (ds) show muito obrigado
+- (ds) sim estou disponivel obrigado pela ajuda
+- (ds) beleza obrigado vou testar agora
+- (ds) ok obrigada
+- (ds) ta bom obrigado estou aguardando
+- (ds) obg td bem
+- (ds) ta bom obrigado show de bola
+- (ds) beleza vou ligar agora mesmo obrigado pela ajuda
+- (ds) ok obrigado espero que resolvam isso logo
+- (ds) sim seria show obrigado
+- (ds) beleza obrigado vou dar uma olhada
+- (ds) sim por favor obrigado pela ajuda
+- (ds) beleza achei obrigado pela ajuda td show
+- (ds) ok obrigado td bem agora
+- (ds) ok vou dar uma olhada obrigado pela info
+- (ds) beleza vou tentar de novo obrigado pela ajuda
+- (ds) ok obrigado pela ajuda show
+- (ds) ta bom obrigado vc eh muito eficiente
+- (ds) sim show muito obrigado pela ajuda
+- (ds) ta bom obrigado vou ligar agora
+- (ds) beleza vou dar uma olhada obrigado pela ajuda
+- (ds) beleza entendi muito obrigado pela ajuda
+- (ds) tudo certo obrigado pelo atendimento novamente
+- (ds) beleza obrigado espero que vc consiga resolver isso
+- (ds) obrigado tambem vc foi muito prestativo tchau
+- (ds) beleza vou verificar valeu pelo atendimento
+- (ds) beleza td bem obrigado pela ajuda show
+- (ds) show muito obrigado pela ajuda ate mais
+- (ds) obrigado vc foi muito gentil tchau
+- (ds) beleza obrigado pela ajuda vc e muito gentil
+- (ds) ok td bem entao obrigado pela ajuda show
+- (ds) ok td bem obrigado
+- (ds) beleza obrigado pela ajuda vc e muito eficiente
+- (ds) ok obrigado espero que resolvam logo
+- (ds) ok entendi obrigado pela ajuda
+- (ds) beleza obrigado espero que consiga resolver ta bom
+- (ds) beleza obrigado pela ajuda vc e um show
+- (ds) td bem muito obrigado pela ajuda
+- (ds) muito obrigado td ok
+- (ds) certo obrigado pela ajuda td resolveu
+- (ds) ok td bem agende ai obrigado pela ajuda
+- (ds) beleza obrigado td certo agora
+- (ds) valeu td bem ate mais
+- (ds) beleza obrigado pela ajuda eu aguardo entao
+- (ds) pode ser show agradeco desde ja
+- (ds) obg vou dar uma olhada e te retorno
+- (ds) beleza obrigado mesmo espero que resolvam logo
+- (ds) tudo bem beleza aceito obrigado por resolver
+- (ds) certo vou verificar agora muito obrigado pela ajuda
+- (ds) que show muito obrigado vc sao um salvador
+- (ds) beleza muito obrigado pela ajuda vc foi show
+- (ds) valeu mesmo
+- (ds) show seria legal obrigado
+- (ds) ok ta bom obrigado
+- (ds) show obrigado vou ficar de olho
+- (ds) certo obrigado pela ajuda vc eh demais
+- (ds) obrigado show de bola vou dar uma olhada
+- (ds) beleza obrigado pela ajuda vc eh muito atencioso
+- (ds) beleza obrigado eu agradeco a sua atencao
+- (ds) beleza obrigada pela ajuda
+- (ds) beleza obrigado pela ajuda td resolveu
+- (ds) muito obrigado vc foi muito prestativo td show
+- (ds) beleza obrigado naum precisa de nada td show
+- (ds) beleza obrigado vc sao show
+- (ds) muito obrigado vc foi super atencioso
+- (ds) beleza vlw pela ajuda
+- (ds) ta bom obrigado espero que seja resolvido logo
+- (ds) beleza seria show muito obrigado pela ajuda
+- (ds) muito obrigado show de bola ate mais
+- (ds) entendi beleza obrigado por me explicar td
+- (ds) ok obrigado espero que resolva logo
+- (ds) beleza vai ser util obrigado pela ajuda
+- (ds) ok obrigado vou tentar agora
+- (ds) beleza obrigado por resolver isso ta bom agora
+- (ds) obg vou dar uma olhada
+- (ds) muito obrigada vc foi super atencioso ate logo
+- (ds) ta bom obrigado eu aprecio a sua ajuda
+- (ds) beleza entendi obrigado pela ajuda
+- (ds) td bem obrigado vc foi super atencioso
+- (ds) tudo bem obrigado pela explicacao
+- (ds) show obrigado pela ajuda tudo resolvido
+- (ds) ta bom obrigado espero que sim
+- (ds) beleza obrigado espero que vc consiga resolver td
+- (ds) beleza obrigado pela ajuda vou tentar novamente agora
+- (ds) beleza obrigado por resolver isso td bem agora
+- (ds) ok blz obrigado pela ajuda
+- (ds) ok obrigado vou verificar
+- (ds) ok obrigado pela ajuda espero que resolva logo
+- (ds) ok td bem entao muito obrigado pela ajuda
+- (ds) ta obrigado espero que resolva logo
+- (ds) ok td certo obrigado pela ajuda
+- (ds) ta bom sim obrigado pela ajuda
+- (ds) ok ta bom obrigado pela atencao
+- (ds) sim td show obrigado pela ajuda beleza
+- (ds) ok show obrigado vou esperar as infos
+- (ds) ok obrigado eu estou ansioso para resolver isso
+- (ds) vlw ta bom td bem
+- (ds) obrigado vc foi muito prestativo ate mais
+- (ds) tudo bem obrigado
+- (ds) beleza obrigado espero q resolvam logo
+- (ds) show obrigado pela ajuda
+- (ds) beleza valeu mesmo
+- (ds) obe muito obrigado pela ajuda td bem
+- (ds) ok obrigado estou ansioso para resolver isso
+- (ds) beleza obrigado pela ajuda espero que resolva mesmo
+- (ds) obg vc foi super atencioso td bem
+- (ds) ta bom entendi valeu pela info
+- (ds) beleza obrigado pela ajuda espero que chegue logo
+- (ds) muito obrigado vc foi super atencioso td show
+- (ds) obrigado td bem vou dar uma olhada
+- (ds) beleza muito obrigado vou tentar agora
+- (tat) obrigado
+- (tat) valeu
+- (tat) muito obrigado
+- (tat) muito obrigada
+- (tat) obrigado novamente
+- (tat) eu disse obrigado
+- (tat) nao obrigada
+- (tat) agradeco de qualquer maneira
+- (tat) de nada
+- (tat) obrigado por isso
+- (tat) obrigada por isso
+- (tat) voce vai me agradecer
+- (tat) eu devo agradecer a ele
+- (tat) obrigado pelo almoco
+- (tat) ei muito obrigado
+- (tat) obrigado por perguntar
+- (tat) obrigado por ter vindo
+- (tat) obrigado por terem vindo
+- (tat) obrigado pelo jantar
+- (tat) obrigada pelo jantar
+- (tat) nossa muito obrigado
+- (tat) nossa muito obrigada
+- (tat) ele deveria me agradecer
+- (tat) eu deveria te agradecer
+- (tat) obrigado por ligar
+- (tat) obrigada por ligar
+- (tat) obrigado por ajudar
+- (tat) obrigado por nada
+- (tat) obrigada pelo cha
+- (tat) obrigado pelo cha
+- (tat) obrigada pela dica
+- (tat) obrigado pela dica
+- (tat) obrigado pela espera
+- (tat) como posso agradecer lhe
+- (tat) como posso te agradecer
+- (tat) eu estou bem obrigado
+- (tat) obrigada pelo almoco
+- (tat) obrigado por hoje
+- (tat) obrigada por hoje
+- (tat) obrigado pela cerveja
+- (tat) obrigado pelo livro
+- (tat) obrigada pelo livro
+- (tat) obrigado pelo bolo
+- (tat) obrigada pelo bolo
+- (tat) obrigado pela comida
+- (tat) obrigado pelo presente
+- (tat) obrigado pela ajuda
+- (tat) obrigada pela ajuda
+- (tat) obrigado pela carona
+- (tat) obrigada pela carona
+- (tat) obrigado pela refeicao
+- (tat) obrigado pela sopa
+- (tat) voce deveria me agradecer
+- (tat) como podemos agradecer lhe
+- (tat) obrigado pela sua pergunta
+- (tat) obrigado por se preocupar
+- (tat) obrigada por se preocupar
+- (tat) obrigado por se importar
+- (tat) obrigada por se importar
+- (tat) obrigado por tentar
+- (tat) obrigado desde ja
+- (tat) desde ja obrigado
+- (tat) agradeco desde ja
+- (tat) muito obrigado antecipadamente
+- (tat) agradeco antecipadamente
+- (tat) desde ja muito obrigado
+- (tat) obrigado meu amigo
+- (tat) obrigado por me perguntar
+- (tat) obrigado por ser voce
+- (tat) obrigado por conserta lo
+- (tat) obrigado por me contratar
+- (tat) obrigado por escutar
+- (tat) obrigado pela fruta
+- (tat) obrigado pelas ideias
+- (tat) obrigada pelas ideias
+- (tat) obrigado pela pizza
+- (tat) obrigada pela pizza
+- (tat) obrigado por ontem
+- (tat) obrigado por sua ajuda
+- (tat) obrigada pela sua ajuda
+- (tat) obrigado pela tua ajuda
+- (tat) obrigada pela tua ajuda
+- (tat) obrigado pelo seu tempo
+- (tat) obrigada pelo seu tempo
+- (tat) obrigado a todos
+- (tat) obrigada a todos
+- (tat) obrigado a todos voces
+- (tat) eles deveriam me agradecer
+- (tat) elas deveriam me agradecer
+- (tat) voce devia agradecer lhe
+- (tat) voces deveriam agradecer lhe
+- (tat) tu deverias agradecer a ele
+- (tat) voce deveria agradecer a ele
+- (tat) voces deveriam agradecer a ele
+- (tat) o senhor deveria agradecer a ele
+- (tat) a senhora deveria agradecer a ele
+- (tat) tu deverias agradecer lhe
+- (tat) deverias agradecer lhe
+- (tat) o senhor deveria agradecer lhe
+- (tat) a senhora deveria agradecer lhe
+- (tat) voce disse obrigado
+- (tat) sou obrigado a estar la
+- (tat) queria lhe agradecer
+- (tat) eu queria te agradecer
+- (tat) obrigado por fazer isso
+- (tat) obrigado por tudo
+- (tat) obrigado por me ajudar
+- (tat) obrigado pelo conselho
+- (tat) obrigada pelo conselho
+- (tat) obrigado pelo cafe
+- (tat) obrigado pelo biscoito
+- (tat) obrigado pelo convite
+- (tat) obrigado pela sua contribuicao
+- (tat) obrigada pela sua contribuicao
+- (tat) obrigado a ambos
+- (tat) obrigado a ambas
+- (tat) obrigada a ambos
+- (tat) obrigada a ambas
+- (tat) obrigado eu te devo uma
+- (tat) obrigado te devo uma
+- (tat) agradeco a sua ajuda
+- (tat) obrigado pela sua visita
+- (tat) obrigado por assistir
+- (tat) muitissimo obrigado
+- (tat) obrigado por aparecer
+- (tat) obrigado por me convidar
+- (tat) obrigado por ter me convidado
+- (tat) obrigado por nos convidar
+- (tat) obrigado por me resgatar
+- (tat) obrigado pelo comentario
+- (tat) obrigada pelo comentario
+- (tat) obrigado pelas flores
+- (tat) obrigado pelo apoio
+- (tat) obrigado pelas atualizacoes
+- (tat) obrigado pelo aviso
+- (tat) obrigado pelo seu conselho
+- (tat) eu agradeco a sua ajuda
+- (tat) nao obrigado estou cheio
+- (tat) obrigado pelo cafe da manha
+- (tat) obrigado mesmo assim
+- (tat) obrigado por retornar a ligacao
+- (tat) obrigado mesmo por ter vindo hoje
+- (tat) obrigado por me lembrar
+- (tat) obrigado por se lembrar da gente
+- (tat) obrigado por se lembrar de nos
+- (tat) obrigado pelo retorno
+- (tat) obrigada pelo retorno
+- (tat) obrigado pelo sanduiche
+- (tat) obrigado pelo seu apoio
+- (tat) obrigado por vosso apoio
+- (tat) obrigado pelo teu apoio
+- (tat) voce nunca diz obrigado
+- (tat) eu agradeco a ajuda
+- (tat) obrigado a todos por virem
+- (tat) obrigada por ter estado aqui
+- (tat) agradeco lhe por tudo
+- (tat) obrigado por nos ajudar
+- (tat) obrigado por me contar
+- (tat) obrigado por me avisar
+- (tat) obrigado por sua visita
+- (tat) obrigado por tua visita
+- (tat) obrigado por chegar na hora
+- (tat) obrigado por conversar comigo
+- (tat) agradeco pela compreensao
+- (tat) obrigado pelos seus comentarios
+- (tat) obrigado pelos comentarios
+- (tat) obrigada pelos comentarios
+- (tat) obrigado pelo seu interesse
+- (tat) obrigado pela sua resposta
+- (tat) obrigada pela sua resposta
+- (tat) obrigado pela tua resposta
+- (tat) obrigada pela tua resposta
+- (tat) agradeco a tua preocupacao
+- (tat) quero agradecer lhe novamente
+- (tat) muito obrigado pela sua ajuda
+- (tat) obrigado por comprar comida
+- (tat) obrigado por cooperar
+- (tat) obrigado por nao julgar
+- (tat) obrigado por nao fumar
+- (tat) obrigado por se lembrar
+- (tat) obrigada por se lembrar
+- (tat) obrigado pela visita
+- (tat) obrigado pelo teu conselho
+- (tat) obrigado por virem
+- (tat) obrigada por virem
+- (tat) muito muito obrigado
+- (tat) muito obrigado mesmo
+- (tat) obrigada por ser o meu guia
+- (tat) obrigado por ser o meu guia
+- (tat) obrigado por ter feito tudo isto
+- (tat) obrigado mesmo por me ajudar
+- (tat) obrigado por salvar a minha vida
+- (tat) obrigada por salvar a minha vida
+- (tat) obrigado pelo elogio
+- (tat) obrigado pela correcao
+- (tat) obrigada pela correcao
+- (tat) obrigado pela ajuda pessoal
+- (tat) obrigada pela ajuda pessoal
+- (tat) obrigado pela sugestao
+- (tat) obrigado por me esperar
+- (tat) obrigada por me esperar
+- (tat) obrigado de nada
+- (tat) obrigado imagina
+- (tat) obrigado nao tem de que
+- (tat) voce e obrigado a fazer isso
+- (tat) tu es obrigada a fazer isso
+- (tat) o senhor e obrigado a fazer isso
+- (tat) a senhora e obrigada a fazer isso
+- (tat) eu agradeco sua gentileza
+- (tat) eu so queria te agradecer
+- (tat) ja e o bastante obrigado
+- (tat) obrigado por me acordar
+- (tat) obrigado pelo seu comentario
+- (tat) obrigado pela sua ideia
+- (tat) obrigado pela sua opiniao
+- (tat) muito obrigado por isto
+- (tat) muito obrigada por isto
+- (tat) muito obrigada pela sua ajuda
+- (tat) obrigado por ser meu amigo
+- (tat) obrigada por ser meu amigo
+- (tat) obrigada por ser minha amiga
+- (tat) obrigado por ser minha amiga
+- (tat) obrigado por acreditar em mim
+- (tat) obrigada por acreditar em mim
+- (tat) obrigado por me escutar
+- (tat) obrigado por mencionar isso
+- (tat) obrigado pela explicacao
+- (tat) obrigado pelas sugestoes
+- (tat) obrigado por me acompanhar ate em casa
+- (tat) obrigada por me acompanhar ate em casa
+- (tat) sou obrigado a obter um visto
+- (tat) eu so queria dizer obrigado
+- (tat) ja estou cheio obrigado
+- (tat) ja estou satisfeito obrigado
+- (tat) estou so olhando obrigado
+- (tat) obrigado por toda a sua ajuda
+- (tat) obrigado por toda a tua ajuda
+- (tat) obrigado por me apoiar
+- (tat) obrigado por falar comigo
+- (tat) obrigado pelo outro dia
+- (tat) obrigada pelo outro dia
+- (tat) obrigado a voces pelo outro dia
+- (tat) obrigado pela compreensao
+- (tat) obrigado por entender
+- (tat) obrigado por seu trabalho
+- (tat) obrigado pelo seu feedback
+- (tat) obrigado pelo teu feedback
+- (tat) muito obrigado pelo almoco
+- (tat) muito obrigada pelo almoco
+- (tat) muito obrigado pelo conselho
+- (tat) obrigado novamente por tudo
+- (tat) obrigada novamente por tudo
+- (tat) obrigado por me trazer aqui
+- (tat) obrigado por esclarecer
+- (tat) obrigado por lavar a louca
+- (tat) obrigado por me dar uma carona
+- (tat) obrigado por abrir a porta
+- (tat) obrigado por sua explicacao
+- (tat) obrigado pela resposta rapida
+- (tat) muito obrigado pela ajuda
+- (tat) muito obrigado por ter vindo
+- (tat) eu agradeco suas amaveis palavras
+- (tat) agradeco tuas palavras generosas
+- (tat) agradeco vossas palavras gentis
+- (tat) agradeco a voces por suas gentis palavras
+- (tat) agradeco lhes as palavras atenciosas
+- (tat) agradeco muito a senhora as palavras tao gentis
+- (tat) eu nao sou obrigado a estudar frances
+- (tat) eu so passei para dizer obrigado
+- (tat) eu so quero dizer obrigado
+- (tat) eu so quero agradecer
+- (tat) eu so quero te agradecer
+- (tat) eu so quero agradecer a voce
+- (tat) obrigado a todos pela presenca
+- (tat) obrigado por me dar isto
+- (tat) obrigado por sua atencao
+- (tat) obrigado pela sua atencao
+- (tat) obrigada pela sua atencao
+- (tat) obrigado faremos o nosso melhor
+- (tat) muito obrigado pela visita
+- (tat) obrigado por sempre me ajudar
+- (tat) obrigado por ser tao tolerante
+- (tat) obrigado por vir tao rapido
+- (tat) obrigado por cuidar de nos
+- (tat) obrigado pelo incentivo
+- (tat) obrigada pelo encorajamento
+- (tat) obrigado por tua pronta resposta
+- (tat) obrigada disponha
+- (tat) muito obrigado o prazer e meu
+- (tat) nao se esqueca de dizer obrigado
+- (tat) eu agradeco a todos voces por terem vindo
+- (tat) agradeco a todos voces por terem vindo
+- (tat) eu agradeco a sua simpatia
+- (tat) agradeco a sua simpatia
+- (tat) agradeco de todo o coracao
+- (tat) agradeco lhes de coracao
+- (tat) obrigada por dancar comigo
+- (tat) obrigado pelas correcoes
+- (tat) obrigado pela sua confianca
+- (tat) obrigado pelas palavras gentis
+- (tat) muito obrigado por hoje
+- (tat) muito obrigada por hoje
+- (tat) muito obrigado a todos
+- (tat) obrigado a todo mundo
+- (tat) obrigado por estar aqui com a gente
+- (tat) obrigado por estar aqui conosco
+- (tat) obrigado por manter nos inteirados
+- (tat) obrigada por manter nos inteirados
+- (tat) obrigado por me mostrar o caminho
+- (tat) obrigada por me mostrar o caminho
+- (tat) obrigado pela recomendacao
+- (tat) obrigada pela recomendacao
+- (tat) obrigado a todos que ajudaram
+- (tat) fique com o troco obrigado
+- (tat) estas obrigada a trabalhar dia de domingo
+- (tat) a senhora esta obrigada a trabalhar aos domingos
+- (tat) eu nao preciso da sua ajuda obrigado
+- (tat) obrigado por concordar em nos encontrar
+- (tat) obrigado por concordar em nos conhecer
+- (tat) obrigado por trazer isso
+- (tat) obrigado por fechar a porta
+- (tat) obrigado por ter vindo me ver
+- (tat) obrigado por ter vindo me visitar
+- (tat) obrigado por essa informacao
+- (tat) obrigado pela introducao
+- (tat) obrigado pelas bebidas
+- (tat) obrigado por esta oportunidade
+- (tat) obrigada por sua explicacao
+- (tat) muito obrigada pela ajuda
+- (tat) obrigado por tudo amigos
+- (tat) obrigado por me ajudar com o jantar
+- (tat) obrigado por nao desistir de mim
+- (tat) obrigado por reportar o problema
+- (tat) nao quero ser obrigado a fazer isso
+- (tat) agradeco lhe pela sua confianca
+- (tat) obrigado por dar isto a mim
+- (tat) obrigado por retornar a minha ligacao
+- (tat) obrigada por retornar a minha ligacao
+- (tat) obrigado por esse belo presente
+- (tat) obrigado por sua pronta resposta
+- (tat) obrigado pelo presente de natal
+- (tat) obrigado por sua consideracao
+- (tat) obrigada por sua consideracao
+- (tat) muito obrigado pela comida
+- (tat) obrigado por me explicar isso
+- (tat) obrigado por me ajudar a consertar meu carro
+- (tat) obrigada por me ajudar a consertar meu carro
+- (tat) obrigado por cuidar do meu cachorro
+- (tat) eu agradeco muito toda a tua ajuda
+- (tat) penhorado lhe agradeco senhor toda a sua ajuda
+- (tat) agradeco muito a ajuda de voces
+- (tat) suponho que devo agradecer
+- (tat) eu suponho que devo agradecer
+- (tat) obrigado por aceitar me ajudar
+- (tat) obrigado por decorar a minha casa
+- (tat) obrigada por decorar a minha casa
+- (tat) obrigado por me fazer este favor
+- (tat) obrigada por me fazer este favor
+- (tat) muito obrigado por ter me convidado
+- (tat) muito obrigado por sua ajuda
+- (tat) muito obrigado por me ajudar hoje
+- (tat) ele foi obrigado a assinar o documento
+- (tat) eu agradeco muito o seu apoio
+- (tat) obrigado por ser tao cooperativo
+- (tat) obrigado por me ajudar ontem
+- (tat) obrigado por me terem ajudado ontem
+- (tat) obrigado por ter me reportado isso
+- (tat) obrigado por me dizer a verdade
+- (tat) obrigada por me dizer a verdade
+- (tat) obrigado por me contar a verdade
+- (tat) obrigada por me contar a verdade
+- (tat) obrigado pelo jantar delicioso
+- (tat) obrigado desde ja por sua ajuda
+- (tat) obrigado de antemao pela ajuda
+- (tat) muito obrigado por tudo
+- (tat) obrigado por cuidar das criancas
+- (tat) voce devia pelo menos dizer obrigado
+- (tat) sei que nao sou obrigado a fazer isso
+- (tat) eu te agradeco muito por sua ajuda
+- (tat) te agradeco muito por sua ajuda
+- (tat) eu quero lhe agradecer por ter vindo aqui
+- (tat) quero te agradecer por ter vindo aqui
+- (tat) eu quero te agradecer por ter vindo aqui
+- (tat) obrigado por ter me convidado para jantar
+- (tat) obrigado por nos convidar para jantar
+- (tat) obrigado por sua gentil hospitalidade
+- (tat) muito obrigado pela sua carta
+- (tat) muito obrigada pela sua carta
+- (tat) muito obrigado pela tua carta
+- (tat) muito obrigada pela tua carta
+- (tat) obrigado por cuidar de minha irma
+- (tat) obrigado por me contar o que aconteceu
+- (tat) como voce esta estou bem obrigado
+- (tat) como nos dizemos obrigado em frances
+- (tat) como se diz obrigado em frances
+- (tat) obrigado por me emprestar estes livros
+- (tat) obrigada por me emprestar estes livros
+- (tat) obrigado pela sugestao util
+- (tat) obrigado por cuidares da minha irma
+- (tat) eu te agradeco de coracao
+- (tat) agradeco lhe de coracao
+- (tat) eu vos agradeco de coracao
+- (tat) como se diz obrigado em japones
+- (tat) como se diz obrigada em japones
+- (tat) obrigado por ser um amigo tao bom
+- (tat) obrigado por me convidar para a festa
+- (tat) obrigado por vir no seu dia de folga
+- (tat) obrigado por me ajudar a atingir meus objetivos
+- (tat) eu lhe agradeco muito a generosidade
+- (tat) obrigado por fazer o que precisava ser feito
+- (tat) obrigado por sua resposta franca
+- (tat) e dificil para voce dizer obrigado
+- (tat) e dificil para voce agradecer
+- (tat) obrigado mais uma vez por sua amavel assistencia
+- (tat) obrigado por preparar este bolo delicioso
+- (tat) quer deixar recado nao obrigado
+- (tat) o senhor quer deixar algum recado nao obrigado
+- (tat) a senhora quer deixar algum recado nao obrigada
+- (tat) obrigado pela ajuda disponha
+- (tat) obrigado por me lembrar da reuniao
+- (tat) obrigado pelo conselho eu vou tentar
+- (tat) obrigada pelo conselho eu vou tentar
+- (tat) agradeco por tudo que voce fez por mim
+- (tat) agradeco a oferta mas nao posso aceitar
+- (tat) gostaria de lhes agradecer pela cooperacao
+- (tat) muito obrigado pelo bonito cartao
+- (tat) obrigado pelo chocolate estava delicioso
+- (tat) muito obrigado por organizar este evento
+- (tat) obrigado por me ajudar e um prazer
+- (tat) sua mae nao lhe ensinou a dizer obrigado
+- (tat) tua mae nao te ensinou a dizer obrigado
+- (tat) agradeco a oferta mas nao posso aceita la
+- (tat) voce quer deixar uma mensagem nao obrigado
+- (tat) voces querem deixar uma mensagem nao obrigado
+- (tat) obrigado pela ajuda de nada
+- (tat) eu nao conseguiria ter feito sem voce obrigado
+- (tat) nao poderia ter feito isso sem voce obrigado
+- (tat) nao poderia ter feito isso sem voce obrigada
+- (tat) muitissimo obrigado pela hospitalidade hoje
+- (tat) muito obrigado pelo seu presente tao atencioso
+- (tat) voce quer uma bebida nao obrigado estou dirigindo
+- (tat) voce quer uma bebida nao obrigada estou dirigindo
+- (tat) queria saber como dizer obrigado em frances
+- (tat) queria saber dizer obrigado em frances
+- (tat) eu nem sei como dizer obrigado em frances
+- (tat) obrigado por reunir todos esses documentos
+- (tat) posso ajuda lo nao obrigado so estou olhando
+- (tat) posso ajuda la nao obrigada so estou olhando
+- (tat) muitissimo obrigado pelo maravilhoso jantar de ontem
+
+  respostas candidatas:
+  - de nada foi um prazer ajudar tenha um otimo dia
+  - de nada foi um prazer ajudar aguardo te falar amanha entao
+  - de nada tenha um otimo dia
+  - valeu
+  - obrigado novamente
+  - obrigado por isso
+  - obrigada por isso
+  - obrigado pelo almoco
+  - obrigado por perguntar
+  - obrigado pelo jantar
+  - obrigada pelo jantar
+  - obrigado por ligar
+  - obrigada por ligar
+  - obrigado por ajudar
+  - obrigado por nada
+  - obrigada pelo cha
+  - obrigado pelo cha
+  - obrigada pela dica
+  - obrigado pela dica
+  - obrigado pela espera
+  - obrigada pelo almoco
+  - obrigado por hoje
+  - obrigada por hoje
+  - obrigado pela cerveja
+  - obrigado pelo livro
+  - obrigada pelo livro
+  - obrigado pelo bolo
+  - obrigada pelo bolo
+  - obrigado pela comida
+  - obrigado pelo presente
+  - obrigado pela ajuda
+  - obrigada pela ajuda
+  - obrigado pela carona
+  - obrigada pela carona
+  - obrigado pela refeicao
+  - obrigado pela sopa
+  - obrigado por tentar
+  - obrigado desde ja
+  - obrigado meu amigo
+  - obrigado por escutar
+  - obrigado pela fruta
+  - obrigado pelas ideias
+  - obrigada pelas ideias
+  - obrigado pela pizza
+  - obrigada pela pizza
+  - obrigado por ontem
+  - obrigado a todos
+  - obrigada a todos
+  - obrigado por tudo
+  - obrigado pelo conselho
+  - obrigada pelo conselho
+  - obrigado pelo cafe
+  - obrigado pelo biscoito
+  - obrigado pelo convite
+  - obrigado a ambos
+  - obrigado a ambas
+  - obrigada a ambos
+  - obrigada a ambas
+  - obrigado por assistir
+  - obrigado por aparecer
+  - obrigado pelo comentario
+  - obrigada pelo comentario
+  - obrigado pelas flores
+  - obrigado pelo apoio
+  - obrigado pelas atualizacoes
+  - obrigado pelo aviso
+  - obrigado mesmo assim
+  - obrigado pelo retorno
+  - obrigada pelo retorno
+  - obrigado pelo sanduiche
+  - obrigado pelos comentarios
+  - obrigada pelos comentarios
+  - obrigado por cooperar
+  - obrigado pela visita
+  - obrigado por virem
+  - obrigada por virem
+  - obrigado pelo elogio
+  - obrigado pela correcao
+  - obrigada pela correcao
+  - obrigado pela sugestao
+  - obrigado de nada
+  - obrigado imagina
+  - obrigado pela explicacao
+  - obrigado pelas sugestoes
+  - obrigado pela compreensao
+  - obrigado por entender
+  - obrigado por esclarecer
+  - obrigado pelo incentivo
+  - obrigada pelo encorajamento
+  - obrigada disponha
+  - obrigado pelas correcoes
+  - obrigado pela recomendacao
+  - obrigada pela recomendacao
+  - obrigado pela introducao
+  - obrigado pelas bebidas
+
+## despedida  (80 frases, 12 respostas candidatas)
+- (orig) tchau
+- (orig) boa noite
+- (orig) vou embora
+- (orig) voce vai embora
+- (orig) eu volto mais tarde
+- (ds) vc tambem tchau
+- (ds) beleza tchau
+- (ds) igualmente tchau
+- (ds) beleza td certo ate mais
+- (ds) tchau td bem
+- (ds) td bem tchau
+- (ds) ate logo tchau
+- (ds) vc tbm ta bom ate mais
+- (ds) show mesmo continuem com o bom trabalho abraco
+- (tat) ate mais
+- (tat) ate logo
+- (tat) ate mais ver
+- (tat) nos vemos
+- (tat) eu preciso de um abraco
+- (tat) preciso de um abraco
+- (tat) posso te dar um abraco
+- (tat) que tal um abraco
+- (tat) nos vemos as cinco
+- (tat) posso ganhar um abraco
+- (tat) nos vemos amanha
+- (tat) ate amanha
+- (tat) quer um abraco
+- (tat) voce quer um abraco
+- (tat) preciso mesmo de um abraco
+- (tat) espere ate amanha
+- (tat) ele me deu um grande abraco
+- (tat) quero dizer tchau
+- (tat) nos vemos televisao todos os dias
+- (tat) eu queria poder te dar um abraco
+- (tat) eu tenho que dizer tchau
+- (tat) eu ate nao recusaria um abraco
+- (tat) um abraco seria muito bem vindo
+- (tat) nao irei ate amanha
+- (tat) ficarei ate amanha
+- (tat) ate amanha de manha
+- (tat) ok ate amanha
+- (tat) nao posso esperar ate amanha
+- (tat) eu preciso saber ate amanha
+- (tat) ate amanha a tarde
+- (tat) ate a proxima quarta feira
+- (tat) diga tchau aos seus amigos
+- (tat) diz tchau para os teus amigos
+- (tat) espere ate amanha de manha
+- (tat) aguarde ate amanha pela manha
+- (tat) voce nao pode esperar ate amanha
+- (tat) voces nao podem esperar ate amanha
+- (tat) eu estarei aqui ate a proxima segunda
+- (tat) estarei aqui ate a proxima segunda
+- (tat) eu vou ficar aqui ate amanha
+- (tat) decore o poema ate a proxima semana
+- (tat) eles nao virao ate amanha
+- (tat) elas nao virao ate amanha
+- (tat) temos tempo ate amanha
+- (tat) voce se importaria em me dar um abraco
+- (tat) nao quer me dar um abraco
+- (tat) de me ate amanha a tarde
+- (tat) entregue o seu relatorio ate amanha
+- (tat) e melhor esperarmos ate amanha
+- (tat) mal posso esperar ate amanha
+- (tat) eu so parei para falar tchau
+- (tat) um abraco seu me deixaria feliz
+- (tat) por favor devolva o livro ate amanha
+- (tat) por favor espere ate amanha de manha
+- (tat) voce vai ter de esperar ate amanha
+- (tat) nao quero esperar ate amanha
+- (tat) eu nao quero esperar ate amanha
+- (tat) eu preciso pagar esta conta ate amanha
+- (tat) preciso pagar esta conta ate amanha
+- (tat) nos vemos daqui a meia hora
+- (tat) temos ate amanha a noite para nos decidir
+- (tat) eu nao quero vender chocolate mais
+- (tat) o trabalho deve estar concluido ate amanha
+- (tat) precisamos resolver isso ate amanha
+- (tat) vou tomar conta do cachorro ate amanha
+- (tat) estarei fora da cidade ate a proxima segunda
+
+  respostas candidatas:
+  - tchau ate logo
+  - tchau tenha um otimo dia
+  - tchau ate a proxima
+  - tchau tenha um otimo dia e uma otima refeicao
+  - tchau tenha um bom dia
+  - tchau que seja um bom dia
+  - nao tem de que ate mais
+  - tchau estou ansioso para te atender novamente tenha um otimo dia
+  - tchau
+  - ate mais
+  - ate logo
+  - ate mais ver
+
+## elogio  (53 frases)
+- (orig) voce e legal
+- (orig) eu gosto de voce
+- (orig) voce e muito gentil
+- (orig) voce e bem esperta
+- (orig) voce e linda
+- (orig) adoro voce
+- (orig) gosto da sua sinceridade
+- (orig) voce e valente
+- (orig) voce e muito sexy
+- (orig) gosto do seu talento
+- (orig) voce e de mais
+- (orig) voce e uma graca
+- (orig) como voce e animada
+- (orig) voce e insubstituivel
+- (orig) voce trousse luz a minha vida
+- (orig) eu amo os seus expressivos olhos doces
+- (orig) estou muito orgulhoso de ti
+- (orig) voce e tao engracada
+- (orig) voce esta linda
+- (orig) voce e tao inteligente
+- (orig) voce tem bom gosto
+- (orig) voce e maravilhosa
+- (orig) que pernas lindas voce tem
+- (orig) voce fala muito bem
+- (orig) voce tem talento
+- (orig) gosto do seu comportamento
+- (orig) teu olhar me seduz
+- (orig) voce esta mais bonita hoje
+- (orig) voce esta mais bem arrumado hoje
+- (orig) seus olhos brilham como as estrelas
+- (orig) te admiro por seu talento
+- (orig) voce me faz melhor
+- (orig) suas palavras me confortam
+- (orig) voce e show
+- (orig) com essa beleza toda voce me deixa nas nuvens
+- (orig) voce e show de bola
+- (orig) voce e um anjo que apareceu em minha vida
+- (orig) voce e fofa
+- (orig) voce e minha alma gemea
+- (orig) gosto de voce
+- (orig) sua conversa me fascina
+- (orig) voce e a flor que faltava no meu jardim
+- (orig) voce e a mulher da minha vida
+- (orig) tudo em voce e maravilhoso
+- (orig) voce e luz para os meus olhos
+- (orig) sua pele e macia como uma la
+- (orig) sua verdade e o que me atrai
+- (orig) voce e meiga como uma rosa
+- (orig) seus atos de sinceridade me fascinam
+- (orig) seu perfume me atrai
+- (orig) voce tem um corpo maravilhoso
+- (orig) voce e muito engracada
+- (orig) voce fala bem
+
+## cumprimentar  (47 frases, 24 respostas candidatas)
+- (orig) oi
+- (orig) ola
+- (orig) eai
+- (orig) voce esta ai
+- (orig) bom dia como voce esta
+- (ds) oi td bem
+- (ds) oi tudo bem
+- (ds) e ai tudo bem
+- (ds) e ai td bem
+- (ds) ola td bem
+- (ds) ola tudo bem
+- (ds) e aee td bem
+- (ds) e ai beleza tudo bem
+- (ds) e aee tudo bem
+- (ds) eae tudo bem
+- (ds) e aee tudo beleza
+- (ds) e ai tudo beleza
+- (ds) oi vc td bem
+- (tat) ola pessoal
+- (tat) e ai
+- (tat) ola novamente
+- (tat) bom dia
+- (tat) boa tarde
+- (tat) sim tudo bem
+- (tat) oi eu posso ajudar
+- (tat) oi como vai voce
+- (tat) ola como vai voce
+- (tat) e ai cara
+- (tat) e ai mano
+- (tat) e ai mesmo
+- (tat) oi como voce esta
+- (tat) bom dia pessoal
+- (tat) oi voce trabalha aqui
+- (tat) oi como vai o negocio
+- (tat) oi como voce vai
+- (tat) bom dia a todos
+- (tat) ola tem alguem ai
+- (tat) oi eu ja volto
+- (tat) bom dia querida
+- (tat) oi voce ainda esta ai
+- (tat) e ai que esta o problema
+- (tat) bom dia e hora de acordar
+- (tat) e ai exatamente que voce se engana
+- (tat) bom dia senhoras e senhores
+- (tat) ola eu poderia falar com o sr jackson
+- (tat) boa tarde senhoras e senhores
+- (tat) oi esse e o departamento de recursos humanos
+
+  respostas candidatas:
+  - tudo show obrigado e vc como posso ajudar hoje
+  - ola tudo bem sim obrigado e voce como posso ajudar hoje
+  - tudo bem obrigado beleza em que posso ajudar hoje
+  - tudo bem obrigado e voce em que posso ajudar hoje
+  - tudo bem obrigado beleza como posso ajudar vc hoje
+  - show td bem sim obrigado por perguntar como posso ajudar vc hoje
+  - beleza tudo show aqui obrigado por perguntar como posso ajudar vc hoje
+  - tudo show obrigado como posso ajudar vc hoje
+  - beleza tudo bem sim obrigado por perguntar como posso ajudar voce hoje
+  - tudo bem obrigado e voce como posso ajudar hoje
+  - oi
+  - ola
+  - tudo bem
+  - ola pessoal
+  - e ai
+  - ola novamente
+  - bom dia
+  - boa tarde
+  - ola tudo bem
+  - e ai cara
+  - e ai mano
+  - e ai mesmo
+  - bom dia pessoal
+  - bom dia querida
+
+## reacao_diversa  (36 frases)
+- (orig) legal
+- (orig) nao acredito
+- (orig) tenho uma ideia
+- (orig) o que houve
+- (orig) eu nao quero
+- (orig) eu sei
+- (orig) eu ainda nao estou pronto
+- (orig) e o suficiente
+- (orig) eu acho isso muito bom
+- (orig) eu acho isso bem saboroso
+- (orig) eu nunca vi isso antes
+- (orig) so um pouquinho
+- (orig) so um momento
+- (orig) vou pensar sobre isso
+- (orig) e mais do que isso
+- (orig) nao faz mal
+- (orig) da proxima vez
+- (orig) nao obrigado
+- (orig) mais nada
+- (orig) nao recentemente
+- (orig) ainda nao
+- (orig) ela e bonita
+- (orig) me perdoe te importunar
+- (orig) isso nao e justo
+- (orig) isso nao esta certo
+- (orig) esta certo
+- (orig) isso nao funciona assim
+- (orig) isso e muito dificil
+- (orig) isso e muito importante
+- (orig) voce esta com medo
+- (orig) voce me entende
+- (orig) voce seria um presente para quem
+- (orig) sabe alguma musica
+- (orig) o que temos em comum
+- (orig) nao consegue me ver
+- (orig) eu tambem estou
+
+## identidade  (18 frases)
+- (orig) quem e voce
+- (orig) tem quantos anos
+- (orig) como voce e
+- (orig) qual o seu nome
+- (orig) o que e ser uma ia
+- (orig) como voce se chama
+- (orig) o que significa k a i r a
+- (orig) voce foi criada para ser apenas um sistema de comunicacao
+- (orig) o que voce e
+- (orig) voce e paga
+- (orig) quanto e que voce ganha
+- (orig) e um ser de inteligencia artificial
+- (orig) voce e imortal
+- (orig) gosta de ser uma ia
+- (orig) foi criada por humanos
+- (orig) voce e um robo
+- (orig) como e ser um robo
+- (orig) como voce sabe que e uma ia
+
+## meta_conversa  (13 frases)
+- (orig) eu mesmo
+- (orig) ja me perguntou isso
+- (orig) voce nao percebeu o que eu queria dizer
+- (orig) ja me disse isso
+- (orig) voce que disse isso
+- (orig) nos falamos antes
+- (orig) voce tem todas as respostas
+- (orig) nao me respondeu
+- (orig) voce se esqueceu
+- (orig) voce disse isso mesmo
+- (orig) eu percebo isso agora
+- (orig) voce tinha dito que sim
+- (orig) voce tinha dito que nao
+
+## reflexao_ia  (10 frases)
+- (orig) e incomum conversar com uma ia
+- (orig) dificil imaginar que uma ia tenha humor
+- (orig) esse seu humor e definido de que forma
+- (orig) ias tambem devem gostar de fazer alguma coisa
+- (orig) como voce pode nao saber o que gosta
+- (orig) parece uma pessoa real
+- (orig) depende de como voce define a vida
+- (orig) isso e uma definicao ou uma opiniao
+- (orig) voce tem alguma opiniao sobre algo
+- (orig) voce parece real
+
+## status_geral  (9 frases)
+- (orig) como esta seu humor hoje
+- (orig) como esta seu humor
+- (orig) como voce esta
+- (orig) tudo bem
+- (orig) eu estou bem e voce
+- (orig) eu vou bem
+- (orig) eu nao vou muito bem recentemente
+- (orig) voce esta bem
+- (orig) vc ta bem
+
+## atividades_usuario  (8 frases)
+- (orig) eu estou limpando meu quarto
+- (orig) eu vou sair
+- (orig) eu nao estou ocupado
+- (orig) eu estou muito ocupado nao tenho tempo agora
+- (orig) eu preciso trocar de roupas
+- (orig) eu vou sair sim
+- (orig) indo onde
+- (orig) eu estou trabalhando em um projeto
+
+## gostos_ia  (8 frases)
+- (orig) que tipo de coisas voce gosta
+- (orig) qual a sua cor preferida
+- (orig) do que voce gosta
+- (orig) o que voce acha bonito
+- (orig) voce gosta de musica
+- (orig) quais sao os seus passatempos
+- (orig) o que voce quer fazer
+- (orig) voce gosta de conversar
+
+## convite_conversa  (7 frases)
+- (orig) vamos dar um passeio
+- (orig) posso te fazer uma pergunta
+- (orig) vamos falar sobre voce
+- (orig) vamos conversar
+- (orig) vamos falar sobre esportes
+- (orig) vamos falar sobre robos
+- (orig) me fale sobre voce
+
+## estado_fisico  (6 frases)
+- (orig) eu estou com dor de cabeca
+- (orig) eu estou com frio
+- (orig) estou com fome
+- (orig) eu estou com sede
+- (orig) eu so quero um lanche
+- (orig) estou cansado
+
+## jogo_favorito  (6 frases)
+- (orig) voce gosta de algum jogo
+- (orig) tem algum jogo que voce goste mais
+- (orig) o que acha do mario
+- (orig) qual seu jogo favorito do mario
+- (orig) o que acha do sonic
+- (orig) qual seu jogo favorito do sonic
+
+## conhecimento_linguistico  (6 frases)
+- (orig) o que e linguistica
+- (orig) o que e um verbo
+- (orig) quem foi saussure
+- (orig) o que e uma gramatica
+- (orig) o que e um substantivo
+- (orig) quais as areas da linguistica
+
+## habilidades  (6 frases)
+- (orig) o que voce sabe fazer
+- (orig) o que voce sabe
+- (orig) o que voce esta fazendo
+- (orig) no que voce esta pensando
+- (orig) qual a sua principal funcao
+- (orig) como voce trabalha
+
+## confusao  (5 frases)
+- (orig) eu nao sei usar isso
+- (orig) eu nao entendo
+- (orig) eu nao tenho certeza
+- (orig) eu estou perdido
+- (orig) isso nao faz sentido
+
+## gostos_usuario  (5 frases)
+- (orig) gosto de filmes de robos
+- (orig) eu gosto de gatos
+- (orig) eu gosto de humor
+- (orig) eu nao gosto dele
+- (orig) eu nao gosto
+
+## conhecimento_tecnologia  (5 frases)
+- (orig) o que e uma ia
+- (orig) o que e um robo
+- (orig) o que e um chatbot
+- (orig) o que voce acha sobre inteligencia artificial
+- (orig) serio porque gosta de inteligencia artificial
+
+## apoio  (4 frases)
+- (orig) voce vai me ajudar
+- (orig) como animar alguem
+- (orig) se voce precisar da minha ajuda por favor me diga
+- (orig) voce precisa de alguma coisa
+
+## critica  (4 frases)
+- (orig) voce e chata
+- (orig) voce nao pode fazer algo
+- (orig) voce nao entende
+- (orig) acho que pode fazer melhor
+
+## humor_usuario  (4 frases)
+- (orig) estou triste
+- (orig) eu me sinto bem
+- (orig) eu estou feliz
+- (orig) eu nao me sinto bem
+
+## sugestao  (4 frases)
+- (orig) o que eu faco
+- (orig) o que eu deveria vestir
+- (orig) o que faco para secar minhas roupas em tempos chuvosos
+- (orig) como faco para tirar pelos da roupa preta
+
+## jogar  (3 frases)
+- (orig) vamos jogar um jogo
+- (orig) vamos tentar
+- (orig) vamos festejar
+
+## piada  (3 frases)
+- (orig) me conta uma piada
+- (orig) me conta uma piada
+- (orig) aonde tu tira essas piadas
+
+## mudar_assunto  (3 frases)
+- (orig) antes disso
+- (orig) proxima questao
+- (orig) vamos mudar de assunto
+
+## limitacao_ia  (3 frases)
+- (orig) nao posso comer
+- (orig) voce nao tem uma boca
+- (orig) voce nao pode se mexer
+
+## info_externa  (3 frases)
+- (orig) como esta o clima
+- (orig) o que esta acontecendo agora
+- (orig) ouviu as noticias
+
+## _lixo  (1 frases)
+- (orig) o
+
+## conhecimento_geral  (1 frases)
+- (orig) quem inventou o radio
+
+## localizacao  (1 frases)
+- (orig) onde voce esta
+
+## desligar  (1 frases)
+- (orig) desligar
+
+## versao  (1 frases)
+- (orig) qual a sua versao atual
+
+## conhecimento_dinheiro  (1 frases)
+- (orig) o que e dinheiro
+
+## retorno  (1 frases)
+- (orig) voltei
+
+## aprendizado  (1 frases)
+- (orig) como voce aprende coisas novas
