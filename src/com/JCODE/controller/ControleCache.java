@@ -40,9 +40,6 @@ public class ControleCache {
 
         KAIRA kaira = ControleKaira.criarCacheKAIRA();
 
-        ControleResposta.criarCacheResposta();
-        ControleSinonimo.criarCacheSinonimo();
-
         JOptionPane.showMessageDialog(null, "Inicialização primaria concluida, o sistema deve ser reiniciado para que possa operar",null, JOptionPane.INFORMATION_MESSAGE);
         System.exit(0);
 

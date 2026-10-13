@@ -1,6 +1,7 @@
 package com.JCODE.controller;
 
 import com.JCODE.util.Calculos;
+import com.JCODE.util.Caminhos;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.*;
@@ -29,7 +30,7 @@ public class ControlePalavra {
                 palavras.add(palavraSeparada);
         }
 
-        try (FileWriter fileWriter = new FileWriter("KAIRA/resources/palavras.json", StandardCharsets.UTF_8)) {
+        try (FileWriter fileWriter = new FileWriter(Caminhos.recurso("palavras.json").toFile(), StandardCharsets.UTF_8)) {
 
             String jsonInicial = objectMapper.writeValueAsString(palavras);
 
@@ -57,7 +58,8 @@ public class ControlePalavra {
             }
         }
 
-        try (FileWriter fileWriter = new FileWriter("KAIRA/resources/palavras.json", StandardCharsets.UTF_8)) {
+        try (FileWriter fileWriter = new FileWriter(
+                Caminhos.recurso("palavras.json").toFile(), StandardCharsets.UTF_8)) {
 
             String jsonInicial = objectMapper.writeValueAsString(palavras);
 
@@ -116,7 +118,8 @@ public class ControlePalavra {
     private static List<String> buscaArquivoPalavra(){
 
         try {
-            FileInputStream fileInputStream = new FileInputStream("KAIRA/resources/palavras.json");
+
+            FileInputStream fileInputStream = new FileInputStream(Caminhos.recurso("palavras.json").toFile());
 
             InputStreamReader reader = new InputStreamReader(fileInputStream, StandardCharsets.UTF_8);
 

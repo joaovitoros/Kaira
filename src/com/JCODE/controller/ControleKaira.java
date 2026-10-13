@@ -1,10 +1,12 @@
 package com.JCODE.controller;
 
 import com.JCODE.domain.KAIRA;
+import com.JCODE.util.Caminhos;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 
 public class ControleKaira {
 
@@ -17,7 +19,7 @@ public class ControleKaira {
         if(objectMapper == null)
             objectMapper = new ObjectMapper();
 
-        FileInputStream fileInputStream = new FileInputStream("KAIRA/resources/kaira.json");
+        FileInputStream fileInputStream = new FileInputStream(Caminhos.recurso("kaira.json").toFile());
 
         InputStreamReader reader = new InputStreamReader(fileInputStream, StandardCharsets.UTF_8);
 
@@ -40,7 +42,7 @@ public class ControleKaira {
         kaira.setNome("K.A.I.R.A");
         kaira.setVersao("0.0.1");
 
-        try (FileWriter fileWriter = new FileWriter("KAIRA/resources/kaira.json", StandardCharsets.UTF_8)) {
+        try (FileWriter fileWriter = new FileWriter(Caminhos.recurso("kaira.json").toFile(), StandardCharsets.UTF_8)) {
 
             String jsonInicial = objectMapper.writeValueAsString(kaira);
 
@@ -66,10 +68,11 @@ public class ControleKaira {
     }
 
     public static void criarCaminho(){
-        File diretorio = new File("KAIRA");
-        diretorio.mkdir();
-        File dir = new File("KAIRA/resources");
-        dir.mkdir();
+        try {
+            Files.createDirectories(Caminhos.base().resolve("KAIRA").resolve("resources"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
