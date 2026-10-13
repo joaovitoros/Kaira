@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class ControleResposta {
@@ -20,6 +21,8 @@ public class ControleResposta {
 	static ObjectMapper objectMapper;
 
 	static Falas falasCache;
+
+	private static final double LIMIAR = 0.6;
 
 	public static String lerResposta(String falaUsuario) {
 
@@ -184,5 +187,46 @@ public class ControleResposta {
 				.map(Resposta::getFrase)
 				.findFirst().orElse(null);
 	}
+
+	public static String resolver(String entradaNormalizada){
+		String exata = fraseExata(entradaNormalizada);
+		if(exata != null) return exata;
+		return melhorFrasesPorSimilaridade(entradaNormalizada);
+	}
+
+	private static String melhorFrasesPorSimilaridade(String entradaNormalizada) {
+		Set<String> palavrasEntrada = Arrays.stream(entradaNormalizada.trim().split("\\s+"))
+				.filter(t -> !t.isEmpty()).collect(Collectors.toSet());
+
+		if(palavrasEntrada.isEmpty())
+			return null;
+
+		String melhorFrase = null;
+		double melhorScore = 0;
+
+		for(Resposta frase: falasCache.getFalas()){
+			Set<String> palavraFrase = new HashSet<>(Arrays.asList(frase.getFrase().split(" ")));
+			long intersecao = palavrasEntrada.stream().filter((palavraFrase::contains)).count();
+			double score = (double) intersecao / palavrasEntrada.size();
+			if (score > LIMIAR) {
+				if(score > melhorScore) {
+					melhorScore = score;
+					melhorFrase = frase.getFrase();
+				} else if (score == melhorScore) {
+					long restoAnterior = Arrays.stream(melhorFrase.split(" ")).filter(Predicate.not(palavrasEntrada::contains)).count();
+					long resto = palavraFrase.stream().filter(Predicate.not(palavrasEntrada::contains)).count();
+
+					if(resto < restoAnterior){
+						melhorScore = score;
+						melhorFrase = frase.getFrase();
+					}
+				}
+			}
+		}
+
+		return melhorScore >= LIMIAR ? melhorFrase : null;
+
+	}
+
 
 }

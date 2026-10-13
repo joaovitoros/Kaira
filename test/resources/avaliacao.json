@@ -1,5 +1,5 @@
 {
-  "_doc": "Dataset de avaliacao do KAIRA (Tarefa #3). Roda com CWD na raiz do projeto. Dois tiers: (1) fraseEsperada != null = caso de REGRESSAO, tem que casar hoje; (2) fraseEsperada = null + alvoFase1 = GAP medido, nao resolve hoje e e o alvo do classificador da Fase 1.",
+  "_doc": "Dataset de avaliacao do KAIRA (Tarefa #3, atualizado na #5). Roda com CWD na raiz do projeto. Dois tiers: (1) fraseEsperada != null = caso de REGRESSAO, tem que casar hoje; (2) fraseEsperada = null + alvoFase1 = GAP medido, nao resolve hoje. A Tarefa #5 (classificador por cobertura de pergunta) fechou 2 gaps - 'como vc esta' e 'bom dia' - que viraram regressao asserida. Ficam 2 gaps, cada um motivando uma task distinta: 'e ai beleza' (sem sobreposicao lexica com 'oi' -> sinonimos, §5.5) e 'qual seu jogo favorito' (empata 1,00 com 'do Mario' e 'do Sonic' -> intents, §5.1).",
   "casos": [
     { "entrada": "oi", "fraseEsperada": "oi", "nota": "cumprimento simples" },
     { "entrada": "ola", "fraseEsperada": "ola", "nota": "cumprimento simples" },
@@ -12,9 +12,10 @@
     { "entrada": "tudo bem", "fraseEsperada": "tudo bem", "nota": "status" },
     { "entrada": "qual a sua cor preferida", "fraseEsperada": "qual a sua cor preferida", "nota": "frase longa exata" },
 
-    { "entrada": "e ai beleza", "fraseEsperada": null, "alvoFase1": "oi", "nota": "parafrase de cumprimento - base so tem 'oi'/'ola'/'eai'" },
-    { "entrada": "como vc está", "fraseEsperada": null, "alvoFase1": "como voce esta", "nota": "abreviacao 'vc' - classificador tem que generalizar" },
-    { "entrada": "qual seu jogo favorito", "fraseEsperada": null, "alvoFase1": "qual seu jogo favorito do Mario", "nota": "base so tem as variantes 'do Mario'/'do Sonic'" },
-    { "entrada": "bom dia", "fraseEsperada": null, "alvoFase1": "bom dia como voce esta", "nota": "base so tem a frase longa" }
+    { "entrada": "como vc está", "fraseEsperada": "como voce esta", "nota": "GAP FECHADO pela Tarefa #5 - abreviacao 'vc', cobertura {como,esta}=0.67 >= 0.6" },
+    { "entrada": "bom dia", "fraseEsperada": "bom dia como voce esta", "nota": "GAP FECHADO pela Tarefa #5 - subconjunto da frase longa, cobertura 2/2=1.0" },
+
+    { "entrada": "e ai beleza", "fraseEsperada": null, "alvoFase1": "oi", "nota": "GAP - nenhuma palavra em comum com 'oi' (cobertura 0); so sinonimos (§5.5) resolvem" },
+    { "entrada": "qual seu jogo favorito", "fraseEsperada": null, "alvoFase1": "qual seu jogo favorito do Mario", "nota": "GAP - empatam 'do Mario' e 'do Sonic' (ambos cobertura 1.0); nenhum score lexico desempata, precisa de intents (§5.1)" }
   ]
 }

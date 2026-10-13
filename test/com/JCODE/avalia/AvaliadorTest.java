@@ -6,18 +6,18 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 /**
- * Testa o Avaliador (Tarefa #3) - a regua de medição do pipeline.
+ * Testa o Avaliador (Tarefa #3, atualizado na #5) - a regua do pipeline.
  *
  * O Avaliador carrega test/resources/avaliacao.json, manda cada entrada por
- * Normalizador.texto() -> ControleResposta.fraseExata() e compara com o
- * esperado. Dois tiers:
+ * Normalizador.texto() -> ControleResposta.resolver() (exato -> classificador)
+ * e compara com o esperado. Dois tiers:
  *
  *   - REGRESSAO (fraseEsperada != null): tem que casar HOJE. Assertado aqui.
- *   - GAP (fraseEsperada == null + alvoFase1): nao resolve hoje. So REPORTADO,
- *     nao assertado - porque e exatamente o que o classificador da Fase 1 vai
- *     consertar. Quando a Fase 1 entrar, o gap vira caso de regressao.
- *
- * O numero que a Fase 1 precisa vencer e a contagem de gaps.
+ *     Na Tarefa #5 os 2 gaps fechados pelo classificador foram promovidos pra
+ *     regressao - entao tierRegressaoTemCemPorCento e o guarda de que o
+ *     classificador fechou eles SEM quebrar os 10 casos exatos.
+ *   - GAP (fraseEsperada == null + alvoFase1): nao resolve hoje. So REPORTADO.
+ *     Ficam 2, cada um motivando uma task: sinonimos (§5.5) e intents (§5.1).
  *
  * Roda com CWD na raiz do projeto.
  */

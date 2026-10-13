@@ -18,14 +18,16 @@ import java.util.List;
  *
  * NAO e um teste: e infra de teste. Fica em test/ de proposito, nao vai pro
  * app. Existe porque lerResposta/decifrar nao servem pra medir (System.exit,
- * Math.random, UI) - o Avaliador usa a consulta pura fraseExata.
+ * Math.random, UI) - o Avaliador usa a consulta pura resolver (exato ->
+ * classificador), que nao tem efeito colateral.
  *
- * Roda cada entrada do dataset por Normalizador.texto() -> fraseExata() e
+ * Roda cada entrada do dataset por Normalizador.texto() -> resolver() e
  * compara com o esperado. Dois tiers:
  *
  *   - REGRESSAO (fraseEsperada != null): tem que casar hoje.
  *   - GAP     (fraseEsperada == null + alvoFase1): nao resolve hoje; e o
- *     placar que o classificador da Fase 1 (§5.2) precisa baixar.
+ *     placar que o classificador da Fase 1 (§5.2) precisa baixar. (Na Tarefa
+ *     #5 o classificador fecha 2 gaps - eles viraram regressao la em cima.)
  *
  * Uso (CWD na raiz do projeto):
  *   java -cp "out/test;externallibs/*" com.JCODE.avalia.Avaliador
@@ -77,8 +79,8 @@ public class Avaliador {
 
 		for (Caso c : dataset.casos) {
 			// quem normaliza e o avaliador (no app, quem normaliza e o decifrar).
-			// fraseExata recebe a entrada JA normalizada.
-			String resolvida = ControleResposta.fraseExata(Normalizador.texto(c.entrada));
+			// resolver recebe a entrada JA normalizada e faz exato -> classificador.
+			String resolvida = ControleResposta.resolver(Normalizador.texto(c.entrada));
 
 			if (c.fraseEsperada != null) {
 				r.casosRegressao++;
