@@ -25,10 +25,22 @@ public class ControleFace implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		String cmd = e.getActionCommand();
 		
-		if(cmd=="Enviar"){
+		if(cmd.equalsIgnoreCase("Enviar")){
 			MandarFrase();
+			exibirResposta(resposta);
 		}
-		textAreaKaira.setText(resposta);
+
+	}
+
+	/**
+	 * Acrescenta a resposta ao histórico do chat, sem sobrescrever as anteriores.
+	 * A resposta nula (ainda sem match) e ignorada para nao poluir a conversa.
+	 */
+	static void exibirResposta(String texto) {
+		if(texto==null)
+			return;
+		textAreaKaira.append(texto + "\n");
+		textAreaKaira.setCaretPosition(textAreaKaira.getDocument().getLength());
 	}
 
 	public static void MandarFrase(){

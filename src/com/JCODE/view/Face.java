@@ -21,7 +21,7 @@ public class Face extends JFrame {
 	 * @param nome 
 	 */
 	public Face(String nome) {
-		setTitle("L.O.L.I");
+		setTitle("K.A.I.R.A");
 		setResizable(false);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -39,9 +39,12 @@ public class Face extends JFrame {
 		
 		JTextArea textAreaKaira = new JTextArea();
 		textAreaKaira.setLineWrap(true);
+		textAreaKaira.setWrapStyleWord(true);
 		textAreaKaira.setEditable(false);
-		textAreaKaira.setBounds(10, 42, 554, 255);
-		contentPane.add(textAreaKaira);
+
+		JScrollPane scrollKaira = new JScrollPane(textAreaKaira);
+		scrollKaira.setBounds(10, 42, 554, 255);
+		contentPane.add(scrollKaira);
 		
 		JTextArea textAreaUsuario = new JTextArea();
 		textAreaUsuario.setWrapStyleWord(true);
