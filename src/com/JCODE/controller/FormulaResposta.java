@@ -1,5 +1,7 @@
 package com.JCODE.controller;
 
+import com.JCODE.util.Normalizador;
+
 public class FormulaResposta {
 
     static String respostaVariavel;
@@ -8,7 +10,7 @@ public class FormulaResposta {
 
     public static void decifrar(String falaUsuario) {
 
-        falaUsuario = falaUsuario.replace("?", "").replace("\n", "").trim();
+        falaUsuario = Normalizador.texto(falaUsuario);
 
         System.out.println("texto recebido pós replaces "+falaUsuario);
 

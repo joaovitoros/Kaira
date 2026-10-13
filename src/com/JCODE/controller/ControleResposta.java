@@ -3,6 +3,7 @@ package com.JCODE.controller;
 import com.JCODE.domain.Falas;
 import com.JCODE.domain.Resposta;
 import com.JCODE.util.Calculos;
+import com.JCODE.util.Normalizador;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.FileInputStream;
@@ -55,6 +56,12 @@ public class ControleResposta {
 			InputStreamReader reader = new InputStreamReader(fileInputStream, StandardCharsets.UTF_8);
 
 			falasCache = objectMapper.readValue(reader, Falas.class);
+
+			falasCache.getFalas().stream().forEach( resposta -> {
+
+				resposta.setFrase(Normalizador.texto(resposta.getFrase()));
+
+			});
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -86,9 +93,6 @@ public class ControleResposta {
 
 		for (int i = 0; i < falasCache.getFalas().size(); i++) {
 			palavras = falasCache.getFalas().get(i).getFrase();
-
-			if(palavras.equals("voce é uma graça"))
-				System.out.println("");
 
 			//porcentagem = Calculos.calculoPorcentagemGeral(frase, palavras);
 			porcentagem = Calculos.calculoPorcentagemFrase(frase, palavras, null);
