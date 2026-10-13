@@ -26,15 +26,14 @@ public class ControleResposta {
 
 	public static String lerResposta(String falaUsuario) {
 
-		Resposta resposta = new Resposta();
+		Resposta resposta;
 
 		if (falasCache == null)
 			carregaCache();
 
-		resposta = falasCache.getFalas().stream().filter(frase -> falaUsuario.equalsIgnoreCase(frase.getFrase()))
-				.findFirst().orElse(new Resposta());
+		resposta = buscaResposta(falaUsuario);
 
-		return falaUsuario.equalsIgnoreCase(resposta.getFrase()) ? comandosResposta(resposta) : null;
+		return resposta != null ? comandosResposta(resposta) : null;
 	}
 
 	private static String escolheMultiRespostas(List<String> respostas) {
@@ -208,7 +207,7 @@ public class ControleResposta {
 			Set<String> palavraFrase = new HashSet<>(Arrays.asList(frase.getFrase().split(" ")));
 			long intersecao = palavrasEntrada.stream().filter((palavraFrase::contains)).count();
 			double score = (double) intersecao / palavrasEntrada.size();
-			if (score > LIMIAR) {
+			if (score >= LIMIAR) {
 				if(score > melhorScore) {
 					melhorScore = score;
 					melhorFrase = frase.getFrase();
@@ -226,6 +225,20 @@ public class ControleResposta {
 
 		return melhorScore >= LIMIAR ? melhorFrase : null;
 
+	}
+
+	public static Resposta buscaResposta(String entradaNormalizada){
+
+		Resposta resposta = null;
+
+		resposta = falasCache.getFalas().stream()
+				.filter(it -> it.getFrase().equalsIgnoreCase(entradaNormalizada)).findFirst().orElse(null);
+
+		if(resposta==null)
+			resposta = falasCache.getFalas().stream()
+					.filter(it -> it.getFrase().equalsIgnoreCase(melhorFrasesPorSimilaridade(entradaNormalizada))).findFirst().orElse(null);
+
+		return resposta;
 	}
 
 
