@@ -1,0 +1,9 @@
+# Artefatos de build do IntelliJ
+out/
+
+# Configurações locais do IntelliJ IDEA
+.idea/
+*.iml
+
+# Compiled class files
+*.class

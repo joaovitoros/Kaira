@@ -1,0 +1,614 @@
+{"sinonimos":[
+  {
+    "palavra": "ia",
+    "sinonimos": [
+      "voce"
+    ]
+  },
+  {
+    "palavra": "hallo",
+    "sinonimos": [
+      "oi"
+    ]
+  },
+  {
+    "palavra": "agora",
+    "sinonimos": [
+      "hoje"
+    ]
+  },
+  {
+    "palavra": "maneira",
+    "sinonimos": [
+      "legal"
+    ]
+  },
+  {
+    "palavra": "chateado",
+    "sinonimos": [
+      "triste"
+    ]
+  },
+  {
+    "palavra": "bonito",
+    "sinonimos": [
+      "belo"
+    ]
+  },
+  {
+    "palavra": "falaria",
+    "sinonimos": [
+      "diria"
+    ]
+  },
+  {
+    "palavra": "ok",
+    "sinonimos": [
+      "bem"
+    ]
+  },
+  {
+    "palavra": "seu",
+    "sinonimos": [
+      "sua"
+    ]
+  },
+  {
+    "palavra": "modelo",
+    "sinonimos": [
+      "versao"
+    ]
+  },
+  {
+    "palavra": "algum",
+    "sinonimos": [
+      "alguma"
+    ]
+  },
+  {
+    "palavra": "conto",
+    "sinonimos": [
+      "história"
+    ]
+  },
+  {
+    "palavra": "recente",
+    "sinonimos": [
+      "atual"
+    ]
+  },
+  {
+    "palavra": "tenho",
+    "sinonimos": [
+      "possuo"
+    ]
+  },
+  {
+    "palavra": "enquanto",
+    "sinonimos": [
+      "durante"
+    ]
+  },
+  {
+    "palavra": "ali",
+    "sinonimos": [
+      "lá"
+    ]
+  },
+  {
+    "palavra": "radiante",
+    "sinonimos": [
+      "brilhante"
+    ]
+  },
+  {
+    "palavra": "demais",
+    "sinonimos": [
+      "muitas"
+    ]
+  },
+  {
+    "palavra": "claro",
+    "sinonimos": [
+      "definido"
+    ]
+  },
+  {
+    "palavra": "exito",
+    "sinonimos": [
+      "sucesso"
+    ]
+  },
+  {
+    "palavra": "pegando",
+    "sinonimos": [
+      "coletando"
+    ]
+  },
+  {
+    "palavra": "começando",
+    "sinonimos": [
+      "iniciando"
+    ]
+  },
+  {
+    "palavra": "agradeço!",
+    "sinonimos": [
+      "obrigada!"
+    ]
+  },
+  {
+    "palavra": "segundo",
+    "sinonimos": [
+      "como"
+    ]
+  },
+  {
+    "palavra": "favorita",
+    "sinonimos": [
+      "preferida"
+    ]
+  },
+  {
+    "palavra": "ótima",
+    "sinonimos": [
+      "boa"
+    ]
+  },
+  {
+    "palavra": "finalizar",
+    "sinonimos": [
+      "desligar"
+    ]
+  },
+  {
+    "palavra": "tu",
+    "sinonimos": [
+      "voce"
+    ]
+  },
+  {
+    "palavra": "infeliz",
+    "sinonimos": [
+      "triste"
+    ]
+  },
+  {
+    "palavra": "conhece",
+    "sinonimos": [
+      "sabe"
+    ]
+  },
+  {
+    "palavra": "uma",
+    "sinonimos": [
+      "alguma"
+    ]
+  },
+  {
+    "palavra": "bastante",
+    "sinonimos": [
+      "muito"
+    ]
+  },
+  {
+    "palavra": "retorna",
+    "sinonimos": [
+      "volta"
+    ]
+  },
+  {
+    "palavra": "correto",
+    "sinonimos": [
+      "certo"
+    ]
+  },
+  {
+    "palavra": "andar",
+    "sinonimos": [
+      "caminhar"
+    ]
+  },
+  {
+    "palavra": "manipular",
+    "sinonimos": [
+      "usar"
+    ]
+  },
+  {
+    "palavra": "ele",
+    "sinonimos": [
+      "dele"
+    ]
+  },
+  {
+    "palavra": "compreendo",
+    "sinonimos": [
+      "entendo"
+    ]
+  },
+  {
+    "palavra": "fale",
+    "sinonimos": [
+      "diga"
+    ]
+  },
+  {
+    "palavra": "retorno",
+    "sinonimos": [
+      "volto"
+    ]
+  },
+  {
+    "palavra": "conversar",
+    "sinonimos": [
+      "falar"
+    ]
+  },
+  {
+    "palavra": "dados",
+    "sinonimos": [
+      "informaçoes"
+    ]
+  },
+  {
+    "palavra": "possuo",
+    "sinonimos": [
+      "tenho"
+    ]
+  },
+  {
+    "palavra": "enxergar",
+    "sinonimos": [
+      "ver"
+    ]
+  },
+  {
+    "palavra": "breve",
+    "sinonimos": [
+      "logo"
+    ]
+  },
+  {
+    "palavra": "acredito",
+    "sinonimos": [
+      "creio"
+    ]
+  },
+  {
+    "palavra": "disse",
+    "sinonimos": [
+      "falou"
+    ]
+  },
+  {
+    "palavra": "precionando",
+    "sinonimos": [
+      "Apertando"
+    ]
+  },
+  {
+    "palavra": "assim",
+    "sinonimos": [
+      "então"
+    ]
+  },
+  {
+    "palavra": "conseguir",
+    "sinonimos": [
+      "poder"
+    ]
+  },
+  {
+    "palavra": "falam",
+    "sinonimos": [
+      "dizem"
+    ]
+  },
+  {
+    "palavra": "agradavel",
+    "sinonimos": [
+      "legal"
+    ]
+  },
+  {
+    "palavra": "obter",
+    "sinonimos": [
+      "conseguir"
+    ]
+  },
+  {
+    "palavra": "adquirir",
+    "sinonimos": [
+      "conseguir"
+    ]
+  },
+  {
+    "palavra": "olhar",
+    "sinonimos": [
+      "enxergar"
+    ]
+  },
+  {
+    "palavra": "utilizar",
+    "sinonimos": [
+      "manipular"
+    ]
+  },
+  {
+    "palavra": "exato",
+    "sinonimos": [
+      "correto"
+    ]
+  },
+  {
+    "palavra": "deprimido",
+    "sinonimos": [
+      "infeliz"
+    ]
+  },
+  {
+    "palavra": "encerrar",
+    "sinonimos": [
+      "finalizar"
+    ]
+  },
+  {
+    "palavra": "excelente",
+    "sinonimos": [
+      "ótima"
+    ]
+  },
+  {
+    "palavra": "grande",
+    "sinonimos": [
+      "ótima"
+    ]
+  },
+  {
+    "palavra": "conforme",
+    "sinonimos": [
+      "segundo"
+    ]
+  },
+  {
+    "palavra": "buscando",
+    "sinonimos": [
+      "pegando"
+    ]
+  },
+  {
+    "palavra": "colhendo",
+    "sinonimos": [
+      "pegando"
+    ]
+  },
+  {
+    "palavra": "aborrecido",
+    "sinonimos": [
+      "chateado"
+    ]
+  },
+  {
+    "palavra": "do",
+    "sinonimos": [
+      "da"
+    ]
+  },
+  {
+    "palavra": "carater",
+    "sinonimos": [
+      "personalidade"
+    ]
+  },
+  {
+    "palavra": "meu",
+    "sinonimos": [
+      "minha"
+    ]
+  },
+  {
+    "palavra": "agradecer",
+    "sinonimos": [
+      "retribuir"
+    ]
+  },
+  {
+    "palavra": "sérios",
+    "sinonimos": [
+      "importantes"
+    ]
+  },
+  {
+    "palavra": "necessitam",
+    "sinonimos": [
+      "devem"
+    ]
+  },
+  {
+    "palavra": "precisam",
+    "sinonimos": [
+      "devem"
+    ]
+  },
+  {
+    "palavra": "tagalerar",
+    "sinonimos": [
+      "conversar"
+    ]
+  },
+  {
+    "palavra": "dialogar",
+    "sinonimos": [
+      "conversar"
+    ]
+  },
+  {
+    "palavra": "moça",
+    "sinonimos": [
+      "garota"
+    ]
+  },
+  {
+    "palavra": "certo",
+    "sinonimos": [
+      "bem"
+    ]
+  },
+  {
+    "palavra": "qualquer",
+    "sinonimos": [
+      "algum"
+    ]
+  },
+  {
+    "palavra": "sugere",
+    "sinonimos": [
+      "significa"
+    ]
+  },
+  {
+    "palavra": "atual",
+    "sinonimos": [
+      "recente"
+    ]
+  },
+  {
+    "palavra": "ocasião",
+    "sinonimos": [
+      "oportunidade"
+    ]
+  },
+  {
+    "palavra": "sugestão",
+    "sinonimos": [
+      "ideia"
+    ]
+  },
+  {
+    "palavra": "cedo",
+    "sinonimos": [
+      "logo"
+    ]
+  },
+  {
+    "palavra": "desfrutaria",
+    "sinonimos": [
+      "gostaria"
+    ]
+  },
+  {
+    "palavra": "acabado",
+    "sinonimos": [
+      "pronto"
+    ]
+  },
+  {
+    "palavra": "convicção",
+    "sinonimos": [
+      "certeza"
+    ]
+  },
+  {
+    "palavra": "jamais",
+    "sinonimos": [
+      "nunca"
+    ]
+  },
+  {
+    "palavra": "instante",
+    "sinonimos": [
+      "momento"
+    ]
+  },
+  {
+    "palavra": "ponderar",
+    "sinonimos": [
+      "pensar"
+    ]
+  },
+  {
+    "palavra": "considerar",
+    "sinonimos": [
+      "pensar"
+    ]
+  },
+  {
+    "palavra": "refletir",
+    "sinonimos": [
+      "pensar"
+    ]
+  },
+  {
+    "palavra": "por",
+    "sinonimos": [
+      "pela"
+    ]
+  },
+  {
+    "palavra": "consegue",
+    "sinonimos": [
+      "pode"
+    ]
+  },
+  {
+    "palavra": "produzir",
+    "sinonimos": [
+      "fazer"
+    ]
+  },
+  {
+    "palavra": "executar",
+    "sinonimos": [
+      "fazer"
+    ]
+  },
+  {
+    "palavra": "igualmente",
+    "sinonimos": [
+      "assim"
+    ]
+  },
+  {
+    "palavra": "portanto",
+    "sinonimos": [
+      "assim"
+    ]
+  },
+  {
+    "palavra": "possuir",
+    "sinonimos": [
+      "ter"
+    ]
+  },
+  {
+    "palavra": "dialogando",
+    "sinonimos": [
+      "falando"
+    ]
+  },
+  {
+    "palavra": "consigo",
+    "sinonimos": [
+      "posso"
+    ]
+  },
+  {
+    "palavra": "possivelmente",
+    "sinonimos": [
+      "talvez"
+    ]
+  },
+  {
+    "palavra": "provavelmente",
+    "sinonimos": [
+      "talvez"
+    ]
+  },
+  {
+    "palavra": "compensar",
+    "sinonimos": [
+      "retribuir"
+    ]
+  }
+  ]}

@@ -1,0 +1,75 @@
+package com.JCODE.view;
+
+import com.JCODE.controller.ControleFace;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
+public class Face extends JFrame {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JTextField textFieldKairaNome;
+
+	/**
+	 * Create the frame.
+	 * @param nome 
+	 */
+	public Face(String nome) {
+		setTitle("L.O.L.I");
+		setResizable(false);
+		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 580, 580);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		textFieldKairaNome = new JTextField(nome +":");
+		textFieldKairaNome.setEnabled(false);
+		textFieldKairaNome.setBounds(10, 11, 86, 20);
+		contentPane.add(textFieldKairaNome);
+		textFieldKairaNome.setColumns(10);
+		
+		JTextArea textAreaKaira = new JTextArea();
+		textAreaKaira.setLineWrap(true);
+		textAreaKaira.setEditable(false);
+		textAreaKaira.setBounds(10, 42, 554, 255);
+		contentPane.add(textAreaKaira);
+		
+		JTextArea textAreaUsuario = new JTextArea();
+		textAreaUsuario.setWrapStyleWord(true);
+		textAreaUsuario.setLineWrap(true);
+		textAreaUsuario.setBounds(10, 317, 554, 187);
+		contentPane.add(textAreaUsuario);
+		
+		
+		
+		JButton btnEnviar = new JButton("Enviar");
+		btnEnviar.setBounds(10, 515, 106, 25);
+		contentPane.add(btnEnviar);
+
+		JButton btnSinalizar = new JButton("!");
+		btnSinalizar.setBounds(134, 10, 44, 23);
+		contentPane.add(btnSinalizar);
+		
+		ControleFace contface = new ControleFace(textAreaKaira, textAreaUsuario, btnSinalizar);
+		
+		btnEnviar.addActionListener(contface);
+		
+		textAreaUsuario.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(java.awt.event.KeyEvent evt) {
+				if (evt.getKeyCode()== KeyEvent.VK_ENTER) {
+					btnEnviar.doClick();
+				}
+			}
+		});
+	}
+}
