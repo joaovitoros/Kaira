@@ -197,4 +197,12 @@ public class ControleResposta {
 
 	}
 
+	public static String fraseExata(String entradaNormalizada) {
+		if (falasCache == null) carregaCache();
+		return falasCache.getFalas().stream()
+				.filter(f -> entradaNormalizada.equalsIgnoreCase(f.getFrase()))
+				.map(Resposta::getFrase)
+				.findFirst().orElse(null);
+	}
+
 }

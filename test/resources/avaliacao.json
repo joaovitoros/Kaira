@@ -1,0 +1,20 @@
+{
+  "_doc": "Dataset de avaliacao do KAIRA (Tarefa #3). Roda com CWD na raiz do projeto. Dois tiers: (1) fraseEsperada != null = caso de REGRESSAO, tem que casar hoje; (2) fraseEsperada = null + alvoFase1 = GAP medido, nao resolve hoje e e o alvo do classificador da Fase 1.",
+  "casos": [
+    { "entrada": "oi", "fraseEsperada": "oi", "nota": "cumprimento simples" },
+    { "entrada": "ola", "fraseEsperada": "ola", "nota": "cumprimento simples" },
+    { "entrada": "Você é legal?", "fraseEsperada": "voce e legal", "nota": "input acentuado casa c/ chave normalizada (regressao do Normalizador)" },
+    { "entrada": "Quem é você?", "fraseEsperada": "quem e voce", "nota": "idem - chave acentuada na base" },
+    { "entrada": "Você gosta de música?", "fraseEsperada": "voce gosta de musica", "nota": "acento em 2 palavras" },
+    { "entrada": "onde você está?", "fraseEsperada": "onde voce esta", "nota": "acento + assunto 'localizacao'" },
+    { "entrada": "boa noite", "fraseEsperada": "boa noite", "nota": "despedida" },
+    { "entrada": "tchau", "fraseEsperada": "tchau", "nota": "despedida" },
+    { "entrada": "tudo bem", "fraseEsperada": "tudo bem", "nota": "status" },
+    { "entrada": "qual a sua cor preferida", "fraseEsperada": "qual a sua cor preferida", "nota": "frase longa exata" },
+
+    { "entrada": "e ai beleza", "fraseEsperada": null, "alvoFase1": "oi", "nota": "parafrase de cumprimento - base so tem 'oi'/'ola'/'eai'" },
+    { "entrada": "como vc está", "fraseEsperada": null, "alvoFase1": "como voce esta", "nota": "abreviacao 'vc' - classificador tem que generalizar" },
+    { "entrada": "qual seu jogo favorito", "fraseEsperada": null, "alvoFase1": "qual seu jogo favorito do Mario", "nota": "base so tem as variantes 'do Mario'/'do Sonic'" },
+    { "entrada": "bom dia", "fraseEsperada": null, "alvoFase1": "bom dia como voce esta", "nota": "base so tem a frase longa" }
+  ]
+}
