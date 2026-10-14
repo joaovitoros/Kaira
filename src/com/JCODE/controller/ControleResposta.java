@@ -187,10 +187,9 @@ public class ControleResposta {
 
 	public static String fraseExata(String entradaNormalizada) {
 		if (intencoesCache == null) carregaCache();
-		return intencoesCache.getIntencoes().stream()
-				.filter(i -> i.getExemplos().stream().anyMatch(e -> entradaNormalizada.equalsIgnoreCase(e.getTexto())))
-				.map(txt -> txt.getExemplos().stream().filter(e -> entradaNormalizada.equalsIgnoreCase(e.getTexto()))
-						.findFirst().get().getTexto())
+		return intencoesCache.getIntencoes().stream().flatMap(i -> i.getExemplos().stream())
+				.map(Exemplo::getTexto)
+				.filter(texto -> texto.equalsIgnoreCase(entradaNormalizada))
 				.findFirst().orElse(null);
 	}
 
