@@ -37,21 +37,4 @@ public class ControleCorrecao {
 
     }
 
-    public static String procuraSinonimo(String frase) {
-        String novafrase = "", compara;
-        List<String> fraseCorridaList = new ArrayList<>();
-        String[] fraseseparada = frase.split(" ");
-        for (int i = 0; i < fraseseparada.length; i++) {
-            compara = fraseseparada[i];
-            fraseCorridaList.add(ControleSinonimo.procuraSinonimo(compara));
-        }
-
-        for(String palavra: fraseCorridaList){
-            novafrase = novafrase+" "+palavra;
-        }
-
-        System.out.println("Resultado busca de sinonimos: "+novafrase);
-
-        return ControleResposta.lerResposta(novafrase.trim());
-    }
 }

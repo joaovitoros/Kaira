@@ -24,11 +24,7 @@ public class FormulaResposta {
             if(respostaVariavel==null){
                 respostaVariavel = ControleCorrecao.corrigirFrases(falaUsuario);
             }
-
-            if(respostaVariavel==null){
-                respostaVariavel = ControleCorrecao.procuraSinonimo(falaUsuario);
-            }
-
+            
             criacaoLeituraRespostas(falaUsuario);
         }
 

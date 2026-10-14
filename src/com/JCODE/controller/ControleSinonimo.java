@@ -1,29 +1,27 @@
 package com.JCODE.controller;
 
-import com.JCODE.domain.Sinonimo;
-import com.JCODE.domain.Sinonimos;
+import com.JCODE.domain.GruposSinonimos;
 import com.JCODE.util.Caminhos;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
 
 public class ControleSinonimo {
 
     static ObjectMapper objectMapper;
 
-    static List<Sinonimo> sinonimosCache;
+    private static Map<String, Set<String>> indice;
 
-    private static Sinonimos buscaArquivoSinonimo(){
+    private static GruposSinonimos buscaArquivoSinonimo(){
 
         try {
-            FileInputStream fileInputStream = new FileInputStream(Caminhos.recurso("sinonimos.json").toFile());
+            FileInputStream fileInputStream = new FileInputStream(Caminhos.recurso("grupos_sinonimos.json").toFile());
 
             InputStreamReader reader = new InputStreamReader(fileInputStream, StandardCharsets.UTF_8);
 
-            return objectMapper.readValue(reader, Sinonimos.class);
+            return objectMapper.readValue(reader, GruposSinonimos.class);
         }catch (Exception e){
             if(e instanceof FileNotFoundException)
 
@@ -38,41 +36,23 @@ public class ControleSinonimo {
         if (objectMapper == null)
             objectMapper = new ObjectMapper();
 
-        sinonimosCache = buscaArquivoSinonimo().getSinonimos();
-    }
+        indice = new HashMap<>();
 
-    public static String procuraSinonimo(String palavra){
-
-        String[] retorno = new String[1];
-
-        sinonimosCache.stream().filter(sinonimo -> sinonimo.getPalavra().equalsIgnoreCase(palavra))
-                .findFirst().ifPresentOrElse(sinonimo -> {
-            retorno[0] = escolheSinonimo(sinonimo.getSinonimos());
-        }, () ->{ retorno[0] = palavra;
-        });
-
-        if(retorno[0].equalsIgnoreCase(palavra)) {
-            String palavraCorrigida = ControlePalavra.correcaoPalavra(palavra);
-
-            sinonimosCache.stream().filter(sinonimo -> sinonimo.getPalavra().equalsIgnoreCase(palavraCorrigida))
-                    .findFirst().ifPresent(sinonimo ->
-                retorno[0] = escolheSinonimo(sinonimo.getSinonimos()));
+        for(List<String> sinonimos: Objects.requireNonNull(buscaArquivoSinonimo()).getGrupos()){
+            for(String palavra: sinonimos){
+                indice.computeIfAbsent(palavra, k -> new HashSet<>()).addAll(sinonimos);
+            }
         }
-
-        return retorno[0];
-
     }
 
-    private static String escolheSinonimo(List<String> sinonimos){
+    public static Boolean mesmaPalavra(String a, String b){
 
-        if (sinonimos.isEmpty())
-            return null;
+        if(indice == null)
+            return a.equalsIgnoreCase(b);
 
-        int qtdSinonimos = sinonimos.size();
+        Set<String> vizinhos = indice.getOrDefault(a.toLowerCase(), Set.of());
 
-        int escolha = (int) (Math.random() * (qtdSinonimos));
-
-        return sinonimos.get(escolha);
+        return a.equalsIgnoreCase(b) || vizinhos.contains(b.toLowerCase());
     }
 
 }

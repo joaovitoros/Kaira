@@ -248,7 +248,16 @@ public class ControleResposta {
 		return resposta;
 	}
 
+
 	public static Intencao melhorIntencao(String entradaNormalizada){
+		if(intencoesCache == null)
+			carregaCache();
+
+		return melhorIntencao(intencoesCache, entradaNormalizada);
+
+	}
+
+	public static Intencao melhorIntencao(Intencoes raiz, String entradaNormalizada){
 		Set<String> palavrasEntrada = Arrays.stream(entradaNormalizada.trim().split("\\s+"))
 				.filter(t -> !t.isEmpty()).collect(Collectors.toSet());
 
@@ -259,11 +268,12 @@ public class ControleResposta {
 		String melhorFraseIntencao = null;
 		double melhorScore = 0;
 
-		for(Intencao intencao: intencoesCache.getIntencoes()){
+		for(Intencao intencao: raiz.getIntencoes()){
 
 			for(Exemplo frase: intencao.getExemplos()) {
 				Set<String> palavraFrase = new HashSet<>(Arrays.asList(Normalizador.texto(frase.getTexto()).split(" ")));
-				long intersecao = palavrasEntrada.stream().filter((palavraFrase::contains)).count();
+				long intersecao = palavrasEntrada.stream()
+						.filter(e -> palavraFrase.stream().anyMatch(f -> ControleSinonimo.mesmaPalavra(e,f))).count();
 				double score = (double) intersecao / palavrasEntrada.size();
 				if (score >= LIMIAR) {
 					if (score > melhorScore) {
@@ -271,8 +281,10 @@ public class ControleResposta {
 						melhorFraseIntencao = frase.getTexto();
 						melhorIntencao = intencao;
 					} else if (score == melhorScore) {
-						long restoAnterior = Arrays.stream(melhorFraseIntencao.split(" ")).filter(Predicate.not(palavrasEntrada::contains)).count();
-						long resto = palavraFrase.stream().filter(Predicate.not(palavrasEntrada::contains)).count();
+						long restoAnterior = Arrays.stream(melhorFraseIntencao.split(" "))
+								.filter(f -> !palavrasEntrada.stream().anyMatch(e -> ControleSinonimo.mesmaPalavra(e,f))).count();
+						long resto = palavraFrase.stream()
+								.filter(f -> !palavrasEntrada.stream().anyMatch(e -> ControleSinonimo.mesmaPalavra(e,f))).count();
 
 						if (resto < restoAnterior) {
 							melhorScore = score;
