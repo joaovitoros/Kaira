@@ -9,11 +9,15 @@ import com.JCODE.domain.Exemplo;
 import com.JCODE.domain.Intencao;
 import com.JCODE.domain.RespostaIntencao;
 import com.JCODE.util.Normalizador;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Teste de INTEGRACAO do carregamento do cache (Tarefa #7, migração p/
@@ -50,6 +54,13 @@ public class ControleRespostaCarregaCacheTest {
 				.orElseThrow(() -> new AssertionError("intencao '" + nome + "' nao encontrada no cache"));
 	}
 
+	/** Le o intencoes.json curado direto do disco (sem passar pelo cache). */
+	private JsonNode arquivoCurado() throws Exception {
+		byte[] bytes = java.nio.file.Files.readAllBytes(
+				java.nio.file.Paths.get("KAIRA", "resources", "intencoes.json"));
+		return new ObjectMapper().readTree(bytes);
+	}
+
 	/** Carga básica: o arquivo tem que ter virado objetos de verdade. */
 	@Test
 	public void cacheCarregadoNaoVazio() {
@@ -58,21 +69,46 @@ public class ControleRespostaCarregaCacheTest {
 	}
 
 	/**
-	 * A CHAVE de match (Exemplo.texto) deve chegar normalizada - e normalizar
-	 * de novo não muda nada (idempotente). É o equivalente, no modelo novo,
-	 * do fraseEhNormalizadaAoCarregar da Tarefa #2.
+	 * A CHAVE de match (Exemplo.texto) deve chegar com o TEXTO ORIGINAL do
+	 * arquivo - sem ser normalizado na carga (Tarefa #8, issue #8).
+	 *
+	 * O intencoes.json curado tem exemplos acentuados ("Bom falar com você").
+	 * Se o carregaCache mutasse o texto no lugar (toLowerCase + sem acento),
+	 * este teste falharia: o acento sumiria do cache. Guardar o original e o
+	 * que impede a gravacao do aprendizado de degradar o arquivo curado em
+	 * minusculo/sem acento - o bug da Tarefa #2 revivido na gravacao.
+	 *
+	 * A comparacao (fraseExata/melhorIntencao) normaliza NA HORA; ver
+	 * ControleRespostaFraseExataTest pra garantir que o match continua casando.
 	 */
 	@Test
-	public void exemplosChegamNormalizados() {
-		for (Intencao i : intencoes()) {
-			for (Exemplo e : i.getExemplos()) {
-				String texto = e.getTexto();
-				assertNotNull("Exemplo.texto nao pode ser null", texto);
-				assertEquals(
-						"Exemplo.texto devia estar normalizado: " + texto,
-						Normalizador.texto(texto), texto);
+	public void exemplosGuardamTextoOriginal() throws Exception {
+		// Le o arquivo curado direto e confere que NENHUM Exemplo foi alterado
+		// pela carga. Se a normalizacao da Tarefa #2 ainda rodasse aqui (toLowerCase
+		// + sem acento no lugar), exemplos com caixa/algo diferente da forma
+		// normalizada seriam mutados - e este teste pegaria.
+		//
+		// A propriedade: para todo Exemplo, o texto carregado deve ser igual ao
+		// texto gravado no arquivo. O carregaCache nao pode reescrever nada.
+		JsonNode raiz = arquivoCurado();
+		Set<String> textosNoArquivo = new HashSet<>();
+		for (JsonNode intento : raiz.get("intencoes")) {
+			for (JsonNode ex : intento.get("exemplos")) {
+				textosNoArquivo.add(ex.get("texto").asText());
 			}
 		}
+		assertFalse("arquivo curado sem exemplos (fixture quebrada)", textosNoArquivo.isEmpty());
+
+		Set<String> textosNoCache = new HashSet<>();
+		for (Intencao i : intencoes()) {
+			for (Exemplo e : i.getExemplos()) {
+				textosNoCache.add(e.getTexto());
+			}
+		}
+
+		assertEquals(
+				"a carga alterou os exemplos (normalizou no lugar - remova a mutacao do carregaCache)",
+				textosNoArquivo, textosNoCache);
 	}
 
 	/** O texto EXIBIDO (RespostaIntencao.texto) deve manter acento e caixa alta. */

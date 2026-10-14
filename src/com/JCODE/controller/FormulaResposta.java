@@ -67,7 +67,7 @@ public class FormulaResposta {
     }
 
     public static void manterResposta(String resposta){
-        ControleResposta.chamadaFrase(bufferFrases, "Auto-Aprendizado", resposta);
+        ControleResposta.chamadaFrase(bufferFrases, resposta);
         ControleFace.recebeResp(resposta);
     }
 

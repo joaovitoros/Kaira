@@ -61,9 +61,6 @@ public class ControleResposta {
 
 			intencoesCache = objectMapper.readValue(reader, Intencoes.class);
 
-			intencoesCache.getIntencoes().forEach(it -> it.getExemplos().forEach(exemplo -> {
-				exemplo.setTexto(Normalizador.texto(exemplo.getTexto()));
-			}));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -161,24 +158,21 @@ public class ControleResposta {
 		return respostaEscolhida;
 	}
 
-	public static void chamadaFrase(String frase, String tipo, String resposta) {
+	public static void chamadaFrase(String frase, String resposta) {
 
-		List<String> reps = new ArrayList<>();
+		if (intencoesCache == null)
+			carregaCache();
 
-		reps.add(resposta);
+		if (objectMapper == null)
+			objectMapper = new ObjectMapper();
 
-		if (falasCache != null) {
-			if (objectMapper == null)
-				objectMapper = new ObjectMapper();
+		ensinaEm(intencoesCache, frase, resposta);
 
-			falasCache.getFalas().add(new Resposta(frase, reps, tipo));
+		try (FileWriter fileWriter = new FileWriter(Caminhos.recurso("intencoes.json").toFile(), StandardCharsets.UTF_8)) {
 
-			try (FileWriter fileWriter = new FileWriter(Caminhos.recurso("respostas.json").toFile(), StandardCharsets.UTF_8)) {
-
-				fileWriter.write(objectMapper.writeValueAsString(falasCache));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			fileWriter.write(objectMapper.writeValueAsString(intencoesCache));
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
 		ControlePalavra.gravaPalavra(frase);
@@ -187,9 +181,10 @@ public class ControleResposta {
 
 	public static String fraseExata(String entradaNormalizada) {
 		if (intencoesCache == null) carregaCache();
-		return intencoesCache.getIntencoes().stream().flatMap(i -> i.getExemplos().stream())
+		return intencoesCache.getIntencoes().stream()
+				.flatMap(i -> i.getExemplos().stream())
 				.map(Exemplo::getTexto)
-				.filter(texto -> texto.equalsIgnoreCase(entradaNormalizada))
+				.filter(texto -> Normalizador.texto(texto).equalsIgnoreCase(entradaNormalizada))
 				.findFirst().orElse(null);
 	}
 
@@ -212,7 +207,7 @@ public class ControleResposta {
 		for(Intencao intencao: intencoesCache.getIntencoes()){
 
 			for(Exemplo frase: intencao.getExemplos()) {
-				Set<String> palavraFrase = new HashSet<>(Arrays.asList(frase.getTexto().split(" ")));
+				Set<String> palavraFrase = new HashSet<>(Arrays.asList(Normalizador.texto(frase.getTexto()).split(" ")));
 				long intersecao = palavrasEntrada.stream().filter((palavraFrase::contains)).count();
 				double score = (double) intersecao / palavrasEntrada.size();
 				if (score >= LIMIAR) {
@@ -244,11 +239,11 @@ public class ControleResposta {
 		Intencao resposta = null;
 
 		resposta = intencoesCache.getIntencoes().stream().filter(intencao -> intencao.getExemplos().stream()
-				.anyMatch(it -> it.getTexto().equalsIgnoreCase(entradaNormalizada))).findFirst().orElse(null);
+				.anyMatch(it -> Normalizador.texto(it.getTexto()).equalsIgnoreCase(entradaNormalizada))).findFirst().orElse(null);
 
 		if(resposta==null)
 			resposta = intencoesCache.getIntencoes().stream().filter(intencao -> intencao.getExemplos().stream()
-					.anyMatch(it -> it.getTexto().equalsIgnoreCase(melhorFrasesPorSimilaridade(entradaNormalizada)))).findFirst().orElse(null);
+					.anyMatch(it -> Normalizador.texto(it.getTexto()).equalsIgnoreCase(melhorFrasesPorSimilaridade(entradaNormalizada)))).findFirst().orElse(null);
 
 		return resposta;
 	}
@@ -267,7 +262,7 @@ public class ControleResposta {
 		for(Intencao intencao: intencoesCache.getIntencoes()){
 
 			for(Exemplo frase: intencao.getExemplos()) {
-				Set<String> palavraFrase = new HashSet<>(Arrays.asList(frase.getTexto().split(" ")));
+				Set<String> palavraFrase = new HashSet<>(Arrays.asList(Normalizador.texto(frase.getTexto()).split(" ")));
 				long intersecao = palavrasEntrada.stream().filter((palavraFrase::contains)).count();
 				double score = (double) intersecao / palavrasEntrada.size();
 				if (score >= LIMIAR) {
@@ -298,6 +293,21 @@ public class ControleResposta {
 			carregaCache();
 
 		return intencoesCache.getIntencoes();
+
+	}
+
+	public static void ensinaEm(Intencoes raiz, String frase, String resposta){
+
+		Intencao intencao = raiz.getIntencoes().stream()
+				.filter(i -> i.getIntento().equalsIgnoreCase("auto_aprendizado")).findFirst().orElse(null);
+
+		if(intencao==null) {
+			intencao = new Intencao("auto_aprendizado", new ArrayList<>(), null, new ArrayList<>(),null,null);
+			raiz.getIntencoes().add(intencao);
+		}
+
+		intencao.getExemplos().add(new Exemplo(frase, "autor"));
+		intencao.getRespostas().add(new RespostaIntencao(resposta, "autor",0,10));
 
 	}
 
