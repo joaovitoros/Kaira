@@ -7,14 +7,18 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Testa a consulta pura fraseExata (Tarefa #3).
+ * Testa a consulta pura fraseExata (Tarefa #3, adaptado na #7).
  *
- * fraseExata devolve a frase-base com que a entrada NORMALIZADA casou, ou
- * null. Ela existe porque lerResposta/decifrar NAO servem pra avaliar:
- * chamam comandosResposta (System.exit no desligamento, Math.random,
- * ControleKaira) e ControleFace (UI). fraseExata e so o filtro, nada mais.
+ * fraseExata devolve o EXEMPLO com que a entrada NORMALIZADA casou, ou null.
+ * No modelo antigo ela casava contra Resposta.frase (respostas.json); desde a
+ * Tarefa #7 ela casa contra Exemplo.texto (intencoes.json) - mesmo papel,
+ * fonte nova.
  *
- * Roda com CWD na raiz do projeto (carrega o KAIRA/resources/respostas.json).
+ * Ela existe porque lerResposta/decifrar NAO servem pra avaliar: chamam
+ * comandosResposta (System.exit no desligamento, Math.random, ControleKaira)
+ * e ControleFace (UI). fraseExata e so o filtro, nada mais.
+ *
+ * Roda com CWD na raiz do projeto (carrega o KAIRA/resources/intencoes.json).
  */
 public class ControleRespostaFraseExataTest {
 
@@ -36,7 +40,7 @@ public class ControleRespostaFraseExataTest {
 
 	@Test
 	public void entradaNaoRegistradaDevolveNull() {
-		// parafrase: nao esta na base, entao null (gap p/ o classificador da Fase 1)
+		// parafrase: nao esta como exemplo, entao null (cai na cobertura da Fase 1)
 		assertNull(ControleResposta.fraseExata("e ai beleza"));
 	}
 

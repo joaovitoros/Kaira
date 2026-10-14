@@ -1,10 +1,13 @@
 package com.JCODE.controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import com.JCODE.domain.Resposta;
+import com.JCODE.domain.Exemplo;
+import com.JCODE.domain.Intencao;
+import com.JCODE.domain.RespostaIntencao;
 import com.JCODE.util.Normalizador;
 
 import org.junit.Before;
@@ -13,22 +16,21 @@ import org.junit.Test;
 import java.util.List;
 
 /**
- * Teste de INTEGRACAO do carregamento do cache (G3 / Tarefa #2).
+ * Teste de INTEGRACAO do carregamento do cache (Tarefa #7, migração p/
+ * intencoes.json, §5.1).
  *
- * O NormalizadorTest cobre o Normalizador isolado (unidade). Este cobre o
- * WIRING: a hora em que carregaCache() aplica o normalizador nos campos
- * CERTOS.
+ * Substitui o CarregaCacheTest da era respostas.json. O NormalizadorTest
+ * cobre o Normalizador isolado (unidade); este cobre o WIRING: a hora em que
+ * carregaCache() lê intencoes.json e aplica o normalizador nos campos CERTOS.
  *
- * Pegou um bug real da Tarefa #2: a primeira versao normalizava
- * `respostas` (texto exibido) em vez de `frase` (chave de match). Unidade
- * 13/13 verde, app com match quebrado + resposta sem acento. Bug de
- * integracao so aparece aqui.
+ * A lição que sobrevive da Tarefa #2 e vale de novo aqui: normalizar a chave
+ * DE MATCH (Exemplo.texto) e o que garante o acerto; normalizar o que é
+ * EXIBIDO (RespostaIntencao.texto) é o que quebra. Bug desse tipo passa
+ * ilesos em teste de unidade e só aparece na integração - por isso este
+ * arquivo existe.
  *
- * Roda contra o KAIRA/resources/respostas.json REAL (caminho relativo),
+ * Roda contra o KAIRA/resources/intencoes.json REAL (caminho relativo),
  * entao o CWD tem que ser a raiz do projeto.
- *
- * Nao usar frases de assunto "comando de desligamento" aqui: comandosResposta()
- * chama System.exit(0) e derruba o JVM do teste.
  */
 public class ControleRespostaCarregaCacheTest {
 
@@ -37,41 +39,80 @@ public class ControleRespostaCarregaCacheTest {
 		ControleResposta.carregaCache();
 	}
 
-	private List<Resposta> falas() {
-		return ControleResposta.falasCache.getFalas();
+	private List<Intencao> intencoes() {
+		return ControleResposta.getIntencoes();
 	}
 
-	/** A chave de match deve chegar normalizada (e ja normalizada = idempotente). */
+	private Intencao intencao(String nome) {
+		return intencoes().stream()
+				.filter(i -> nome.equals(i.getIntento()))
+				.findFirst()
+				.orElseThrow(() -> new AssertionError("intencao '" + nome + "' nao encontrada no cache"));
+	}
+
+	/** Carga básica: o arquivo tem que ter virado objetos de verdade. */
 	@Test
-	public void fraseEhNormalizadaAoCarregar() {
-		for (Resposta r : falas()) {
-			String frase = r.getFrase();
-			assertNotNull("frase nao pode ser null", frase);
-			assertEquals(
-					"frase devia estar em forma normalizada: " + frase,
-					Normalizador.texto(frase), frase);
+	public void cacheCarregadoNaoVazio() {
+		assertNotNull("getIntencoes() devia devolver a lista carregada", intencoes());
+		assertFalse("getIntencoes() devia ter itens", intencoes().isEmpty());
+	}
+
+	/**
+	 * A CHAVE de match (Exemplo.texto) deve chegar normalizada - e normalizar
+	 * de novo não muda nada (idempotente). É o equivalente, no modelo novo,
+	 * do fraseEhNormalizadaAoCarregar da Tarefa #2.
+	 */
+	@Test
+	public void exemplosChegamNormalizados() {
+		for (Intencao i : intencoes()) {
+			for (Exemplo e : i.getExemplos()) {
+				String texto = e.getTexto();
+				assertNotNull("Exemplo.texto nao pode ser null", texto);
+				assertEquals(
+						"Exemplo.texto devia estar normalizado: " + texto,
+						Normalizador.texto(texto), texto);
+			}
 		}
 	}
 
-	/** O texto EXIBIDO deve manter acento e caixa alta. */
+	/** O texto EXIBIDO (RespostaIntencao.texto) deve manter acento e caixa alta. */
 	@Test
 	public void respostasExibidasMantemAcento() {
-		Resposta oi = falas().stream()
-				.filter(r -> "oi".equals(r.getFrase()))
-				.findFirst()
-				.orElseThrow(() -> new AssertionError("frase 'oi' nao encontrada no cache"));
+		Intencao cumprimentar = intencao("cumprimentar");
+
+		boolean temAcentuada = cumprimentar.getRespostas().stream()
+				.anyMatch(r -> "Bom falar com você".equals(r.getTexto()));
 
 		assertTrue(
-				"resposta exibida perdeu o acento: " + oi.getRespostas(),
-				oi.getRespostas().contains("Bom falar com você"));
+				"resposta exibida perdeu o acento (normalizaram o campo errado)",
+				temAcentuada);
 	}
 
-	/** O assunto deve ficar intacto (comandosResposta compara com texto acentuado). */
+	/** Origem tem que sobreviver à carga (é ela que garante a atribuição de licença). */
 	@Test
-	public void assuntoFicaIntacto() {
-		boolean temTecnico = falas().stream()
-				.anyMatch(r -> "informações técnicas".equals(r.getAssunto()));
-		assertTrue("assunto 'informações técnicas' devia sobreviver a normalizacao", temTecnico);
+	public void exemplosCarregamOrigem() {
+		for (Intencao i : intencoes()) {
+			for (Exemplo e : i.getExemplos()) {
+				assertNotNull("Exemplo.origem nao pode ser null (intencao " + i.getIntento() + ")", e.getOrigem());
+				assertFalse("Exemplo.origem nao pode ser vazia", e.getOrigem().trim().isEmpty());
+			}
+		}
+	}
+
+	/** Cada pool de respostas deve ter origem e faixa de humor válida (0..10). */
+	@Test
+	public void respostasDoPoolCarregamOrigemEFaixaDeHumor() {
+		for (Intencao i : intencoes()) {
+			for (RespostaIntencao r : i.getRespostas()) {
+				assertNotNull("RespostaIntencao.origem nao pode ser null (intencao " + i.getIntento() + ")", r.getOrigem());
+				assertTrue("humorMin deve ficar em 0..10, veio " + r.getHumorMin(),
+						r.getHumorMin() >= 0 && r.getHumorMin() <= 10);
+				assertTrue("humorMax deve ficar em 0..10, veio " + r.getHumorMax(),
+						r.getHumorMax() >= 0 && r.getHumorMax() <= 10);
+				assertTrue("humorMin (" + r.getHumorMin() + ") nao pode exceder humorMax (" + r.getHumorMax() + ")",
+						r.getHumorMin() <= r.getHumorMax());
+			}
+		}
 	}
 
 	/** Cenario ponta a ponta: digitado com acento e pontuacao, casa com a base. */

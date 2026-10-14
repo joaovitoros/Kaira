@@ -209,7 +209,7 @@ Todos os controllers usam `"KAIRA/resources/..."` relativo ao diretório de exec
 
 ### 5.1 Mudança do modelo de dados
 
-As 250 frases atuais provavelmente se agrupam em **~40–60 intenções reais**. Reestruturar de:
+As 250 frases atuais provavelmente se agrupam em **~40–60 intenções reais**. O campo `assunto` de hoje já é um esboço disso — mas está no nível da frase (não da intenção) e é metadado da **resposta** (serve só pra `comandosResposta` anexar humor/versão/`exit` via string mágica). A mudança formaliza `assunto` como **intenção**: um rótulo da **entrada** ("o que o usuário quis dizer") que leva a um pool de respostas, com `acoes` explícito no lugar da string mágica. Reestruturar de:
 
 ```json
 {"frase": "oi", "respostas": ["Como vai?"], "assunto": "cumprimento"}   // modelo atual
@@ -253,6 +253,8 @@ Detalhes práticos:
 - [ ] Definir limiar de confiança (ex.: ≥ 0,5 → acionar intenção; entre 0,3 e 0,5 → responder com a melhor aposta + "Foi isso que você quis dizer?"; < 0,3 → fallback)
 - [ ] Empate entre intenções → desempatar pelo **contexto** da Fase 2 (tópico atual)
 
+**Limite da cobertura (por que a pré-análise da §5.7 existe):** o pareamento por exemplos casa a entrada com frases **já vistas**. Pra um tópico novo fora da base (ex.: "qual seu carro favorito?", nunca visto) a cobertura só pega o que tiver em comum com exemplos parecidos ("qual seu jogo favorito") e ainda assim precisa de uma resposta pro tópico novo — ver [§5.7](#57-pré-análise-frame--slot-tarefa-8).
+
 ### 5.3 Stemming PT-BR caseiro
 
 "gosto/gostei/gostar/gostosa" devem contar como a mesma palavra:
@@ -295,6 +297,18 @@ Matar o G2. Não trocar a palavra do usuário — em vez disso, duas palavras ca
 - [ ] Substituir `calculoPorcentagemPalavra` por **distância de Levenshtein** (código no [Apêndice B](#apêndice-b--exemplos-de-código)): distância 1–2 (dependendo do tamanho) → corrige
 - [ ] Corrigir `calculoPorcentagemFrase` para comparar **palavra por palavra** (nunca `contains` na frase inteira — G8)
 - [ ] A cascata de correção continua existindo, mas agora: normaliza → stemma → agrupa → classifica (muitos "erros" somem sozinhos com a pontuação)
+
+### 5.7 Pré-análise frame + slot (task #8)
+
+> **Escopo decidido:** fica pra **depois** da task #7 (migração pra `intencoes.json` + cobertura de exemplos). A #7 fecha os 2 gaps do eval; esta seção é o passo seguinte.
+
+Ideia do autor: antes de buscar na base, decompor a frase em **frame** (a estrutura/molde) e **slot** (o termo de conteúdo). Ex.: "qual seu **carro** favorito?" e "qual seu **jogo** favorito?" são o **mesmo frame** (`qual seu X favorito`); o slot muda (`carro` vs `jogo`). Como a KAIRA conhece o frame pelo jogo, ela sabe que é uma **pergunta de preferência** mesmo nunca tendo visto "carro".
+
+- [ ] **Marcadores são frase-modelo, não palavra solta**: `qual...favorito`, `voce gosta de`, `o que acha do`, `bom/boa dia/tarde/noite` (cumprimento de família). "qual/quando/como" isolado → PERGUNTA genérica é fraco (quase tudo é pergunta no banco)
+- [ ] **O mecanismo é o §5.4 (stopwords)**: remover `qual/seu/de/favorito` isola o conteúdo (`carro`). Esta seção é o §5.4 + §5.2 juntos, separando **frame** de **slot** em vez de só indexar palavra-chave
+- [ ] **Rodar ANTES, mas como SINAL — nunca como portão**: o frame é calculado logo de cara e entra como **peso/desempate** no ranking da cobertura, sem barrar a busca geral. Se o frame erra, a cobertura ainda roda plena e pode achar — nunca regride o que a #7 conquistou
+- [ ] **Fallback informado** (quase nunca há resposta pro slot novo): em vez do "Não sei como responder a isso" seco, dizer **"ainda não sei sobre {slot}"** (ex.: "ainda não sei sobre carro"). Evolui o fallback da [§7.3](#73-fallbacks-inteligentes)
+- [ ] O frame já calculado fica disponível pra **decidir o caminho** no futuro (contexto prévio)
 
 ### Critérios de aceite
 
@@ -380,6 +394,7 @@ Substituir o "Não sei como responder a isso" seco:
 
 - [ ] Classificou algo com confiança média → aposta + confirmação: *"Sobre {palavrasChave}, é isso? Ainda tô aprendendo — me responde essa: ..."*
 - [ ] Confiança baixa → honesto + curioso: *"Ainda não sei falar disso... me ensina? O que você quis dizer?"* → cai no modo ensino atual (que já existe e funciona!)
+- [ ] Com a pré-análise da [§5.7](#57-pré-análise-frame--slot-tarefa-8) (task #8): quando o **frame** foi reconhecido mas o **slot** é novo, responder "ainda não sei sobre {slot}" em vez do genérico
 - [ ] **Modo ensino turbinado**: ao ensinar, perguntar em qual intenção encaixa (ou criar nova) — em vez de gravar frase solta com assunto "Auto-Aprendizado". O dado coletado passa a alimentar o classificador
 
 ### Critérios de aceite
