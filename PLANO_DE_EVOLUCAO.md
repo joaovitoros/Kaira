@@ -227,6 +227,8 @@ para o modelo **intenção → exemplos → respostas** (esquema completo no [Ap
 }
 ```
 
+No arquivo final, cada item de `exemplos` e `respostas` é um objeto `{texto, origem}` para rastrear a proveniência de cada frase (detalhe no [Apêndice A](#apêndice-a--esquema-json-proposto)).
+
 **Por quê:** 5–10 variações por intenção multiplicam a cobertura efetiva sem escrever respostas novas. "e aí", "salve", "opa" hoje seriam 3 frases extras para decorar; no novo modelo são só exemplos de custo ~zero.
 
 - [ ] Mapear as 250 frases atuais → intenções (agrupar por `assunto` + olhar as respostas parecidas)
@@ -516,29 +518,46 @@ Escrever por **categoria de intenção**, com checklist de cobertura. Mínimo pa
   "intencoes": [
     {
       "intento": "cumprimentar",
-      "exemplos": ["oi", "ola", "e ai", "bom dia", "oi tudo bem", "salve", "opa"],
+      "exemplos": [
+        {"texto": "oi", "origem": "respostas.json"},
+        {"texto": "ola", "origem": "respostas.json"},
+        {"texto": "e ai", "origem": "respostas.json"},
+        {"texto": "bom dia", "origem": "respostas.json"},
+        {"texto": "oi tudo bem", "origem": "respostas.json"},
+        {"texto": "salve", "origem": "autor"},
+        {"texto": "opa", "origem": "autor"}
+      ],
       "palavrasChave": ["oi", "ola", "salve", "opa", "bom dia"],
       "respostas": [
-        {"texto": "Oi! Como você está hoje?", "humorMin": 0, "humorMax": 10},
-        {"texto": "Oiê! Que bom te ver por aqui!", "humorMin": 7, "humorMax": 10},
-        {"texto": "oi.", "humorMin": 0, "humorMax": 3}
+        {"texto": "Oi! Como você está hoje?", "origem": "respostas.json", "humorMin": 0, "humorMax": 10},
+        {"texto": "Oiê! Que bom te ver por aqui!", "origem": "autor", "humorMin": 7, "humorMax": 10},
+        {"texto": "oi.", "origem": "respostas.json", "humorMin": 0, "humorMax": 3}
       ],
       "followups": ["E você, como está?", "Como foi seu dia?"],
       "acoes": []
     },
     {
       "intento": "informar_versao",
-      "exemplos": ["qual a sua versao", "versao atual", "que modelo voce e"],
+      "exemplos": [
+        {"texto": "qual a sua versao", "origem": "respostas.json"},
+        {"texto": "versao atual", "origem": "autor"},
+        {"texto": "que modelo voce e", "origem": "autor"}
+      ],
       "palavrasChave": ["versao", "modelo", "atual"],
-      "respostas": [{"texto": "Estou na versão {versao}!", "humorMin": 0, "humorMax": 10}],
+      "respostas": [{"texto": "Estou na versão {versao}!", "origem": "autor", "humorMin": 0, "humorMax": 10}],
       "followups": [],
       "acoes": ["MOSTRAR_VERSAO"]
     },
     {
       "intento": "elogio",
-      "exemplos": ["voce e legal", "gosto de voce", "voce e demais", "amo voce"],
+      "exemplos": [
+        {"texto": "voce e legal", "origem": "respostas.json"},
+        {"texto": "gosto de voce", "origem": "respostas.json"},
+        {"texto": "voce e demais", "origem": "respostas.json"},
+        {"texto": "amo voce", "origem": "autor"}
+      ],
       "palavrasChave": ["legal", "demais", "amo", "gosto de voce"],
-      "respostas": [{"texto": "Obrigada, {nome}! Isso me deixou feliz (o mais perto disso que consigo).", "humorMin": 4, "humorMax": 10}],
+      "respostas": [{"texto": "Obrigada, {nome}! Isso me deixou feliz (o mais perto disso que consigo).", "origem": "autor", "humorMin": 4, "humorMax": 10}],
       "followups": ["O que mais você gosta em mim?"],
       "acoes": ["HUMOR_MAIS_1"]
     }
@@ -548,6 +567,7 @@ Escrever por **categoria de intenção**, com checklist de cobertura. Mínimo pa
 
 Notas do esquema:
 
+- `origem` rastreia a proveniência de cada exemplo e resposta: `respostas.json` (original do projeto), nome do dataset + licença (ex.: `Tatoeba (CC BY 2.0 FR)`, `RichardSakaguchiMS/... (Apache-2.0)`) ou `autor` (frase escrita na curadoria). Além de depuração ("de onde veio essa frase?"), é o que garante a atribuição exigida pelas licenças — CC BY exige crédito item a item. `palavrasChave` e `followups` são derivados/escritos, não têm origem externa
 - `palavrasChave` pontuam mais que `exemplos` (podem nem existir em `exemplos`)
 - `humorMin/humorMax` filtram a resposta pela faixa de humor atual (Fase 3)
 - `acoes` substituem os `assuntos` mágicos atuais (`"comando de desligamento"` → `System.exit(0)` escondido em string): ação explícita, auditável, testável

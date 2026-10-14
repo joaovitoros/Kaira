@@ -1,12 +1,10 @@
-﻿Total: 986 frases em 36 intencoes
+﻿Total: 985 frases em 35 intencoes
 
 # Rascunho de intencoes - para validacao
 
-Gerado a partir de respostas.json (253 frases originais) + candidatas aceitas
-(cumprimentar/despedida/agradecimento) de dois datasets externos.
-
-Legenda de origem:
-- (orig) = frase que ja existe em respostas.json
+Agrupamento das frases do respostas.json + candidatas aceitas de dois datasets externos.
+Cada frase tem campo origem no JSON; aqui aparece como tag:
+- (orig) = ja existe em respostas.json
 - (ds)   = dataset Apache-2.0 (RichardSakaguchiMS/brazilian-customer-service-conversations)
 - (tat)  = Tatoeba (CC BY 2.0 FR)
 
@@ -633,101 +631,101 @@ Legenda de origem:
 - (tat) muitissimo obrigado pelo maravilhoso jantar de ontem
 
   respostas candidatas:
-  - de nada foi um prazer ajudar tenha um otimo dia
-  - de nada foi um prazer ajudar aguardo te falar amanha entao
-  - de nada tenha um otimo dia
-  - valeu
-  - obrigado novamente
-  - obrigado por isso
-  - obrigada por isso
-  - obrigado pelo almoco
-  - obrigado por perguntar
-  - obrigado pelo jantar
-  - obrigada pelo jantar
-  - obrigado por ligar
-  - obrigada por ligar
-  - obrigado por ajudar
-  - obrigado por nada
-  - obrigada pelo cha
-  - obrigado pelo cha
-  - obrigada pela dica
-  - obrigado pela dica
-  - obrigado pela espera
-  - obrigada pelo almoco
-  - obrigado por hoje
-  - obrigada por hoje
-  - obrigado pela cerveja
-  - obrigado pelo livro
-  - obrigada pelo livro
-  - obrigado pelo bolo
-  - obrigada pelo bolo
-  - obrigado pela comida
-  - obrigado pelo presente
-  - obrigado pela ajuda
-  - obrigada pela ajuda
-  - obrigado pela carona
-  - obrigada pela carona
-  - obrigado pela refeicao
-  - obrigado pela sopa
-  - obrigado por tentar
-  - obrigado desde ja
-  - obrigado meu amigo
-  - obrigado por escutar
-  - obrigado pela fruta
-  - obrigado pelas ideias
-  - obrigada pelas ideias
-  - obrigado pela pizza
-  - obrigada pela pizza
-  - obrigado por ontem
-  - obrigado a todos
-  - obrigada a todos
-  - obrigado por tudo
-  - obrigado pelo conselho
-  - obrigada pelo conselho
-  - obrigado pelo cafe
-  - obrigado pelo biscoito
-  - obrigado pelo convite
-  - obrigado a ambos
-  - obrigado a ambas
-  - obrigada a ambos
-  - obrigada a ambas
-  - obrigado por assistir
-  - obrigado por aparecer
-  - obrigado pelo comentario
-  - obrigada pelo comentario
-  - obrigado pelas flores
-  - obrigado pelo apoio
-  - obrigado pelas atualizacoes
-  - obrigado pelo aviso
-  - obrigado mesmo assim
-  - obrigado pelo retorno
-  - obrigada pelo retorno
-  - obrigado pelo sanduiche
-  - obrigado pelos comentarios
-  - obrigada pelos comentarios
-  - obrigado por cooperar
-  - obrigado pela visita
-  - obrigado por virem
-  - obrigada por virem
-  - obrigado pelo elogio
-  - obrigado pela correcao
-  - obrigada pela correcao
-  - obrigado pela sugestao
-  - obrigado de nada
-  - obrigado imagina
-  - obrigado pela explicacao
-  - obrigado pelas sugestoes
-  - obrigado pela compreensao
-  - obrigado por entender
-  - obrigado por esclarecer
-  - obrigado pelo incentivo
-  - obrigada pelo encorajamento
-  - obrigada disponha
-  - obrigado pelas correcoes
-  - obrigado pela recomendacao
-  - obrigada pela recomendacao
-  - obrigado pela introducao
-  - obrigado pelas bebidas
+  - (ds) de nada foi um prazer ajudar tenha um otimo dia
+  - (ds) de nada foi um prazer ajudar aguardo te falar amanha entao
+  - (ds) de nada tenha um otimo dia
+  - (tat) valeu
+  - (tat) obrigado novamente
+  - (tat) obrigado por isso
+  - (tat) obrigada por isso
+  - (tat) obrigado pelo almoco
+  - (tat) obrigado por perguntar
+  - (tat) obrigado pelo jantar
+  - (tat) obrigada pelo jantar
+  - (tat) obrigado por ligar
+  - (tat) obrigada por ligar
+  - (tat) obrigado por ajudar
+  - (tat) obrigado por nada
+  - (tat) obrigada pelo cha
+  - (tat) obrigado pelo cha
+  - (tat) obrigada pela dica
+  - (tat) obrigado pela dica
+  - (tat) obrigado pela espera
+  - (tat) obrigada pelo almoco
+  - (tat) obrigado por hoje
+  - (tat) obrigada por hoje
+  - (tat) obrigado pela cerveja
+  - (tat) obrigado pelo livro
+  - (tat) obrigada pelo livro
+  - (tat) obrigado pelo bolo
+  - (tat) obrigada pelo bolo
+  - (tat) obrigado pela comida
+  - (tat) obrigado pelo presente
+  - (tat) obrigado pela ajuda
+  - (tat) obrigada pela ajuda
+  - (tat) obrigado pela carona
+  - (tat) obrigada pela carona
+  - (tat) obrigado pela refeicao
+  - (tat) obrigado pela sopa
+  - (tat) obrigado por tentar
+  - (tat) obrigado desde ja
+  - (tat) obrigado meu amigo
+  - (tat) obrigado por escutar
+  - (tat) obrigado pela fruta
+  - (tat) obrigado pelas ideias
+  - (tat) obrigada pelas ideias
+  - (tat) obrigado pela pizza
+  - (tat) obrigada pela pizza
+  - (tat) obrigado por ontem
+  - (tat) obrigado a todos
+  - (tat) obrigada a todos
+  - (tat) obrigado por tudo
+  - (tat) obrigado pelo conselho
+  - (tat) obrigada pelo conselho
+  - (tat) obrigado pelo cafe
+  - (tat) obrigado pelo biscoito
+  - (tat) obrigado pelo convite
+  - (tat) obrigado a ambos
+  - (tat) obrigado a ambas
+  - (tat) obrigada a ambos
+  - (tat) obrigada a ambas
+  - (tat) obrigado por assistir
+  - (tat) obrigado por aparecer
+  - (tat) obrigado pelo comentario
+  - (tat) obrigada pelo comentario
+  - (tat) obrigado pelas flores
+  - (tat) obrigado pelo apoio
+  - (tat) obrigado pelas atualizacoes
+  - (tat) obrigado pelo aviso
+  - (tat) obrigado mesmo assim
+  - (tat) obrigado pelo retorno
+  - (tat) obrigada pelo retorno
+  - (tat) obrigado pelo sanduiche
+  - (tat) obrigado pelos comentarios
+  - (tat) obrigada pelos comentarios
+  - (tat) obrigado por cooperar
+  - (tat) obrigado pela visita
+  - (tat) obrigado por virem
+  - (tat) obrigada por virem
+  - (tat) obrigado pelo elogio
+  - (tat) obrigado pela correcao
+  - (tat) obrigada pela correcao
+  - (tat) obrigado pela sugestao
+  - (tat) obrigado de nada
+  - (tat) obrigado imagina
+  - (tat) obrigado pela explicacao
+  - (tat) obrigado pelas sugestoes
+  - (tat) obrigado pela compreensao
+  - (tat) obrigado por entender
+  - (tat) obrigado por esclarecer
+  - (tat) obrigado pelo incentivo
+  - (tat) obrigada pelo encorajamento
+  - (tat) obrigada disponha
+  - (tat) obrigado pelas correcoes
+  - (tat) obrigado pela recomendacao
+  - (tat) obrigada pela recomendacao
+  - (tat) obrigado pela introducao
+  - (tat) obrigado pelas bebidas
 
 ## despedida  (80 frases, 12 respostas candidatas)
 - (orig) tchau
@@ -812,18 +810,18 @@ Legenda de origem:
 - (tat) estarei fora da cidade ate a proxima segunda
 
   respostas candidatas:
-  - tchau ate logo
-  - tchau tenha um otimo dia
-  - tchau ate a proxima
-  - tchau tenha um otimo dia e uma otima refeicao
-  - tchau tenha um bom dia
-  - tchau que seja um bom dia
-  - nao tem de que ate mais
-  - tchau estou ansioso para te atender novamente tenha um otimo dia
-  - tchau
-  - ate mais
-  - ate logo
-  - ate mais ver
+  - (ds) tchau ate logo
+  - (ds) tchau tenha um otimo dia
+  - (ds) tchau ate a proxima
+  - (ds) tchau tenha um otimo dia e uma otima refeicao
+  - (ds) tchau tenha um bom dia
+  - (ds) tchau que seja um bom dia
+  - (ds) nao tem de que ate mais
+  - (ds) tchau estou ansioso para te atender novamente tenha um otimo dia
+  - (tat) tchau
+  - (tat) ate mais
+  - (tat) ate logo
+  - (tat) ate mais ver
 
 ## elogio  (53 frases)
 - (orig) voce e legal
@@ -930,30 +928,30 @@ Legenda de origem:
 - (tat) oi esse e o departamento de recursos humanos
 
   respostas candidatas:
-  - tudo show obrigado e vc como posso ajudar hoje
-  - ola tudo bem sim obrigado e voce como posso ajudar hoje
-  - tudo bem obrigado beleza em que posso ajudar hoje
-  - tudo bem obrigado e voce em que posso ajudar hoje
-  - tudo bem obrigado beleza como posso ajudar vc hoje
-  - show td bem sim obrigado por perguntar como posso ajudar vc hoje
-  - beleza tudo show aqui obrigado por perguntar como posso ajudar vc hoje
-  - tudo show obrigado como posso ajudar vc hoje
-  - beleza tudo bem sim obrigado por perguntar como posso ajudar voce hoje
-  - tudo bem obrigado e voce como posso ajudar hoje
-  - oi
-  - ola
-  - tudo bem
-  - ola pessoal
-  - e ai
-  - ola novamente
-  - bom dia
-  - boa tarde
-  - ola tudo bem
-  - e ai cara
-  - e ai mano
-  - e ai mesmo
-  - bom dia pessoal
-  - bom dia querida
+  - (ds) tudo show obrigado e vc como posso ajudar hoje
+  - (ds) ola tudo bem sim obrigado e voce como posso ajudar hoje
+  - (ds) tudo bem obrigado beleza em que posso ajudar hoje
+  - (ds) tudo bem obrigado e voce em que posso ajudar hoje
+  - (ds) tudo bem obrigado beleza como posso ajudar vc hoje
+  - (ds) show td bem sim obrigado por perguntar como posso ajudar vc hoje
+  - (ds) beleza tudo show aqui obrigado por perguntar como posso ajudar vc hoje
+  - (ds) tudo show obrigado como posso ajudar vc hoje
+  - (ds) beleza tudo bem sim obrigado por perguntar como posso ajudar voce hoje
+  - (ds) tudo bem obrigado e voce como posso ajudar hoje
+  - (tat) oi
+  - (tat) ola
+  - (tat) tudo bem
+  - (tat) ola pessoal
+  - (tat) e ai
+  - (tat) ola novamente
+  - (tat) bom dia
+  - (tat) boa tarde
+  - (tat) ola tudo bem
+  - (tat) e ai cara
+  - (tat) e ai mano
+  - (tat) e ai mesmo
+  - (tat) bom dia pessoal
+  - (tat) bom dia querida
 
 ## reacao_diversa  (36 frases)
 - (orig) legal
@@ -1080,13 +1078,13 @@ Legenda de origem:
 - (orig) vamos falar sobre robos
 - (orig) me fale sobre voce
 
-## estado_fisico  (6 frases)
-- (orig) eu estou com dor de cabeca
-- (orig) eu estou com frio
-- (orig) estou com fome
-- (orig) eu estou com sede
-- (orig) eu so quero um lanche
-- (orig) estou cansado
+## conhecimento_linguistico  (6 frases)
+- (orig) o que e linguistica
+- (orig) o que e um verbo
+- (orig) quem foi saussure
+- (orig) o que e uma gramatica
+- (orig) o que e um substantivo
+- (orig) quais as areas da linguistica
 
 ## jogo_favorito  (6 frases)
 - (orig) voce gosta de algum jogo
@@ -1096,13 +1094,13 @@ Legenda de origem:
 - (orig) o que acha do sonic
 - (orig) qual seu jogo favorito do sonic
 
-## conhecimento_linguistico  (6 frases)
-- (orig) o que e linguistica
-- (orig) o que e um verbo
-- (orig) quem foi saussure
-- (orig) o que e uma gramatica
-- (orig) o que e um substantivo
-- (orig) quais as areas da linguistica
+## estado_fisico  (6 frases)
+- (orig) eu estou com dor de cabeca
+- (orig) eu estou com frio
+- (orig) estou com fome
+- (orig) eu estou com sede
+- (orig) eu so quero um lanche
+- (orig) estou cansado
 
 ## habilidades  (6 frases)
 - (orig) o que voce sabe fazer
@@ -1112,12 +1110,12 @@ Legenda de origem:
 - (orig) qual a sua principal funcao
 - (orig) como voce trabalha
 
-## confusao  (5 frases)
-- (orig) eu nao sei usar isso
-- (orig) eu nao entendo
-- (orig) eu nao tenho certeza
-- (orig) eu estou perdido
-- (orig) isso nao faz sentido
+## conhecimento_tecnologia  (5 frases)
+- (orig) o que e uma ia
+- (orig) o que e um robo
+- (orig) o que e um chatbot
+- (orig) o que voce acha sobre inteligencia artificial
+- (orig) serio porque gosta de inteligencia artificial
 
 ## gostos_usuario  (5 frases)
 - (orig) gosto de filmes de robos
@@ -1126,24 +1124,12 @@ Legenda de origem:
 - (orig) eu nao gosto dele
 - (orig) eu nao gosto
 
-## conhecimento_tecnologia  (5 frases)
-- (orig) o que e uma ia
-- (orig) o que e um robo
-- (orig) o que e um chatbot
-- (orig) o que voce acha sobre inteligencia artificial
-- (orig) serio porque gosta de inteligencia artificial
-
-## apoio  (4 frases)
-- (orig) voce vai me ajudar
-- (orig) como animar alguem
-- (orig) se voce precisar da minha ajuda por favor me diga
-- (orig) voce precisa de alguma coisa
-
-## critica  (4 frases)
-- (orig) voce e chata
-- (orig) voce nao pode fazer algo
-- (orig) voce nao entende
-- (orig) acho que pode fazer melhor
+## confusao  (5 frases)
+- (orig) eu nao sei usar isso
+- (orig) eu nao entendo
+- (orig) eu nao tenho certeza
+- (orig) eu estou perdido
+- (orig) isso nao faz sentido
 
 ## humor_usuario  (4 frases)
 - (orig) estou triste
@@ -1151,11 +1137,28 @@ Legenda de origem:
 - (orig) eu estou feliz
 - (orig) eu nao me sinto bem
 
+## critica  (4 frases)
+- (orig) voce e chata
+- (orig) voce nao pode fazer algo
+- (orig) voce nao entende
+- (orig) acho que pode fazer melhor
+
 ## sugestao  (4 frases)
 - (orig) o que eu faco
 - (orig) o que eu deveria vestir
 - (orig) o que faco para secar minhas roupas em tempos chuvosos
 - (orig) como faco para tirar pelos da roupa preta
+
+## apoio  (4 frases)
+- (orig) voce vai me ajudar
+- (orig) como animar alguem
+- (orig) se voce precisar da minha ajuda por favor me diga
+- (orig) voce precisa de alguma coisa
+
+## mudar_assunto  (3 frases)
+- (orig) antes disso
+- (orig) proxima questao
+- (orig) vamos mudar de assunto
 
 ## jogar  (3 frases)
 - (orig) vamos jogar um jogo
@@ -1167,41 +1170,33 @@ Legenda de origem:
 - (orig) me conta uma piada
 - (orig) aonde tu tira essas piadas
 
-## mudar_assunto  (3 frases)
-- (orig) antes disso
-- (orig) proxima questao
-- (orig) vamos mudar de assunto
+## info_externa  (3 frases)
+- (orig) como esta o clima
+- (orig) o que esta acontecendo agora
+- (orig) ouviu as noticias
 
 ## limitacao_ia  (3 frases)
 - (orig) nao posso comer
 - (orig) voce nao tem uma boca
 - (orig) voce nao pode se mexer
 
-## info_externa  (3 frases)
-- (orig) como esta o clima
-- (orig) o que esta acontecendo agora
-- (orig) ouviu as noticias
-
-## _lixo  (1 frases)
-- (orig) o
-
-## conhecimento_geral  (1 frases)
-- (orig) quem inventou o radio
-
-## localizacao  (1 frases)
-- (orig) onde voce esta
-
-## desligar  (1 frases)
-- (orig) desligar
-
-## versao  (1 frases)
-- (orig) qual a sua versao atual
-
-## conhecimento_dinheiro  (1 frases)
-- (orig) o que e dinheiro
-
 ## retorno  (1 frases)
 - (orig) voltei
 
 ## aprendizado  (1 frases)
 - (orig) como voce aprende coisas novas
+
+## localizacao  (1 frases)
+- (orig) onde voce esta
+
+## versao  (1 frases)
+- (orig) qual a sua versao atual
+
+## desligar  (1 frases)
+- (orig) desligar
+
+## conhecimento_geral  (1 frases)
+- (orig) quem inventou o radio
+
+## conhecimento_dinheiro  (1 frases)
+- (orig) o que e dinheiro
