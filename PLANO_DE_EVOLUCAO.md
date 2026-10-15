@@ -5,6 +5,8 @@
 > Versão do documento: **1.0** — Outubro/2026
 > Escopo: diagnóstico da base atual + roadmap completo até conversação livre
 > Estado do projeto na data deste documento: v0.0.1, ~250 frases, 102 sinônimos, 456 palavras registradas
+>
+> **Atualização de progresso (out/2026):** tarefas já entregues estão com `[x]` e nota com issue/commit. **Fase 0** concluída (menos G6 e Gradle); **Fase 1** praticamente concluída (§5.1–§5.6 ok, §5.2 limiar de confiança em curso, §5.7 liberada); **Fases 2–5** intactas. Issues #1–#15 fechadas (github.com/joaovitoros/Kaira), 23 commits em `master`, avaliador de regressão 14/14 com 0 gaps.
 
 ---
 
@@ -117,6 +119,21 @@ FormulaResposta.enviarResposta()
 
 ### 2.2 Gargalos (em ordem de impacto)
 
+> **Status (out/2026):** G1 resolvido · G2 resolvido · G3 resolvido · G4 pendente · G5 resolvido · G6 pendente · G7 resolvido · G8 resolvido · G9 parcial · G10 parcial
+
+| Gargalo | Status | Resolvido em |
+|---|---|---|
+| G1 frase-exata | resolvido | matcher por cobertura ponderada por IDF sobre intenções (issues #5, #6, #11, #14) |
+| G2 sinônimos roleta | resolvido | grupos no matcher (issue #9); procuraSinonimo deletado; geração com guarda de stopword (#13) |
+| G3 sem normalização | resolvido | Normalizador.texto + stem de 12 regras + 54 stopwords nos dois lados (issues #2, #12) |
+| G4 sem memória | pendente | Fase 2 (§6.1 Sessão) |
+| G5 UI apaga conversa | resolvido | histórico acumula via append (issue #1); auto-scroll/separador/log pendentes |
+| G6 Runtime.exec | pendente | backlog de segurança |
+| G7 caminhos relativos | resolvido | Caminhos.recurso() resolve a base de qualquer diretório (issue #4, CaminhosTest) |
+| G8 similaridades frágeis | resolvido | Levenshtein + frase palavra-a-palavra (issue #15) |
+| G9 código morto/NPE | parcial | decisao passou a ser usado; prints e placeholder de humor seguem vivos |
+| G10 engenharia | parcial | git + JUnit + avaliador (21 classes de teste); Gradle/pacote/estáticos pendentes |
+
 #### G1 — Match é frase-exata
 `ControleResposta.lerResposta()` usa `equalsIgnoreCase(frase.getFrase())`. Todo o resto do pipeline existe só para *forçar* a frase do usuário a virar uma frase registrada. Com 250 frases, a taxa de acerto é baixa por construção — **adicionar mais frases soltas não resolve, só escala o problema**.
 
@@ -184,15 +201,15 @@ Todos os controllers usam `"KAIRA/resources/..."` relativo ao diretório de exec
 
 ### Tarefas
 
-- [ ] `git init` + `.gitignore` (`out/`, `*.class`, `.idea/`) + primeiro commit
-- [ ] **Normalização central** — criar `util/Normalizador.java` com UMA função usada por todo o pipeline (ver código no [Apêndice B](#apêndice-b--exemplos-de-código)):
+- [x] `git init` + `.gitignore` (`out/`, `*.class`, `.idea/`) + primeiro commit — *(commit inicial b34046f; .gitignore cobre out/, .idea/, *.iml, *.class)*
+- [x] **Normalização central** — criar `util/Normalizador.java` com UMA função usada por todo o pipeline (ver código no [Apêndice B](#apêndice-b--exemplos-de-código)): — *(issue #2; `texto()` virou a função canônica do pipeline)*
   - lowercase, remover acentos (`Normalizer.NFD`), remover pontuação, colapsar espaços, trim
   - aplicar também nos dados ao carregar (base e entrada ficam no mesmo "idioma")
-- [ ] **Mover os dados para pasta fixa** — `%APPDATA%/KAIRA/` (via `System.getenv("APPDATA")`) ou ao lado do `.jar`. Trocar todas as strings `"KAIRA/resources/..."` (G7). Migração: se existir pasta antiga, copiar antes
-- [ ] **Neutralizar o comando "Executar"** (G6): pedir confirmação via dialog OU remover por enquanto. Se mantiver: whitelist de programas + juntar todas as palavras do caminho (não só `fraseComando[1]`)
-- [ ] Limpar código morto (G9): `decisao` não usada, branch `verificarCriarResp`, prints de debug → um `Logger` simples ou `System.Logger`
+- [x] **Mover os dados para pasta fixa** — `%APPDATA%/KAIRA/` (via `System.getenv("APPDATA")`) ou ao lado do `.jar`. Trocar todas as strings `"KAIRA/resources/..."` (G7). Migração: se existir pasta antiga, copiar antes — *(solução adotada: `Caminhos.recurso()` resolve a base via `kaira.home`/`KAIRA_HOME`/code source — roda de qualquer pasta sem %APPDATA%; issue #4)*
+- [ ] **Neutralizar o comando "Executar"** (G6): pedir confirmação via dialog OU remover por enquanto. Se mantiver: whitelist de programas + juntar todas as palavras do caminho (não só `fraseComando[1]`) — *(G6 segue pendente)*
+- [ ] Limpar código morto (G9): `decisao` não usada, branch `verificarCriarResp`, prints de debug → um `Logger` simples ou `System.Logger` — *(parcial: `decisao` virou uso real na geração; prints e placeholder de humor ainda vivos)*
 - [ ] (Opcional) Adotar Gradle: `gradle init` + mover os jars para dependências declaradas; pacote `com.JCODE` → `com.jcode` (rename automático no IntelliJ)
-- [ ] (Opcional) Primeiro teste JUnit: `NormalizadorTest` (entrada "  Olá, Tudo bem? " → "ola tudo bem")
+- [x] (Opcional) Primeiro teste JUnit: `NormalizadorTest` (entrada "  Olá, Tudo bem? " → "ola tudo bem") — *(issue #2; hoje são 21 classes de teste + avaliador)*
 
 ### Critérios de aceite
 
@@ -231,10 +248,10 @@ No arquivo final, cada item de `exemplos` e `respostas` é um objeto `{texto, or
 
 **Por quê:** 5–10 variações por intenção multiplicam a cobertura efetiva sem escrever respostas novas. "e aí", "salve", "opa" hoje seriam 3 frases extras para decorar; no novo modelo são só exemplos de custo ~zero.
 
-- [ ] Mapear as 250 frases atuais → intenções (agrupar por `assunto` + olhar as respostas parecidas)
-- [ ] Escrever o conversor (um script Java ou conversão manual única) — manter backup do JSON antigo
-- [ ] Para cada intenção, adicionar 5–10 exemplos (gírias, com/sem acento, erros comuns de digitação)
-- [ ] Novo campo `followups` já nasce preenchido — será usado na Fase 2
+- [x] Mapear as 250 frases atuais → intenções (agrupar por `assunto` + olhar as respostas parecidas) — *(issue #7; dados travados por testes de curadoria: IntencoesCuradoNaoDegradadoTest)*
+- [x] Escrever o conversor (um script Java ou conversão manual única) — manter backup do JSON antigo — *(geração única para intencoes.json; respostas.json original mantido no projeto)*
+- [x] Para cada intenção, adicionar 5–10 exemplos (gírias, com/sem acento, erros comuns de digitação) — *(parcial: exemplos migrados + expansão contínua pelo auto_aprendizado)*
+- [ ] Novo campo `followups` já nasce preenchido — será usado na Fase 2 — *(campo existe no esquema; preenchimento/uso seguem na Fase 2)*
 
 ### 5.2 Classificador por pontuação (substitui o `equalsIgnoreCase`)
 
@@ -248,10 +265,10 @@ peso(palavra) = raro no geral + presente na intenção = mais pontos (IDF simple
 
 Detalhes práticos:
 
-- [ ] Implementar **TF-IDF simplificado** (ver pseudo-código no [Apêndice B](#apêndice-b--exemplos-de-código)) — dá pra fazer em Java puro, ~50 linhas
-- [ ] Ou, versão mínima viável: **Jaccard sobre conjuntos de palavras** (`interseção / união`) — 10 linhas
-- [ ] Definir limiar de confiança (ex.: ≥ 0,5 → acionar intenção; entre 0,3 e 0,5 → responder com a melhor aposta + "Foi isso que você quis dizer?"; < 0,3 → fallback)
-- [ ] Empate entre intenções → desempatar pelo **contexto** da Fase 2 (tópico atual)
+- [x] Implementar **TF-IDF simplificado** (ver pseudo-código no [Apêndice B](#apêndice-b--exemplos-de-código)) — dá pra fazer em Java puro, ~50 linhas — *(feito: `pesosIdf` = log(N/df) por token pos-stem; score = pesos dos casados ÷ pesos da entrada; denominador 0 cai na cobertura uniforme — issue #14)*
+- [x] Ou, versão mínima viável: **Jaccard sobre conjuntos de palavras** (`interseção / união`) — 10 linhas — *(descartado — o TF-IDF acima cumpriu a mesma função)*
+- [ ] Definir limiar de confiança (ex.: ≥ 0,5 → acionar intenção; entre 0,3 e 0,5 → responder com a melhor aposta + "Foi isso que você quis dizer?"; < 0,3 → fallback) — *(em curso: faixas ALTA ≥ 0,6 responde direto · MÉDIA 0,3–0,6 aposta + confirmação · BAIXA < 0,3 fallback)*
+- [ ] Empate entre intenções → desempatar pelo **contexto** da Fase 2 (tópico atual) — *(pendente: exige Sessão, §6.1)*
 
 **Limite da cobertura (por que a pré-análise da §5.7 existe):** o pareamento por exemplos casa a entrada com frases **já vistas**. Pra um tópico novo fora da base (ex.: "qual seu carro favorito?", nunca visto) a cobertura só pega o que tiver em comum com exemplos parecidos ("qual seu jogo favorito") e ainda assim precisa de uma resposta pro tópico novo — ver [§5.7](#57-pré-análise-frame--slot-tarefa-8).
 
@@ -259,9 +276,9 @@ Detalhes práticos:
 
 "gosto/gostei/gostar/gostosa" devem contar como a mesma palavra:
 
-- [ ] Sufixos para cortar, em ordem (implementação ~15 linhas): `ções→ção`, `-mente`, `-ando/-endo/-indo`, `-ei`, `-ou`, `-amos/-emos/-imos`, `-istas/-ista`, `-ção`, `-eza`, `-ança`, `-ar/-er/-ir`, plural `-s`
-- [ ] Tamanho mínimo do radical: 3 letras (evita "pá" → "p")
-- [ ] Alternativa pronta: **Apache Lucene** tem `PortugueseStemmer` (algoritmo RSLP) — é um jar a mais no `externallibs`, mesmo esquema do Jackson
+- [x] Sufixos para cortar, em ordem (implementação ~15 linhas): `ções→ção`, `-mente`, `-ando/-endo/-indo`, `-ei`, `-ou`, `-amos/-emos/-imos`, `-istas/-ista`, `-ção`, `-eza`, `-ança`, `-ar/-er/-ir`, plural `-s` — *(issue #12: 12 regras na ordem, primeira que casa vence, formas sem acento, aplicação única sem encadear)*
+- [x] Tamanho mínimo do radical: 3 letras (evita "pá" → "p") — *(guarda: radical < 3 devolve a palavra original)*
+- [x] Alternativa pronta: **Apache Lucene** tem `PortugueseStemmer` (algoritmo RSLP) — é um jar a mais no `externallibs`, mesmo esquema do Jackson — *(descartado — o stem caseiro cobriu o necessário sem jar extra)*
 
 ### 5.4 Stopwords PT-BR
 
@@ -273,7 +290,7 @@ ao aos à às se eu tu ele ela nós eles você vocês me te lhe isso isto este
 esse aquele mais muito pouco já não sim mas ou nem como quando onde quem qual
 ```
 
-- [ ] Lista num arquivo `stopwords.txt` (ou campo no JSON), aplicada **depois** do stemming
+- [x] Lista num arquivo `stopwords.txt` (ou campo no JSON), aplicada **depois** do stemming — *(issue #12: 54 palavras + `vc` em KAIRA/resources/stopwords.txt; carregada com texto+stem (forma canônica) e filtrada nos DOIS lados via `tokensDe`; arquivo ausente = sem filtro. Bônus: a geração de respostas também não troca sinonimo de stopword — follow-up da #13)*
 
 ### 5.5 Sinônimos: de substituição para **grupos**
 
@@ -288,19 +305,21 @@ Matar o G2. Não trocar a palavra do usuário — em vez disso, duas palavras ca
 ]}
 ```
 
-- [ ] Converter `sinonimos.json` para grupos; **remover os pares falsos** ("maneira"→"legal" etc.)
-- [ ] No classificador: palavra do usuário → grupo → compara pelo grupo
-- [ ] Deletar a lógica de substituição aleatória em `ControleSinonimo.procuraSinonimo`
+- [x] Converter `sinonimos.json` para grupos; **remover os pares falsos** ("maneira"→"legal" etc.) — *(grupos_sinonimos.json curado, pares falsos fora — issue #9)*
+- [x] No classificador: palavra do usuário → grupo → compara pelo grupo — *(ControleSinonimo.mesmaPalavra no matcher; índice com duas chaves: cru+stem pro grupo, cru pro indicePalavras da geração — issues #11 e #12)*
+- [x] Deletar a lógica de substituição aleatória em `ControleSinonimo.procuraSinonimo` — *(não existe mais no código; a geração nova usa buscaGrupoSinonimo + CriarResposta — issue #13)*
 
 ### 5.6 Correção de erro de digitação
 
-- [ ] Substituir `calculoPorcentagemPalavra` por **distância de Levenshtein** (código no [Apêndice B](#apêndice-b--exemplos-de-código)): distância 1–2 (dependendo do tamanho) → corrige
-- [ ] Corrigir `calculoPorcentagemFrase` para comparar **palavra por palavra** (nunca `contains` na frase inteira — G8)
-- [ ] A cascata de correção continua existindo, mas agora: normaliza → stemma → agrupa → classifica (muitos "erros" somem sozinhos com a pontuação)
+- [x] Substituir `calculoPorcentagemPalavra` por **distância de Levenshtein** (código no [Apêndice B](#apêndice-b--exemplos-de-código)): distância 1–2 (dependendo do tamanho) → corrige — *(issue #15: `Calculos.levenshtein` do Ap. B.2; limiar por tamanho do digitado — ≤4 letras aceita 1, maior aceita 2; nota honesta: Levenshtein puro não vê anagrama — `lista`/`sltia` = 4, fica de fora)*
+- [x] Corrigir `calculoPorcentagemFrase` para comparar **palavra por palavra** (nunca `contains` na frase inteira — G8) — *(issue #15: palavra exata por palavra; "sol" dentro de "ensolarado" não conta mais)*
+- [x] A cascata de correção continua existindo, mas agora: normaliza → stemma → agrupa → classifica (muitos "erros" somem sozinhos com a pontuação) — *(mantida em 4 degraus: lerResposta → corrigirPalavras → corrigirFrases → geração)*
 
 ### 5.7 Pré-análise frame + slot (task #8)
 
 > **Escopo decidido:** fica pra **depois** da task #7 (migração pra `intencoes.json` + cobertura de exemplos). A #7 fecha os 2 gaps do eval; esta seção é o passo seguinte.
+>
+> **Atualização:** a #7 foi concluída (migração + gaps fechados + avaliador 14/14) — **esta seção está liberada** e é o próximo item da Fase 1.
 
 Ideia do autor: antes de buscar na base, decompor a frase em **frame** (a estrutura/molde) e **slot** (o termo de conteúdo). Ex.: "qual seu **carro** favorito?" e "qual seu **jogo** favorito?" são o **mesmo frame** (`qual seu X favorito`); o slot muda (`carro` vs `jogo`). Como a KAIRA conhece o frame pelo jogo, ela sabe que é uma **pergunta de preferência** mesmo nunca tendo visto "carro".
 
@@ -349,7 +368,7 @@ class Sessao {
 
 ### 6.2 Histórico visível (corrige G5)
 
-- [ ] `textAreaLoli.append(...)` em vez de `setText` — o chat vira um log real
+- [x] `textAreaLoli.append(...)` em vez de `setText` — o chat vira um log real — *(issue #1; teste ControleFaceTest)*
 - [ ] Auto-scroll para o fim; separador visual entre turnos
 - [ ] (Opcional) `conversas.log` com timestamp — dados para análise futura e para treinar/tunar
 
@@ -392,10 +411,10 @@ class Sessao {
 
 Substituir o "Não sei como responder a isso" seco:
 
-- [ ] Classificou algo com confiança média → aposta + confirmação: *"Sobre {palavrasChave}, é isso? Ainda tô aprendendo — me responde essa: ..."*
+- [ ] Classificou algo com confiança média → aposta + confirmação: *"Sobre {palavrasChave}, é isso? Ainda tô aprendendo — me responde essa: ..."* — *(em curso: degrau de faixa média no fim da cascata)*
 - [ ] Confiança baixa → honesto + curioso: *"Ainda não sei falar disso... me ensina? O que você quis dizer?"* → cai no modo ensino atual (que já existe e funciona!)
 - [ ] Com a pré-análise da [§5.7](#57-pré-análise-frame--slot-tarefa-8) (task #8): quando o **frame** foi reconhecido mas o **slot** é novo, responder "ainda não sei sobre {slot}" em vez do genérico
-- [ ] **Modo ensino turbinado**: ao ensinar, perguntar em qual intenção encaixa (ou criar nova) — em vez de gravar frase solta com assunto "Auto-Aprendizado". O dado coletado passa a alimentar o classificador
+- [ ] **Modo ensino turbinado**: ao ensinar, perguntar em qual intenção encaixa (ou criar nova) — em vez de gravar frase solta com assunto "Auto-Aprendizado". O dado coletado passa a alimentar o classificador — *(parcial: o ensino já grava na intenção `auto_aprendizado` estruturada sem mutar o cache — commit b89557d; falta perguntar/encaixar intenção)*
 
 ### Critérios de aceite
 
@@ -479,11 +498,11 @@ Mensagem do usuário
 
 Ordem sugerida, começando amanhã:
 
-1. **Append no histórico da UI** (`ControleFace.actionPerformed`: `setText` → `append`) — bug mais visível, correção de 5 minutos, muda a sensação do produto
-2. **`util/Normalizador.java`** + aplicar em `decifrar()` e no carregamento da base — mata a família de problemas de acento/case/pontuação
-3. **Reestruturar `respostas.json` por intenção** — agrupar as 250 frases em ~40–60 intenções com exemplos ([Apêndice A](#apêndice-a--esquema-json-proposto))
-4. **Classificador por pontuação** (Jaccard/TF-IDF) no lugar do `equalsIgnoreCase` — junto com grupos de sinônimos e stemming
-5. **`Sessao` com nome do usuário** — pergunta no primeiro uso, usa `{nome}` nas respostas
+1. ✅ **Append no histórico da UI** (`ControleFace.actionPerformed`: `setText` → `append`) — bug mais visível, correção de 5 minutos, muda a sensação do produto — *(issue #1)*
+2. ✅ **`util/Normalizador.java`** + aplicar em `decifrar()` e no carregamento da base — mata a família de problemas de acento/case/pontuação — *(issue #2)*
+3. ✅ **Reestruturar `respostas.json` por intenção** — agrupar as 250 frases em ~40–60 intenções com exemplos ([Apêndice A](#apêndice-a--esquema-json-proposto)) — *(issue #7)*
+4. ✅ **Classificador por pontuação** (Jaccard/TF-IDF) no lugar do `equalsIgnoreCase` — junto com grupos de sinônimos e stemming — *(issues #9–#14)*
+5. **`Sessao` com nome do usuário** — pergunta no primeiro uso, usa `{nome}` nas respostas — *(próximo da fila — Fase 2)*
 
 Essas 5 já transformam a experiência sem nenhuma dependência externa e sem jogar nada fora.
 
