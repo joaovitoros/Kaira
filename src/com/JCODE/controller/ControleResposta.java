@@ -313,7 +313,7 @@ public class ControleResposta {
 				Set<String> palavraFrase = tokensDe(frase.getTexto());
 				long intersecao = palavrasEntrada.stream()
 						.filter(e -> palavraFrase.stream().anyMatch(f -> ControleSinonimo.mesmaPalavra(e,f))).count();
-				
+
 				double numerador = 0;
 				for (String e : palavrasEntrada)
 					if (palavraFrase.stream().anyMatch(f -> ControleSinonimo.mesmaPalavra(e, f)))
