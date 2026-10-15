@@ -19,8 +19,6 @@ public class ControleResposta {
 
 	static ObjectMapper objectMapper;
 
-	static Falas falasCache;
-
 	static Intencoes intencoesCache;
 
 	private static final double LIMIAR = 0.6;
@@ -191,43 +189,14 @@ public class ControleResposta {
 	public static String resolver(String entradaNormalizada){
 		String exata = fraseExata(entradaNormalizada);
 		if(exata != null) return exata;
-		return melhorFrasesPorSimilaridade(entradaNormalizada);
-	}
 
-	private static String melhorFrasesPorSimilaridade(String entradaNormalizada) {
-		Set<String> palavrasEntrada = Arrays.stream(entradaNormalizada.trim().split("\\s+"))
-				.filter(t -> !t.isEmpty()).collect(Collectors.toSet());
+		var resposta = melhorIntencao(entradaNormalizada);
 
-		if(palavrasEntrada.isEmpty())
-			return null;
-
-		String melhorFrase = null;
-		double melhorScore = 0;
-
-		for(Intencao intencao: intencoesCache.getIntencoes()){
-
-			for(Exemplo frase: intencao.getExemplos()) {
-				Set<String> palavraFrase = new HashSet<>(Arrays.asList(Normalizador.texto(frase.getTexto()).split(" ")));
-				long intersecao = palavrasEntrada.stream().filter((palavraFrase::contains)).count();
-				double score = (double) intersecao / palavrasEntrada.size();
-				if (score >= LIMIAR) {
-					if (score > melhorScore) {
-						melhorScore = score;
-						melhorFrase = frase.getTexto();
-					} else if (score == melhorScore) {
-						long restoAnterior = Arrays.stream(melhorFrase.split(" ")).filter(Predicate.not(palavrasEntrada::contains)).count();
-						long resto = palavraFrase.stream().filter(Predicate.not(palavrasEntrada::contains)).count();
-
-						if (resto < restoAnterior) {
-							melhorScore = score;
-							melhorFrase = frase.getTexto();
-						}
-					}
-				}
-			}
+		if(resposta!=null) {
+			return resposta.keySet().stream().findFirst().orElse(null);
 		}
 
-		return melhorScore >= LIMIAR ? melhorFrase : null;
+		return null;
 
 	}
 
@@ -241,15 +210,25 @@ public class ControleResposta {
 		resposta = intencoesCache.getIntencoes().stream().filter(intencao -> intencao.getExemplos().stream()
 				.anyMatch(it -> Normalizador.texto(it.getTexto()).equalsIgnoreCase(entradaNormalizada))).findFirst().orElse(null);
 
-		if(resposta==null)
-			resposta = intencoesCache.getIntencoes().stream().filter(intencao -> intencao.getExemplos().stream()
-					.anyMatch(it -> Normalizador.texto(it.getTexto()).equalsIgnoreCase(melhorFrasesPorSimilaridade(entradaNormalizada)))).findFirst().orElse(null);
+		if(resposta==null) {
+
+			var aux = melhorIntencao(entradaNormalizada);
+
+			if(aux!=null){
+				Iterator<Intencao> iterator = aux.values().iterator();
+				if (iterator.hasNext()) {
+					resposta = iterator.next();
+				}
+
+			}
+
+		}
 
 		return resposta;
 	}
 
 
-	public static Intencao melhorIntencao(String entradaNormalizada){
+	public static Map<String, Intencao> melhorIntencao(String entradaNormalizada){
 		if(intencoesCache == null)
 			carregaCache();
 
@@ -257,7 +236,7 @@ public class ControleResposta {
 
 	}
 
-	public static Intencao melhorIntencao(Intencoes raiz, String entradaNormalizada){
+	public static Map<String, Intencao> melhorIntencao(Intencoes raiz, String entradaNormalizada){
 		Set<String> palavrasEntrada = Arrays.stream(entradaNormalizada.trim().split("\\s+"))
 				.filter(t -> !t.isEmpty()).collect(Collectors.toSet());
 
@@ -296,7 +275,12 @@ public class ControleResposta {
 			}
 		}
 
-		return melhorScore >= LIMIAR ? melhorIntencao : null;
+		Map<String, Intencao> retorno = new HashMap<>();
+
+		if(melhorScore >= LIMIAR)
+			retorno.put(melhorFraseIntencao, melhorIntencao) ;
+
+		return !retorno.isEmpty() ? retorno : null;
 	}
 
 	public static List<Intencao> getIntencoes(){

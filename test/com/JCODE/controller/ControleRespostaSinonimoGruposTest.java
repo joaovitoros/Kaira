@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Testa o classificador por GRUPOS (Tarefa #9, issue #9, Secao 5.5): a
@@ -71,10 +72,11 @@ public class ControleRespostaSinonimoGruposTest {
 	 */
 	@Test
 	public void sinonimoCruzaLimiarQueSemGrupoNaoCruzava() {
-		Intencao achada = ControleResposta.melhorIntencao(baseDeTeste(), "tu gosta de falar");
+		Map<String, Intencao> resultado = ControleResposta.melhorIntencao(baseDeTeste(), "tu gosta de falar");
 
-		assertNotNull("tu gosta de falar devia achar o intent via grupos (tu~voce, falar~dizer)", achada);
-		assertEquals("devia ser o intent do exemplo com sinonimos", "teste_grupo", achada.getIntento());
+		assertNotNull("tu gosta de falar devia achar o intent via grupos (tu~voce, falar~dizer)", resultado);
+		assertEquals("devia ser o intent do exemplo com sinonimos", "teste_grupo",
+				resultado.values().iterator().next().getIntento());
 	}
 
 	/**
@@ -83,9 +85,9 @@ public class ControleRespostaSinonimoGruposTest {
 	 */
 	@Test
 	public void semParSuficienteContinuaSemIntent() {
-		Intencao achada = ControleResposta.melhorIntencao(baseDeTeste(), "zzqqxx qqzz gosta");
+		Map<String, Intencao> resultado = ControleResposta.melhorIntencao(baseDeTeste(), "zzqqxx qqzz gosta");
 
-		assertNull("cobertura 1/3 devia ficar abaixo do LIMIAR mesmo com grupos", achada);
+		assertNull("cobertura 1/3 devia ficar abaixo do LIMIAR mesmo com grupos", resultado);
 	}
 
 	/**

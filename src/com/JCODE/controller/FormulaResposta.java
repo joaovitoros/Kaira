@@ -24,7 +24,7 @@ public class FormulaResposta {
             if(respostaVariavel==null){
                 respostaVariavel = ControleCorrecao.corrigirFrases(falaUsuario);
             }
-            
+
             criacaoLeituraRespostas(falaUsuario);
         }
 

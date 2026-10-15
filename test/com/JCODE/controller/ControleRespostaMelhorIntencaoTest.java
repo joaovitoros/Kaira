@@ -9,6 +9,8 @@ import com.JCODE.domain.Intencao;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Map;
+
 /**
  * Testa o classificador de intents melhorIntencao (Tarefa #7, §5.1).
  *
@@ -32,9 +34,9 @@ public class ControleRespostaMelhorIntencaoTest {
 	}
 
 	private String intentoDe(String entrada) {
-		Intencao i = ControleResposta.melhorIntencao(entrada);
-		assertNotNull("entrada '" + entrada + "' devia achar uma intencao", i);
-		return i.getIntento();
+		Map<String, Intencao> resultado = ControleResposta.melhorIntencao(entrada);
+		assertNotNull("entrada '" + entrada + "' devia achar uma intencao", resultado);
+		return resultado.values().iterator().next().getIntento();
 	}
 
 	/** Caso exato simples classifica na intenção certa. */
