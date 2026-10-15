@@ -6,7 +6,7 @@
 > Escopo: diagnóstico da base atual + roadmap completo até conversação livre
 > Estado do projeto na data deste documento: v0.0.1, ~250 frases, 102 sinônimos, 456 palavras registradas
 >
-> **Atualização de progresso (out/2026):** tarefas já entregues estão com `[x]` e nota com issue/commit. **Fase 0** concluída (menos G6 e Gradle); **Fase 1** praticamente concluída (§5.1–§5.6 ok, §5.2 limiar de confiança em curso, §5.7 liberada); **Fases 2–5** intactas. Issues #1–#15 fechadas (github.com/joaovitoros/Kaira), 23 commits em `master`, avaliador de regressão 14/14 com 0 gaps.
+> **Atualização de progresso (out/2026):** tarefas já entregues estão com `[x]` e nota com issue/commit. **Fase 0** concluída (menos G6 e Gradle); **Fase 1** praticamente concluída (§5.1–§5.6 ok, §5.7 liberada — próxima da fila); **Fases 2–5** intactas. Issues #1–#16 fechadas (github.com/joaovitoros/Kaira), 23 commits em `master`, avaliador de regressão 14/14 com 0 gaps.
 
 ---
 
@@ -267,7 +267,7 @@ Detalhes práticos:
 
 - [x] Implementar **TF-IDF simplificado** (ver pseudo-código no [Apêndice B](#apêndice-b--exemplos-de-código)) — dá pra fazer em Java puro, ~50 linhas — *(feito: `pesosIdf` = log(N/df) por token pos-stem; score = pesos dos casados ÷ pesos da entrada; denominador 0 cai na cobertura uniforme — issue #14)*
 - [x] Ou, versão mínima viável: **Jaccard sobre conjuntos de palavras** (`interseção / união`) — 10 linhas — *(descartado — o TF-IDF acima cumpriu a mesma função)*
-- [ ] Definir limiar de confiança (ex.: ≥ 0,5 → acionar intenção; entre 0,3 e 0,5 → responder com a melhor aposta + "Foi isso que você quis dizer?"; < 0,3 → fallback) — *(em curso: faixas ALTA ≥ 0,6 responde direto · MÉDIA 0,3–0,6 aposta + confirmação · BAIXA < 0,3 fallback)*
+- [ ] Definir limiar de confiança (ex.: ≥ 0,5 → acionar intenção; entre 0,3 e 0,5 → responder com a melhor aposta + "Foi isso que você quis dizer?"; < 0,3 → fallback) — *(faixas entregues: ALTA ≥ 0,6 responde direto · MÉDIA 0,3–0,6 aposta + "Foi isso que você quis dizer?" · BAIXA < 0,3 fallback — issue #16, commit 08e1666)*
 - [ ] Empate entre intenções → desempatar pelo **contexto** da Fase 2 (tópico atual) — *(pendente: exige Sessão, §6.1)*
 
 **Limite da cobertura (por que a pré-análise da §5.7 existe):** o pareamento por exemplos casa a entrada com frases **já vistas**. Pra um tópico novo fora da base (ex.: "qual seu carro favorito?", nunca visto) a cobertura só pega o que tiver em comum com exemplos parecidos ("qual seu jogo favorito") e ainda assim precisa de uma resposta pro tópico novo — ver [§5.7](#57-pré-análise-frame--slot-tarefa-8).
@@ -411,7 +411,7 @@ class Sessao {
 
 Substituir o "Não sei como responder a isso" seco:
 
-- [ ] Classificou algo com confiança média → aposta + confirmação: *"Sobre {palavrasChave}, é isso? Ainda tô aprendendo — me responde essa: ..."* — *(em curso: degrau de faixa média no fim da cascata)*
+- [ ] Classificou algo com confiança média → aposta + confirmação: *"Sobre {palavrasChave}, é isso? Ainda tô aprendendo — me responde essa: ..."* — *(degrau da faixa média pronto — issue #16; a frase personalizada com {palavrasChave} e o followup ficam pra §7.1 humor)*
 - [ ] Confiança baixa → honesto + curioso: *"Ainda não sei falar disso... me ensina? O que você quis dizer?"* → cai no modo ensino atual (que já existe e funciona!)
 - [ ] Com a pré-análise da [§5.7](#57-pré-análise-frame--slot-tarefa-8) (task #8): quando o **frame** foi reconhecido mas o **slot** é novo, responder "ainda não sei sobre {slot}" em vez do genérico
 - [ ] **Modo ensino turbinado**: ao ensinar, perguntar em qual intenção encaixa (ou criar nova) — em vez de gravar frase solta com assunto "Auto-Aprendizado". O dado coletado passa a alimentar o classificador — *(parcial: o ensino já grava na intenção `auto_aprendizado` estruturada sem mutar o cache — commit b89557d; falta perguntar/encaixar intenção)*
