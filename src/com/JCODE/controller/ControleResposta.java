@@ -6,6 +6,7 @@ import com.JCODE.util.Caminhos;
 import com.JCODE.util.Normalizador;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -22,6 +23,8 @@ public class ControleResposta {
 	static Intencoes intencoesCache;
 
 	private static final double LIMIAR = 0.6;
+
+	static Set<String> stopwords;
 
 	public static String lerResposta(String falaUsuario) {
 
@@ -63,6 +66,30 @@ public class ControleResposta {
 			e.printStackTrace();
 		}
 
+		stopwords = new HashSet<>();
+		try {
+			FileInputStream fileInputStream = new FileInputStream(Caminhos.recurso("stopwords.txt").toFile());
+			BufferedReader reader = new BufferedReader(new InputStreamReader(fileInputStream, StandardCharsets.UTF_8));
+
+			String linha;
+			while ((linha = reader.readLine()) != null) {
+				String t = linha.trim();
+				if (t.isEmpty() || t.startsWith("#"))
+					continue;
+
+				stopwords.add(Normalizador.stem(Normalizador.texto(t)));
+			}
+		} catch (Exception e) {
+			stopwords = null;   // sem arquivo: sem filtro, sem explodir
+		}
+
+	}
+
+	private static Set<String> tokensDe(String frase){
+		return Arrays.stream(Normalizador.texto(frase).split(" "))
+				.map(Normalizador::stem)
+				.filter(it -> !it.isEmpty() && (stopwords == null || !stopwords.contains(it)))
+				.collect(Collectors.toSet());
 	}
 
 	public static String correcaoFrases(String frase){
@@ -237,8 +264,7 @@ public class ControleResposta {
 	}
 
 	public static Map<String, Intencao> melhorIntencao(Intencoes raiz, String entradaNormalizada){
-		Set<String> palavrasEntrada = Arrays.stream(entradaNormalizada.trim().split("\\s+"))
-				.filter(t -> !t.isEmpty()).collect(Collectors.toSet());
+		Set<String> palavrasEntrada = tokensDe(entradaNormalizada);
 
 		if(palavrasEntrada.isEmpty())
 			return null;
@@ -250,7 +276,7 @@ public class ControleResposta {
 		for(Intencao intencao: raiz.getIntencoes()){
 
 			for(Exemplo frase: intencao.getExemplos()) {
-				Set<String> palavraFrase = new HashSet<>(Arrays.asList(Normalizador.texto(frase.getTexto()).split(" ")));
+				Set<String> palavraFrase = tokensDe(frase.getTexto());
 				long intersecao = palavrasEntrada.stream()
 						.filter(e -> palavraFrase.stream().anyMatch(f -> ControleSinonimo.mesmaPalavra(e,f))).count();
 				double score = (double) intersecao / palavrasEntrada.size();
@@ -260,7 +286,7 @@ public class ControleResposta {
 						melhorFraseIntencao = frase.getTexto();
 						melhorIntencao = intencao;
 					} else if (score == melhorScore) {
-						long restoAnterior = Arrays.stream(melhorFraseIntencao.split(" "))
+						long restoAnterior = tokensDe(melhorFraseIntencao).stream()
 								.filter(f -> !palavrasEntrada.stream().anyMatch(e -> ControleSinonimo.mesmaPalavra(e,f))).count();
 						long resto = palavraFrase.stream()
 								.filter(f -> !palavrasEntrada.stream().anyMatch(e -> ControleSinonimo.mesmaPalavra(e,f))).count();
@@ -305,6 +331,35 @@ public class ControleResposta {
 		intencao.getExemplos().add(new Exemplo(frase, "autor"));
 		intencao.getRespostas().add(new RespostaIntencao(resposta, "autor",0,10));
 
+	}
+
+	public static String CriarResposta(String resposta) {
+
+		if(resposta==null)
+			return null;
+
+		List<String> respostaSeparada = List.of(resposta.split(" "));
+		String novaFrase = "";
+
+		for(String palavra: respostaSeparada){
+
+			List<String> sinonimos = ControleSinonimo.buscaGrupoSinonimo(palavra).stream().toList();
+
+			String sinonimo = sinonimos.isEmpty() ? null : sinonimos.get(new Random().nextInt(sinonimos.size()));
+
+			if(!novaFrase.equalsIgnoreCase(""))
+				novaFrase = novaFrase.concat(" ");
+
+			if(sinonimo==null)
+				novaFrase = novaFrase.concat(palavra);
+			else
+				novaFrase = novaFrase.concat(sinonimo);
+
+		}
+
+		System.out.println("nova resposta " + novaFrase + "/ resposta antiga "+ resposta);
+
+		return novaFrase;
 	}
 
 

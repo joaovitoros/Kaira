@@ -2,6 +2,7 @@ package com.JCODE.controller;
 
 import com.JCODE.domain.GruposSinonimos;
 import com.JCODE.util.Caminhos;
+import com.JCODE.util.Normalizador;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.*;
@@ -13,6 +14,7 @@ public class ControleSinonimo {
     static ObjectMapper objectMapper;
 
     private static Map<String, Set<String>> indice;
+    private static Map<String, Set<String>> indicePalavras;
 
     private static GruposSinonimos buscaArquivoSinonimo(){
 
@@ -37,10 +39,20 @@ public class ControleSinonimo {
             objectMapper = new ObjectMapper();
 
         indice = new HashMap<>();
+        indicePalavras = new HashMap<>();
 
         for(List<String> sinonimos: Objects.requireNonNull(buscaArquivoSinonimo()).getGrupos()){
-            for(String palavra: sinonimos){
-                indice.computeIfAbsent(palavra, k -> new HashSet<>()).addAll(sinonimos);
+            Set<String> brutos = new HashSet<>(sinonimos);              // cru do grupo
+            Set<String> todos = new HashSet<>(sinonimos);
+
+            for (String m : sinonimos) todos.add(Normalizador.stem(m));
+
+            for (String palavra : sinonimos) {
+                String cru = Normalizador.texto(palavra);
+                String radical = Normalizador.stem(palavra);
+                indice.computeIfAbsent(cru, k -> new HashSet<>()).addAll(todos);       // chave cru
+                indice.computeIfAbsent(radical, k -> new HashSet<>()).addAll(todos);   // chave stemmada
+                indicePalavras.computeIfAbsent(cru, k -> new HashSet<>()).addAll(brutos); // so cru
             }
         }
     }
@@ -53,6 +65,10 @@ public class ControleSinonimo {
         Set<String> vizinhos = indice.getOrDefault(a.toLowerCase(), Set.of());
 
         return a.equalsIgnoreCase(b) || vizinhos.contains(b.toLowerCase());
+    }
+
+    public static Set<String> buscaGrupoSinonimo(String palavra){
+        return indicePalavras.getOrDefault(palavra, Set.of());
     }
 
 }
