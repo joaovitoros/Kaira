@@ -7,3 +7,6 @@ out/
 
 # Compiled class files
 *.class
+
+# dados de execução - nunca versionar
+conversas.log

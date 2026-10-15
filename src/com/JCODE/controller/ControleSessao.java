@@ -2,6 +2,7 @@ package com.JCODE.controller;
 
 import com.JCODE.domain.Sessao;
 import com.JCODE.domain.Turno;
+import com.JCODE.util.Registro;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -48,14 +49,17 @@ public class ControleSessao {
     }
 
     public static void topico(String intencao) {
-        if (intencao != null && !intencao.isBlank())
+        if (intencao != null && !intencao.isBlank()) {
             sessao.setTopicoAtual(intencao);
+            Registro.linha("SESSAO    : topico=" + intencao);
+        }
     }
 
     public static String perguntaDeNome() {
         if (sessao.getNomeUsuario() != null || perguntouNome)
             return null;
         perguntouNome = true;
+        Registro.linha("SESSAO    : perguntou o nome");
         return "Como posso te chamar?";
     }
 
@@ -70,6 +74,7 @@ public class ControleSessao {
             Matcher m = p.matcher(fala.trim());
             if (m.find()) {
                 sessao.setNomeUsuario(m.group(1).trim());
+                Registro.linha("SESSAO    : nome=" + sessao.getNomeUsuario());
                 return;
             }
         }
@@ -80,11 +85,14 @@ public class ControleSessao {
             Matcher m = Pattern.compile(regra[1]).matcher(fala.trim());
             if (!m.find())
                 continue;
-            if (m.groupCount() >= 2)
+            if (m.groupCount() >= 2) {
                 // "meu jogo favorito e minecraft" -> chave "jogo favorito"
                 sessao.getFatos().put(m.group(1).trim() + " favorito", m.group(2).trim());
-            else
+                Registro.linha("SESSAO    : fato " + m.group(1).trim() + " favorito=" + m.group(2).trim());
+            } else {
                 sessao.getFatos().put(regra[0], m.group(1).trim());
+                Registro.linha("SESSAO    : fato " + regra[0] + "=" + m.group(1).trim());
+            }
         }
     }
 }

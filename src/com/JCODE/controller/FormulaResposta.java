@@ -1,6 +1,7 @@
 package com.JCODE.controller;
 
 import com.JCODE.util.Normalizador;
+import com.JCODE.util.Registro;
 
 public class FormulaResposta {
 
@@ -10,27 +11,42 @@ public class FormulaResposta {
 
     public static void decifrar(String falaUsuario) {
 
+        Registro.linha("ENTRADA   : " + falaUsuario);
+
         ControleSessao.processa(falaUsuario);
         falaUsuario = Normalizador.texto(falaUsuario);
 
         System.out.println("texto recebido pós replaces "+falaUsuario);
 
         if(!ControleComandos.validaComandos(falaUsuario)){
+            String degrau = "aprender";
             respostaVariavel = ControleResposta.lerResposta(falaUsuario);
+
+            if(respostaVariavel!=null)
+                degrau = "direto";
 
             if(respostaVariavel==null){
                 respostaVariavel = ControleCorrecao.corrigirPalavras(falaUsuario);
+                if(respostaVariavel!=null)
+                    degrau = "corrigida-palavra";
             }
 
             if(respostaVariavel==null){
                 respostaVariavel = ControleCorrecao.corrigirFrases(falaUsuario);
+                if(respostaVariavel!=null)
+                    degrau = "corrigida-frase";
             }
 
             if(respostaVariavel==null){
                 respostaVariavel = ControleResposta.respostaAposta(falaUsuario);
+                if(respostaVariavel!=null)
+                    degrau = "aposta";
             }
 
+            Registro.linha("DEGRAU    : " + degrau);
             criacaoLeituraRespostas(falaUsuario);
+        }else{
+            Registro.linha("DEGRAU    : comando");
         }
 
     }
@@ -55,6 +71,7 @@ public class FormulaResposta {
             bufferFrases=falaUsuario;
             String slot = ControlePreAnalise.preAnalise(falaUsuario).getSlot();
             texto = ControleResposta.respostaFallback(slot);
+            Registro.linha("APRENDENDO: " + falaUsuario + " (slot=" + slot + ")");
         }else{
             texto = resposta;
         }
@@ -64,6 +81,7 @@ public class FormulaResposta {
             texto = texto + " " + chamada;
 
         ControleSessao.anotaResposta(texto);
+        Registro.linha("KAIRA     : " + texto);
         ControleFace.recebeResp(texto);
     }
 

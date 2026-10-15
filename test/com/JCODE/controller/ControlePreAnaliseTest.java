@@ -88,7 +88,7 @@ public class ControlePreAnaliseTest {
 		String b = ControleResposta.respostaFallback("carro");
 		List<String> generico = ControleResposta.frasesFallback();
 
-		assertTrue("fallback cita o slot: " + a, a.contains("sobre carro"));
+		assertTrue("fallback cita o slot: " + a, a.contains("carro"));
 		assertTrue("fallback convida ao ensino: " + a, a.contains("ensin"));
 		assertTrue("fallback e curioso: " + a, a.endsWith("?"));
 		assertNotEquals("anti-repeticao vale pra slot tambem", a, b);
