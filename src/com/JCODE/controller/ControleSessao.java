@@ -19,7 +19,12 @@ public class ControleSessao {
     };
 
     private static final String[][] PADROES_FATO = {
-            {"gosta de", "(?i).*\\bgosto de\\s+([\\p{L}\\s]+?)(?:[.!?]|$)"}
+            {"gosta de",     "(?i).*\\bgosto de\\s+([\\p{L}\\s]+?)(?:[.!?]|$)"},
+            {"mora em",      "(?i).*\\bmor[oa]\\s+em\\s+([\\p{L}\\s]+?)(?:[.!?]|$)"},
+            {"trabalha com", "(?i).*\\btrabalh[oa]\\s+com\\s+([\\p{L}\\s]+?)(?:[.!?]|$)"},
+            {"nasceu em",    "(?i).*\\bnasci\\s+em\\s+([\\p{L}\\s]+?)(?:[.!?]|$)"},
+            {"meu X favorito e Y",
+             "(?i).*\\bmeu\\s+([\\p{L}\\s]+?)\\s+favorit[oa]\\s+(?:é|eh|e)\\s+([\\p{L}\\s]+?)(?:[.!?]|$)"}
     };
 
     public static Sessao get() {
@@ -73,7 +78,12 @@ public class ControleSessao {
     private static void detectaFato(String fala) {
         for (String[] regra : PADROES_FATO) {
             Matcher m = Pattern.compile(regra[1]).matcher(fala.trim());
-            if (m.find())
+            if (!m.find())
+                continue;
+            if (m.groupCount() >= 2)
+                // "meu jogo favorito e minecraft" -> chave "jogo favorito"
+                sessao.getFatos().put(m.group(1).trim() + " favorito", m.group(2).trim());
+            else
                 sessao.getFatos().put(regra[0], m.group(1).trim());
         }
     }

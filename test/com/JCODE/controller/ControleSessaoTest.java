@@ -143,6 +143,29 @@ public class ControleSessaoTest {
 		assertEquals("turno da KAIRA nao conta troca", 25, s.getTurnos());
 	}
 
+	/**
+	 * Expansão curada de fatos (out/2026): mora/trabalha/nasceu + a regra
+	 * de DOIS grupos "meu X favorito é Y" — a chave vem do texto do
+	 * usuário ("jogo favorito"), a tabela não precisa adivinhar.
+	 */
+	@Test
+	public void detectaFatosNovos() {
+		ControleSessao.processa("eu moro em São Paulo");
+		assertEquals("São Paulo", ControleSessao.get().getFatos().get("mora em"));
+
+		ControleSessao.reset();
+		ControleSessao.processa("meu jogo favorito é minecraft");
+		assertEquals("minecraft", ControleSessao.get().getFatos().get("jogo favorito"));
+
+		ControleSessao.reset();
+		ControleSessao.processa("eu trabalho com programação");
+		assertEquals("programação", ControleSessao.get().getFatos().get("trabalha com"));
+
+		ControleSessao.reset();
+		ControleSessao.processa("nasci em Belo Horizonte");
+		assertEquals("Belo Horizonte", ControleSessao.get().getFatos().get("nasceu em"));
+	}
+
 	private Intencao intencao(String nome, String... frases) {
 		Intencao i = new Intencao();
 		i.setIntento(nome);

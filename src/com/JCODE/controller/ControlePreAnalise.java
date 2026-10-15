@@ -14,14 +14,23 @@ public class ControlePreAnalise {
             {"preferencia", "qual .* favorit"},
             {"gosto",        "gosta de"},
             {"opiniao",      "acha d"},
-            {"cumprimento",  "bom dia|boa tarde|boa noite"}
+            {"cumprimento",  "bom dia|boa tarde|boa noite"},
+            {"traducao",     "como se diz|traduz"},
+            {"receita",      "como (se )?faz"},
+            {"hora",         "que horas"},
+            {"clima",        "que tempo faz|tempo hoje"},
+            {"localizacao",  "onde fica"},
+            {"definicao",    "o que e|que significa"},
+            {"idade",        "quantos anos"}
     };
 
     private static final Set<String> RUBRICAS = Set.of(
             "qual", "seu", "sua", "seus", "suas", "favorito", "favorita",
             "gosta", "de", "acha", "do", "da", "o", "que", "voce", "vc",
             "bom", "boa", "dia", "tarde", "noite",
-            "eu", "tu", "meu", "minha", "teu", "tua", "nosso", "nossa");
+            "eu", "tu", "meu", "minha", "teu", "tua", "nosso", "nossa",
+            "como", "se", "faz", "fazer", "diz", "traduz", "horas", "tempo",
+            "hoje", "onde", "fica", "significa", "quantos", "anos");
 
     public static FrameSlot preAnalise(String frase) {
         String texto = Normalizador.texto(frase);

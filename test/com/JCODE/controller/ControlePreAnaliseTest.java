@@ -121,6 +121,29 @@ public class ControlePreAnaliseTest {
 				"preferencia_jogo", m.getIntencao().getIntento());
 	}
 
+	/**
+	 * Expansão curada de frames (out/2026): cada família nova = 1 linha na
+	 * tabela. O slot sempre sai cru e sem as rubricas do frame casado.
+	 */
+	@Test
+	public void preAnaliseCobreFramesNovos() {
+		FrameSlot receita = ControlePreAnalise.preAnalise("como fazer bolo de cenoura");
+		assertEquals("receita", receita.getFrame());
+		assertEquals("bolo cenoura", receita.getSlot());
+
+		FrameSlot traducao = ControlePreAnalise.preAnalise("como se diz hello");
+		assertEquals("traducao", traducao.getFrame());
+		assertEquals("hello", traducao.getSlot());
+
+		FrameSlot local = ControlePreAnalise.preAnalise("onde fica o museu");
+		assertEquals("localizacao", local.getFrame());
+		assertEquals("museu", local.getSlot());
+
+		FrameSlot definicao = ControlePreAnalise.preAnalise("o que é gravidade");
+		assertEquals("definicao", definicao.getFrame());
+		assertEquals("gravidade", definicao.getSlot());
+	}
+
 	/** Fixture: duas intencoes que empatam em score e resto. */
 	private Intencao intencao(String nome, String... frases) {
 		Intencao i = new Intencao();
