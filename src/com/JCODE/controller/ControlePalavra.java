@@ -69,44 +69,23 @@ public class ControlePalavra {
         }
     }
 
-
-
     public static String correcaoPalavra(String compara){
-        double porcentagem = 0;
-        String palavra;
 
-        Map<String, Double> bufferCalc = new HashMap<>();
+        int limiar = (compara.length() <= 4) ? 1 : 2;
 
-        for (int i = 0; i < palavrasCache.size(); i++) {
-            palavra = palavrasCache.get(i);
-            porcentagem = Calculos.calculoPorcentagemPalavra(compara, palavra);
-            if (porcentagem==100) {
-                System.out.println(porcentagem+"/"+ palavra);
-                return palavra;
-            }else if(porcentagem>=70){
-                System.out.println(porcentagem+"/"+ palavra);
+        String melhorPalavra = null;
+        int melhorDistancia = Integer.MAX_VALUE;
 
-                bufferCalc.put(palavra, porcentagem);
-
+        for(String palavra: palavrasCache){
+            int distancia = Calculos.levenshtein(compara, palavra);
+            if(distancia <= limiar && distancia < melhorDistancia){
+                melhorDistancia = distancia;
+                melhorPalavra = palavra;
             }
         }
 
-        List<Map.Entry<String, Double>> entryList = new ArrayList<>(bufferCalc.entrySet());
-
-        Collections.sort(entryList, new Comparator<Map.Entry<String, Double>>() {
-            public int compare(Map.Entry<String, Double> entry1, Map.Entry<String, Double> entry2) {
-                return Double.compare(entry2.getValue(), entry1.getValue());
-            }
-        });
-
-        if(!entryList.isEmpty()) {
-            String melhorPalavra = entryList.get(0).getKey();
-
-            Double melhorPorcentagem = entryList.get(0).getValue();
-
-            if (melhorPorcentagem >= 75)
-                return melhorPalavra;
-        }
+        if(melhorPalavra != null)
+            return melhorPalavra;
 
         return compara;
     }
