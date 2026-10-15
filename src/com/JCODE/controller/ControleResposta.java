@@ -350,7 +350,7 @@ public class ControleResposta {
 			if(!novaFrase.equalsIgnoreCase(""))
 				novaFrase = novaFrase.concat(" ");
 
-			if(sinonimo==null)
+			if(sinonimo==null || (stopwords != null && stopwords.contains(Normalizador.stem(palavra))))
 				novaFrase = novaFrase.concat(palavra);
 			else
 				novaFrase = novaFrase.concat(sinonimo);

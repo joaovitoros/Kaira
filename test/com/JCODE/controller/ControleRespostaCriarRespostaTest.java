@@ -42,10 +42,11 @@ public class ControleRespostaCriarRespostaTest {
 
 	private static final Set<String> GRUPO_VOCE = Set.of("amece", "tu", "voce");
 
-	/** O indice de grupos e REAL; a base de intents nao entra aqui. */
+	/** O indice de grupos e REAL; o carregaCache do ControleResposta poe os stopwords na guarda do CriarResposta. */
 	@Before
 	public void carregaCacheDeSinonimos() {
 		ControleSinonimo.carregaCache();
+		ControleResposta.carregaCache();
 	}
 
 	/** Resposta nula (entrada desconhecida) passa direto - sem explodir. */
@@ -130,5 +131,27 @@ public class ControleRespostaCriarRespostaTest {
 		Set<String> vizinhos = ControleSinonimo.buscaGrupoSinonimo("zxqw");
 		assertNotNull(vizinhos);
 		assertTrue("palavra sem grupo devia devolver set vazio", vizinhos.isEmpty());
+	}
+
+	/**
+	 * Guarda do autor: palavra stopword NAO troca na geracao - o classificador
+	 * ja as ignora (Secao 5.4) e no lado da geracao trocar so arrisca o sentido
+	 * da resposta (nao -> "deixar"/"positivo", de -> "em", mais -> "agora").
+	 *
+	 * Os tres casos sao stopword E tem grupo real, entao sem a guarda o
+	 * sorteio troca de verdade. "mais" ainda exige o lookup na forma canonica
+	 * pos-stem: o set guarda "mai" (stem de "mais"), entao contains("mais")
+	 * cru nao acha e o sorteio mais->agora volta.
+	 */
+	@Test
+	public void stopwordNaoTrocaNaGeracao() {
+		for (int i = 0; i < 30; i++) {
+			assertEquals("'voce' e stopword com grupo {tu, amece} - nao devia trocar",
+					"voce", ControleResposta.CriarResposta("voce"));
+			assertEquals("'nao' e stopword com grupo {deixar, positivo} - nao devia trocar",
+					"nao", ControleResposta.CriarResposta("nao"));
+			assertEquals("'mais' e stopword canonico 'mai' com grupo {agora} - nao devia trocar",
+					"mais", ControleResposta.CriarResposta("mais"));
+		}
 	}
 }
