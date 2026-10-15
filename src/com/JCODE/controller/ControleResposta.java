@@ -92,6 +92,31 @@ public class ControleResposta {
 				.collect(Collectors.toSet());
 	}
 
+	public static Map<String, Double> pesosIdf(Intencoes raiz){
+
+		List<Exemplo> todos = new ArrayList<>();
+		for(Intencao i : raiz.getIntencoes())
+			todos.addAll(i.getExemplos());
+
+		int total = todos.size();
+		Map<String, Double> pesos = new HashMap<>();
+
+		if(total == 0)
+			return pesos;
+
+		for(Exemplo e: todos){
+			for(String palavra: tokensDe(e.getTexto())){
+				pesos.merge(palavra, 1.0, Double::sum);
+			}
+		}
+
+		pesos.replaceAll((palavra, df) ->
+				Math.log(total / Math.max(df, 1.0)));
+
+		return pesos;
+	}
+
+
 	public static String correcaoFrases(String frase){
 		double porcentagem = 0;
 		String palavras;
@@ -269,6 +294,15 @@ public class ControleResposta {
 		if(palavrasEntrada.isEmpty())
 			return null;
 
+		Map<String, Double> pesos = pesosIdf(raiz);
+
+		double n = raiz.getIntencoes().stream().mapToInt(i -> i.getExemplos().size()).sum();
+		double pesoAusente = Math.log(Math.max(n, 1.0));
+
+		double denominador = 0;
+		for (String p : palavrasEntrada)
+			denominador += pesos.getOrDefault(p, pesoAusente);
+
 		Intencao melhorIntencao = null;
 		String melhorFraseIntencao = null;
 		double melhorScore = 0;
@@ -279,7 +313,15 @@ public class ControleResposta {
 				Set<String> palavraFrase = tokensDe(frase.getTexto());
 				long intersecao = palavrasEntrada.stream()
 						.filter(e -> palavraFrase.stream().anyMatch(f -> ControleSinonimo.mesmaPalavra(e,f))).count();
-				double score = (double) intersecao / palavrasEntrada.size();
+				
+				double numerador = 0;
+				for (String e : palavrasEntrada)
+					if (palavraFrase.stream().anyMatch(f -> ControleSinonimo.mesmaPalavra(e, f)))
+						numerador += pesos.getOrDefault(e, pesoAusente);
+
+				double score = denominador == 0
+						? (double) intersecao / palavrasEntrada.size()
+						: numerador / denominador;
 				if (score >= LIMIAR) {
 					if (score > melhorScore) {
 						melhorScore = score;
