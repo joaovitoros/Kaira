@@ -26,7 +26,8 @@ import java.util.Map;
  * "Conversa" com a KAIRA de verdade pelo CASCADE REAL (lerResposta ->
  * corrigirPalavras -> corrigirFrases -> respostaAposta -> fallback), num
  * roteiro LONGO de cotidiano (nome, fatos, musica, filmes, series,
- * curiosidade, typos, frases sem sentido) e gera duas saidas em
+ * curiosidade, esporte, comida, livro, viagem, pet, universo, typos,
+ * frases sem sentido) e gera duas saidas em
  * saidas/:
  *
  * 1. simulacao_conversa.json - o TRACO: cada turno com o degrau que
@@ -80,7 +81,24 @@ public class SimuladorDeConversa {
 			"asdkjhqwe",
 			"quanto tempo voce leva pra ver uma série",
 			"tchau",
-			"até logo"
+			"até logo",
+			// parte 2: temas diversos curados (esporte, comida, livro,
+			// viagem, pet, universo) + um pra ver o limite (festas)
+			"qual seu esporte favorito",
+			"torce pra algum time",
+			"gosto de pizza",
+			"qual sua comida favorita",
+			"me recomenda um livro bom",
+			"gosto de fantasia",
+			"para onde voce viajaria",
+			"vou viajar semana que vem",
+			"tenho um cachorro",
+			"cachorros ou gatos",
+			"existe vida em marte",
+			"gosto de astronomia",
+			"estrelas sao lindas",
+			"natal ou ano novo",
+			"qual seu filme de terror favorito"
 	};
 
 	public static void main(String[] args) throws Exception {
