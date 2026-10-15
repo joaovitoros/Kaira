@@ -28,6 +28,17 @@ public class ControleResposta {
 
 	static Set<String> stopwords;
 
+	private static final List<String> FRASES_FALLBACK = List.of(
+			"Ainda não sei falar disso... me ensina? O que você quis dizer?",
+			"Ainda tô aprendendo isso — me conta o que você quis dizer, e me ensina?",
+			"Essa ainda não sei... me ensina? Quero aprender o que você quis dizer?");
+
+	private static String ultimoFallback = null;
+
+	public static List<String> frasesFallback() {
+		return FRASES_FALLBACK;
+	}
+
 	public static String lerResposta(String falaUsuario) {
 
 		Intencao resposta;
@@ -378,6 +389,19 @@ public class ControleResposta {
 		String aposta = comandosResposta(match.getIntencao());
 
 		return aposta == null ? null : aposta + " Foi isso que você quis dizer?";
+	}
+
+	public static String respostaFallback() {
+		List<String> opcoes = new ArrayList<>(FRASES_FALLBACK);
+		if (ultimoFallback != null)
+			opcoes.remove(ultimoFallback);
+
+		if (opcoes.isEmpty())
+			opcoes = new ArrayList<>(FRASES_FALLBACK);
+
+		String escolhida = opcoes.get(new Random().nextInt(opcoes.size()));
+		ultimoFallback = escolhida;
+		return escolhida;
 	}
 
 	public static List<Intencao> getIntencoes(){

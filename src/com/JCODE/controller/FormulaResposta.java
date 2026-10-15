@@ -51,7 +51,7 @@ public class FormulaResposta {
         if(resposta==null) {
             ativarAprendizado();
             bufferFrases=falaUsuario;
-            ControleFace.recebeResp("Não sei como responder a isso");
+            ControleFace.recebeResp(ControleResposta.respostaFallback());
         }else{
             ControleFace.recebeResp(resposta);
         }
