@@ -6,7 +6,7 @@
 > Escopo: diagnóstico da base atual + roadmap completo até conversação livre
 > Estado do projeto na data deste documento: v0.0.1, ~250 frases, 102 sinônimos, 456 palavras registradas
 >
-> **Atualização de progresso (out/2026):** tarefas já entregues estão com `[x]` e nota com issue/commit. **Fase 0** concluída (menos G6 e Gradle); **Fase 1** concluída (§5.1–§5.7 — a última, frame+slot, na issue #18; §7.3 parcial na #17 e descartados à parte); **Fases 2–5** intactas. Issues #1–#18 fechadas (github.com/joaovitoros/Kaira), 25 commits em `master`, avaliador de regressão 14/14 com 0 gaps.
+> **Atualização de progresso (out/2026):** tarefas já entregues estão com `[x]` e nota com issue/commit. **Fase 0** concluída (menos G6 e Gradle); **Fase 1** concluída (§5.1–§5.7 — a última, frame+slot, na issue #18; §7.3 parcial na #17 e descartados à parte); **Fases 2–5** intactas. Issues #1–#18 fechadas (github.com/joaovitoros/Kaira), 30 commits em `master`, avaliador de regressão 14/14 com 0 gaps.
 
 ---
 
