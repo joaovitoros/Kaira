@@ -412,7 +412,7 @@ class Sessao {
 Substituir o "Não sei como responder a isso" seco:
 
 - [ ] Classificou algo com confiança média → aposta + confirmação: *"Sobre {palavrasChave}, é isso? Ainda tô aprendendo — me responde essa: ..."* — *(degrau da faixa média pronto — issue #16; a frase personalizada com {palavrasChave} e o followup ficam pra §7.1 humor)*
-- [ ] Confiança baixa → honesto + curioso: *"Ainda não sei falar disso... me ensina? O que você quis dizer?"* → cai no modo ensino atual (que já existe e funciona!)
+- [x] Confiança baixa → honesto + curioso: *"Ainda não sei falar disso... me ensina? O que você quis dizer?"* → cai no modo ensino atual (que já existe e funciona!) — *(pool de 3 frases em `FRASES_FALLBACK` + anti-repetição via `ultimoFallback` — issue #17; o modo ensino segue armado no `enviarResposta`)*
 - [ ] Com a pré-análise da [§5.7](#57-pré-análise-frame--slot-tarefa-8) (task #8): quando o **frame** foi reconhecido mas o **slot** é novo, responder "ainda não sei sobre {slot}" em vez do genérico
 - [ ] **Modo ensino turbinado**: ao ensinar, perguntar em qual intenção encaixa (ou criar nova) — em vez de gravar frase solta com assunto "Auto-Aprendizado". O dado coletado passa a alimentar o classificador — *(parcial: o ensino já grava na intenção `auto_aprendizado` estruturada sem mutar o cache — commit b89557d; falta perguntar/encaixar intenção)*
 
@@ -420,7 +420,7 @@ Substituir o "Não sei como responder a isso" seco:
 
 - Elogiar 3× seguidas muda o tom das respostas de forma perceptível
 - KAIRA faz pelo menos 1 pergunta espontânea a cada ~5 turnos
-- Fallback nunca repete duas vezes a mesma frase (anti-repetição simples)
+- Fallback nunca repete duas vezes a mesma frase (anti-repetição simples) — *(entregue — issue #17)*
 
 ---
 
