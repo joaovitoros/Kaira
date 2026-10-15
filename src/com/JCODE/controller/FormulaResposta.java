@@ -33,17 +33,12 @@ public class FormulaResposta {
     public static void criacaoLeituraRespostas(String falaUsuario){
         int decisao = (int) (Math.random()* (4))+1;
         System.out.println("Fator geração resposta nova "+ decisao);
-//        if(decisao>=2){
+        if(decisao>=2){
+            ControleResposta.CriarResposta(respostaVariavel);
+        }
 
-
-
-//        }else{
-//            respostaVariavel = ProcessResposta.CriarResposta(i);
-//            if(ProcessResposta.validaCriacao(indexDeCriacao, respVariavel)){
-//                AtivarCriacao();
-//            }
-//        }
         enviarResposta(respostaVariavel, falaUsuario);
+
 
     }
 
