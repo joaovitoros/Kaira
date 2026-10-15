@@ -6,7 +6,7 @@
 > Escopo: diagnóstico da base atual + roadmap completo até conversação livre
 > Estado do projeto na data deste documento: v0.0.1, ~250 frases, 102 sinônimos, 456 palavras registradas
 >
-> **Atualização de progresso (out/2026):** tarefas já entregues estão com `[x]` e nota com issue/commit. **Fase 0** concluída (menos G6 e Gradle); **Fase 1** concluída (§5.1–§5.7 — a última, frame+slot, na issue #18; §7.3 parcial na #17 e descartados à parte); **Fases 2–5** intactas. Issues #1–#18 fechadas (github.com/joaovitoros/Kaira), 30 commits em `master`, avaliador de regressão 14/14 com 0 gaps.
+> **Atualização de progresso (out/2026):** tarefas já entregues estão com `[x]` e nota com issue/commit. **Fase 0** concluída (menos G6 e Gradle); **Fase 1** concluída (§5.1–§5.7 — a última, frame+slot, na issue #18; §7.3 parcial na #17 e descartados à parte); **Fase 2 em andamento** (§6.1 em memória na issue #19 — persistência na #20); **Fases 3–5** intactas. Issues #1–#19 fechadas (github.com/joaovitoros/Kaira), 32 commits em `master`, avaliador de regressão 14/14 com 0 gaps.
 
 ---
 
@@ -362,10 +362,10 @@ class Sessao {
 }
 ```
 
-- [ ] Detectar **nome**: regex simples sobre padrões `"meu nome é X"`, `"me chamo X"`, `"sou o X"`, `"pode me chamar de X"` — e perguntar "Como posso te chamar?" no primeiro uso
-- [ ] Detectar **fatos sobre o usuário** com pares pergunta/resposta da conversa: usuário diz "eu gosto de minecraft" → `fatos.put("gosta de", "minecraft")`. Nas próximas conversas: "Você me disse que gosta de minecraft — ainda joga?"
-- [ ] **Tópico atual**: guardado a cada intenção classificada; usado para desempate e para "sobre isso?"
-- [os] Persistir sessão entre execuções (`sessao.json` na pasta de dados) — "Bem-vindo de volta, João!" ao reabrir
+- [x] Detectar **nome**: regex simples sobre padrões `"meu nome é X"`, `"me chamo X"`, `"sou o X"`, `"pode me chamar de X"` — e perguntar "Como posso te chamar?" no primeiro uso — *(issue #19: `ControleSessao` — 4 `Pattern`s na grafia **crua** do usuário, "sou" ancorado no início da frase; a pergunta sai uma vez só no 1º turno, e nunca se o nome já foi extraído)*
+- [x] Detectar **fatos sobre o usuário** com pares pergunta/resposta da conversa: usuário diz "eu gosto de minecraft" → `fatos.put("gosta de", "minecraft")`. Nas próximas conversas: "Você me disse que gosta de minecraft — ainda joga?" — *(issue #19: tabela `{chave, regex}` com 1 regra na v1; **usar** os fatos nas respostas é a §6.3 — a estrutura cresce como a tabela de frames)*
+- [x] **Tópico atual**: guardado a cada intenção classificada; usado para desempate e para "sobre isso?" — *(issue #19: hook no `melhorIntencaoDetalhado` — última intenção significativa, match `null` não limpa; o uso no ranking vem no futuro)*
+- [ ] Persistir sessão entre execuções (`sessao.json` na pasta de dados) — "Bem-vindo de volta, João!" ao reabrir — *(issue #20 — **próxima da fila**; fecha o critério "fechar e reabrir → cumprimenta pelo nome e retoma o tópico")*
 
 ### 6.2 Histórico visível (corrige G5)
 
