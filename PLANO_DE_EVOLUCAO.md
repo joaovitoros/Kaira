@@ -6,7 +6,7 @@
 > Escopo: diagnóstico da base atual + roadmap completo até conversação livre
 > Estado do projeto na data deste documento: v0.0.1, ~250 frases, 102 sinônimos, 456 palavras registradas
 >
-> **Atualização de progresso (out/2026):** tarefas já entregues estão com `[x]` e nota com issue/commit. **Fase 0** concluída (menos G6 e Gradle); **Fase 1** praticamente concluída (§5.1–§5.6 ok, §5.7 liberada — próxima da fila); **Fases 2–5** intactas. Issues #1–#16 fechadas (github.com/joaovitoros/Kaira), 23 commits em `master`, avaliador de regressão 14/14 com 0 gaps.
+> **Atualização de progresso (out/2026):** tarefas já entregues estão com `[x]` e nota com issue/commit. **Fase 0** concluída (menos G6 e Gradle); **Fase 1** concluída (§5.1–§5.7 — a última, frame+slot, na issue #18; §7.3 parcial na #17 e descartados à parte); **Fases 2–5** intactas. Issues #1–#18 fechadas (github.com/joaovitoros/Kaira), 25 commits em `master`, avaliador de regressão 14/14 com 0 gaps.
 
 ---
 
@@ -323,11 +323,12 @@ Matar o G2. Não trocar a palavra do usuário — em vez disso, duas palavras ca
 
 Ideia do autor: antes de buscar na base, decompor a frase em **frame** (a estrutura/molde) e **slot** (o termo de conteúdo). Ex.: "qual seu **carro** favorito?" e "qual seu **jogo** favorito?" são o **mesmo frame** (`qual seu X favorito`); o slot muda (`carro` vs `jogo`). Como a KAIRA conhece o frame pelo jogo, ela sabe que é uma **pergunta de preferência** mesmo nunca tendo visto "carro".
 
-- [ ] **Marcadores são frase-modelo, não palavra solta**: `qual...favorito`, `voce gosta de`, `o que acha do`, `bom/boa dia/tarde/noite` (cumprimento de família). "qual/quando/como" isolado → PERGUNTA genérica é fraco (quase tudo é pergunta no banco)
-- [ ] **O mecanismo é o §5.4 (stopwords)**: remover `qual/seu/de/favorito` isola o conteúdo (`carro`). Esta seção é o §5.4 + §5.2 juntos, separando **frame** de **slot** em vez de só indexar palavra-chave
-- [ ] **Rodar ANTES, mas como SINAL — nunca como portão**: o frame é calculado logo de cara e entra como **peso/desempate** no ranking da cobertura, sem barrar a busca geral. Se o frame erra, a cobertura ainda roda plena e pode achar — nunca regride o que a #7 conquistou
-- [ ] **Fallback informado** (quase nunca há resposta pro slot novo): em vez do "Não sei como responder a isso" seco, dizer **"ainda não sei sobre {slot}"** (ex.: "ainda não sei sobre carro"). Evolui o fallback da [§7.3](#73-fallbacks-inteligentes)
-- [ ] O frame já calculado fica disponível pra **decidir o caminho** no futuro (contexto prévio)
+- [x] **Marcadores são frase-modelo, não palavra solta**: `qual...favorito`, `voce gosta de`, `o que acha do`, `bom/boa dia/tarde/noite` (cumprimento de família). "qual/quando/como" isolado → PERGUNTA genérica é fraco (quase tudo é pergunta no banco) — *(issue #18: tabela curada de 4 famílias casadas por regex de 2+ palavras — `qual .* favorit` · `gosta de` · `acha d` · `bom dia|boa tarde|boa noite`)*
+- [x] **O mecanismo é o §5.4 (stopwords)**: remover `qual/seu/de/favorito` isola o conteúdo (`carro`). Esta seção é o §5.4 + §5.2 juntos, separando **frame** de **slot** em vez de só indexar palavra-chave — *(issue #18: `ControlePreAnalise.preAnalise` — slot = palavras de conteúdo sem stopword/pronomes/rubricas, na forma **crua** do usuário; "qual seu carro favorito" → frame `preferencia`, slot `carro`)*
+- [x] **Rodar ANTES, mas como SINAL — nunca como portão**: o frame é calculado logo de cara e entra como **peso/desempate** no ranking da cobertura, sem barrar a busca geral. Se o frame erra, a cobertura ainda roda plena e pode achar — nunca regride o que a #7 conquistou — *(issue #18: desempate de 3º nível no `melhorIntencaoDetalhado` (`vencePorFrame`): só age em empate exato de score **e** resto; sem frame na entrada = comportamento byte a byte o anterior — avaliador 14/14 confirma zero regressão)*
+- [x] **Fallback informado** (quase nunca há resposta pro slot novo): em vez do "Não sei como responder a isso" seco, dizer **"ainda não sei sobre {slot}"** (ex.: "ainda não sei sobre carro"). Evolui o fallback da [§7.3](#73-fallbacks-inteligentes) — *(issue #18: sobrecarga `respostaFallback(String slot)` + pool `FRASES_FALLBACK_SLOT` com `{slot}` pré-preenchido — mesma alma da #17 (honesto + curioso + `ensin` + `?`) e anti-repetição compartilhada; slot vazio cai no pool genérico)*
+- [x] O frame já calculado fica disponível pra **decidir o caminho** no futuro (contexto prévio) — *(`ControlePreAnalise.preAnalise` é público; quem vai usá-lo pra decidir caminho é a Sessão da §6.1)*
+- [ ] **Expandir a tabela de frames com o uso real** — os slots e frames que repetem no `auto_aprendizado` são a mina de padrões: cada frame novo = 1 linha em `FRAMES` (+ rubricas associadas) — *(backlog contínuo, sugerido pelo autor em out/2026 — a tabela atual é curada de propósito, não é parser)*
 
 ### Critérios de aceite
 
@@ -338,7 +339,7 @@ Ideia do autor: antes de buscar na base, decompor a frase em **frame** (a estrut
 | "ola tud bem" (typo) | intenção `cumprimentar` com confiança razoável |
 | "você gosta de música?" e "voce curte musica?" | **mesma** intenção |
 | "qual seu jogo favorito" e "qual seu jogo preferido" | mesma intenção ("favorito" e "preferido" no mesmo grupo) |
-| frase sem relação com nada | fallback honesto (não resposta aleatória) |
+| frase sem relação com nada | fallback honesto com slot quando há conteúdo: **"Ainda não sei sobre {slot}... me ensina?"**; sem conteúdo, o pool genérico (#18) |
 
 ---
 
