@@ -24,6 +24,8 @@ public class ControleResposta {
 
 	private static final double LIMIAR = 0.6;
 
+	private static final double LIMIAR_MEDIA = 0.3;
+
 	static Set<String> stopwords;
 
 	public static String lerResposta(String falaUsuario) {
@@ -289,6 +291,20 @@ public class ControleResposta {
 	}
 
 	public static Map<String, Intencao> melhorIntencao(Intencoes raiz, String entradaNormalizada){
+
+		MatchIntencao match = melhorIntencaoDetalhado(raiz, entradaNormalizada);
+
+		if(match == null || match.getScore() < LIMIAR)
+			return null;
+
+		Map<String, Intencao> retorno = new HashMap<>();
+
+		retorno.put(match.getFrase(), match.getIntencao());
+
+		return retorno;
+	}
+
+	public static MatchIntencao melhorIntencaoDetalhado(Intencoes raiz, String entradaNormalizada){
 		Set<String> palavrasEntrada = tokensDe(entradaNormalizada);
 
 		if(palavrasEntrada.isEmpty())
@@ -305,7 +321,7 @@ public class ControleResposta {
 
 		Intencao melhorIntencao = null;
 		String melhorFraseIntencao = null;
-		double melhorScore = 0;
+		double melhorScore = -1;
 
 		for(Intencao intencao: raiz.getIntencoes()){
 
@@ -322,33 +338,46 @@ public class ControleResposta {
 				double score = denominador == 0
 						? (double) intersecao / palavrasEntrada.size()
 						: numerador / denominador;
-				if (score >= LIMIAR) {
-					if (score > melhorScore) {
+
+				if (score > melhorScore) {
+					melhorScore = score;
+					melhorFraseIntencao = frase.getTexto();
+					melhorIntencao = intencao;
+				} else if (score == melhorScore) {
+					long restoAnterior = tokensDe(melhorFraseIntencao).stream()
+							.filter(f -> !palavrasEntrada.stream().anyMatch(e -> ControleSinonimo.mesmaPalavra(e,f))).count();
+					long resto = palavraFrase.stream()
+							.filter(f -> !palavrasEntrada.stream().anyMatch(e -> ControleSinonimo.mesmaPalavra(e,f))).count();
+
+					if (resto < restoAnterior) {
 						melhorScore = score;
 						melhorFraseIntencao = frase.getTexto();
 						melhorIntencao = intencao;
-					} else if (score == melhorScore) {
-						long restoAnterior = tokensDe(melhorFraseIntencao).stream()
-								.filter(f -> !palavrasEntrada.stream().anyMatch(e -> ControleSinonimo.mesmaPalavra(e,f))).count();
-						long resto = palavraFrase.stream()
-								.filter(f -> !palavrasEntrada.stream().anyMatch(e -> ControleSinonimo.mesmaPalavra(e,f))).count();
-
-						if (resto < restoAnterior) {
-							melhorScore = score;
-							melhorFraseIntencao = frase.getTexto();
-							melhorIntencao = intencao;
-						}
 					}
+
 				}
 			}
 		}
 
-		Map<String, Intencao> retorno = new HashMap<>();
+		return melhorIntencao == null ? null : new MatchIntencao(melhorFraseIntencao, melhorIntencao, melhorScore);
+	}
 
-		if(melhorScore >= LIMIAR)
-			retorno.put(melhorFraseIntencao, melhorIntencao) ;
+	public static String respostaAposta(String entradaNormalizada) {
+		if (intencoesCache == null)
+			carregaCache();
 
-		return !retorno.isEmpty() ? retorno : null;
+		return respostaAposta(intencoesCache, entradaNormalizada);
+	}
+
+	public static String respostaAposta(Intencoes raiz, String entradaNormalizada){
+		MatchIntencao match = melhorIntencaoDetalhado(raiz, entradaNormalizada);
+
+		if(match == null || match.getScore() < LIMIAR_MEDIA || match.getScore() >= LIMIAR)
+			return null;
+
+		String aposta = comandosResposta(match.getIntencao());
+
+		return aposta == null ? null : aposta + " Foi isso que você quis dizer?";
 	}
 
 	public static List<Intencao> getIntencoes(){
