@@ -4,6 +4,7 @@ import com.JCODE.controller.ControleFace;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import java.awt.Color;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -37,12 +38,11 @@ public class Face extends JFrame {
 		contentPane.add(textFieldKairaNome);
 		textFieldKairaNome.setColumns(10);
 		
-		JTextArea textAreaKaira = new JTextArea();
-		textAreaKaira.setLineWrap(true);
-		textAreaKaira.setWrapStyleWord(true);
-		textAreaKaira.setEditable(false);
+		JTextPane areaConversa = new JTextPane();
+		areaConversa.setEditable(false);
+		areaConversa.setBackground(Color.WHITE);
 
-		JScrollPane scrollKaira = new JScrollPane(textAreaKaira);
+		JScrollPane scrollKaira = new JScrollPane(areaConversa);
 		scrollKaira.setBounds(10, 42, 554, 255);
 		contentPane.add(scrollKaira);
 		
@@ -62,7 +62,7 @@ public class Face extends JFrame {
 		btnSinalizar.setBounds(134, 10, 44, 23);
 		contentPane.add(btnSinalizar);
 		
-		ControleFace contface = new ControleFace(textAreaKaira, textAreaUsuario, btnSinalizar);
+		ControleFace contface = new ControleFace(areaConversa, textAreaUsuario, btnSinalizar);
 		
 		btnEnviar.addActionListener(contface);
 		
