@@ -51,7 +51,8 @@ public class FormulaResposta {
         if(resposta==null) {
             ativarAprendizado();
             bufferFrases=falaUsuario;
-            ControleFace.recebeResp(ControleResposta.respostaFallback());
+            String slot = ControlePreAnalise.preAnalise(falaUsuario).getSlot();
+            ControleFace.recebeResp(ControleResposta.respostaFallback(slot));
         }else{
             ControleFace.recebeResp(resposta);
         }

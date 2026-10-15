@@ -33,6 +33,11 @@ public class ControleResposta {
 			"Ainda tô aprendendo isso — me conta o que você quis dizer, e me ensina?",
 			"Essa ainda não sei... me ensina? Quero aprender o que você quis dizer?");
 
+	private static final List<String> FRASES_FALLBACK_SLOT = List.of(
+			"Ainda não sei sobre {slot}... me ensina? O que você quis dizer?",
+			"Ainda tô aprendendo sobre {slot} — me conta o que você quis dizer, e me ensina?",
+			"Essa parte de {slot} ainda não sei... me ensina? Quero aprender o que você quis dizer?");
+
 	private static String ultimoFallback = null;
 
 	public static List<String> frasesFallback() {
@@ -364,6 +369,11 @@ public class ControleResposta {
 						melhorScore = score;
 						melhorFraseIntencao = frase.getTexto();
 						melhorIntencao = intencao;
+					} else if (resto == restoAnterior
+							&& vencePorFrame(entradaNormalizada, melhorFraseIntencao, frase.getTexto())) {
+						melhorScore = score;
+						melhorFraseIntencao = frase.getTexto();
+						melhorIntencao = intencao;
 					}
 
 				}
@@ -371,6 +381,15 @@ public class ControleResposta {
 		}
 
 		return melhorIntencao == null ? null : new MatchIntencao(melhorFraseIntencao, melhorIntencao, melhorScore);
+	}
+
+	private static boolean vencePorFrame(String entrada, String atual, String candidata) {
+		String frameEntrada = ControlePreAnalise.preAnalise(entrada).getFrame();
+		if (frameEntrada == null)
+			return false;
+		if (frameEntrada.equals(ControlePreAnalise.preAnalise(atual).getFrame()))
+			return false;
+		return frameEntrada.equals(ControlePreAnalise.preAnalise(candidata).getFrame());
 	}
 
 	public static String respostaAposta(String entradaNormalizada) {
@@ -398,6 +417,22 @@ public class ControleResposta {
 
 		if (opcoes.isEmpty())
 			opcoes = new ArrayList<>(FRASES_FALLBACK);
+
+		String escolhida = opcoes.get(new Random().nextInt(opcoes.size()));
+		ultimoFallback = escolhida;
+		return escolhida;
+	}
+
+	public static String respostaFallback(String slot) {
+		if (slot == null || slot.isBlank())
+			return respostaFallback();
+
+		List<String> opcoes = new ArrayList<>();
+		for (String template : FRASES_FALLBACK_SLOT)
+			opcoes.add(template.replace("{slot}", slot));
+
+		if (ultimoFallback != null)
+			opcoes.remove(ultimoFallback);
 
 		String escolhida = opcoes.get(new Random().nextInt(opcoes.size()));
 		ultimoFallback = escolhida;
