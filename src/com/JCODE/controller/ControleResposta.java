@@ -380,7 +380,11 @@ public class ControleResposta {
 			}
 		}
 
-		return melhorIntencao == null ? null : new MatchIntencao(melhorFraseIntencao, melhorIntencao, melhorScore);
+		if (melhorIntencao == null)
+			return null;
+
+		ControleSessao.topico(melhorIntencao.getIntento());
+		return new MatchIntencao(melhorFraseIntencao, melhorIntencao, melhorScore);
 	}
 
 	private static boolean vencePorFrame(String entrada, String atual, String candidata) {

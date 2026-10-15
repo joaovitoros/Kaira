@@ -10,6 +10,7 @@ public class FormulaResposta {
 
     public static void decifrar(String falaUsuario) {
 
+        ControleSessao.processa(falaUsuario);
         falaUsuario = Normalizador.texto(falaUsuario);
 
         System.out.println("texto recebido pós replaces "+falaUsuario);
@@ -48,14 +49,22 @@ public class FormulaResposta {
 
     public static void enviarResposta(String resposta, String falaUsuario) {
 
+        String texto;
         if(resposta==null) {
             ativarAprendizado();
             bufferFrases=falaUsuario;
             String slot = ControlePreAnalise.preAnalise(falaUsuario).getSlot();
-            ControleFace.recebeResp(ControleResposta.respostaFallback(slot));
+            texto = ControleResposta.respostaFallback(slot);
         }else{
-            ControleFace.recebeResp(resposta);
+            texto = resposta;
         }
+
+        String chamada = ControleSessao.perguntaDeNome();
+        if (chamada != null)
+            texto = texto + " " + chamada;
+
+        ControleSessao.anotaResposta(texto);
+        ControleFace.recebeResp(texto);
     }
 
     public static void ativarAprendizado(){
