@@ -6,7 +6,7 @@
 > Escopo: diagnóstico da base atual + roadmap completo até conversação livre
 > Estado do projeto na data deste documento: v0.0.1, ~250 frases, 102 sinônimos, 456 palavras registradas
 >
-> **Atualização de progresso (out/2026):** tarefas já entregues estão com `[x]` e nota com issue/commit. **Fase 0** concluída (menos G6 e Gradle); **Fase 1** concluída (§5.1–§5.7 — a última, frame+slot, na issue #18; §7.3 parcial na #17 e descartados à parte); **Fase 2 em andamento** (§6.1 em memória na issue #19 — persistência na #20); **Fases 3–5** intactas. Issues #1–#19 fechadas (github.com/joaovitoros/Kaira), 32 commits em `master`, avaliador de regressão 14/14 com 0 gaps.
+> **Atualização de progresso (out/2026):** tarefas já entregues estão com `[x]` e nota com issue/commit. **Fase 0** concluída (menos G6 e Gradle); **Fase 1** concluída (§5.1–§5.7 — a última, frame+slot, na issue #18; §7.3 parcial na #17 e descartados à parte); **Fase 2 em andamento** (§6.1 em memória na issue #19 — persistência na #20); **Fases 3–5** intactas. Issues #1–#19 fechadas (github.com/joaovitoros/Kaira), 44 commits em `master`, avaliador de regressão 14/14 com 0 gaps. **Trabalhos laterais entregues por commits diretos (sem issue):** tabelas de frames/fatos ampliadas, curadoria contínua da base (36→54 intenções, ciclos A/B), chat em balões, `conversas.log` + simulador de conversa (§6.2 opcional) e specs `RegistroTest`/`CuradoriaTemasTest`. **Ideias em estudo** anotadas na §12.
 
 ---
 
@@ -372,7 +372,7 @@ class Sessao {
 
 - [x] `textAreaLoli.append(...)` em vez de `setText` — o chat vira um log real — *(issue #1; teste ControleFaceTest)*
 - [ ] Auto-scroll para o fim; separador visual entre turnos
-- [ ] (Opcional) `conversas.log` com timestamp — dados para análise futura e para treinar/tunar
+- [x] (Opcional) `conversas.log` com timestamp — dados para análise futura e para treinar/tunar — *(entregue nos commits laterais: `Registro.linha` nos ganchos de decifrar/resposta/sessão, coberto por `RegistroTest`, arquivo no `.gitignore`)*
 
 ### 6.3 Slots nas respostas
 
