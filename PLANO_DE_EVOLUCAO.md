@@ -30,10 +30,11 @@
 9. [Fase 5 — IA de verdade (LLM)](#9-fase-5--ia-de-verdade-llm)
 10. [Top 5 ações imediatas](#10-top-5-ações-imediatas)
 11. [Alimentando a base de dados](#11-alimentando-a-base-de-dados)
-12. [Apêndice A — Esquema JSON proposto](#apêndice-a--esquema-json-proposto)
-13. [Apêndice B — Exemplos de código](#apêndice-b--exemplos-de-código)
-14. [Apêndice C — Esforço estimado](#apêndice-c--esforço-estimado)
-15. [Apêndice D — Checklist de decisões](#apêndice-d--checklist-de-decisões)
+12. [Ideias em estudo (backlog)](#12-ideias-em-estudo-backlog)
+13. [Apêndice A — Esquema JSON proposto](#apêndice-a--esquema-json-proposto)
+14. [Apêndice B — Exemplos de código](#apêndice-b--exemplos-de-código)
+15. [Apêndice C — Esforço estimado](#apêndice-c--esforço-estimado)
+16. [Apêndice D — Checklist de decisões](#apêndice-d--checklist-de-decisões)
 
 ---
 
@@ -541,6 +542,25 @@ Escrever por **categoria de intenção**, com checklist de cobertura. Mínimo pa
 - **Corpus do projeto Chatterbot** — tem categoria de saudações em português (verificar estado atual do repositório; o projeto foi descontinuado, mas os YAMLs continuam úteis)
 - **Transcrições TED (PT)** — linguagem mais formal; útil para perguntas factuais, não para papo
 - **Seu próprio `conversas.log`** (Fase 2) — com tempo, a melhor fonte de todas: são as conversas *reais* com a KAIRA
+
+---
+
+## 12. Ideias em estudo (backlog)
+
+> Brainstorm do usuário (out/2026), anotado sem detalhar — forma e ordem a decidir depois. Nenhuma virou issue; a **#20 continua reservada pra persistência** (§6.1).
+
+### 12.1 Contexto antes das intenções + dicionário de conhecimentos
+
+- Na hora de responder, a KAIRA deveria olhar o **contexto** (tópico/história da sessão) **antes** de ir pra cascata de intenções.
+- Encher a base de frases prontas não resolve no longo prazo (mesma conclusão do diagnóstico do §2: *"adicionar mais frases soltas não resolve, só escala o problema"*). O que faltaria: uma **base grande de conhecimentos, tipo dicionário** — termo → texto longo sobre o tema.
+- Com uma lógica de transformação (ideia: usar a lista de **stopwords** como base da extração — lógica ainda a pensar), virar o texto longo numa **frase simples**; se o usuário pedir explicação maior, aí devolver o texto inteiro.
+- Encaixes já existentes: `conhecimento_*` (4 intents de frases prontas = mini-dicionário de hoje); `palavras.json`/`ControlePalavra` é dicionário de *palavras* pra correção (outro papel); `stopwords.json` + pesos IDF (`ControleRespostaPesosIdf`) são a infra pronta pra pontuar conteúdo; parecido com §8 (geração própria) e §9 (LLM) — decidir se é regra própria ou skill.
+
+### 12.2 Continuação por contexto ("conte-me mais sobre isso")
+
+- Frase como "conte-me mais sobre isso" não tem frase-fato própria: a KAIRA olharia o `topicoAtual` (existe desde a #19), veria que o último tópico era X e montaria a resposta sobre X (puxando do dicionário da 12.1).
+- "Montar uma frase inacabada" = resposta **por fragmentos**, não frase inteira pronta — linha já prevista no plano: respostas compostas `[reação ao tópico] + [followup]` (§7.1 e o checklist de `followups` do §6).
+- Encaixes prontos: `Sessao.topicoAtual`/`historico` (issue #19); desempate por contexto (pendência do §5.1); campo `followups` existe no esquema **sem uso**; placeholders `{topico}` (pendência do §6).
 
 ---
 
