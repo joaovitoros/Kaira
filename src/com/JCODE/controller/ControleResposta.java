@@ -15,6 +15,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalTime;
 import java.util.*;
+import java.util.function.IntUnaryOperator;
 import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -43,6 +44,9 @@ public class ControleResposta {
 			"Essa parte de {slot} ainda não sei... me ensina? Quero aprender o que você quis dizer?");
 
 	private static String ultimoFallback = null;
+
+	/** #35 - gancho de sorteio: teste injeta ordem deterministica (refactor). */
+	static IntUnaryOperator semeador = n -> (int) (Math.random() * n);
 
 	// #26 (briefing P7.2) - cache de IDF e de tokens por base: a base so
 	// muda no carregaCache (instancia nova -> rebuild por identidade) ou
@@ -75,7 +79,7 @@ public class ControleResposta {
 
 		int qtdRespostas = respostas.size();
 
-		int escolha = (int) (Math.random() * (qtdRespostas));
+		int escolha = semeador.applyAsInt(qtdRespostas);
 
 		return respostas.get(escolha);
 
@@ -296,7 +300,8 @@ public class ControleResposta {
 		return faixa.isEmpty() ? pool : faixa;
 	}
 
-	private static String comandosResposta(Intencao resposta){
+	// #35 - package-private: spec chama direto (fixture isolada)
+	static String comandosResposta(Intencao resposta){
 
 		if(resposta==null)
 			return null;
