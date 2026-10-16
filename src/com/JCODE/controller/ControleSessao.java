@@ -25,6 +25,9 @@ public class ControleSessao {
     private static final String ARQUIVO_SESSAO = "sessao.json";
 
     private static int turnosDesdePergunta = 0;
+    // #28 - turno em que o usuario pediu continuacao: o pool generico
+    // do §7.2 fica de fora (o followup do topico passa)
+    private static boolean turnoDeContinuacao = false;
     private static String ultimoInteresse = null;
 
     private static final int TURNOS_SEM_PERGUNTA = 3;
@@ -77,6 +80,7 @@ public class ControleSessao {
         perguntouNome = false;
         nomeCapturado = false;
         turnosDesdePergunta = 0;
+        turnoDeContinuacao = false;
         ultimoInteresse = null;
     }
 
@@ -85,6 +89,8 @@ public class ControleSessao {
             return;
 
         nomeCapturado = false;
+        // #28 - a flag do pedido vive so o turno atual
+        turnoDeContinuacao = false;
         turnosDesdePergunta++;
         detectaNome(falaUsuario);
         detectaFato(falaUsuario);
@@ -99,6 +105,11 @@ public class ControleSessao {
             sessao.setTopicoAtual(intencao);
             Registro.linha("SESSAO    : topico=" + intencao);
         }
+    }
+
+    /** #28 - o usuario pediu pra ela falar; perguntaInteresse segura o pool. */
+    public static void pedeContinuacao() {
+        turnoDeContinuacao = true;
     }
 
     public static String perguntaDeNome() {
@@ -253,6 +264,13 @@ public class ControleSessao {
                     return sorteia(i.getFollowups());
                 }
             }
+        }
+
+        // #28 - no turno de continuacao a fonte 2 (pool) fica de fora:
+        // ela fica com o turno - a fonte 1 do topico ja passou la em cima
+        if (turnoDeContinuacao) {
+            Registro.linha("SESSAO    : interesse segurado (turno de continuacao)");
+            return null;
         }
 
         // fonte 2 - pool generico
