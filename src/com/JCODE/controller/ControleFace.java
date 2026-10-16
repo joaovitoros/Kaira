@@ -44,7 +44,7 @@ public class ControleFace implements ActionListener{
 	 * sobrescrever as anteriores. A resposta nula (ainda sem match) e
 	 * ignorada para nao poluir a conversa.
 	 */
-	static void exibirResposta(String texto) {
+	public static void exibirResposta(String texto) {
 		if(texto==null)
 			return;
 		balao(false, texto);

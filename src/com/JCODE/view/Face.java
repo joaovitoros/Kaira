@@ -1,6 +1,7 @@
 package com.JCODE.view;
 
 import com.JCODE.controller.ControleFace;
+import com.JCODE.controller.ControleSessao;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -63,6 +64,17 @@ public class Face extends JFrame {
 		contentPane.add(btnSinalizar);
 		
 		ControleFace contface = new ControleFace(areaConversa, textAreaUsuario, btnSinalizar);
+
+		String bemVindo = ControleSessao.boasVindas();
+		if (bemVindo != null)
+			ControleFace.exibirResposta(bemVindo);
+
+		addWindowListener(new java.awt.event.WindowAdapter() {
+			@Override
+			public void windowClosing(java.awt.event.WindowEvent e) {
+				ControleSessao.gravaSessao();
+			}
+		});
 		
 		btnEnviar.addActionListener(contface);
 		

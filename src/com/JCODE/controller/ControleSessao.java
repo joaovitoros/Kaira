@@ -2,8 +2,14 @@ package com.JCODE.controller;
 
 import com.JCODE.domain.Sessao;
 import com.JCODE.domain.Turno;
+import com.JCODE.util.Caminhos;
 import com.JCODE.util.Registro;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,6 +17,8 @@ public class ControleSessao {
 
     private static Sessao sessao = new Sessao();
     private static boolean perguntouNome = false;
+
+    private static final String ARQUIVO_SESSAO = "sessao.json";
 
     private static final Pattern[] PADROES_NOME = {
             Pattern.compile("(?i)meu nome (?:é|eh|e)\\s+([\\p{L}]+(?:\\s+[\\p{L}]+){0,2})"),
@@ -67,6 +75,49 @@ public class ControleSessao {
         if (texto == null)
             return;
         sessao.anota(new Turno("kaira", texto));
+    }
+
+    public static void gravaSessao() {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+            Path arquivo = Caminhos.base().resolve(ARQUIVO_SESSAO);
+            mapper.writerWithDefaultPrettyPrinter().writeValue(arquivo.toFile(), sessao);
+            Registro.linha("SESSAO    : gravada em " + arquivo.getFileName());
+        } catch (Exception e) {
+            Registro.linha("SESSAO    : falha ao gravar sessao.json (" + e.getMessage() + ")");
+        }
+    }
+
+    public static boolean carregaSessao() {
+        Path arquivo = Caminhos.base().resolve(ARQUIVO_SESSAO);
+        if (!Files.exists(arquivo))
+            return false;
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+            Sessao restaurada = mapper.readValue(arquivo.toFile(), Sessao.class);
+            if (restaurada == null)
+                return false;
+            sessao = restaurada;
+            while (sessao.getHistorico().size() > Sessao.MAX_HISTORICO)
+                sessao.getHistorico().remove(0);
+            Registro.linha("SESSAO    : carregada de sessao.json (nome=" + sessao.getNomeUsuario() + ")");
+            return true;
+        } catch (Exception e) {
+            reset();
+            Registro.linha("SESSAO    : sessao.json corrompido, sessao nova");
+            return false;
+        }
+    }
+
+    public static String boasVindas() {
+        if (sessao.getNomeUsuario() == null)
+            return null;
+        String mensagem = "Bem-vindo de volta, " + sessao.getNomeUsuario() + "!";
+        if (sessao.getTopicoAtual() != null && !sessao.getTopicoAtual().isBlank())
+            mensagem += " A gente tava falando sobre " + sessao.getTopicoAtual() + ".";
+        return mensagem;
     }
 
     private static void detectaNome(String fala) {

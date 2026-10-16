@@ -52,7 +52,7 @@ public class ControleSessaoPersistenciaTest {
 
 	/** O estado aprendido sai pro arquivo de dados, em UTF-8 (João != Joao). */
 	@Test
-	public void gravaSessaoCriaArquivoComAcentos() {
+	public void gravaSessaoCriaArquivoComAcentos() throws Exception {
 		ControleSessao.processa("meu nome é João");
 		ControleSessao.topico("musica");
 		ControleSessao.gravaSessao();
