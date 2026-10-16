@@ -48,6 +48,7 @@ public class ControleFace implements ActionListener{
 		if(texto==null)
 			return;
 		balao(false, texto);
+		fimDeTurno();   // §6.2: separador entre turnos
 	}
 
 	/**
@@ -77,6 +78,23 @@ public class ControleFace implements ActionListener{
 				(javax.swing.text.html.HTMLDocument) areaConversa.getDocument();
 		try {
 			kit.insertHTML(doc, doc.getLength(), html, 0, 0, null);
+		} catch (BadLocationException | IOException e) {
+			// apresentacao nunca derruba o chat
+			e.printStackTrace();
+		}
+		areaConversa.setCaretPosition(doc.getLength());
+	}
+
+	/**
+	 * §6.2: regua visual de fim de turno - depois da resposta da KAIRA.
+	 * O cursor vai pro fim junto (auto-scroll por turno).
+	 */
+	private static void fimDeTurno() {
+		HTMLEditorKit kit = (HTMLEditorKit) areaConversa.getEditorKit();
+		javax.swing.text.html.HTMLDocument doc =
+				(javax.swing.text.html.HTMLDocument) areaConversa.getDocument();
+		try {
+			kit.insertHTML(doc, doc.getLength(), "<hr>", 0, 0, null);
 		} catch (BadLocationException | IOException e) {
 			// apresentacao nunca derruba o chat
 			e.printStackTrace();
