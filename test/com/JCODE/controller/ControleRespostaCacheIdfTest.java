@@ -91,7 +91,8 @@ public class ControleRespostaCacheIdfTest {
 
 		Map<String, Double> depois = ControleResposta.pesosIdf(raiz);
 		assertEquals("df 2 de 7 -> log(7/2)", Math.log(7.0 / 2), depois.get("musica"), 1e-9);
-		assertEquals("quero segue em todos -> 0", 0.0, depois.get("quero"), 1e-9);
+		assertEquals("quero em 6 de 7 agora (o exemplo novo nao o tem) -> log(7/6)",
+				Math.log(7.0 / 6), depois.get("quero"), 1e-9);
 	}
 
 	/** Guarda: ida e volta entre bases nunca contamina. */
@@ -108,8 +109,13 @@ public class ControleRespostaCacheIdfTest {
 		assertNotSame("bases diferentes nao compartilham mapa", pesosA, pesosB);
 		assertEquals("volta pro mapa da base A", Math.log(3), pesosA.get("saud"), 1e-9);
 		assertEquals("base B: 1 exemplo -> idf 0", 0.0, pesosB.get("quero"), 1e-9);
-		assertSame("ida e volta: A devolve o mapa de A de novo",
-				pesosA, ControleResposta.pesosIdf(a));
+
+		// cache de slot unico (uma base por vez, como no fluxo real):
+		// trocar de base reconstrui - o contrato e os VALORES continuarem
+		// certos na ida e volta, nao a identidade do mapa
+		Map<String, Double> volta = ControleResposta.pesosIdf(a);
+		assertEquals("ida e volta: pesos da base A de novo", Math.log(3), volta.get("saud"), 1e-9);
+		assertEquals("ida e volta: quero volta a 0 (6 de 6)", 0.0, volta.get("quero"), 1e-9);
 	}
 
 	/** Guarda: o classificador (caminho inteiro) nao se contamina. */

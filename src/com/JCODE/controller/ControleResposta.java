@@ -43,6 +43,14 @@ public class ControleResposta {
 
 	private static String ultimoFallback = null;
 
+	// #26 (briefing P7.2) - cache de IDF e de tokens por base: a base so
+	// muda no carregaCache (instancia nova -> rebuild por identidade) ou
+	// no ensinaEm (mutacao -> invalidaCacheIdf)
+	private static Intencoes cacheRaizIdf = null;
+	private static Map<String, Double> cachePesosIdf = null;
+	private static Map<Exemplo, Set<String>> cacheTokensExemplos = null;
+	private static double cacheTotalExemplos = 0;
+
 	public static List<String> frasesFallback() {
 		return FRASES_FALLBACK;
 	}
@@ -113,28 +121,47 @@ public class ControleResposta {
 				.collect(Collectors.toSet());
 	}
 
+	/** #26 - cache por base: mesma Intencoes devolve o mesmo mapa (imutavel). */
 	public static Map<String, Double> pesosIdf(Intencoes raiz){
+		garanteCacheIdf(raiz);
+		return cachePesosIdf;
+	}
+
+	private static void garanteCacheIdf(Intencoes raiz){
+		if (raiz == cacheRaizIdf && cachePesosIdf != null)
+			return;
 
 		List<Exemplo> todos = new ArrayList<>();
 		for(Intencao i : raiz.getIntencoes())
 			todos.addAll(i.getExemplos());
 
+		cacheTokensExemplos = new HashMap<>();
+		for(Exemplo e : todos)
+			cacheTokensExemplos.put(e, tokensDe(e.getTexto()));
+
 		int total = todos.size();
+		cacheTotalExemplos = total;
+
 		Map<String, Double> pesos = new HashMap<>();
-
-		if(total == 0)
-			return pesos;
-
-		for(Exemplo e: todos){
-			for(String palavra: tokensDe(e.getTexto())){
-				pesos.merge(palavra, 1.0, Double::sum);
+		if(total > 0){
+			for(Exemplo e: todos){
+				for(String palavra: cacheTokensExemplos.get(e)){
+					pesos.merge(palavra, 1.0, Double::sum);
+				}
 			}
+			pesos.replaceAll((palavra, df) ->
+					Math.log(total / Math.max(df, 1.0)));
 		}
 
-		pesos.replaceAll((palavra, df) ->
-				Math.log(total / Math.max(df, 1.0)));
+		cacheRaizIdf = raiz;
+		cachePesosIdf = Collections.unmodifiableMap(pesos);
+	}
 
-		return pesos;
+	/** #26 - base mutada em runtime (ensino): proxima chamada recalcula. */
+	public static void invalidaCacheIdf(){
+		cacheRaizIdf = null;
+		cachePesosIdf = null;
+		cacheTokensExemplos = null;
 	}
 
 
@@ -393,9 +420,11 @@ public class ControleResposta {
 		if(palavrasEntrada.isEmpty())
 			return null;
 
-		Map<String, Double> pesos = pesosIdf(raiz);
+		// #26 - IDF e tokens vem do cache; recalcula so na 1a chamada da base
+		garanteCacheIdf(raiz);
+		Map<String, Double> pesos = cachePesosIdf;
 
-		double n = raiz.getIntencoes().stream().mapToInt(i -> i.getExemplos().size()).sum();
+		double n = cacheTotalExemplos;
 		double pesoAusente = Math.log(Math.max(n, 1.0));
 
 		double denominador = 0;
@@ -404,12 +433,15 @@ public class ControleResposta {
 
 		Intencao melhorIntencao = null;
 		String melhorFraseIntencao = null;
+		// #26 - tokens do melhor exemplo ate agora: o cache e por objeto
+		// Exemplo, e o desempate precisa dos tokens do texto vencedor
+		Set<String> melhorTokensFrase = null;
 		double melhorScore = -1;
 
 		for(Intencao intencao: raiz.getIntencoes()){
 
 			for(Exemplo frase: intencao.getExemplos()) {
-				Set<String> palavraFrase = tokensDe(frase.getTexto());
+				Set<String> palavraFrase = cacheTokensExemplos.get(frase);
 				long intersecao = palavrasEntrada.stream()
 						.filter(e -> palavraFrase.stream().anyMatch(f -> ControleSinonimo.mesmaPalavra(e,f))).count();
 
@@ -425,9 +457,10 @@ public class ControleResposta {
 				if (score > melhorScore) {
 					melhorScore = score;
 					melhorFraseIntencao = frase.getTexto();
+					melhorTokensFrase = palavraFrase;
 					melhorIntencao = intencao;
 				} else if (score == melhorScore) {
-					long restoAnterior = tokensDe(melhorFraseIntencao).stream()
+					long restoAnterior = melhorTokensFrase.stream()
 							.filter(f -> !palavrasEntrada.stream().anyMatch(e -> ControleSinonimo.mesmaPalavra(e,f))).count();
 					long resto = palavraFrase.stream()
 							.filter(f -> !palavrasEntrada.stream().anyMatch(e -> ControleSinonimo.mesmaPalavra(e,f))).count();
@@ -435,11 +468,13 @@ public class ControleResposta {
 					if (resto < restoAnterior) {
 						melhorScore = score;
 						melhorFraseIntencao = frase.getTexto();
+						melhorTokensFrase = palavraFrase;
 						melhorIntencao = intencao;
 					} else if (resto == restoAnterior
 							&& vencePorFrame(entradaNormalizada, melhorFraseIntencao, frase.getTexto())) {
 						melhorScore = score;
 						melhorFraseIntencao = frase.getTexto();
+						melhorTokensFrase = palavraFrase;
 						melhorIntencao = intencao;
 					}
 
@@ -531,7 +566,7 @@ public class ControleResposta {
 
 		intencao.getExemplos().add(new Exemplo(frase, "autor"));
 		intencao.getRespostas().add(new RespostaIntencao(resposta, "autor",0,10));
-
+		invalidaCacheIdf(); // #26 - a base mudou: proxima classificacao recalcula
 	}
 
 	public static String CriarResposta(String resposta) {
