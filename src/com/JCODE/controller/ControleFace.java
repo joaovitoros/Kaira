@@ -1,5 +1,7 @@
 package com.JCODE.controller;
 
+import com.JCODE.util.Tema;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +24,12 @@ public class ControleFace implements ActionListener{
 	public ControleFace(JTextPane areaConversa1, JTextArea textAreaUsuario1, JButton btnSinalizar) {
 		// setContentType troca o editor por HTML - e o que permite balao de chat
 		areaConversa1.setContentType("text/html");
+		// #31: tema preto e verde no proprio documento HTML (fundo, texto, regua)
+		javax.swing.text.html.StyleSheet css =
+				((javax.swing.text.html.HTMLDocument) areaConversa1.getDocument()).getStyleSheet();
+		css.addRule("body { background-color: " + Tema.hex(Tema.FUNDO)
+				+ "; color: " + Tema.hex(Tema.TEXTO) + "; }");
+		css.addRule("hr { color: " + Tema.hex(Tema.VERDE_ESCURO) + "; }");
 		ControleFace.areaConversa = areaConversa1;
 		ControleFace.textAreaUsuario = textAreaUsuario1;
 		ControleFace.btnSinalizar = btnSinalizar;
@@ -67,10 +75,12 @@ public class ControleFace implements ActionListener{
 	 * Escapar o texto e obrigatorio: < e & quebrariam o HTML do balao.
 	 */
 	private static void balao(boolean doUsuario, String texto) {
-		String cor = doUsuario ? "#d1e7dd" : "#e2e3e5";
+		// #31: baloes do tema - usuario em verde escuro, KAIRA em superficie escura
+		String cor = Tema.hex(doUsuario ? Tema.BALAO_USUARIO : Tema.BALAO_KAIRA);
+		String fala = "<font color='" + Tema.hex(Tema.TEXTO) + "'>" + escapa(texto) + "</font>";
 		String celula = doUsuario
-				? "<td align='right' bgcolor='" + cor + "'>" + escapa(texto) + "</td>"
-				: "<td align='left' bgcolor='" + cor + "'>" + escapa(texto) + "</td>";
+				? "<td align='right' bgcolor='" + cor + "'>" + fala + "</td>"
+				: "<td align='left' bgcolor='" + cor + "'>" + fala + "</td>";
 		String html = "<table width='100%' cellspacing='2' cellpadding='5'><tr>"
 				+ celula + "<td width='6'></td></tr></table>";
 		HTMLEditorKit kit = (HTMLEditorKit) areaConversa.getEditorKit();
@@ -111,7 +121,7 @@ public class ControleFace implements ActionListener{
 		textAreaUsuario.setText("");
 		if(verificarManter){
 			verificarManter=false;
-			btnSinalizar.setForeground(Color.BLACK);
+			btnSinalizar.setForeground(Tema.NEON_APAGADO);
 			FormulaResposta.manterResposta(falaUsuario.trim());
 		}else if(verificarCriarResp){
 //			verificarCriarResp=false;
@@ -131,7 +141,7 @@ public class ControleFace implements ActionListener{
 	}
 
 	public static void mudarVerificar(){
-		btnSinalizar.setForeground(Color.GREEN);
+		btnSinalizar.setForeground(Tema.NEON);
 		verificarManter=true;
 	}
 

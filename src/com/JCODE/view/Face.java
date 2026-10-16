@@ -4,11 +4,11 @@ import com.JCODE.controller.ControleFace;
 import com.JCODE.controller.ControleSessao;
 import com.JCODE.util.Caminhos;
 import com.JCODE.util.Registro;
+import com.JCODE.util.Tema;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -48,18 +48,27 @@ public class Face extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		contentPane.setBackground(Tema.FUNDO);
 		
 		textFieldKairaNome = new JTextField(nome +":");
 		textFieldKairaNome.setEnabled(false);
 		textFieldKairaNome.setBounds(10, 11, 86, 20);
 		contentPane.add(textFieldKairaNome);
 		textFieldKairaNome.setColumns(10);
+		textFieldKairaNome.setBackground(Tema.CAMPO);
+		textFieldKairaNome.setForeground(Tema.NEON);
+		textFieldKairaNome.setDisabledTextColor(Tema.NEON_APAGADO);
+		textFieldKairaNome.setBorder(BorderFactory.createLineBorder(Tema.VERDE_ESCURO));
 		
 		JTextPane areaConversa = new JTextPane();
 		areaConversa.setEditable(false);
-		areaConversa.setBackground(Color.WHITE);
+		// #31: o HTML do chat pinta por cima; FUNDO/TEXTO valem onde o HTML nao chega
+		areaConversa.setBackground(Tema.FUNDO);
+		areaConversa.setForeground(Tema.TEXTO);
 
 		JScrollPane scrollKaira = new JScrollPane(areaConversa);
+		scrollKaira.setBorder(BorderFactory.createLineBorder(Tema.VERDE_ESCURO));
+		scrollKaira.getViewport().setBackground(Tema.FUNDO);
 		scrollKaira.setBounds(10, 42, 554, 255);
 		contentPane.add(scrollKaira);
 		
@@ -69,6 +78,12 @@ public class Face extends JFrame {
 		// #30: 554 -> 456; a faixa da direita (474..562) fica pro avatar
 		textAreaUsuario.setBounds(10, 317, 456, 187);
 		contentPane.add(textAreaUsuario);
+		textAreaUsuario.setBackground(Tema.CAMPO);
+		textAreaUsuario.setForeground(Tema.TEXTO);
+		textAreaUsuario.setCaretColor(Tema.NEON);
+		textAreaUsuario.setSelectionColor(Tema.VERDE_ESCURO);
+		textAreaUsuario.setSelectedTextColor(Tema.TEXTO);
+		textAreaUsuario.setBorder(BorderFactory.createLineBorder(Tema.VERDE_ESCURO));
 
 		lblAvatar = new JLabel();
 		lblAvatar.setBounds(474, 450, 88, 88);
@@ -92,15 +107,20 @@ public class Face extends JFrame {
 		JButton btnEnviar = new JButton("Enviar");
 		btnEnviar.setBounds(10, 515, 106, 25);
 		contentPane.add(btnEnviar);
+		temaBotao(btnEnviar);
 
 		JButton btnSinalizar = new JButton("!");
 		btnSinalizar.setBounds(134, 10, 44, 23);
 		contentPane.add(btnSinalizar);
+		temaBotao(btnSinalizar);
+		// desarmado; o ControleFace troca pra NEON (manter) e vermelho (criar)
+		btnSinalizar.setForeground(Tema.NEON_APAGADO);
 
 		// #29 - tela de log ao vivo (instancia unica via TelaLog.abrir)
 		JButton btnLog = new JButton("Log");
 		btnLog.setBounds(460, 10, 104, 23);
 		contentPane.add(btnLog);
+		temaBotao(btnLog);
 		btnLog.addActionListener(e -> TelaLog.abrir());
 		
 		ControleFace contface = new ControleFace(areaConversa, textAreaUsuario, btnSinalizar);
@@ -128,6 +148,19 @@ public class Face extends JFrame {
 				}
 			}
 		});
+	}
+
+	/**
+	 * Botao chato do LAF nativo ignora setBackground; o trio abaixo força
+	 * o fundo escuro do tema: sem fill nativo, opaco e borda verde escura.
+	 */
+	private static void temaBotao(JButton botao) {
+		botao.setContentAreaFilled(false);
+		botao.setOpaque(true);
+		botao.setBackground(Tema.CAMPO);
+		botao.setForeground(Tema.NEON);
+		botao.setBorder(BorderFactory.createLineBorder(Tema.VERDE_ESCURO));
+		botao.setFocusPainted(false);
 	}
 
 	/** Qualquer interacao devolve o avatar ao estado conversando e reinicia o relogio. */

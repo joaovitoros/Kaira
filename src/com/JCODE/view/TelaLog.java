@@ -1,7 +1,9 @@
 package com.JCODE.view;
 
 import com.JCODE.util.Caminhos;
+import com.JCODE.util.Tema;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -51,13 +53,28 @@ public class TelaLog extends JFrame {
 
 		JPanel painel = new JPanel(new BorderLayout(5, 5));
 		painel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		painel.setBackground(Tema.FUNDO);
 
+		// #31: log no preto esverdeado, texto verde claro (mesma paleta da Face)
 		area.setEditable(false);
-		painel.add(new JScrollPane(area), BorderLayout.CENTER);
+		area.setBackground(Tema.PROFUNDO);
+		area.setForeground(Tema.TEXTO);
+		area.setSelectionColor(Tema.VERDE_ESCURO);
+		area.setSelectedTextColor(Tema.TEXTO);
+		JScrollPane rolagem = new JScrollPane(area);
+		rolagem.setBorder(BorderFactory.createLineBorder(Tema.VERDE_ESCURO));
+		rolagem.getViewport().setBackground(Tema.PROFUNDO);
+		painel.add(rolagem, BorderLayout.CENTER);
 
 		JButton limpar = new JButton("Limpar visualizacao");
 		JButton recarregar = new JButton("Recarregar");
+		temaBotao(limpar);
+		temaBotao(recarregar);
 		JPanel barra = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
+		barra.setBackground(Tema.FUNDO);
+		autoScroll.setOpaque(true);
+		autoScroll.setBackground(Tema.FUNDO);
+		autoScroll.setForeground(Tema.NEON);
 		barra.add(autoScroll);
 		barra.add(limpar);
 		barra.add(recarregar);
@@ -83,6 +100,16 @@ public class TelaLog extends JFrame {
 				timer.stop();
 			}
 		});
+	}
+
+	/** Mesma forcacao de botao flat da Face: LAF nativo ignora setBackground. */
+	private static void temaBotao(JButton botao) {
+		botao.setContentAreaFilled(false);
+		botao.setOpaque(true);
+		botao.setBackground(Tema.CAMPO);
+		botao.setForeground(Tema.NEON);
+		botao.setBorder(BorderFactory.createLineBorder(Tema.VERDE_ESCURO));
+		botao.setFocusPainted(false);
 	}
 
 	private Path arquivo() {
