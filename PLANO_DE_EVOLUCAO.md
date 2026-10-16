@@ -406,8 +406,8 @@ class Sessao {
 
 ### 7.2 Iniciativa própria
 
-- [ ] A cada N turnos (ex.: 3) sem KAIRA ter feito pergunta → usar `followups` da intenção
-- [ ] Perguntas de interesse genérico num pool próprio: "E você, o que andou fazendo hoje?", "Assiste algo bom ultimamente?"
+- [x] A cada N turnos (ex.: 3) sem KAIRA ter feito pergunta → usar `followups` da intenção — *(issue #25: contador `turnosDesdePergunta` em `processa`; `perguntaInteresse()` lê os followups do tópico atual no banco — 195 já escritos pela curadoria em 74 intenções — e zera também quando a pergunta de nome dispara)*
+- [x] Perguntas de interesse genérico num pool próprio: "E você, o que andou fazendo hoje?", "Assiste algo bom ultimamente?" — *(`PERGUNTAS_INTERESSE` em `ControleSessao` com as frases do plano, uma com `{nome}`; prioridade pro followup do tópico, pool genérico como segunda fonte; anti-repetição estilo `ultimoFallback` — issue #25)*
 - [ ] (Opcional) `javax.swing.Timer` → silêncio de 60s+ gera um comentário leve ("tá aí? posso esperar, sou paciente... sou feita de paciência, literalmente")
 
 ### 7.3 Fallbacks inteligentes
@@ -422,7 +422,7 @@ Substituir o "Não sei como responder a isso" seco:
 ### Critérios de aceite
 
 - Elogiar 3× seguidas muda o tom das respostas de forma perceptível — *(entregue — issue #23, `SistemaDeHumorTest.tresElogiosMudamTomDaResposta`)*
-- KAIRA faz pelo menos 1 pergunta espontânea a cada ~5 turnos
+- KAIRA faz pelo menos 1 pergunta espontânea a cada ~5 turnos — *(entregue — issue #25: dispara no 3o turno, com followups do tópico ou o pool genérico — `IniciativaPropriaTest`)*
 - Fallback nunca repete duas vezes a mesma frase (anti-repetição simples) — *(entregue — issue #17)*
 
 ---
