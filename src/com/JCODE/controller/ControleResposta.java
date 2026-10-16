@@ -580,8 +580,26 @@ public class ControleResposta {
 
 	public static void ensinaEm(Intencoes raiz, String frase, String resposta){
 
-		Intencao intencao = raiz.getIntencoes().stream()
-				.filter(i -> i.getIntento().equalsIgnoreCase("auto_aprendizado")).findFirst().orElse(null);
+		// #33 - ensino turbinado: classifica ANTES de gravar; a regua e a
+		// mesma LIMIAR (0.6) com que ela ja responde com confianca. A
+		// classificacao roda antes do invalidaCacheIdf de proposito: com o
+		// cache invalido na frente, a 2a chamada recalcula com a base ja
+		// mutada (sem NPE de token, sem IDF desatualizado no ensino em cadeia)
+		MatchIntencao encaixe = melhorIntencaoDetalhado(raiz, frase);
+		Intencao intencao;
+
+		if (encaixe != null && encaixe.getScore() >= LIMIAR) {
+			// score acima do limiar: o par ensinado alimenta o intento certo
+			intencao = encaixe.getIntencao();
+			Registro.linha("APRENDE   : intento=" + intencao.getIntento()
+					+ String.format(Locale.ROOT, " score=%.2f", encaixe.getScore()));
+		} else {
+			// duvida (ou nada): caixa de entrada como sempre
+			intencao = raiz.getIntencoes().stream()
+					.filter(i -> i.getIntento().equalsIgnoreCase("auto_aprendizado")).findFirst().orElse(null);
+			Registro.linha("APRENDE   : auto_aprendizado"
+					+ (encaixe == null ? "" : String.format(Locale.ROOT, " score=%.2f", encaixe.getScore())));
+		}
 
 		if(intencao==null) {
 			intencao = new Intencao("auto_aprendizado", new ArrayList<>(), null, new ArrayList<>(),null,null);
