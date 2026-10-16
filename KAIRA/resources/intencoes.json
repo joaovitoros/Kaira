@@ -9011,6 +9011,81 @@
             "acoes": []
         },
         {
+            "intento": "continuacao_topico",
+            "exemplos": [
+                {
+                    "texto": "fala mais disso",
+                    "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "conta mais sobre isso",
+                    "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "e depois o que aconteceu",
+                    "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "me explica melhor essa parte",
+                    "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "conta o resto",
+                    "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "fala mais sobre isso",
+                    "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "e ai continua",
+                    "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "quero saber o final",
+                    "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "nossa conta mais",
+                    "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "desenvolve essa ideia",
+                    "origem": "curadoria out/2026"
+                }
+            ],
+            "respostas": [
+                {
+                    "texto": "Conta, tô ouvindo!",
+                    "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "Quero saber o resto, continua!",
+                    "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "Pode falar, {topico} é um bom assunto pra isso.",
+                    "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "Boa, essa parte eu quero entender melhor. Vai!",
+                    "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "Continua sim! {topico} sempre rende papo.",
+                    "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "Só isso? Duvido que acabou aí. Conta o resto.",
+                    "origem": "curadoria out/2026"
+                }
+            ],
+            "followups": [
+                "E o que mais te prende nisso?",
+                "Me conta mais como foi pra você."
+            ]
+        },
+        {
             "intento": "mudar_assunto",
             "exemplos": [
                 {
@@ -9052,6 +9127,10 @@
                 {
                     "texto": "agora outro assunto",
                     "origem": "curadoria consultoria out/2026"
+                },
+                {
+                    "texto": "muda de assunto",
+                    "origem": "curadoria out/2026"
                 }
             ],
             "palavrasChave": [],
