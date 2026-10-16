@@ -35,6 +35,7 @@ public class ContinuacaoTopicoTest {
 	@Before
 	public void zera() {
 		ControleSessao.reset();
+		ControleResposta.carregaCache();
 	}
 
 	private void assertIntencao(String frase, String esperado) {
@@ -70,6 +71,19 @@ public class ContinuacaoTopicoTest {
 
 		assertEquals("o topico continua sendo o assunto de verdade",
 				"filme", ControleSessao.get().getTopicoAtual());
+	}
+
+	/**
+	 * CONTRATO DE ESQUEMA (hotfix pos-#27): toda intencao da base real
+	 * nasce com acoes - o comandosResposta chama getAcoes().contains e
+	 * NPEia com null (perigo ja documentado no fixture do
+	 * ControleRespostaFaixaConfiancaTest). A continuacao_topico entrou
+	 * no #27 sem o campo e derrubou o app ao vivo no "fala mais disso".
+	 */
+	@Test
+	public void baseNaoTemIntentoSemAcoes() {
+		for (Intencao i : ControleResposta.getIntencoes())
+			assertNotNull("intencao da base sem acoes: " + i.getIntento(), i.getAcoes());
 	}
 
 	/** RED de novo: {topico} renderizaria o nome da propria continuacao. */
