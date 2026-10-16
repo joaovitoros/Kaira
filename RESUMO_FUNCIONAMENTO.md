@@ -26,7 +26,7 @@
 | `util/Tema.java` | Paleta única preto/verde (#31) — única fonte de cor da UI. |
 | `util/Caminhos.java` | `recurso(nome)` → `KAIRA/resources/`. **Nunca escreva o caminho literal** (teste `SemCaminhoHardcodedTest` flagra, inclusive em comentário). |
 | `util/Registro.java` | `linha(evento)` → `conversas.log` (gitignored). À prova de falha: log nunca derruba o fluxo. |
-| `KAIRA/resources/intencoes.json` | **O banco** (UTF-8 sem BOM): 91+ intents com exemplos/respostas/followups/acoes. |
+| `KAIRA/resources/intencoes.json` | **O banco** (UTF-8 sem BOM): 95 intents com exemplos/respostas/followups/acoes. |
 | `KAIRA/resources/avatar/` | `kaira_conversa`, `kaira_idle`, `kaira_baixa`, `kaira_alta` (+ `avatar_01..09` arquivadas). |
 | `sessao.json` | Persistência da sessão (nome, humor, tópico, turnos). |
 

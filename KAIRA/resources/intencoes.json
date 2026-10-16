@@ -9060,6 +9060,14 @@
                 {
                     "texto": "me fale mais",
                     "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "porque disso",
+                    "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "pq disso",
+                    "origem": "curadoria out/2026"
                 }
             ],
             "respostas": [
@@ -17180,7 +17188,10 @@
                     "humorMax": 10
                 }
             ],
-            "followups": null,
+            "followups": [
+                "Ainda torce pra ele?",
+                "Qual foi o jogo mais emocionante que você viu dele?"
+            ],
             "acoes": []
         },
         {
@@ -17237,7 +17248,10 @@
                     "humorMax": 10
                 }
             ],
-            "followups": null,
+            "followups": [
+                "Ainda escuta essa hoje em dia?",
+                "Que som te pega agora?"
+            ],
             "acoes": []
         },
         {
@@ -17294,7 +17308,10 @@
                     "humorMax": 10
                 }
             ],
-            "followups": null,
+            "followups": [
+                "E como ele está agora?",
+                "Qual a arte mais famosa dele na casa?"
+            ],
             "acoes": []
         },
         {
@@ -17351,7 +17368,10 @@
                     "humorMax": 10
                 }
             ],
-            "followups": null,
+            "followups": [
+                "Ainda vale esse sonho?",
+                "Qual passo você deu pra ele esse mês?"
+            ],
             "acoes": []
         }
     ]

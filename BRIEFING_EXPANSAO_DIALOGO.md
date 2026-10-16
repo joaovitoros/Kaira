@@ -2,7 +2,7 @@
 
 > **Para quem é este documento:** agente responsável pela próxima leva de dados/conteúdo do banco de intenções. Ele é auto-contido: não depende de conversa anterior.
 > **Origem:** auditoria de sobreposição (out/2026, aprovada) + sonda de lacunas no classificador real (fumaca de frases, output colado abaixo).
-> **Estado do projeto no momento:** 173 testes Java verdes + avaliador 14/14, com a base recém-expandida (90 intenções, 2.311 exemplos, 1.113 respostas, 195 followups). **Atualização pós-briefing:** as issues #24 (resposta ao pedido de nome) e #25 (iniciativa própria — `ControleSessao.perguntaInteresse()` anexa pergunta a cada 3 turnos, lendo os `followups` do tópico atual) foram fechadas; os specs `ControleSessaoNomeTest` e `IniciativaPropriaTest` estão verdes.
+> **Estado do projeto no momento:** 199 testes Java verdes + avaliador 14/14, com a base recém-expandida (95 intenções, 2.350 exemplos, 1.135 respostas, 205 followups). **Atualização pós-briefing:** issues da casa fechadas — #24 (resposta ao pedido de nome), #25 (iniciativa própria — `ControleSessao.perguntaInteresse()` anexa pergunta a cada 3 turnos, lendo os `followups` do tópico atual), #26 (P7.2 — cache de `pesosIdf`, suíte ~4x mais rápida), #27/#28 (P2 — `continuacao_topico` com `{topico}` e pool segurado no turno do pedido), #32 (P7.4 — fatos novos: time, música, pet, sonho, "nasceu em", "meu X favorito é Y"), #33 (ensino turbinado — frase ensinada classificada antes de gravar) — specs `ControleSessaoNomeTest`, `IniciativaPropriaTest`, `ContinuacaoTopicoTest`, `ControleRespostaCacheIdfTest`, `FatosNovosTest`, `EnsinoTurbinadoTest` verdes.
 
 ---
 
@@ -22,7 +22,7 @@
 2. `auto_aprendizado` **nasce vazio** (0 exemplos, 0 respostas) — caixa de entrada do modo ensino.
 3. **Nunca** adicionar exemplo cujo texto normalizado seja igual a uma entrada do `test/resources/avaliacao.json` ("oi", "ola", "tchau", "tudo bem", "bom dia", "como vc está", "e ai beleza", "qual seu jogo favorito"... — 14 casos, todos regressão) — isso quebra o avaliador. **Cuidado extra (zona de empate por token-set):** o que colide é o token-set **pós-stopwords**, não as palavras cruas. Caso concreto: `"e voce, como esta"` tem token-set `{esta}` ("voce" e "como" são stopwords) — a mesma zona de empate do caso congelado `"como vc está"` E do achado #2 da auditoria (status_geral × localizacao). Um exemplo novo `{esta}` disputa a rotação e, pior, se auto-classificaria em status_geral (empate resolvido pela ordem do arquivo) → matriz vermelha. No P1, **deixar de fora** variantes nessa forma (critério geral: conferir o token-set pós-stopwords de toda frase curta antes de incluir).
 4. Não quebrar os 6 casos fuzzy do `CuradoriaTemasTest.frasesNaoExatasCaemNoTemaCerto` ("recomenda um filme bom pra hoje" → filme, etc.).
-5. Toda leva nova deve passar a suíte completa: **173 testes** (`CuradoriaTemasTest`, `CuradoriaConsultoriaTest`, `IniciativaPropriaTest`, `ControleSessaoNomeTest`, `AvaliadorTest` incluídos — os dois últimos eram vermelhos por TDD quando este briefing foi escrito e hoje estão **verdes**, issues #24/#25 fechadas; não os mexa). Nota: `CuradoriaConsultoriaTest` existe só na árvore de trabalho local (não commitado no repo).
+5. Toda leva nova deve passar a suíte completa: **199 testes** (`CuradoriaTemasTest`, `CuradoriaConsultoriaTest`, `ContinuacaoTopicoTest`, `ControleRespostaCacheIdfTest`, `FatosNovosTest`, `EnsinoTurbinadoTest`, `IniciativaPropriaTest`, `ControleSessaoNomeTest`, `AvaliadorTest` incluídos — todos verdes, issues #24–#28 e #32/#33 fechadas; não os mexa). Nota: `CuradoriaConsultoriaTest` existe só na árvore de trabalho local (não commitado no repo).
 6. Exemplos de token-set idêntico em intenções diferentes = matriz vermelha (o teste pega). Frase só com stopwords = classificador devolve null.
 7. **Toda intenção nova deve nascer com `followups`** (1–3 perguntas na voz da KAIRA): o mecanismo da §7.2 está vivo desde a issue #25 (`perguntaInteresse()` lê os `followups` do tópico atual e anexa à resposta a cada 3 turnos). Intenção sem followups só recebe pergunta de interesse do pool genérico — desperdiça a personalidade do banco.
 
@@ -139,7 +139,7 @@ Reações curtas são o combustível do papo e hoje cada uma cai num lugar absur
 
 ## 4. Critérios de aceite globais (a leva só está pronta quando)
 
-1. Suíte Java completa verde: **173 testes** (`CuradoriaTemasTest`, `CuradoriaConsultoriaTest`, `IniciativaPropriaTest`, `ControleSessaoNomeTest`, `AvaliadorTest` incluídos — todos verdes hoje; specs do nome e da iniciativa fecharam nas issues #24/#25).
+1. Suíte Java completa verde: **199 testes** (`CuradoriaTemasTest`, `CuradoriaConsultoriaTest`, `ContinuacaoTopicoTest`, `ControleRespostaCacheIdfTest`, `FatosNovosTest`, `EnsinoTurbinadoTest`, `IniciativaPropriaTest`, `ControleSessaoNomeTest`, `AvaliadorTest` incluídos — todos verdes hoje; issues #24–#28 e #32/#33 fechadas).
 2. Avaliador de regressão: **14/14**.
 3. Sonda P1–P6: todas as frases do diagnóstico roteiam para a intenção certa, com score ≥ 0,6 (ou match exato).
 4. Nova spec no estilo do projeto (`Curadoria*Test`): volume + matriz de auto-classificação + frases não-exatas caem no tema certo.
