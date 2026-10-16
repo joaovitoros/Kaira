@@ -120,19 +120,19 @@ FormulaResposta.enviarResposta()
 
 ### 2.2 Gargalos (em ordem de impacto)
 
-> **Status (out/2026):** G1 resolvido · G2 resolvido · G3 resolvido · G4 pendente · G5 resolvido · G6 pendente · G7 resolvido · G8 resolvido · G9 parcial · G10 parcial
+> **Status (out/2026):** G1 resolvido · G2 resolvido · G3 resolvido · G4 resolvido · G5 resolvido · G6 pendente · G7 resolvido · G8 resolvido · G9 parcial · G10 parcial
 
 | Gargalo | Status | Resolvido em |
 |---|---|---|
 | G1 frase-exata | resolvido | matcher por cobertura ponderada por IDF sobre intenções (issues #5, #6, #11, #14) |
 | G2 sinônimos roleta | resolvido | grupos no matcher (issue #9); procuraSinonimo deletado; geração com guarda de stopword (#13) |
 | G3 sem normalização | resolvido | Normalizador.texto + stem de 12 regras + 54 stopwords nos dois lados (issues #2, #12) |
-| G4 sem memória | pendente | Fase 2 (§6.1 Sessão) |
-| G5 UI apaga conversa | resolvido | histórico acumula via append (issue #1); auto-scroll/separador/log pendentes |
+| G4 sem memória | resolvido | sessão em memória + `sessao.json` persistente (issues #19/#20) |
+| G5 UI apaga conversa | resolvido | histórico acumula via append (issue #1); separador de turnos e auto-scroll entregues (issue #22) |
 | G6 Runtime.exec | pendente | backlog de segurança |
 | G7 caminhos relativos | resolvido | Caminhos.recurso() resolve a base de qualquer diretório (issue #4, CaminhosTest) |
 | G8 similaridades frágeis | resolvido | Levenshtein + frase palavra-a-palavra (issue #15) |
-| G9 código morto/NPE | parcial | decisao passou a ser usado; prints e placeholder de humor seguem vivos |
+| G9 código morto/NPE | parcial | decisao passou a ser usado; placeholder do humor virou valor real (#23); prints seguem vivos |
 | G10 engenharia | parcial | git + JUnit + avaliador (21 classes de teste); Gradle/pacote/estáticos pendentes |
 
 #### G1 — Match é frase-exata
@@ -171,7 +171,7 @@ Todos os controllers usam `"KAIRA/resources/..."` relativo ao diretório de exec
 - `escolheMultiRespostas()` devolve `null` se a lista estiver vazia (vira "não sei" sem explicação).
 - Debug `System.out.println` espalhado; `Math.random()` direto (sem `Random` seedado, sem log).
 - `"numero de " + versao` monta o texto estranho "numero de 0.0.1" em `comandosResposta()`.
-- `"nivel de humor em... de 10"` — placeholder do humor que nunca foi implementado.
+- `"nivel de humor em... de 10"` — placeholder do humor que nunca foi implementado. *(corrigido na issue #23 — agora mostra `nivel de humor em <valor> de 10`)*
 
 #### G10 — Engenharia
 - Sem git, sem build tool (depende do IntelliJ: `.iml` + `out/`), sem testes.
@@ -208,7 +208,7 @@ Todos os controllers usam `"KAIRA/resources/..."` relativo ao diretório de exec
   - aplicar também nos dados ao carregar (base e entrada ficam no mesmo "idioma")
 - [x] **Mover os dados para pasta fixa** — `%APPDATA%/KAIRA/` (via `System.getenv("APPDATA")`) ou ao lado do `.jar`. Trocar todas as strings `"KAIRA/resources/..."` (G7). Migração: se existir pasta antiga, copiar antes — *(solução adotada: `Caminhos.recurso()` resolve a base via `kaira.home`/`KAIRA_HOME`/code source — roda de qualquer pasta sem %APPDATA%; issue #4)*
 - [ ] **Neutralizar o comando "Executar"** (G6): pedir confirmação via dialog OU remover por enquanto. Se mantiver: whitelist de programas + juntar todas as palavras do caminho (não só `fraseComando[1]`) — *(G6 segue pendente)*
-- [ ] Limpar código morto (G9): `decisao` não usada, branch `verificarCriarResp`, prints de debug → um `Logger` simples ou `System.Logger` — *(parcial: `decisao` virou uso real na geração; prints e placeholder de humor ainda vivos)*
+- [ ] Limpar código morto (G9): `decisao` não usada, branch `verificarCriarResp`, prints de debug → um `Logger` simples ou `System.Logger` — *(parcial: `decisao` virou uso real na geração; placeholder do humor consertado na #23; prints de debug ainda vivos)*
 - [ ] (Opcional) Adotar Gradle: `gradle init` + mover os jars para dependências declaradas; pacote `com.JCODE` → `com.jcode` (rename automático no IntelliJ)
 - [x] (Opcional) Primeiro teste JUnit: `NormalizadorTest` (entrada "  Olá, Tudo bem? " → "ola tudo bem") — *(issue #2; hoje são 21 classes de teste + avaliador)*
 
@@ -268,7 +268,7 @@ Detalhes práticos:
 
 - [x] Implementar **TF-IDF simplificado** (ver pseudo-código no [Apêndice B](#apêndice-b--exemplos-de-código)) — dá pra fazer em Java puro, ~50 linhas — *(feito: `pesosIdf` = log(N/df) por token pos-stem; score = pesos dos casados ÷ pesos da entrada; denominador 0 cai na cobertura uniforme — issue #14)*
 - [x] Ou, versão mínima viável: **Jaccard sobre conjuntos de palavras** (`interseção / união`) — 10 linhas — *(descartado — o TF-IDF acima cumpriu a mesma função)*
-- [ ] Definir limiar de confiança (ex.: ≥ 0,5 → acionar intenção; entre 0,3 e 0,5 → responder com a melhor aposta + "Foi isso que você quis dizer?"; < 0,3 → fallback) — *(faixas entregues: ALTA ≥ 0,6 responde direto · MÉDIA 0,3–0,6 aposta + "Foi isso que você quis dizer?" · BAIXA < 0,3 fallback — issue #16, commit 08e1666)*
+- [x] Definir limiar de confiança (ex.: ≥ 0,5 → acionar intenção; entre 0,3 e 0,5 → responder com a melhor aposta + "Foi isso que você quis dizer?"; < 0,3 → fallback) — *(faixas entregues: ALTA ≥ 0,6 responde direto · MÉDIA 0,3–0,6 aposta + "Foi isso que você quis dizer?" · BAIXA < 0,3 fallback — issue #16, commit 08e1666)*
 - [ ] Empate entre intenções → desempatar pelo **contexto** da Fase 2 (tópico atual) — *(pendente: exige Sessão, §6.1)*
 
 **Limite da cobertura (por que a pré-análise da §5.7 existe):** o pareamento por exemplos casa a entrada com frases **já vistas**. Pra um tópico novo fora da base (ex.: "qual seu carro favorito?", nunca visto) a cobertura só pega o que tiver em comum com exemplos parecidos ("qual seu jogo favorito") e ainda assim precisa de uma resposta pro tópico novo — ver [§5.7](#57-pré-análise-frame--slot-tarefa-8).
@@ -394,14 +394,14 @@ class Sessao {
 
 ### 7.1 Sistema de humor
 
-- [ ] Campo `humor` (0–10, inicial 5) na sessão, persistido
-- [ ] **Modificadores**: elogio ("você é legal", "gosto de você") → +1; grosseria ("você é chata", xingamento) → −1; despedida carinhosa → +0
-- [ ] **Faixas de tom** — mesma intenção, resposta diferente por humor:
+- [x] Campo `humor` (0–10, inicial 5) na sessão, persistido — *(estrutural desde a #19; persistência + clamp 0..10 na spec da #23)*
+- [x] **Modificadores**: elogio ("você é legal", "gosto de você") → +1; grosseria ("você é chata", xingamento) → −1; despedida carinhosa → +0 — *(detectaHumor em `processa`, padrões na fala crua com/sem acento, log em `Registro` — issue #23)*
+- [x] **Faixas de tom** — mesma intenção, resposta diferente por humor:
   - 0–3: seca/cética — `"tô de boa."`
   - 4–6: neutra — `"estou bem, obrigada por perguntar."`
-  - 7–10: animada — `"estou ótima! seu papo melhora meu dia!"`
-- [ ] Implementação: cada intenção pode ter respostas marcadas por faixa (ver [Apêndice A](#apêndice-a--esquema-json-proposto)), ou um pós-processador ajusta a mensagem
-- [ ] "Como está seu humor?" → responde o valor real + frase da faixa (finalmente conserta o placeholder)
+  - 7–10: animada — `"estou ótima! seu papo melhora meu dia!"` — *(`status_geral` re-bandado: 4 seca / 14 neutra / 4 animada, inclusive as frases de exemplo do plano — issue #23)*
+- [x] Implementação: cada intenção pode ter respostas marcadas por faixa (ver [Apêndice A](#apêndice-a--esquema-json-proposto)), ou um pós-processador ajusta a mensagem — *(decisão: usar o `humorMin`/`humorMax` já existentes — filtro do pool em `comandosResposta`, sem schema novo e sem pós-processador; faixa vazia cai no pool inteiro — issue #23)*
+- [x] "Como está seu humor?" → responde o valor real + frase da faixa (finalmente conserta o placeholder) — *(`nivel de humor em <valor> de 10` — issue #23)*
 - [ ] (Opcional) Decaimento: humor volta 1 ponto por dia sem interação
 
 ### 7.2 Iniciativa própria
@@ -421,7 +421,7 @@ Substituir o "Não sei como responder a isso" seco:
 
 ### Critérios de aceite
 
-- Elogiar 3× seguidas muda o tom das respostas de forma perceptível
+- Elogiar 3× seguidas muda o tom das respostas de forma perceptível — *(entregue — issue #23, `SistemaDeHumorTest.tresElogiosMudamTomDaResposta`)*
 - KAIRA faz pelo menos 1 pergunta espontânea a cada ~5 turnos
 - Fallback nunca repete duas vezes a mesma frase (anti-repetição simples) — *(entregue — issue #17)*
 
@@ -505,7 +505,7 @@ Ordem sugerida, começando amanhã:
 2. ✅ **`util/Normalizador.java`** + aplicar em `decifrar()` e no carregamento da base — mata a família de problemas de acento/case/pontuação — *(issue #2)*
 3. ✅ **Reestruturar `respostas.json` por intenção** — agrupar as 250 frases em ~40–60 intenções com exemplos ([Apêndice A](#apêndice-a--esquema-json-proposto)) — *(issue #7)*
 4. ✅ **Classificador por pontuação** (Jaccard/TF-IDF) no lugar do `equalsIgnoreCase` — junto com grupos de sinônimos e stemming — *(issues #9–#14)*
-5. **`Sessao` com nome do usuário** — pergunta no primeiro uso, usa `{nome}` nas respostas — *(próximo da fila — Fase 2)*
+5. ✅ **`Sessao` com nome do usuário** — pergunta no primeiro uso, usa `{nome}` nas respostas — *(issues #19/#21)*
 
 Essas 5 já transformam a experiência sem nenhuma dependência externa e sem jogar nada fora.
 
