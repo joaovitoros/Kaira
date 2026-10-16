@@ -566,9 +566,10 @@ Escrever por **categoria de intenção**, com checklist de cobertura. Mínimo pa
 
 ### 12.2 Continuação por contexto ("conte-me mais sobre isso")
 
+- ✅ **Entregue (issue #27, out/2026)** — intenção `continuacao_topico` com os literais da continuação ("fala mais disso", "conta mais sobre isso", "e depois o que aconteceu"...), e o hook de tópico (`melhorIntencaoDetalhado`) pula esse intento: o `topicoAtual` sobrevive e as respostas com `{topico}` montam a reação sobre o tema anterior. Respostas compostas por fragmentos (reação + followup) seguem pendentes.
 - Frase como "conte-me mais sobre isso" não tem frase-fato própria: a KAIRA olharia o `topicoAtual` (existe desde a #19), veria que o último tópico era X e montaria a resposta sobre X (puxando do dicionário da 12.1).
 - "Montar uma frase inacabada" = resposta **por fragmentos**, não frase inteira pronta — linha já prevista no plano: respostas compostas `[reação ao tópico] + [followup]` (§7.1 e o checklist de `followups` do §6).
-- Encaixes prontos: `Sessao.topicoAtual`/`historico` (issue #19); desempate por contexto (pendência do §5.1); campo `followups` existe no esquema **sem uso**; placeholders `{topico}` (pendência do §6).
+- Encaixes prontos: `Sessao.topicoAtual`/`historico` (issue #19); desempate por contexto (pendência do §5.1); campo `followups` **em uso desde a issue #25** (`perguntaInteresse`); placeholders `{topico}` (pendência do §6).
 
 ---
 
