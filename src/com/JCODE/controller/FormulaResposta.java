@@ -14,6 +14,15 @@ public class FormulaResposta {
         Registro.linha("ENTRADA   : " + falaUsuario);
 
         ControleSessao.processa(falaUsuario);
+
+        // #24: a resposta ao pedido de nome nao passa pelo classificador
+        String agradecimento = ControleSessao.respostaDeNome(falaUsuario);
+        if (agradecimento != null) {
+            Registro.linha("DEGRAU    : resposta-nome");
+            enviarResposta(agradecimento, falaUsuario);
+            return;
+        }
+        falaUsuario = ControleSessao.tiraNome(falaUsuario);
         falaUsuario = Normalizador.texto(falaUsuario);
 
         System.out.println("texto recebido pós replaces "+falaUsuario);

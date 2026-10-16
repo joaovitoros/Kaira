@@ -17,14 +17,15 @@ public class ControleSessao {
 
     private static Sessao sessao = new Sessao();
     private static boolean perguntouNome = false;
+    private static boolean nomeCapturado = false;
 
     private static final String ARQUIVO_SESSAO = "sessao.json";
 
     private static final Pattern[] PADROES_NOME = {
-            Pattern.compile("(?i)meu nome (?:é|eh|e)\\s+([\\p{L}]+(?:\\s+[\\p{L}]+){0,2})"),
-            Pattern.compile("(?i)me chamo\\s+([\\p{L}]+(?:\\s+[\\p{L}]+){0,2})"),
-            Pattern.compile("(?i)pode me chamar de\\s+([\\p{L}]+(?:\\s+[\\p{L}]+){0,2})"),
-            Pattern.compile("(?i)^(?:eu\\s+)?sou\\s+(?:o\\s+|a\\s+)?([\\p{L}]+(?:\\s+[\\p{L}]+){0,2})")
+            Pattern.compile("(?i)meu nome (?:é|eh|e)\\s+([\\p{L}]+(?:\\s+[\\p{L}]+){0,2}?)(?=\\s*(?:$|[.!?])|\\s*,|\\s+(?:e|que|com|pra|para|vou|quero)\\b)"),
+            Pattern.compile("(?i)me chamo\\s+([\\p{L}]+(?:\\s+[\\p{L}]+){0,2}?)(?=\\s*(?:$|[.!?])|\\s*,|\\s+(?:e|que|com|pra|para|vou|quero)\\b)"),
+            Pattern.compile("(?i)pode me chamar de\\s+([\\p{L}]+(?:\\s+[\\p{L}]+){0,2}?)(?=\\s*(?:$|[.!?])|\\s*,|\\s+(?:e|que|com|pra|para|vou|quero)\\b)"),
+            Pattern.compile("(?i)^(?:eu\\s+)?sou\\s+(?:o\\s+|a\\s+)?([\\p{L}]+(?:\\s+[\\p{L}]+){0,2}?)(?=\\s*(?:$|[.!?])|\\s*,|\\s+(?:e|que|com|pra|para|vou|quero)\\b)")
     };
 
     private static final String[][] PADROES_FATO = {
@@ -44,6 +45,11 @@ public class ControleSessao {
             {"-1", "(?i).*(?:odeio (?:voce|você)|seu lixo|seu idiota|me arrependo de te conhecer).*"}
     };
 
+    private static final String NOME_PURO =
+            "(?i)^(?!(?:oi|ola|eai|lol|kkk|nao|não|n|sei|bem|obrigad[oa]|la|executar)\\b"
+                    + "|(tudo bem|td bem|nao sei|não sei|quem eu sou|de nada)\\s*$)"
+                    + "[\\p{L}]{2,}(?:\\s+[\\p{L}]{2,}){0,2}$";
+
     public static Sessao get() {
         return sessao;
     }
@@ -51,12 +57,14 @@ public class ControleSessao {
     public static void reset() {
         sessao = new Sessao();
         perguntouNome = false;
+        nomeCapturado = false;
     }
 
     public static void processa(String falaUsuario) {
         if (falaUsuario == null || falaUsuario.trim().isEmpty())
             return;
 
+        nomeCapturado = false;
         detectaNome(falaUsuario);
         detectaFato(falaUsuario);
         detectaHumor(falaUsuario);
@@ -130,13 +138,21 @@ public class ControleSessao {
     }
 
     private static void detectaNome(String fala) {
+        String t = fala.trim();
         for (Pattern p : PADROES_NOME) {
-            Matcher m = p.matcher(fala.trim());
+            Matcher m = p.matcher(t);
             if (m.find()) {
                 sessao.setNomeUsuario(m.group(1).trim());
+                nomeCapturado = true;
                 Registro.linha("SESSAO    : nome=" + sessao.getNomeUsuario());
                 return;
             }
+        }
+        // #24 - nome pelado: so dentro da janela da pergunta, fora da lista
+        if (perguntouNome && sessao.getNomeUsuario() == null && t.matches(NOME_PURO)) {
+            sessao.setNomeUsuario(t);
+            nomeCapturado = true;
+            Registro.linha("SESSAO    : nome=" + sessao.getNomeUsuario() + " (pelado)");
         }
     }
 
@@ -168,6 +184,35 @@ public class ControleSessao {
                     + sessao.getHumor() + " (" + regra[0] + ")");
             return;
         }
+    }
+
+    public static String tiraNome(String fala) {
+        if (!nomeCapturado)
+            return fala;
+        String t = fala.trim();
+        for (Pattern p : PADROES_NOME) {
+            Matcher m = p.matcher(t);
+            if (m.find()) {
+                String sem = t.substring(0, m.start()) + " " + t.substring(m.end());
+                return limpaConectivos(sem.trim());
+            }
+        }
+        return "";
+    }
+
+    public static String respostaDeNome(String fala) {
+        if (!nomeCapturado)
+            return null;
+        if (!tiraNome(fala).trim().isEmpty())
+            return null;
+        return "Prazer em conhecer voce, " + sessao.getNomeUsuario() + "!";
+    }
+
+    private static String limpaConectivos(String s) {
+        s = s.replaceAll("^(?:e\\b\\s*|que\\s+|[,;.])\\s*", "");
+        s = s.replaceAll("\\s+(?:e|que)\\b\\s*$", "");
+        s = s.replaceAll("[,;]\\s*$", "");
+        return s.trim();
     }
 
 }
