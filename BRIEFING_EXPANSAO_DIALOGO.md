@@ -2,7 +2,9 @@
 
 > **Para quem é este documento:** agente responsável pela próxima leva de dados/conteúdo do banco de intenções. Ele é auto-contido: não depende de conversa anterior.
 > **Origem:** auditoria de sobreposição (out/2026, aprovada) + sonda de lacunas no classificador real (fumaca de frases, output colado abaixo).
-> **Estado do projeto no momento:** 199 testes Java verdes + avaliador 14/14, com a base recém-expandida (95 intenções, 2.350 exemplos, 1.135 respostas, 205 followups). **Atualização pós-briefing:** issues da casa fechadas — #24 (resposta ao pedido de nome), #25 (iniciativa própria — `ControleSessao.perguntaInteresse()` anexa pergunta a cada 3 turnos, lendo os `followups` do tópico atual), #26 (P7.2 — cache de `pesosIdf`, suíte ~4x mais rápida), #27/#28 (P2 — `continuacao_topico` com `{topico}` e pool segurado no turno do pedido), #32 (P7.4 — fatos novos: time, música, pet, sonho, "nasceu em", "meu X favorito é Y"), #33 (ensino turbinado — frase ensinada classificada antes de gravar) — specs `ControleSessaoNomeTest`, `IniciativaPropriaTest`, `ContinuacaoTopicoTest`, `ControleRespostaCacheIdfTest`, `FatosNovosTest`, `EnsinoTurbinadoTest` verdes.
+> **Estado do projeto no momento:** 202 testes Java verdes + avaliador 14/14, com a base em **98 intenções / 2.420 exemplos / 1.291 respostas / 211 followups**. **Leva de dados DIALOGO out/2026 executada** (patches `intencoes-dialogo-*.json` + `merge_intencoes_consultoria.py`, origem 'curadoria dialogo out/2026' + literais de match exato em origem 'autor'): **P1 ✅** (pergunta_kaaira — literais 'e voce'/'e vc' + variantes, todos com >0,6 ou match exato), **P3 ✅** (reacao_curta), **P4 ✅** (trabalho social/marcos), **P5 ✅** (casa_usuario), **P6 ✅** (hobbies), **pools de resposta por faixa ✅** (as 33 de conversa diária saíram de 1 para ≥3 na faixa seca — +156 respostas), **P7.5 parcial** ({nome} em pools), **P7.3 parcial** (3 dos 8 empates dissolvidos; 5 documentados — avaliador-locked ou colapso de negação, ver §2-P7). **P7.1 (podar agradecimento) segue pendente.** **C1 do §6 concluído (issue #35 — anti-repetição de resposta).**
+>
+> **Issues da casa fechadas (contexto):** #24 (resposta ao pedido de nome), #25 (iniciativa própria — `perguntaInteresse()` lê os `followups` do tópico atual), #26 (P7.2 — cache de `pesosIdf`, suíte ~4x mais rápida), #27/#28 (P2 — `continuacao_topico` + pool segurado no turno do pedido), #32 (P7.4 — fatos novos: time, música, pet, sonho, "nasceu em", "meu X favorito é Y"), #33 (ensino turbinado). Specs verdes: `ControleSessaoNomeTest`, `IniciativaPropriaTest`, `ContinuacaoTopicoTest`, `ControleRespostaCacheIdfTest`, `FatosNovosTest`, `EnsinoTurbinadoTest`, `CuradoriaConsultoriaTest` (cobre as duas levas + literais de match exato).
 
 ---
 
@@ -122,7 +124,7 @@ Reações curtas são o combustível do papo e hoje cada uma cai num lugar absur
 
 1. **Podar `agradecimento`** (619 → ~250): ~46% de redundância interna (família "obrigado pela ajuda"); efeitos: base menor, classificação mais rápida, menos ruído.
 2. **Cachear `pesosIdf`** (código): hoje é recalculado varrendo TODOS os exemplos em CADA classificação → cada mensagem é O(N²). Com 2.311 exemplos, dobra o custo de toda resposta — *(entregue — issue #26: cache por base de `pesosIdf` + tokens de exemplos (`garanteCacheIdf`, rebuild por identidade; `invalidaCacheIdf` no `ensinaEm`); scoring e desempate leem o cache)*
-3. **Dissolver os 8 empates de token-único da base antiga** (tabela no relatório de auditoria `AppData\Local\Temp\opencode\auditoria_sobreposicao.md` — os piores: "você entende" → critica; agradecimento variante → reacao_diversa). Método: enriquecer o exemplo de 1 token com um 2º token distintivo (ex.: "voce nao entende" → "voce nao entende nada").
+3. **Dissolver os 8 empates de token-único da base antiga** (tabela no relatório de auditoria `AppData\Local\Temp\opencode\auditoria_sobreposicao.md`). **Resultado (leva diálogo):** 3 dissolvidos em `reacao_diversa` ("legal"→"legal demais", "nao obrigado"→"nao obrigado agora", "mais nada"→"mais nada entao"); **5 ficam documentados como aceitos** e não se resolvem por dados: `{bem,tudo}` e `{esta}` são **avaliador-locked** (editar quebraria as regressões "tudo bem"/"como vc está"/"onde você está"); `{gosto}`, `{entende}` e `{robo}` sofrem **colapso de negação/lexical** ("eu nao gosto" ≡ "gosto"; "voce nao entende" ≡ "entende") — qualquer edição só move a ambiguidade e piora algum literal. **Fix de verdade é código** (o classificador tratar negação) — vale abrir issue própria.
 4. **Fatos novos na sessão** (código `ControleSessao` FATOS + intents `lembra_*`): hoje só gosta/mora/trabalha — adicionar time de futebol, música favorita, nome do pet, sonho. Estrutura idêntica às existentes.
 5. **Usar os slots nas respostas** (dados): `{nome}` quase não é usado, `{topico}` zero — inserir em saudações/retornos (render já existe, `ControleResposta.preencheSlots`).
 
@@ -150,3 +152,31 @@ Reações curtas são o combustível do papo e hoje cada uma cai num lugar absur
 P1 (maior ganho percebido, só dados) → P3 (só dados, alivia misroutes irritantes) → P2 (dados + código pequeno) → P4/P5/P6 (dados, volume) → P7 (higiene/performance). Se for uma leva só de dados: P1+P3+P4+P5+P6 numa tacada, P7 separado.
 
 **Divisão acordada (pós-briefing):** a leva de dados deste briefing fica com **P1 + P3 + P4 + P5 + P6 + P7.1 (podar agradecimento) + P7.3 (dissolver empates) + P7.5 (usar slots nas respostas)**; **P2, P7.2 (cache de pesosIdf) e P7.4 (fatos novos) são tarefas da casa** (dado+código no fluxo de issues do projeto) — não fazer aqui. **Concluídas da casa: P2 ✅, P7.2 ✅ e P7.4 ✅ (issue #32).**
+
+---
+
+## 6. Leva de CÓDIGO (tarefas da casa) — profundidade de resposta e higiene
+
+> Medições feitas na revisão de out/2026, com a base em 95 intenções / 2.348 exemplos / 1.135 respostas.
+> **Motivo:** a expansão dobrou o RECONHECIMENTO (1.129→2.348 exemplos, 2,08x) mas as RESPOSTAS cresceram menos (723→1.135, 1,57x). Para conversa longa, o que a usuária *ouve* importa mais que o que é entendido — e é onde o efeito "ela sempre diz a mesma coisa" aparece.
+
+### C1 — Anti-repetição de resposta (código) — **prioridade alta — CONCLUÍDO (issue #35)**
+
+- **Fato verificado:** `escolheMultiRespostas` (ControleResposta) é `Math.random` puro. Só existem anti-repetição em `ultimoFallback` (fallback) e `ultimoInteresse` (pergunta de interesse). **Resposta de intenção pode repetir imediatamente** — mencionar o mesmo assunto 3x na conversa pode sortear a MESMA frase duas vezes seguidas.
+- **Medição de suporte:** 39 intenções têm alguma faixa de humor com **menos de 3 respostas**; as 33 de conversa diária têm **exatamente 1** na faixa seca (0–3).
+- **Receita:** guardar as últimas N (2–3) respostas entregues por intenção (mapa intento→fila) e excluí-las do sorteio — mesmo espírito do `ultimoFallback`. Se o pool filtrado por humor esvaziar, cair no comportamento atual (nunca ficar sem resposta).
+- **Critério de aceite:** spec nova (ex.: `AntiRepeticaoTurnoTest`) — 3 turnos seguidos no mesmo intento nunca entregam a mesma frase.
+
+### C2 — Higiene do log: separar teste de uso real (código/processo)
+
+- **Fato verificado:** o `conversas.log` tem 5,3 MB com só ~31 entradas de uso real — os testes escrevem nele (o `Registro` roda em contexto de teste; os milhares de `topico=` vêm do simulador/suíte). Hoje o log **não serve** para dirigir curadoria.
+- **Receita:** silenciar/redirecionar o `Registro` durante execução de teste (flag de modo teste ou destino separado); manter o `conversas.log` só com uso real da janela.
+- **Por que importa:** o plano (§11.1) declara o log a fonte mais valiosa de dados ("as conversas reais"). Com o log limpo, a próxima curadoria deixa de ser sonda e vira **relatório de falhas reais**: o que cai em fallback, o que cai em aposta, que assuntos repetem.
+- **Receita de mineração (quando o log estiver limpo):** contar por `DEGRAU` (direto/aposta/aprender), listar as `ENTRADA` que viraram `aprender`, agrupar por intento — saída = lista priorizada de buracos.
+
+### C3 — Base de conhecimento real atrás do `{topico}` (§12.1 do plano) — **a fronteira de profundidade**
+
+- **Fato que motiva:** o P2 (continuação, #27/#28) já funciona — "conta mais" cai em `continuacao_topico` e a resposta usa `{topico}`. Mas **não há conteúdo atrás do tópico**: por isso a resposta é genérica.
+- **Receita:** o recorte de bases livres já levantadas no plano (OpenWordnet-PT CC BY 4.0 + lead da Wikipédia PT) → `KAIRA/resources/conhecimentos.json` no padrão do projeto (origem por item, como sempre). A intenção de continuação passa a montar a resposta do verbete do tópico atual em vez da frase genérica.
+- **Dependência:** vem depois de C1/C2 e do fechamento da leva de dados — é o item que separa "classificador bom" de "conversa de verdade".
+

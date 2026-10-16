@@ -26,7 +26,7 @@
 | `util/Tema.java` | Paleta única preto/verde (#31) — única fonte de cor da UI. |
 | `util/Caminhos.java` | `recurso(nome)` → `KAIRA/resources/`. **Nunca escreva o caminho literal** (teste `SemCaminhoHardcodedTest` flagra, inclusive em comentário). |
 | `util/Registro.java` | `linha(evento)` → `conversas.log` (gitignored). À prova de falha: log nunca derruba o fluxo. |
-| `KAIRA/resources/intencoes.json` | **O banco** (UTF-8 sem BOM): 95 intents com exemplos/respostas/followups/acoes. |
+| `KAIRA/resources/intencoes.json` | **O banco** (UTF-8 sem BOM): 98 intents com exemplos/respostas/followups/acoes. |
 | `KAIRA/resources/avatar/` | `kaira_conversa`, `kaira_idle`, `kaira_baixa`, `kaira_alta` (+ `avatar_01..09` arquivadas). |
 | `sessao.json` | Persistência da sessão (nome, humor, tópico, turnos). |
 
@@ -217,9 +217,9 @@ Tudo em `conversas.log` (gitignored) + tela ao vivo no botão **Log** (#29).
 ## 12. Como testar
 
 - `powershell -NoProfile -ExecutionPolicy Bypass -File run_tests.ps1`
-  → compila `src` + `test`, roda **199 testes** headless (JUnitCore) e o
-  **avaliador 14/14** (conjunto congelado de 14 frases — regressão nunca
-  pode cair).
+  → compila `src` + `test`, roda a suíte headless (JUnitCore, auto-descoberta das
+  classes `*Test`) e o **avaliador 14/14** (conjunto congelado de 14 frases —
+  regressão nunca pode cair). Flag `-SkipBuild` reusa o build anterior.
 - Specs por issue vivem em `test/com/JCODE/...` (`FatosNovosTest`,
   `EnsinoTurbinadoTest`, `CuradoriaTemasTest`, `IniciativaPropriaTest`, …).
 - Fluxo da casa: issue → spec vermelho → receita → verde → `Fixes #N` → docs.
@@ -243,10 +243,21 @@ Tudo em `conversas.log` (gitignored) + tela ao vivo no botão **Log** (#29).
 
 ## 14. Pendências conhecidas (para retomar)
 
-- Leva de dados do briefing (agente): P1, P3, P4, P5, P6, P7.1, P7.3, P7.5.
+- **Leva de dados do briefing — EXECUTADA** (DIALOGO out/2026): P1 ✅ (pergunta_kaaira),
+  P3 ✅ (reacao_curta), P4 ✅ (trabalho social/marcos), P5 ✅ (casa_usuario), P6 ✅ (hobbies),
+  pools de resposta por faixa ✅ (+156 respostas; faixa seca das intenções diárias de 1 → ≥3),
+  P7.5 parcial ✅ (`{nome}` em pools), P7.3 parcial (3 empates dissolvidos; 5 aceitos/documentados).
+  **Pendente: P7.1 (podar `agradecimento` de 619 → ~250).**
+- **#35 (anti-repetição de resposta, C1 do briefing §6): CONCLUÍDA** — fila por
+  intento (`ultimasRespostas`, últimas 2 frases fora do sorteio) em
+  `ControleResposta.comandosResposta`; spec `AntiRepeticaoTurnoTest` verde
+  (sorteio determinístico via o gancho `semeador`).
+- Código pendente do briefing §6: **C2 (higiene do log** — testes sujam o `conversas.log`**)**
+  e **C3 (base de conhecimento atrás do `{topico}`, §12.1)**.
 - §7.3 restante: degrau médio com `{palavrasChave}` + followup (issue #16 parcial);
   frame reconhecido/slot novo (§5.7).
+- Classificador: **negação é cega** ("não" é stopword) — causa raiz dos empates `{gosto}/{entende}`;
+  fix de código, não de dados.
 - Opcional: theming dos `JOptionPane` (saem no estilo do sistema);
   decaimento do humor por dia sem interação (§7.1 opcional);
-  `CriarResposta` — retorno descartado (decidir: usar ou remover);
-  pool de `agradecimento` gigante (619 → ~250, P7.3 do agente).
+  `CriarResposta` — retorno descartado (decidir: usar ou remover).

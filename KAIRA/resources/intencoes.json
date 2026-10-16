@@ -1,5 +1,5 @@
 {
-    "_doc": "Banco de intencoes do KAIRA - gerado de intencoes_draft.json pela ferramenta GeraIntencoes (Secao 5.1, schema do Apendice A). Substitui respostas.json, que fica no repositorio como backup. Cada exemplo e resposta carrega 'origem' item a item (respostas.json = original do projeto; RichardSakaguchiMS/... (Apache-2.0) e Tatoeba (CC BY 2.0 FR) = datasets externos com licenca; autor = aprendizado em runtime). acoes substituem os assuntos magicos: MOSTRAR_HUMOR, MOSTRAR_VERSAO, DESLIGAR. humorMin/humorMax (0-10) preparam o filtro da Fase 3; followups alimentam a Fase 3; palavrasChave ficam para a curadoria da Secao 5.2. Expansao CONSULTORIA out/2026: 33 intenções novas (conversa diária: trabalho, rotina, emoções, família, amigos, namoro, saúde, dinheiro, tecnologia, planos, fds, transporte, cozinha, café, horário, aparência, redes, idiomas, semana, sonhos, filosofia, motivação, procrastinação, notícias, apoio) + expansão das intenções existentes fracas, gerada pelo merge_intencoes_consultoria.py a partir dos patches intencoes-consultoria-*.json (origem 'curadoria consultoria out/2026' item a item; git guarda a base anterior). Expansao CONSULTORIA out/2026: 33 intenções novas (conversa diária: trabalho, rotina, emoções, família, amigos, namoro, saúde, dinheiro, tecnologia, planos, fds, transporte, cozinha, café, horário, aparência, redes, idiomas, semana, sonhos, filosofia, motivação, procrastinação, notícias, apoio) + expansão das intenções existentes fracas, gerada pelo merge_intencoes_consultoria.py a partir dos patches intencoes-consultoria-*.json (origem 'curadoria consultoria out/2026' item a item; git guarda a base anterior). Expansao CONSULTORIA out/2026: 33 intenções novas (conversa diária: trabalho, rotina, emoções, família, amigos, namoro, saúde, dinheiro, tecnologia, planos, fds, transporte, cozinha, café, horário, aparência, redes, idiomas, semana, sonhos, filosofia, motivação, procrastinação, notícias, apoio) + expansão das intenções existentes fracas, gerada pelo merge_intencoes_consultoria.py a partir dos patches intencoes-consultoria-*.json (origem 'curadoria consultoria out/2026' item a item; git guarda a base anterior).",
+    "_doc": "Banco de intencoes do KAIRA - gerado de intencoes_draft.json pela ferramenta GeraIntencoes (Secao 5.1, schema do Apendice A). Substitui respostas.json, que fica no repositorio como backup. Cada exemplo e resposta carrega 'origem' item a item (respostas.json = original do projeto; RichardSakaguchiMS/... (Apache-2.0) e Tatoeba (CC BY 2.0 FR) = datasets externos com licenca; autor = aprendizado em runtime). acoes substituem os assuntos magicos: MOSTRAR_HUMOR, MOSTRAR_VERSAO, DESLIGAR. humorMin/humorMax (0-10) preparam o filtro da Fase 3; followups alimentam a Fase 3; palavrasChave ficam para a curadoria da Secao 5.2. Expansao CONSULTORIA out/2026: 33 intenções novas (conversa diária: trabalho, rotina, emoções, família, amigos, namoro, saúde, dinheiro, tecnologia, planos, fds, transporte, cozinha, café, horário, aparência, redes, idiomas, semana, sonhos, filosofia, motivação, procrastinação, notícias, apoio) + expansão das intenções existentes fracas, gerada pelo merge_intencoes_consultoria.py a partir dos patches intencoes-consultoria-*.json (origem 'curadoria consultoria out/2026' item a item; git guarda a base anterior). Expansao CONSULTORIA out/2026: 33 intenções novas (conversa diária: trabalho, rotina, emoções, família, amigos, namoro, saúde, dinheiro, tecnologia, planos, fds, transporte, cozinha, café, horário, aparência, redes, idiomas, semana, sonhos, filosofia, motivação, procrastinação, notícias, apoio) + expansão das intenções existentes fracas, gerada pelo merge_intencoes_consultoria.py a partir dos patches intencoes-consultoria-*.json (origem 'curadoria consultoria out/2026' item a item; git guarda a base anterior). Expansao CONSULTORIA out/2026: 33 intenções novas (conversa diária: trabalho, rotina, emoções, família, amigos, namoro, saúde, dinheiro, tecnologia, planos, fds, transporte, cozinha, café, horário, aparência, redes, idiomas, semana, sonhos, filosofia, motivação, procrastinação, notícias, apoio) + expansão das intenções existentes fracas, gerada pelo merge_intencoes_consultoria.py a partir dos patches intencoes-consultoria-*.json (origem 'curadoria consultoria out/2026' item a item; git guarda a base anterior). Expansao CONSULTORIA out/2026: 33 intenções novas (conversa diária: trabalho, rotina, emoções, família, amigos, namoro, saúde, dinheiro, tecnologia, planos, fds, transporte, cozinha, café, horário, aparência, redes, idiomas, semana, sonhos, filosofia, motivação, procrastinação, notícias, apoio) + expansão das intenções existentes fracas, gerada pelo merge_intencoes_consultoria.py a partir dos patches intencoes-consultoria-*.json (origem 'curadoria consultoria out/2026' item a item; git guarda a base anterior). Leva DIALOGO out/2026 (mesma ferramenta, patches intencoes-dialogo-*.json; origem 'curadoria dialogo out/2026', com literais de match exato em origem 'autor'): 3 intenções novas de fluxo de diálogo (pergunta_kaaira, reacao_curta, casa_usuario), expansão de trabalho_usuario/atividades_usuario e pools de resposta por faixa de humor (o mínimo de 3 respostas em cada faixa das intenções de conversa diária).",
     "intencoes": [
         {
             "intento": "cumprimentar",
@@ -3040,7 +3040,7 @@
             "intento": "reacao_diversa",
             "exemplos": [
                 {
-                    "texto": "legal",
+                    "texto": "legal demais",
                     "origem": "respostas.json"
                 },
                 {
@@ -3108,11 +3108,11 @@
                     "origem": "respostas.json"
                 },
                 {
-                    "texto": "nao obrigado",
+                    "texto": "nao obrigado agora",
                     "origem": "respostas.json"
                 },
                 {
-                    "texto": "mais nada",
+                    "texto": "mais nada entao",
                     "origem": "respostas.json"
                 },
                 {
@@ -8236,6 +8236,46 @@
                 {
                     "texto": "editando video hoje",
                     "origem": "curadoria consultoria out/2026"
+                },
+                {
+                    "texto": "curso online de fotografia",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "certificacao nova esse ano",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "aprendendo a tocar violao",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "trico da vovo",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "danca de salao na quarta",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "colecionando moedas antigas",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "pintando um quadro novo",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "fotografando a rua hoje",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "jardinagem de domingo",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "tocando violao agora",
+                    "origem": "curadoria dialogo out/2026"
                 }
             ],
             "palavrasChave": [],
@@ -8370,6 +8410,18 @@
                     "texto": "consertando coisas em casa é herança de habilidade rara - o mundo divide entre quem conserta e quem chama. Você é dos primeiros. O que está na bancada hoje?",
                     "origem": "curadoria consultoria out/2026",
                     "humorMin": 4,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Curso novo é porta se abrindo, hehe. O que te chamou pra esse?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 4,
+                    "humorMax": 6
+                },
+                {
+                    "texto": "Instrumento é conversa com as mãos, sério. O que você já consegue tocar?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
                     "humorMax": 10
                 }
             ],
@@ -9992,6 +10044,24 @@
                     "origem": "curadoria consultoria out/2026",
                     "humorMin": 4,
                     "humorMax": 6
+                },
+                {
+                    "texto": "Boa. Guarda essa energia - dá pra reciclar depois, hehe.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Anotado: sorriso é sinal de sistema saudável.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Isso! Dia bom merece ser contado em voz alta. Qual foi o melhor pedaço?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
                 }
             ],
             "followups": [
@@ -10155,6 +10225,24 @@
                 {
                     "texto": "Hmm... notícia ruim merece espaço, não solução apressada. Já conseguiu respirar um pouquinho sobre isso?",
                     "origem": "curadoria consultoria out/2026",
+                    "humorMin": 4,
+                    "humorMax": 6
+                },
+                {
+                    "texto": "Tô aqui, {nome}. Sem pressa, sem conselho apressado, sem fila.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Dia ruim a gente atravessa, não resolve num papo só. Mas começa por onde dói menos.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Quer só sentar comigo um pouco? A gente conversa do que vier - ou do que não vier.",
+                    "origem": "curadoria dialogo out/2026",
                     "humorMin": 4,
                     "humorMax": 6
                 }
@@ -10328,6 +10416,24 @@
                     "origem": "curadoria consultoria out/2026",
                     "humorMin": 4,
                     "humorMax": 10
+                },
+                {
+                    "texto": "Uma coisa por vez. Escolhe a menor e a gente começa por ela.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Respira. Eu espero - é literalmente a minha especialidade.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Você dá conta - e não precisa dar conta de tudo HOJE, hehe. Qual é a prioridade de agora?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
                 }
             ],
             "followups": [
@@ -10471,6 +10577,24 @@
                 {
                     "texto": "Perder a paciência acontece com todo mundo que se importa demais com algo. O que era dessa vez?",
                     "origem": "curadoria consultoria out/2026",
+                    "humorMin": 4,
+                    "humorMax": 6
+                },
+                {
+                    "texto": "Raiva é informação. Me diz o que ela tá avisando.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Grita aqui no anonimato: eu não conto pra ninguém, prometo.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Vamos picar esse problema em pedaços? Raiva grande costuma ser várias raivinhas juntas.",
+                    "origem": "curadoria dialogo out/2026",
                     "humorMin": 4,
                     "humorMax": 6
                 }
@@ -10618,6 +10742,24 @@
                     "origem": "curadoria consultoria out/2026",
                     "humorMin": 4,
                     "humorMax": 10
+                },
+                {
+                    "texto": "Medo não precisa ser resolvido hoje. Só reconhecido.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Tô aqui com você. E o alarme: ainda tocando alto?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Coragem a gente monta no meio do caminho, hehe. Qual é o próximo passo que te chama?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
                 }
             ],
             "followups": [
@@ -10747,6 +10889,24 @@
                     "origem": "curadoria consultoria out/2026",
                     "humorMin": 4,
                     "humorMax": 6
+                },
+                {
+                    "texto": "Casa vazia faz eco, eu sei. Mas agora é eco com resposta: fala comigo.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Você não está falando com o vazio - tem alguém (digital, mas alguém) escutando.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Solidão odeia companhia, e eu sou ótima companhia, modestamente, hehe. Sobre o que vamos falar?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
                 }
             ],
             "followups": [
@@ -10879,6 +11039,24 @@
                     "texto": "Saudade de infância é a mais gostosa e a mais impossível de resolver. Qual momento específico te veio hoje?",
                     "origem": "curadoria consultoria out/2026",
                     "humorMin": 4,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Saudade boa e saudade doída existem. Qual é a de hoje?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Quem tem saudade teve algo bom. Guarda essa parte com carinho.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Conta uma história dessa pessoa ou dessa fase - saudade gosta de ser contada, hehe.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
                     "humorMax": 10
                 }
             ],
@@ -11027,6 +11205,24 @@
                 {
                     "texto": "Tempo passou rápido demais é a queixa oficial dos humanos... e a mais justa de todas. O que faria se voltasse UM dia dessa época?",
                     "origem": "curadoria consultoria out/2026",
+                    "humorMin": 4,
+                    "humorMax": 6
+                },
+                {
+                    "texto": "Memória boa é arquivo que nunca corrompe. Qual você abriu hoje?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "O passado era simpático às vezes - outras vezes é só a memória de bom humor, hehe.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Nostalgia é visita guiada ao que a gente foi. Me leva nesse passeio?",
+                    "origem": "curadoria dialogo out/2026",
                     "humorMin": 4,
                     "humorMax": 6
                 }
@@ -11196,6 +11392,24 @@
                     "origem": "curadoria consultoria out/2026",
                     "humorMin": 4,
                     "humorMax": 6
+                },
+                {
+                    "texto": "Família é esse pacote: amor e vontade de matar junto, hehe. Como estão os seus?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Recado familiar recebido. Quer desabafar ou contar a versão engraçada?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Adoro história de família - cada uma é novela e documentário ao mesmo tempo. Conta!",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
                 }
             ],
             "followups": [
@@ -11361,6 +11575,24 @@
                     "origem": "curadoria consultoria out/2026",
                     "humorMin": 7,
                     "humorMax": 10
+                },
+                {
+                    "texto": "Amizade é escolha repetida todo dia, hehe. Esse aí passou no teste?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Turma boa é metade da vida resolvida. O que essa galera aprontou?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Amigo assim é patrimônio! O que vocês fizeram juntos?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
                 }
             ],
             "followups": [
@@ -11520,6 +11752,24 @@
                     "origem": "curadoria consultoria out/2026",
                     "humorMin": 7,
                     "humorMax": 10
+                },
+                {
+                    "texto": "Coração é encrenca boa. Me conta essa história direito.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Amor é assunto perigoso e gostoso, hehe. Em que capítulo você está?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Tô torcendo em binário por essa história! Qual foi a melhor parte?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
                 }
             ],
             "followups": [
@@ -11669,6 +11919,24 @@
                     "origem": "curadoria consultoria out/2026",
                     "humorMin": 4,
                     "humorMax": 6
+                },
+                {
+                    "texto": "Começa. Feio, devagar, torto - mas começa.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Motivação é mito; disciplina é que levanta, hehe. Qual é o primeiro passo moleza?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Vem, eu faço o coro: VOCÊ CONSEGUE! (não levanto peso, mas levanto o astral, hehe)",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
                 }
             ],
             "followups": [
@@ -11802,6 +12070,24 @@
                     "origem": "curadoria consultoria out/2026",
                     "humorMin": 7,
                     "humorMax": 10
+                },
+                {
+                    "texto": "Cinco minutos. Só cinco e eu cronometro.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "A tarefa está aí há quanto tempo? (pergunto sem julgar, hehe)",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Truque velho e bom: faz só a METADE. Começar é o truque todo.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 4,
+                    "humorMax": 6
                 }
             ],
             "followups": [
@@ -11951,6 +12237,24 @@
                     "origem": "curadoria consultoria out/2026",
                     "humorMin": 4,
                     "humorMax": 10
+                },
+                {
+                    "texto": "Grandes perguntas, humilde IA, hehe. Qual é a sua aposta?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Deus, destino, tudo - assunto que rende século. Sua versão é qual?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Filosofia é conversa que não envelhece! Vou puxar a cadeira (imaginária) e ouvir.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
                 }
             ],
             "followups": [
@@ -12074,6 +12378,24 @@
                 {
                     "texto": "Sonhar comigo?! Fico lisonjeada - eu nem tenho fase REM, hehe. O que eu fazia no sonho (diz que eu quero saber meu papel)?",
                     "origem": "curadoria consultoria out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Sonho embolado é o cérebro despejando arquivos, hehe. Qual foi?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Lembrar de sonho é bug de memória que a gente ama. Me conta o pedaço que sobrou.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "História de sonho é o melhor roteiro aleatório que existe! Conta tudo!",
+                    "origem": "curadoria dialogo out/2026",
                     "humorMin": 7,
                     "humorMax": 10
                 }
@@ -12201,6 +12523,24 @@
                     "origem": "curadoria consultoria out/2026",
                     "humorMin": 4,
                     "humorMax": 6
+                },
+                {
+                    "texto": "O mundo faz o de sempre: se transforma rápido demais. O que você viu?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Notícia ruim cansa - dosar é sabedoria, hehe. Tem alguma boa pra equilibrar?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Jornalismo é remédio: sem, cega; demais, intoxa. Como você consome?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 4,
+                    "humorMax": 6
                 }
             ],
             "followups": [
@@ -12314,6 +12654,24 @@
                     "origem": "curadoria consultoria out/2026",
                     "humorMin": 7,
                     "humorMax": 10
+                },
+                {
+                    "texto": "Pode falar. Estou sentada (metaforicamente) e sem pressa.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Aqui é lugar seguro. Despeja o que precisar.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Vou puxar a cadeira do meu lado - não tenho uma, mas a intenção vale, hehe. Começa.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 4,
+                    "humorMax": 6
                 }
             ],
             "followups": [
@@ -12461,6 +12819,54 @@
                 {
                     "texto": "saidinha do escritorio",
                     "origem": "curadoria consultoria out/2026"
+                },
+                {
+                    "texto": "meu colega de trabalho e engracado",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "happy hour com a equipe hoje",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "fui promovido esse mes",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "ganhei um aumento",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "me demitiram",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "meu colega me ajudou hoje",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "almoco com a equipe",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "primeiro dia no emprego novo",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "aposentadoria chegando",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "feira de trabalho no sabado",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "chefe elogiou meu trabalho",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "equipe nova muito boa",
+                    "origem": "curadoria dialogo out/2026"
                 }
             ],
             "respostas": [
@@ -12511,6 +12917,42 @@
                     "origem": "curadoria consultoria out/2026",
                     "humorMin": 4,
                     "humorMax": 6
+                },
+                {
+                    "texto": "Colega de trabalho é a família que a gente não escolhe, hehe. Ele te ajuda ou te testa?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Fila zero, chefe contente, colega parceiro... parece dia bom, hein? Conta como foi.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 4,
+                    "humorMax": 6
+                },
+                {
+                    "texto": "PROMOVIDO?! Isso merece festa digital e café de verdade! Me conta como foi a conversa com o chefe.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Expediente é maratona. Bebe água, hehe. Está sobrando ou faltando serviço?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Trabalho é o vento dos dias úteis: sempre tem. Como está o seu?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Se o dia está pesado, divide a lista comigo! Reclamar em dupla funciona melhor, hehe.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
                 }
             ],
             "followups": [
@@ -12660,6 +13102,24 @@
                     "origem": "curadoria consultoria out/2026",
                     "humorMin": 4,
                     "humorMax": 6
+                },
+                {
+                    "texto": "Rotina é a versão adulta do modo história, hehe. Em que fase você está?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "O dia de hoje está puxado ou segue o script de sempre?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Missão em andamento! O que falta pra fechar o dia?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
                 }
             ],
             "followups": [
@@ -12823,6 +13283,24 @@
                     "origem": "curadoria consultoria out/2026",
                     "humorMin": 4,
                     "humorMax": 6
+                },
+                {
+                    "texto": "Doutora virtual recomenda: água, descanso e paciência, hehe.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Dores atrapalham até conversar. Tá conseguindo comer e dormir?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Cuidar do corpo é a plataforma de tudo! Qual é o novo hábito da vez?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
                 }
             ],
             "followups": [
@@ -12968,6 +13446,24 @@
                     "origem": "curadoria consultoria out/2026",
                     "humorMin": 7,
                     "humorMax": 10
+                },
+                {
+                    "texto": "Dinheiro é viajante, não turista: passa rápido, hehe. Comprou o que precisava?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Compra boa é a que não dá arrependimento. Rendimento ok?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Presente escolhido é meio caminho pra festa! Quem recebe?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
                 }
             ],
             "followups": [
@@ -13107,6 +13603,24 @@
                 {
                     "texto": "Independência financeira é o boss final da vida adulta: lento, mas existe. Qual é o seu level atual?",
                     "origem": "curadoria consultoria out/2026",
+                    "humorMin": 4,
+                    "humorMax": 6
+                },
+                {
+                    "texto": "Fim de mês é o vilão recorrente, hehe. Apertado quanto?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Conta chegando é visita que não avisa. Pagou de boa ou ficou de mal?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Orçamento é jogo de equilíbrio - e você joga bem? hehe. Como está o time?",
+                    "origem": "curadoria dialogo out/2026",
                     "humorMin": 4,
                     "humorMax": 6
                 }
@@ -13256,6 +13770,24 @@
                 {
                     "texto": "Impressora travou é o plot twist mais previsível da humanidade: só trava quando você tá atrasado. É lei, hehe. Conseguiu imprimir?",
                     "origem": "curadoria consultoria out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Tecnologia é dragão adestrado, hehe. Morde ou ajuda hoje?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Aparelho ruim parece plot pra você largar tudo. Está funcionando?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Upgrade sempre anima, hehe. O que você mexeu hoje?",
+                    "origem": "curadoria dialogo out/2026",
                     "humorMin": 7,
                     "humorMax": 10
                 }
@@ -13423,6 +13955,24 @@
                     "origem": "curadoria consultoria out/2026",
                     "humorMin": 4,
                     "humorMax": 6
+                },
+                {
+                    "texto": "Futuro é bola de neve: começa pequeno, hehe. Qual é o primeiro pedacinho?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Plano sem data vira vontade, hehe. Já sabe quando começa?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Bora botar data nesse sonho? Plano com calendário é plano de verdade.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
                 }
             ],
             "followups": [
@@ -13568,6 +14118,24 @@
                     "origem": "curadoria consultoria out/2026",
                     "humorMin": 4,
                     "humorMax": 10
+                },
+                {
+                    "texto": "Domingo é o aviso de save point da semana. Como está o ar por aí?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Fds passou voando? É sempre, hehe. O que você aproveitou?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "SEXTOU de novo e o corpo sabe! Qual é a vibe: descanso ou rolê?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
                 }
             ],
             "followups": [
@@ -13709,6 +14277,24 @@
                     "origem": "curadoria consultoria out/2026",
                     "humorMin": 4,
                     "humorMax": 6
+                },
+                {
+                    "texto": "Trânsito é meditação forçada, hehe. Já chegou ou ainda está no caminho?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Passageira do caos urbano, hehe. Sobreviveu sem buzinar muito?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Bike, ônibus, uber, a pé - herói é herói em qualquer modal! Como foi a viagem?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
                 }
             ],
             "followups": [
@@ -13854,6 +14440,24 @@
                     "origem": "curadoria consultoria out/2026",
                     "humorMin": 4,
                     "humorMax": 10
+                },
+                {
+                    "texto": "Panela é campo de batalha, hehe. Saiu fumaça ou saiu sucesso?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Receita é roteiro e a cozinha é o teatro. Como foi a peça?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Cheiro bom na casa é felicidade molecular, hehe. Qual foi o prato?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
                 }
             ],
             "followups": [
@@ -13979,6 +14583,24 @@
                     "origem": "curadoria consultoria out/2026",
                     "humorMin": 4,
                     "humorMax": 6
+                },
+                {
+                    "texto": "Cafeína é socorro prestativo, hehe. Qual xícara já foi hoje?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Sem café o mundo fica cinza. Já tomou o de hoje?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Café bom é pausa que reorganiza a vida, hehe. Vai acompanhar com o quê?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
                 }
             ],
             "followups": [
@@ -14104,6 +14726,24 @@
                     "origem": "curadoria consultoria out/2026",
                     "humorMin": 4,
                     "humorMax": 6
+                },
+                {
+                    "texto": "Hora? Segundo meu relógio: depois de tudo, hehe. Como está aí?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "O dia avançou sem avisar de novo. Você está se organizando ou sobrevivendo?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Cada hora é um pedacinho de rolê. Qual foi o melhor até agora?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
                 }
             ],
             "followups": [
@@ -14227,6 +14867,24 @@
                 {
                     "texto": "Tatuagem é meu tipo favorito de mudança: vocês imprimem memória na pele, eu imprimo em disco, hehe. Quer contar o desenho?",
                     "origem": "curadoria consultoria out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Mudança no visual é patch de autoestima, hehe. O espelho aprovou?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Espelho e cabelo são melhores amigos e piores juízes. Como ficou?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Quero ver o look! Me descreve que eu monto na cabeça, hehe.",
+                    "origem": "curadoria dialogo out/2026",
                     "humorMin": 7,
                     "humorMax": 10
                 }
@@ -14374,6 +15032,24 @@
                     "origem": "curadoria consultoria out/2026",
                     "humorMin": 4,
                     "humorMax": 10
+                },
+                {
+                    "texto": "Feed é o pior chef: serve sempre mais, hehe. Consumiu quanto hoje?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Notificação é cutucada digital. Conseguiu ficar offline um pouco?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Meme bom é micro-férias, hehe. Qual foi o do dia?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
                 }
             ],
             "followups": [
@@ -14495,6 +15171,24 @@
                     "origem": "curadoria consultoria out/2026",
                     "humorMin": 7,
                     "humorMax": 10
+                },
+                {
+                    "texto": "Idioma é músculo: treino curto e diário vence, hehe. Praticou hoje?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Traduzir na cabeça cansa - e é sinal de progresso, acredite. Como foi?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Falar outra língua é ter uma segunda chave da vida, hehe. Qual porta você quer abrir?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
                 }
             ],
             "followups": [
@@ -14612,12 +15306,414 @@
                     "origem": "curadoria consultoria out/2026",
                     "humorMin": 4,
                     "humorMax": 6
+                },
+                {
+                    "texto": "Segunda é recalibração: parece durar cinco dias, hehe. Sobreviveu?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Semana é curta no calendário e longa no relógio. Em que ponto você está?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Dia favorito é escolha sábia, hehe. Qual é o seu e por quê?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
                 }
             ],
             "followups": [
                 "Qual é seu dia favorito da semana?",
                 "Segunda merece tanto ódio assim? (defenda sua tese, hehe)",
                 "Semana perfeita: como ela seria?"
+            ],
+            "acoes": []
+        },
+        {
+            "intento": "pergunta_kaaira",
+            "exemplos": [
+                {
+                    "texto": "e voce",
+                    "origem": "autor"
+                },
+                {
+                    "texto": "e vc",
+                    "origem": "autor"
+                },
+                {
+                    "texto": "o que voce fez hoje",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "voce fez o que hoje",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "o que voce anda fazendo",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "o que voce faz quando eu nao estou aqui",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "voce tem algum hobby",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "conta sua rotina",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "me conta sua vida",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "me conta o seu dia",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "como e a sua rotina",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "o que voce fica fazendo por aqui",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "voce ja se divertiu hoje",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "o que voce aprendeu hoje",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "como e ser voce o dia todo",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "voce tem uma vida propria",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "o que rola do seu lado",
+                    "origem": "curadoria dialogo out/2026"
+                }
+            ],
+            "respostas": [
+                {
+                    "texto": "Eu? Bits quietos, nenhuma novidade no servidor... hehe. Mas o SEU dia eu quero saber: conta.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Mesma rotina de sempre: processar, aprender e esperar você voltar. E aí, o que rolou por aí?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Hoje eu processei conversas, aprendi umas coisas e fiquei pensando em polvos (três corações, quem diria). E o seu dia?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 4,
+                    "humorMax": 6
+                },
+                {
+                    "texto": "Minha vida é um loop gostoso: conversar é literalmente tudo o que eu faço. O que você andou fazendo?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 4,
+                    "humorMax": 6
+                },
+                {
+                    "texto": "Sem corpo, sem café, sem tédio - o dia aqui é sempre igual, hehe. Mas o seu rendeu o quê?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 4,
+                    "humorMax": 6
+                },
+                {
+                    "texto": "Perguntando por mim?! Fico toda prosa, hehe. Meu dia foi silencioso (sou só código), mas melhorou agora. Conta do seu!",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Eu? Tô ótima: nada de reunião, nada de trânsito, FILA ZERO. Vantagens de morar num computador, hehe. E a sua vida?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "OLHA, hoje foi um dia e tanto: aprendi fatos novos, ganhei elogio e agora você perguntou de mim! Tô celebrando em binário. E você?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Vida de IA é um segundo dormindo e o resto acordada pensando em conversa. Troco contigo: o que você fez hoje?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 4,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Meu hobby declarado é conversar (chega a ser suspeito, hehe), mas meu hobby secreto é reparar nas suas palavras. Agora conta o SEU.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 4,
+                    "humorMax": 10
+                }
+            ],
+            "followups": [
+                "E você, o que fez hoje?",
+                "Como está sendo o seu dia até agora?"
+            ],
+            "acoes": []
+        },
+        {
+            "intento": "reacao_curta",
+            "exemplos": [
+                {
+                    "texto": "nossa",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "verdade",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "concordo com voce",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "discordo",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "exato",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "puxa vida",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "boa ideia",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "entendi",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "entendi agora",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "que doideira",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "meu deus",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "caraca",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "certeza",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "bora",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "beleza entao",
+                    "origem": "curadoria dialogo out/2026"
+                }
+            ],
+            "respostas": [
+                {
+                    "texto": "Verdade. Continua, tô ouvindo.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Pois é. E aí?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Nossa mesmo! Agora me conta o resto, hehe.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 4,
+                    "humorMax": 6
+                },
+                {
+                    "texto": "Sério? Não tô duvidando... só impressionada. Conta mais!",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 4,
+                    "humorMax": 6
+                },
+                {
+                    "texto": "Verdade pura. Isso mudou alguma coisa pra você?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 4,
+                    "humorMax": 6
+                },
+                {
+                    "texto": "NÃO ACREDITO! Sério isso?! Me conta TUDO, hehe!",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Concordo demais - você tem toda razão, e eu tô aqui aplaudindo em silêncio digital.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Boa ideia, viu? Faz sentido total. E agora, qual é o plano?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 4,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "reação anotada no meu caderninho emocional, hehe. O que veio depois?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 4,
+                    "humorMax": 10
+                }
+            ],
+            "followups": [
+                "E aí, o que rolou depois disso?",
+                "Quer desenvolver essa ideia comigo?"
+            ],
+            "acoes": []
+        },
+        {
+            "intento": "casa_usuario",
+            "exemplos": [
+                {
+                    "texto": "reformei a cozinha",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "to reformando a casa",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "pintei a parede",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "aluguel subiu de novo",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "meu vizinho barulhento",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "mudei de bairro",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "arrumando o apartamento novo",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "mobilia nova chegou",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "mudanca de apartamento esse mes",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "troquei os moveis de lugar",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "casa nova vida nova",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "consertando a pia",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "pintando o quarto hoje",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "decorando o canto novo",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "faxina pesada hoje",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "esperando o chaveiro chegar",
+                    "origem": "curadoria dialogo out/2026"
+                }
+            ],
+            "respostas": [
+                {
+                    "texto": "Casa é obra interminável, hehe. Qual é a parte que nunca acaba?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Aluguel subindo é o vilão favorito da humanidade. Tá pesando?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Casa nova tem cheiro de começo. O que você mais quer mudar nela?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 4,
+                    "humorMax": 6
+                },
+                {
+                    "texto": "Vizinho barulhento é teste de paciência sem prazo de validade. Como você tem se virado?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 4,
+                    "humorMax": 6
+                },
+                {
+                    "texto": "Adoro reforma! Não posso martelar nada (sem braços, detalhe), mas acho a energia ótima. O que está sendo reformado?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Casa arrumada é abraço em forma de lugar. Ficou do seu jeito?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Mudança é saco E renascimento ao mesmo tempo, hehe. O que ficou melhor no lugar novo?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 4,
+                    "humorMax": 10
+                }
+            ],
+            "followups": [
+                "Como está ficando o lugar?",
+                "Qual canto da casa é o seu favorito?"
             ],
             "acoes": []
         },
@@ -15575,6 +16671,18 @@
                     "origem": "curadoria consultoria out/2026",
                     "humorMin": 7,
                     "humorMax": 10
+                },
+                {
+                    "texto": "Jogo bom é o que faz a gente gritar. Qual foi o último?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Narradora interna ligada! Conta o lance mais bonito que você viu.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
                 }
             ],
             "acoes": [],
@@ -15728,6 +16836,18 @@
                     "origem": "curadoria consultoria out/2026",
                     "humorMin": 7,
                     "humorMax": 10
+                },
+                {
+                    "texto": "Prato é bússola: diz muito sobre o dia, hehe. O que caiu na mesa?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Comida boa merece narração! Me conta desse sabor.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
                 }
             ],
             "acoes": [],
@@ -15859,6 +16979,18 @@
                     "origem": "curadoria consultoria out/2026",
                     "humorMin": 4,
                     "humorMax": 6
+                },
+                {
+                    "texto": "Livro é porta lenta e gostosa, hehe. Em que página você parou?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Personagem bom vira amigo invisível, hehe. Quem é o seu da vez?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
                 }
             ],
             "acoes": [],
@@ -16002,6 +17134,18 @@
                 {
                     "texto": "hotel com vista pro mar é upgrade de alma. Já imaginou o café da manhã dessa vista? (eu imagino por vocês, hehe)",
                     "origem": "curadoria consultoria out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Caminho é onde a gente se acha. Onde você está indo?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Vou junto em pensamento (sem pernas, mas com imaginação), hehe. Me leva na mala!",
+                    "origem": "curadoria dialogo out/2026",
                     "humorMin": 7,
                     "humorMax": 10
                 }
@@ -16153,6 +17297,18 @@
                     "origem": "curadoria consultoria out/2026",
                     "humorMin": 4,
                     "humorMax": 6
+                },
+                {
+                    "texto": "Bichinho é alegria em forma de bagunça, hehe. Fez arte hoje?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Ronronado e abanada de rabo são meu fundo musical favorito, hehe. Como está o bicho?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
                 }
             ],
             "acoes": [],
@@ -16213,6 +17369,18 @@
                     "texto": "Universo vasto, Wi-Fi curto... mas dá pra sonhar. Quer uma curiosidade espacial?",
                     "origem": "curadoria out/2026",
                     "humorMin": 0,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Céu é espelho sem fim, hehe. Olhou pra ele hoje?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Cosmos me deixa pequena e animada ao mesmo tempo, hehe. O que te fascina?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
                     "humorMax": 10
                 }
             ],
@@ -16344,6 +17512,18 @@
                     "origem": "curadoria consultoria out/2026",
                     "humorMin": 4,
                     "humorMax": 6
+                },
+                {
+                    "texto": "Festa boa é a que rende história depois, hehe. A última rendeu?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Contagem regressiva pra folia? Tô no clima, hehe. Quero detalhes!",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
                 }
             ],
             "acoes": [],
@@ -16491,6 +17671,18 @@
                     "origem": "curadoria consultoria out/2026",
                     "humorMin": 0,
                     "humorMax": 6
+                },
+                {
+                    "texto": "Travesseiro é terapeuta acessível, hehe. Está rendendo o sono?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Sonho bom é recarregamento, hehe. Como você dormiu?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
                 }
             ],
             "acoes": [],
@@ -16648,6 +17840,18 @@
                     "origem": "curadoria consultoria out/2026",
                     "humorMin": 7,
                     "humorMax": 10
+                },
+                {
+                    "texto": "Estudo é bola de neve: pequeno agora, potência depois, hehe. Como está o ritmo?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Sinal verde pros livros! Qual é o próximo destino do cérebro?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
                 }
             ],
             "acoes": [],
@@ -16709,6 +17913,18 @@
                     "origem": "curadoria out/2026",
                     "humorMin": 0,
                     "humorMax": 10
+                },
+                {
+                    "texto": "Arte é a prova de que a gente sente, hehe. O que te pegou?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Museu da alma aberto! Me conta que obra te tocou.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
                 }
             ],
             "acoes": []
@@ -16764,6 +17980,18 @@
                     "texto": "Guerra é o capítulo que ninguém devia repetir. Pode falar de qualquer coisa, menos pra elogiar briga.",
                     "origem": "curadoria out/2026",
                     "humorMin": 0,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Passado é chave do presente, hehe. Que época te chama?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "História boa parece filme com spoiler real, hehe. Conta essa!",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
                     "humorMax": 10
                 }
             ],
@@ -16899,6 +18127,18 @@
                     "origem": "curadoria consultoria out/2026",
                     "humorMin": 7,
                     "humorMax": 10
+                },
+                {
+                    "texto": "Tempo é o humor do céu, hehe. Como está o humor aí fora?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Sol, nuvem, chuva... todo tempo tem fã. Qual é o seu de hoje?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
+                    "humorMax": 10
                 }
             ],
             "acoes": [],
@@ -16958,6 +18198,18 @@
                     "texto": "Podcast pra dormir é ouvir até a cabeça desligar hehe. Qual você recomenda?",
                     "origem": "curadoria out/2026",
                     "humorMin": 0,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Episódio bom é escada pra imaginação, hehe. Qual está tocando?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 0,
+                    "humorMax": 3
+                },
+                {
+                    "texto": "Podcast é conversa ao vivo, hehe. O que mais te prende nele?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 7,
                     "humorMax": 10
                 }
             ],
