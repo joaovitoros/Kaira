@@ -6,7 +6,7 @@
 > Escopo: diagnóstico da base atual + roadmap completo até conversação livre
 > Estado do projeto na data deste documento: v0.0.1, ~250 frases, 102 sinônimos, 456 palavras registradas
 >
-> **Atualização de progresso (out/2026):** tarefas já entregues estão com `[x]` e nota com issue/commit. **Fase 0** concluída (menos G6 e Gradle); **Fase 1** concluída (§5.1–§5.7 — a última, frame+slot, na issue #18; §7.3 parcial na #17 e descartados à parte); **Fase 2 em andamento** (§6.1 concluída — sessão na #19 + persistência na #20; §6.2 parcial, §6.3 na fila); **Fases 3–5** intactas. Issues #1–#20 fechadas (github.com/joaovitoros/Kaira), 47 commits em `master`, avaliador de regressão 14/14 com 0 gaps. **Trabalhos laterais entregues por commits diretos (sem issue):** tabelas de frames/fatos ampliadas, curadoria contínua da base (36→54 intenções, ciclos A/B), chat em balões, `conversas.log` + simulador de conversa (§6.2 opcional) e specs `RegistroTest`/`CuradoriaTemasTest`. **Ideias em estudo** anotadas na §12.
+> **Atualização de progresso (out/2026):** tarefas já entregues estão com `[x]` e nota com issue/commit. **Fase 0** concluída (menos G6 e Gradle); **Fase 1** concluída (§5.1–§5.7 — a última, frame+slot, na issue #18; §7.3 parcial na #17 e descartados à parte); **Fase 2 em andamento** (§6.1 concluída na #20, §6.3 concluído na #21 com os 3 critérios de aceite da fase marcados; §6.2 parcial — só falta auto-scroll/separador); **Fases 3–5** intactas. Issues #1–#21 fechadas (github.com/joaovitoros/Kaira), 52 commits em `master`, avaliador de regressão 14/14 com 0 gaps. **Trabalhos laterais entregues por commits diretos (sem issue):** tabelas de frames/fatos ampliadas, curadoria contínua da base (36→54 intenções, ciclos A/B), chat em balões, `conversas.log` + simulador de conversa (§6.2 opcional) e specs `RegistroTest`/`CuradoriaTemasTest`. **Ideias em estudo** anotadas na §12.
 
 ---
 
@@ -376,14 +376,15 @@ class Sessao {
 
 ### 6.3 Slots nas respostas
 
-- [ ] Suporte a placeholders nas respostas: `{nome}`, `{topico}`, `{hora_do_dia}` ("bom dia" só antes do meio-dia, senão "boa tarde")
-- [ ] Exemplo: `"Bom te ver de novo, {nome}! Da última vez a gente tava falando sobre {topico}."`
+- [x] Suporte a placeholders nas respostas: `{nome}`, `{topico}`, `{hora_do_dia}` ("bom dia" só antes do meio-dia, senão "boa tarde") — *(issue #21: `ControleResposta.preencheSlots` — render na entrega, o JSON guarda o slot cru; defaults de sessão vazia: `amigo` / `tudo um pouco`; regra literal de hora do plano (2 estados); dois pontos de render idempotentes — `comandosResposta` e `enviarResposta`)*
+- [x] Exemplo: `"Bom te ver de novo, {nome}! Da última vez a gente tava falando sobre {topico}."` — *(capacidade coberta pelo spec (nome+tópico+hora renderizados); nenhum dado usa `{topico}` ainda — a curadoria pode aplicar quando quiser)*
+- [x] (do §6.1) uso dos `fatos` nas respostas: slots `{fato:CHAVE}` com filtro no pool — *(issue #21: resposta com fato pendente não sai do pool; sem fato aproveitável → fallback genérico; dados: `lembra_gosta`/`lembra_mora`/`lembra_trabalha`)*
 
 ### Critérios de aceite
 
-- Fechar e reabrir → KAIRA cumprimenta pelo nome e retoma o tópico
-- "você lembra o que eu falei que gosto?" → resposta correta baseada em `fatos`
-- A UI mostra a conversa inteira, não só a última resposta
+- [x] Fechar e reabrir → KAIRA cumprimenta pelo nome e retoma o tópico — *(#20)*
+- [x] "você lembra o que eu falei que gosto?" → resposta correta baseada em `fatos` — *(#21)*
+- [x] A UI mostra a conversa inteira, não só a última resposta — *(#1 + balões)*
 
 ---
 
