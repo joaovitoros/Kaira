@@ -6,7 +6,7 @@
 > Escopo: diagnóstico da base atual + roadmap completo até conversação livre
 > Estado do projeto na data deste documento: v0.0.1, ~250 frases, 102 sinônimos, 456 palavras registradas
 >
-> **Atualização de progresso (out/2026):** tarefas já entregues estão com `[x]` e nota com issue/commit. **Fase 0** concluída (menos G6 e Gradle); **Fase 1** concluída (§5.1–§5.7 — a última, frame+slot, na issue #18; §7.3 parcial na #17 e descartados à parte); **Fase 2 em andamento** (§6.1 concluída na #20, §6.3 concluído na #21 com os 3 critérios de aceite da fase marcados; §6.2 parcial — só falta auto-scroll/separador); **Fases 3–5** intactas. Issues #1–#21 fechadas (github.com/joaovitoros/Kaira), 52 commits em `master`, avaliador de regressão 14/14 com 0 gaps. **Trabalhos laterais entregues por commits diretos (sem issue):** tabelas de frames/fatos ampliadas, curadoria contínua da base (36→54 intenções, ciclos A/B), chat em balões, `conversas.log` + simulador de conversa (§6.2 opcional) e specs `RegistroTest`/`CuradoriaTemasTest`. **Ideias em estudo** anotadas na §12.
+> **Atualização de progresso (out/2026):** tarefas já entregues estão com `[x]` e nota com issue/commit. **Fase 0** concluída (menos G6 e Gradle); **Fase 1** concluída (§5.1–§5.7 — a última, frame+slot, na issue #18; §7.3 parcial na #17 e descartados à parte); **Fase 2 CONCLUÍDA** (§6.1 na #19+#20, §6.2 na #1+#22, §6.3 na #21 — os 3 critérios de aceite da fase marcados); **Fases 3–5** intactas. Issues #1–#22 fechadas (github.com/joaovitoros/Kaira), 55 commits em `master`, avaliador de regressão 14/14 com 0 gaps. **Trabalhos laterais entregues por commits diretos (sem issue):** tabelas de frames/fatos ampliadas, curadoria contínua da base (36→54 intenções, ciclos A/B), chat em balões, `conversas.log` + simulador de conversa (§6.2 opcional) e specs `RegistroTest`/`CuradoriaTemasTest`. **Ideias em estudo** anotadas na §12.
 
 ---
 
@@ -371,7 +371,7 @@ class Sessao {
 ### 6.2 Histórico visível (corrige G5)
 
 - [x] `textAreaLoli.append(...)` em vez de `setText` — o chat vira um log real — *(issue #1; teste ControleFaceTest)*
-- [ ] Auto-scroll para o fim; separador visual entre turnos
+- [x] Auto-scroll para o fim; separador visual entre turnos — *(issue #22: o auto-scroll já existia no `balao()` (`setCaretPosition(doc.getLength())`) com spec próprio; entregue na #22 o `fimDeTurno()` — régua `<hr>` depois da resposta da KAIRA, cursor no fim junto, `null` não fecha turno; 3 specs no `ControleFaceTest`)*
 - [x] (Opcional) `conversas.log` com timestamp — dados para análise futura e para treinar/tunar — *(entregue nos commits laterais: `Registro.linha` nos ganchos de decifrar/resposta/sessão, coberto por `RegistroTest`, arquivo no `.gitignore`)*
 
 ### 6.3 Slots nas respostas
