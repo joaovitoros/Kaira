@@ -10,3 +10,4 @@ out/
 
 # dados de execução - nunca versionar
 conversas.log
+sessao.json
