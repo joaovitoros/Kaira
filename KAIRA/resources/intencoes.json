@@ -17125,6 +17125,234 @@
             ],
             "followups": null,
             "acoes": []
+        },
+        {
+            "intento": "lembra_time",
+            "exemplos": [
+                {
+                    "texto": "voce lembra do meu time?",
+                    "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "qual e o meu time mesmo?",
+                    "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "sabe qual time eu torco?",
+                    "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "qual time voce lembra que eu torco?",
+                    "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "meu time era pra ser qual mesmo?",
+                    "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "voce sabe qual time do meu coracao?",
+                    "origem": "curadoria out/2026"
+                }
+            ],
+            "respostas": [
+                {
+                    "texto": "Se eu não me engano você torce pro {fato:time}! Ainda é seu time do coração, {nome}?",
+                    "origem": "curadoria out/2026",
+                    "humorMin": 0,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Guardei que seu clube é o {fato:time}. Tá ganhando essas rodadas?",
+                    "origem": "curadoria out/2026",
+                    "humorMin": 0,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Última ficha aqui: {fato:time}. Mudou de camisa ou segue firme?",
+                    "origem": "curadoria out/2026",
+                    "humorMin": 0,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Meu caderno diz {fato:time}. Tô por fora das rodadas, me atualiza?",
+                    "origem": "curadoria out/2026",
+                    "humorMin": 0,
+                    "humorMax": 10
+                }
+            ],
+            "followups": null,
+            "acoes": []
+        },
+        {
+            "intento": "lembra_musica",
+            "exemplos": [
+                {
+                    "texto": "qual e a minha musica favorita mesmo?",
+                    "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "voce lembra da musica que eu gosto?",
+                    "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "sabe qual musica eu mais curto?",
+                    "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "qual foi a musica que eu mais curti?",
+                    "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "voce lembra qual musica eu mais gosto?",
+                    "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "qual som voce lembra que eu curto?",
+                    "origem": "curadoria out/2026"
+                }
+            ],
+            "respostas": [
+                {
+                    "texto": "Você me disse que sua música favorita é {fato:musica favorita}. Coloca ela de novo?",
+                    "origem": "curadoria out/2026",
+                    "humorMin": 0,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Ficou guardado: {fato:musica favorita}. Continua te dando arrepio?",
+                    "origem": "curadoria out/2026",
+                    "humorMin": 0,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Última atualização musical aqui: {fato:musica favorita}. Tava numa fase romântica, {nome}?",
+                    "origem": "curadoria out/2026",
+                    "humorMin": 0,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Se eu lembro certo é {fato:musica favorita}. Bora ouvir de novo?",
+                    "origem": "curadoria out/2026",
+                    "humorMin": 0,
+                    "humorMax": 10
+                }
+            ],
+            "followups": null,
+            "acoes": []
+        },
+        {
+            "intento": "lembra_pet",
+            "exemplos": [
+                {
+                    "texto": "voce lembra o nome do meu pet?",
+                    "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "qual e o nome do meu pet mesmo?",
+                    "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "sabe como se chama meu pet?",
+                    "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "voce sabe o nome do meu bicho?",
+                    "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "como que meu pet se chama mesmo?",
+                    "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "qual era o nome do meu cachorro?",
+                    "origem": "curadoria out/2026"
+                }
+            ],
+            "respostas": [
+                {
+                    "texto": "Se não mudou nada, seu pet é {fato:pet}! Como tá a fofura hoje?",
+                    "origem": "curadoria out/2026",
+                    "humorMin": 0,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Ficou anotado: {fato:pet}. Manda um cumprimento pra mim?",
+                    "origem": "curadoria out/2026",
+                    "humorMin": 0,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Meu caderno lembra que o nome é {fato:pet}. Conta uma fofoca dele?",
+                    "origem": "curadoria out/2026",
+                    "humorMin": 0,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "{fato:pet} é o nome, né? Como tá essa lenda, {nome}?",
+                    "origem": "curadoria out/2026",
+                    "humorMin": 0,
+                    "humorMax": 10
+                }
+            ],
+            "followups": null,
+            "acoes": []
+        },
+        {
+            "intento": "lembra_sonho",
+            "exemplos": [
+                {
+                    "texto": "voce lembra do meu sonho?",
+                    "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "qual e o meu sonho mesmo?",
+                    "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "sabe o que eu sonho em ser?",
+                    "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "voce lembra o que eu falei que queria ser?",
+                    "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "o que eu mais sonho em ser?",
+                    "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "voce sabe qual e o meu sonho?",
+                    "origem": "curadoria out/2026"
+                }
+            ],
+            "respostas": [
+                {
+                    "texto": "Você me disse que seu sonho é {fato:sonho}. Tá mais perto disso?",
+                    "origem": "curadoria out/2026",
+                    "humorMin": 0,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Guardado aqui: {fato:sonho}. O que você fez essa semana pra chegar nele?",
+                    "origem": "curadoria out/2026",
+                    "humorMin": 0,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Se nada mudou, seu sonho é {fato:sonho}. Ainda vale, {nome}?",
+                    "origem": "curadoria out/2026",
+                    "humorMin": 0,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Última atualização de sonho: {fato:sonho}. Bora sonhar acordado?",
+                    "origem": "curadoria out/2026",
+                    "humorMin": 0,
+                    "humorMax": 10
+                }
+            ],
+            "followups": null,
+            "acoes": []
         }
     ]
 }

@@ -45,7 +45,13 @@ public class ControleSessao {
             {"trabalha com", "(?i).*\\btrabalh[oa]\\s+com\\s+([\\p{L}\\s]+?)(?:[.!?]|$)"},
             {"nasceu em",    "(?i).*\\bnasci\\s+em\\s+([\\p{L}\\s]+?)(?:[.!?]|$)"},
             {"meu X favorito e Y",
-             "(?i).*\\bmeu\\s+([\\p{L}\\s]+?)\\s+favorit[oa]\\s+(?:é|eh|e)\\s+([\\p{L}\\s]+?)(?:[.!?]|$)"}
+             "(?i).*\\bmeu\\s+([\\p{L}\\s]+?)\\s+favorit[oa]\\s+(?:é|eh|e)\\s+([\\p{L}\\s]+?)(?:[.!?]|$)"},
+            // #32 - P7.4: fatos novos; artigo cortado no padrao (PADROES_NOME)
+            {"time",            "(?i).*\\bmeu time (?:favorit[oa]\\s+)?(?:é|eh|e)\\s+(?:o\\s+|a\\s+)?([\\p{L}\\s]+?)(?:[.!?]|$)"},
+            {"time",            "(?i).*\\btor[çc]o\\s+(?:pro|pra|para\\s+o|para\\s+a)\\s+([\\p{L}\\s]+?)(?:[.!?]|$)"},
+            {"musica favorita", "(?i).*\\bminha\\s+m[úu]sica favorita (?:é|eh|e)\\s+(?:a\\s+|o\\s+)?([\\p{L}\\s]+?)(?:[.!?]|$)"},
+            {"pet",             "(?i).*\\bmeu (?:pet|cachorro|gato|cão|cadela|gata|bicho) (?:se\\s+)?chama(?:-se)?\\s+(?:o\\s+|a\\s+)?([\\p{L}\\s]+?)(?:[.!?]|$)"},
+            {"sonho",           "(?i).*\\bmeu sonho (?:é|eh|e)\\s+(?:o\\s+|a\\s+)?([\\p{L}\\s]+?)(?:[.!?]|$)"}
     };
 
     // §7.1 - modificadores de humor na fala crua (com ou sem acento)

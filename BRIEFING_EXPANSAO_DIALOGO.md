@@ -149,4 +149,4 @@ Reações curtas são o combustível do papo e hoje cada uma cai num lugar absur
 
 P1 (maior ganho percebido, só dados) → P3 (só dados, alivia misroutes irritantes) → P2 (dados + código pequeno) → P4/P5/P6 (dados, volume) → P7 (higiene/performance). Se for uma leva só de dados: P1+P3+P4+P5+P6 numa tacada, P7 separado.
 
-**Divisão acordada (pós-briefing):** a leva de dados deste briefing fica com **P1 + P3 + P4 + P5 + P6 + P7.1 (podar agradecimento) + P7.3 (dissolver empates) + P7.5 (usar slots nas respostas)**; **P2, P7.2 (cache de pesosIdf) e P7.4 (fatos novos) são tarefas da casa** (dado+código no fluxo de issues do projeto) — não fazer aqui.
+**Divisão acordada (pós-briefing):** a leva de dados deste briefing fica com **P1 + P3 + P4 + P5 + P6 + P7.1 (podar agradecimento) + P7.3 (dissolver empates) + P7.5 (usar slots nas respostas)**; **P2, P7.2 (cache de pesosIdf) e P7.4 (fatos novos) são tarefas da casa** (dado+código no fluxo de issues do projeto) — não fazer aqui. **Concluídas da casa: P2 ✅, P7.2 ✅ e P7.4 ✅ (issue #32).**

@@ -378,7 +378,7 @@ class Sessao {
 
 - [x] Suporte a placeholders nas respostas: `{nome}`, `{topico}`, `{hora_do_dia}` ("bom dia" só antes do meio-dia, senão "boa tarde") — *(issue #21: `ControleResposta.preencheSlots` — render na entrega, o JSON guarda o slot cru; defaults de sessão vazia: `amigo` / `tudo um pouco`; regra literal de hora do plano (2 estados); dois pontos de render idempotentes — `comandosResposta` e `enviarResposta`)*
 - [x] Exemplo: `"Bom te ver de novo, {nome}! Da última vez a gente tava falando sobre {topico}."` — *(capacidade coberta pelo spec (nome+tópico+hora renderizados); nenhum dado usa `{topico}` ainda — a curadoria pode aplicar quando quiser)*
-- [x] (do §6.1) uso dos `fatos` nas respostas: slots `{fato:CHAVE}` com filtro no pool — *(issue #21: resposta com fato pendente não sai do pool; sem fato aproveitável → fallback genérico; dados: `lembra_gosta`/`lembra_mora`/`lembra_trabalha`)*
+- [x] (do §6.1) uso dos `fatos` nas respostas: slots `{fato:CHAVE}` com filtro no pool — *(issue #21: resposta com fato pendente não sai do pool; sem fato aproveitável → fallback genérico; dados: `lembra_gosta`/`lembra_mora`/`lembra_trabalha`)* — *(+ #32 (BRIEFING P7.4): time / música favorita / pet / sonho — 5 padrões novos em `PADROES_FATO` com artigo cortado e intents `lembra_time`/`lembra_musica`/`lembra_pet`/`lembra_sonho` no espelho dos existentes)*
 
 ### Critérios de aceite
 
