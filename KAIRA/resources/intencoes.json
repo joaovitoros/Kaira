@@ -9052,37 +9052,45 @@
                 {
                     "texto": "desenvolve essa ideia",
                     "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "conta mais",
+                    "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "me fale mais",
+                    "origem": "curadoria out/2026"
                 }
             ],
             "respostas": [
                 {
-                    "texto": "Conta, tô ouvindo!",
+                    "texto": "Sobre {topico}: sempre tem mais uma parte — e eu não me canso de procurar.",
                     "origem": "curadoria out/2026"
                 },
                 {
-                    "texto": "Quero saber o resto, continua!",
+                    "texto": "{topico} é daqueles assuntos que nunca acaba de vez. É por isso que eu curto.",
                     "origem": "curadoria out/2026"
                 },
                 {
-                    "texto": "Pode falar, {topico} é um bom assunto pra isso.",
+                    "texto": "Sobre {topico}: dá pra conversar até de madrugada — é desses que não cansam.",
                     "origem": "curadoria out/2026"
                 },
                 {
-                    "texto": "Boa, essa parte eu quero entender melhor. Vai!",
+                    "texto": "{topico} tem camada pra caramba — continuei pensando aqui e sempre aparece mais uma.",
                     "origem": "curadoria out/2026"
                 },
                 {
-                    "texto": "Continua sim! {topico} sempre rende papo.",
+                    "texto": "Sobre {topico}: assunto que não cansa. E olha que minha paciência é puro processamento, hehe.",
                     "origem": "curadoria out/2026"
                 },
                 {
-                    "texto": "Só isso? Duvido que acabou aí. Conta o resto.",
+                    "texto": "Gostei de você puxar {topico} de novo — sempre cabe mais um ângulo.",
                     "origem": "curadoria out/2026"
                 }
             ],
             "followups": [
-                "E o que mais te prende nisso?",
-                "Me conta mais como foi pra você."
+                "Qual a parte de {topico} que mais te prende?",
+                "O que te fez gostar tanto de {topico}?"
             ],
             "acoes": []
         },
