@@ -555,6 +555,13 @@ Escrever por **categoria de intenção**, com checklist de cobertura. Mínimo pa
 - Encher a base de frases prontas não resolve no longo prazo (mesma conclusão do diagnóstico do §2: *"adicionar mais frases soltas não resolve, só escala o problema"*). O que faltaria: uma **base grande de conhecimentos, tipo dicionário** — termo → texto longo sobre o tema.
 - Com uma lógica de transformação (ideia: usar a lista de **stopwords** como base da extração — lógica ainda a pensar), virar o texto longo numa **frase simples**; se o usuário pedir explicação maior, aí devolver o texto inteiro.
 - Encaixes já existentes: `conhecimento_*` (4 intents de frases prontas = mini-dicionário de hoje); `palavras.json`/`ControlePalavra` é dicionário de *palavras* pra correção (outro papel); `stopwords.json` + pesos IDF (`ControleRespostaPesosIdf`) são a infra pronta pra pontuar conteúdo; parecido com §8 (geração própria) e §9 (LLM) — decidir se é regra própria ou skill.
+- **Bases livres levantadas (out/2026)** — a primeira combinação: **OpenWordnet-PT** pro *significado curto* + **dump da Wikipédia PT** (lead por tema) pro *texto longo* do resumidor:
+  - *OpenWordnet-PT* (`github.com/own-pt/openWordnet-PT`) — **CC BY 4.0** (só crédito): glosses em PT-BR, sinônimos, relações semânticas; pacote ~2,2 MB; citar Rademaker et al. (2012);
+  - *Dicionário Aberto* (`dicionario-aberto.net` + API REST grátis) — fonte em domínio público (Cândido de Figueiredo, 1913), downloads CC BY-SA 2.5 PT — português antigo/ortografia pré-1945, usar com pé atrás;
+  - *Wikcionário via Kaikki* (JSONL/SQLite) — CC BY-SA 4.0; *DicSin* (sinônimos pt-BR) — GPLv2; catálogo `linguistic-datasets-pt.etica.ai` pra garimpar mais;
+  - **Evitar**: Priberam/Michaelis/Houaiss/Infopédia/Dicio (grátis só na consulta, dados licenciados), BabelNet (não-comercial), scrapes de terceiros;
+  - Licença rastreada por entrada no campo `origem` (Apêndice A) — CC BY = crédito; CC BY-SA = crédito + mesma licença no derivado;
+  - Arranque previsto: recorte dessas bases → `KAIRA/resources/conhecimentos.json` no padrão do projeto (verificar licenças de novo no momento da importação).
 
 ### 12.2 Continuação por contexto ("conte-me mais sobre isso")
 
