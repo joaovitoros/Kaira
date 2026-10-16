@@ -83,6 +83,12 @@ public class FormulaResposta {
             Registro.linha("APRENDENDO: " + falaUsuario + " (slot=" + slot + ")");
         }else{
             texto = resposta;
+            // §7.2 - iniciativa propria: a cada N turnos, uma pergunta de interesse
+            if (resposta != null) {
+                String interesse = ControleSessao.perguntaInteresse();
+                if (interesse != null)
+                    texto = texto + " " + interesse;
+            }
         }
 
         texto = ControleResposta.preencheSlots(texto);

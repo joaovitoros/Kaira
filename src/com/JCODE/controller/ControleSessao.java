@@ -1,5 +1,6 @@
 package com.JCODE.controller;
 
+import com.JCODE.domain.Intencao;
 import com.JCODE.domain.Sessao;
 import com.JCODE.domain.Turno;
 import com.JCODE.util.Caminhos;
@@ -10,6 +11,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,6 +23,11 @@ public class ControleSessao {
     private static boolean nomeCapturado = false;
 
     private static final String ARQUIVO_SESSAO = "sessao.json";
+
+    private static int turnosDesdePergunta = 0;
+    private static String ultimoInteresse = null;
+
+    private static final int TURNOS_SEM_PERGUNTA = 3;
 
     private static final Pattern[] PADROES_NOME = {
             Pattern.compile("(?i)meu nome (?:é|eh|e)\\s+([\\p{L}]+(?:\\s+[\\p{L}]+){0,2}?)(?=\\s*(?:$|[.!?])|\\s*,|\\s+(?:e|que|com|pra|para|vou|quero)\\b)"),
@@ -50,6 +58,16 @@ public class ControleSessao {
                     + "|(tudo bem|td bem|nao sei|não sei|quem eu sou|de nada)\\s*$)"
                     + "[\\p{L}]{2,}(?:\\s+[\\p{L}]{2,}){0,2}$";
 
+    // §7.2 - perguntas de interesse genericas; o topico atual com
+    // followups no banco tem prioridade
+    private static final List<String> PERGUNTAS_INTERESSE = List.of(
+            "E voce, o que andou fazendo hoje?",
+            "Assiste algo bom ultimamente?",
+            "Tem algo que te fez sorrir hoje?",
+            "O que tem te ocupado nos ultimos dias?",
+            "Conta uma novidade pra mim, {nome}?",
+            "Tem algo que voce queria ter feito e nao fez ainda?");
+
     public static Sessao get() {
         return sessao;
     }
@@ -58,6 +76,8 @@ public class ControleSessao {
         sessao = new Sessao();
         perguntouNome = false;
         nomeCapturado = false;
+        turnosDesdePergunta = 0;
+        ultimoInteresse = null;
     }
 
     public static void processa(String falaUsuario) {
@@ -65,6 +85,7 @@ public class ControleSessao {
             return;
 
         nomeCapturado = false;
+        turnosDesdePergunta++;
         detectaNome(falaUsuario);
         detectaFato(falaUsuario);
         detectaHumor(falaUsuario);
@@ -84,6 +105,7 @@ public class ControleSessao {
         if (sessao.getNomeUsuario() != null || perguntouNome)
             return null;
         perguntouNome = true;
+        turnosDesdePergunta = 0;
         Registro.linha("SESSAO    : perguntou o nome");
         return "Como posso te chamar?";
     }
@@ -213,6 +235,41 @@ public class ControleSessao {
         s = s.replaceAll("\\s+(?:e|que)\\b\\s*$", "");
         s = s.replaceAll("[,;]\\s*$", "");
         return s.trim();
+    }
+
+    /** §7.2 - iniciativa propria: pergunta de interesse a cada N turnos. */
+    public static String perguntaInteresse() {
+        if (turnosDesdePergunta < TURNOS_SEM_PERGUNTA)
+            return null;
+        turnosDesdePergunta = 0;
+
+        // fonte 1 - followups da intencao atual
+        String topico = sessao.getTopicoAtual();
+        if (topico != null && !topico.isBlank()) {
+            for (Intencao i : ControleResposta.getIntencoes()) {
+                if (topico.equals(i.getIntento()) && i.getFollowups() != null
+                        && !i.getFollowups().isEmpty()) {
+                    Registro.linha("SESSAO    : followup de " + topico);
+                    return sorteia(i.getFollowups());
+                }
+            }
+        }
+
+        // fonte 2 - pool generico
+        Registro.linha("SESSAO    : pergunta de interesse");
+        return sorteia(PERGUNTAS_INTERESSE);
+    }
+
+    /** Anti-repeticao no estilo do ultimoFallback (issue #17). */
+    private static String sorteia(List<String> opcoes) {
+        List<String> livres = new ArrayList<>(opcoes);
+        if (ultimoInteresse != null)
+            livres.remove(ultimoInteresse);
+        if (livres.isEmpty())
+            livres = new ArrayList<>(opcoes);
+        String escolhida = livres.get((int) (Math.random() * livres.size()));
+        ultimoInteresse = escolhida;
+        return escolhida;
     }
 
 }
