@@ -48,6 +48,10 @@ public class ControleResposta {
 	/** #35 - gancho de sorteio: teste injeta ordem deterministica (refactor). */
 	static IntUnaryOperator semeador = n -> (int) (Math.random() * n);
 
+	/** #35 - ultimas frases entregues por intento (as N ultimas saem do sorteio). */
+	private static final Map<String, List<String>> ultimasRespostas = new HashMap<>();
+	private static final int ULTIMAS_GUARDADAS = 2;
+
 	// #26 (briefing P7.2) - cache de IDF e de tokens por base: a base so
 	// muda no carregaCache (instancia nova -> rebuild por identidade) ou
 	// no ensinaEm (mutacao -> invalidaCacheIdf)
@@ -300,6 +304,29 @@ public class ControleResposta {
 		return faixa.isEmpty() ? pool : faixa;
 	}
 
+	/** #35 - tira as ultimas N frases entregues deste intento; se esvaziar,
+	 * devolve a lista original (nunca fica sem resposta). */
+	private static List<String> semUltimas(String intento, List<String> candidatas) {
+		if (intento == null)
+			return candidatas;
+		List<String> ultimas = ultimasRespostas.get(intento);
+		if (ultimas == null || ultimas.isEmpty())
+			return candidatas;
+		List<String> livres = new ArrayList<>(candidatas);
+		livres.removeAll(ultimas);
+		return livres.isEmpty() ? candidatas : livres;
+	}
+
+	/** #35 - anota a frase entregue (template, antes dos slots) na fila do intento. */
+	private static void anotaUltima(String intento, String frase) {
+		if (intento == null || frase == null)
+			return;
+		List<String> ultimas = ultimasRespostas.computeIfAbsent(intento, k -> new ArrayList<>());
+		ultimas.add(frase);
+		while (ultimas.size() > ULTIMAS_GUARDADAS)
+			ultimas.remove(0);
+	}
+
 	// #35 - package-private: spec chama direto (fixture isolada)
 	static String comandosResposta(Intencao resposta){
 
@@ -313,7 +340,12 @@ public class ControleResposta {
 		if (prontas.isEmpty() && pool.stream().anyMatch(t -> t.contains("{fato:")))
 			return respostaFallback();
 
-		String respostaEscolhida = escolheMultiRespostas(prontas.isEmpty() ? pool : prontas);
+		// #35 (C1): as ultimas 2 frases do intento saem do sorteio; se a
+		// lista esvaziar, volta pro sorteador normal (nunca fica sem resposta).
+		List<String> disponiveis = prontas.isEmpty() ? pool : prontas;
+		String respostaEscolhida = escolheMultiRespostas(semUltimas(resposta.getIntento(), disponiveis));
+		anotaUltima(resposta.getIntento(), respostaEscolhida);
+
 		// #29 - template escolhido antes dos slots (o KAIRA : ja mostra o final)
 		Registro.linha("RESPOSTA  : " + respostaEscolhida);
 
