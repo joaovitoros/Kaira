@@ -417,7 +417,7 @@ Substituir o "Não sei como responder a isso" seco:
 - [ ] Classificou algo com confiança média → aposta + confirmação: *"Sobre {palavrasChave}, é isso? Ainda tô aprendendo — me responde essa: ..."* — *(degrau da faixa média pronto — issue #16; a frase personalizada com {palavrasChave} e o followup ficam pra §7.1 humor)*
 - [x] Confiança baixa → honesto + curioso: *"Ainda não sei falar disso... me ensina? O que você quis dizer?"* → cai no modo ensino atual (que já existe e funciona!) — *(pool de 3 frases em `FRASES_FALLBACK` + anti-repetição via `ultimoFallback` — issue #17; o modo ensino segue armado no `enviarResposta`)*
 - [ ] Com a pré-análise da [§5.7](#57-pré-análise-frame--slot-tarefa-8) (task #8): quando o **frame** foi reconhecido mas o **slot** é novo, responder "ainda não sei sobre {slot}" em vez do genérico
-- [ ] **Modo ensino turbinado**: ao ensinar, perguntar em qual intenção encaixa (ou criar nova) — em vez de gravar frase solta com assunto "Auto-Aprendizado". O dado coletado passa a alimentar o classificador — *(parcial: o ensino já grava na intenção `auto_aprendizado` estruturada sem mutar o cache — commit b89557d; falta perguntar/encaixar intenção)*
+- [x] **Modo ensino turbinado**: ao ensinar, perguntar em qual intenção encaixa (ou criar nova) — em vez de gravar frase solta com assunto "Auto-Aprendizado". O dado coletado passa a alimentar o classificador — *(entregue — issue #33: `ensinaEm` classifica antes de gravar; score ≥ `LIMIAR` (0.6) → par no intento vencedor, dúvida → `auto_aprendizado` como sempre; `invalidaCacheIdf` por último (recalculo sem NPE no ensino em cadeia); linha `APRENDE   :` no log — spec `EnsinoTurbinadoTest`)*
 
 ### Critérios de aceite
 
