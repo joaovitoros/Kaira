@@ -121,7 +121,7 @@ Reações curtas são o combustível do papo e hoje cada uma cai num lugar absur
 ### P7 — Higiene e performance (transversal, prioridade entre P1–P6 ou depois)
 
 1. **Podar `agradecimento`** (619 → ~250): ~46% de redundância interna (família "obrigado pela ajuda"); efeitos: base menor, classificação mais rápida, menos ruído.
-2. **Cachear `pesosIdf`** (código): hoje é recalculado varrendo TODOS os exemplos em CADA classificação → cada mensagem é O(N²). Com 2.311 exemplos, dobra o custo de toda resposta.
+2. **Cachear `pesosIdf`** (código): hoje é recalculado varrendo TODOS os exemplos em CADA classificação → cada mensagem é O(N²). Com 2.311 exemplos, dobra o custo de toda resposta — *(entregue — issue #26: cache por base de `pesosIdf` + tokens de exemplos (`garanteCacheIdf`, rebuild por identidade; `invalidaCacheIdf` no `ensinaEm`); scoring e desempate leem o cache)*
 3. **Dissolver os 8 empates de token-único da base antiga** (tabela no relatório de auditoria `AppData\Local\Temp\opencode\auditoria_sobreposicao.md` — os piores: "você entende" → critica; agradecimento variante → reacao_diversa). Método: enriquecer o exemplo de 1 token com um 2º token distintivo (ex.: "voce nao entende" → "voce nao entende nada").
 4. **Fatos novos na sessão** (código `ControleSessao` FATOS + intents `lembra_*`): hoje só gosta/mora/trabalha — adicionar time de futebol, música favorita, nome do pet, sonho. Estrutura idêntica às existentes.
 5. **Usar os slots nas respostas** (dados): `{nome}` quase não é usado, `{topico}` zero — inserir em saudações/retornos (render já existe, `ControleResposta.preencheSlots`).
