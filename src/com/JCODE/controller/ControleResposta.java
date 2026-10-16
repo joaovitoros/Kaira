@@ -485,7 +485,9 @@ public class ControleResposta {
 		if (melhorIntencao == null)
 			return null;
 
-		ControleSessao.topico(melhorIntencao.getIntento());
+		// #27 - continuar o assunto nao vira o novo topico
+		if (!"continuacao_topico".equals(melhorIntencao.getIntento()))
+			ControleSessao.topico(melhorIntencao.getIntento());
 		return new MatchIntencao(melhorFraseIntencao, melhorIntencao, melhorScore);
 	}
 
