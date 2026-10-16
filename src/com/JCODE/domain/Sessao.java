@@ -45,6 +45,10 @@ public class Sessao {
     }
 
     public void setHumor(int humor) {
+        if (humor < 0)
+            humor = 0;
+        if (humor > 10)
+            humor = 10;
         this.humor = humor;
     }
 

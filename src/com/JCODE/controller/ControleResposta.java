@@ -252,12 +252,29 @@ public class ControleResposta {
 		return true;
 	}
 
+	/**
+	 * §7.1 - so responde da faixa de tom do humor da sessao (0-3 seca,
+	 * 4-6 neutra, 7-10 animada), usando o humorMin/humorMax do
+	 * Apendice A. Nenhuma resposta na faixa -> devolve o pool inteiro
+	 * (nunca fica sem resposta).
+	 */
+	private static List<String> porFaixaDeHumor(Intencao intencao, List<String> pool) {
+		int humor = ControleSessao.get().getHumor();
+		List<String> faixa = new ArrayList<>();
+		for (int i = 0; i < pool.size(); i++)
+			if (intencao.getRespostas().get(i).getHumorMin() <= humor
+					&& humor <= intencao.getRespostas().get(i).getHumorMax())
+				faixa.add(pool.get(i));
+		return faixa.isEmpty() ? pool : faixa;
+	}
+
 	private static String comandosResposta(Intencao resposta){
 
 		if(resposta==null)
 			return null;
 
 		List<String> pool = resposta.getRespostas().stream().map(RespostaIntencao::getTexto).toList();
+		pool = porFaixaDeHumor(resposta, pool);
 		List<String> prontas = pool.stream().filter(ControleResposta::fatosCompletos).toList();
 
 		if (prontas.isEmpty() && pool.stream().anyMatch(t -> t.contains("{fato:")))
@@ -266,7 +283,7 @@ public class ControleResposta {
 		String respostaEscolhida = escolheMultiRespostas(prontas.isEmpty() ? pool : prontas);
 
 		if(resposta.getAcoes().contains("MOSTRAR_HUMOR")){
-			respostaEscolhida= respostaEscolhida + "\nnivel de humor em...  de 10";
+			respostaEscolhida= respostaEscolhida + "\nnivel de humor em " + ControleSessao.get().getHumor() + " de 10";
 		}else if(resposta.getAcoes().contains("MOSTRAR_VERSAO")){
 			respostaEscolhida= respostaEscolhida + "\nnumero de "+ ControleKaira.buscaDadosGerais().getVersao();
 		}else if(resposta.getAcoes().contains("DESLIGAR")){

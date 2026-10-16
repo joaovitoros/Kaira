@@ -36,6 +36,14 @@ public class ControleSessao {
              "(?i).*\\bmeu\\s+([\\p{L}\\s]+?)\\s+favorit[oa]\\s+(?:é|eh|e)\\s+([\\p{L}\\s]+?)(?:[.!?]|$)"}
     };
 
+    // §7.1 - modificadores de humor na fala crua (com ou sem acento)
+    private static final String[][] PADROES_HUMOR = {
+            {"+1", "(?i).*(?:voce|você|vc)\\s+(?:e|é|eh)\\s+(?:legal|show|incrivel|incrível|otimo|ótimo|otima|ótim[ao]|linda|maravilhosa).*"},
+            {"+1", "(?i).*(?:te amo|amo (?:voce|você)|gosto de (?:voce|você)|adorei).*"},
+            {"-1", "(?i).*(?:voce|você|vc)\\s+(?:e|é|eh)\\s+(?:chata|otario|otaria|otária|burro|burra|idiota|lixo|insuportavel|insuportável|irritante).*"},
+            {"-1", "(?i).*(?:odeio (?:voce|você)|seu lixo|seu idiota|me arrependo de te conhecer).*"}
+    };
+
     public static Sessao get() {
         return sessao;
     }
@@ -51,6 +59,7 @@ public class ControleSessao {
 
         detectaNome(falaUsuario);
         detectaFato(falaUsuario);
+        detectaHumor(falaUsuario);
 
         sessao.anota(new Turno("usuario", falaUsuario.trim()));
         sessao.setTurnos(sessao.getTurnos() + 1);
@@ -146,4 +155,19 @@ public class ControleSessao {
             }
         }
     }
+
+    /** §7.1 - modificadores: elogio sobe, grosseria baixa (clamp no setter). */
+    private static void detectaHumor(String fala) {
+        for (String[] regra : PADROES_HUMOR) {
+            if (!Pattern.compile(regra[1]).matcher(fala.trim()).find())
+                continue;
+            int delta = Integer.parseInt(regra[0]);
+            int antes = sessao.getHumor();
+            sessao.setHumor(antes + delta);
+            Registro.linha("SESSAO    : humor " + antes + "->"
+                    + sessao.getHumor() + " (" + regra[0] + ")");
+            return;
+        }
+    }
+
 }
