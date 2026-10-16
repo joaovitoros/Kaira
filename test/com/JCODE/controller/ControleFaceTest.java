@@ -108,6 +108,40 @@ public class ControleFaceTest {
 		assertEquals("so o balao da resposta", 1, baloes());
 	}
 
+	/**
+	 * §6.2: separador visual ENTRE turnos - a regua sai DEPOIS da resposta
+	 * da KAIRA (fim de turno), nunca depois da fala so do usuario e nunca
+	 * em resposta nula (turno nao fechado).
+	 */
+	@Test
+	public void turnoFechaComSeparadorDepoisDaResposta() {
+		ControleFace.exibirFraseUsuario("oi");
+		ControleFace.exibirResposta("ola, tudo bem?");
+
+		String html = fonte().toLowerCase();
+		int regua = html.indexOf("<hr");
+		assertTrue("turno sem separador visual: " + fonte(), regua >= 0);
+		assertTrue("regua tem que vir depois da resposta da KAIRA",
+				regua > html.indexOf("ola, tudo bem?"));
+	}
+
+	@Test
+	public void umSeparadorPorTurno() {
+		ControleFace.exibirFraseUsuario("um");
+		ControleFace.exibirResposta("resposta um");
+		ControleFace.exibirFraseUsuario("dois");
+		ControleFace.exibirResposta("resposta dois");
+
+		assertEquals("uma regua por turno fechado", 2, separadores());
+	}
+
+	@Test
+	public void respostaNulaNaoFechaTurnoComRegua() {
+		ControleFace.exibirResposta(null);
+
+		assertEquals("resposta nula nao pode soltar regua", 0, separadores());
+	}
+
 	// acesso a area estatica no mesmo pacote
 	private JTextPane areaConversa() {
 		return ControleFace.areaConversa;
@@ -125,6 +159,18 @@ public class ControleFaceTest {
 		while (i >= 0) {
 			total++;
 			i = fonte.indexOf("width='100%'", i + 1);
+		}
+		return total;
+	}
+
+	/** Regua de fim de turno (§6.2) - tag <hr> em qualquer caixa. */
+	private int separadores() {
+		String html = fonte().toLowerCase();
+		int total = 0;
+		int i = html.indexOf("<hr");
+		while (i >= 0) {
+			total++;
+			i = html.indexOf("<hr", i + 1);
 		}
 		return total;
 	}
