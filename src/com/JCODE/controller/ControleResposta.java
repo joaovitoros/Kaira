@@ -12,8 +12,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalTime;
 import java.util.*;
 import java.util.function.Predicate;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class ControleResposta {
@@ -208,12 +211,59 @@ public class ControleResposta {
 		return bufferCalculado;
 	}
 
+	public static String preencheSlots(String texto) {
+		if (texto == null)
+			return null;
+		if (!texto.contains("{"))
+			return texto;
+
+		String nome = ControleSessao.get().getNomeUsuario();
+		if (nome == null || nome.isBlank())
+			nome = "amigo";
+
+		String topico = ControleSessao.get().getTopicoAtual();
+		if (topico == null || topico.isBlank())
+			topico = "tudo um pouco";
+
+		String periodo = LocalTime.now().getHour() < 12 ? "bom dia" : "boa tarde";
+
+		String saida = texto
+				.replace("{nome}", nome)
+				.replace("{topico}", topico)
+				.replace("{hora_do_dia}", periodo);
+
+		Matcher m = Pattern.compile("\\{fato:([^}]+)\\}").matcher(saida);
+		StringBuffer buf = new StringBuffer();
+		while (m.find()) {
+			String valor = ControleSessao.get().getFatos().get(m.group(1).trim());
+			m.appendReplacement(buf, Matcher.quoteReplacement(valor != null ? valor : m.group()));
+		}
+		m.appendTail(buf);
+		return buf.toString();
+	}
+
+	public static boolean fatosCompletos(String texto) {
+		if (texto == null || !texto.contains("{fato:"))
+			return true;
+		Matcher m = Pattern.compile("\\{fato:([^}]+)\\}").matcher(texto);
+		while (m.find())
+			if (ControleSessao.get().getFatos().get(m.group(1).trim()) == null)
+				return false;
+		return true;
+	}
+
 	private static String comandosResposta(Intencao resposta){
 
 		if(resposta==null)
 			return null;
 
-		String respostaEscolhida = escolheMultiRespostas(resposta.getRespostas().stream().map(RespostaIntencao::getTexto).toList());
+		List<String> pool = resposta.getRespostas().stream().map(RespostaIntencao::getTexto).toList();
+		List<String> prontas = pool.stream().filter(ControleResposta::fatosCompletos).toList();
+
+		if (prontas.isEmpty() && pool.stream().anyMatch(t -> t.contains("{fato:")))
+			return respostaFallback();
+
+		String respostaEscolhida = escolheMultiRespostas(prontas.isEmpty() ? pool : prontas);
 
 		if(resposta.getAcoes().contains("MOSTRAR_HUMOR")){
 			respostaEscolhida= respostaEscolhida + "\nnivel de humor em...  de 10";
@@ -223,7 +273,7 @@ public class ControleResposta {
 			System.exit(0);
 		}
 
-		return respostaEscolhida;
+		return preencheSlots(respostaEscolhida);
 	}
 
 	public static void chamadaFrase(String frase, String resposta) {

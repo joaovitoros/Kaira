@@ -76,6 +76,8 @@ public class FormulaResposta {
             texto = resposta;
         }
 
+        texto = ControleResposta.preencheSlots(texto);
+
         String chamada = ControleSessao.perguntaDeNome();
         if (chamada != null)
             texto = texto + " " + chamada;
