@@ -27,6 +27,8 @@ public class Face extends JFrame {
 	private JLabel lblAvatar;
 	private ImageIcon avatarConversa;
 	private ImageIcon avatarIdle;
+	private ImageIcon avatarBaixa;
+	private ImageIcon avatarAlta;
 	private Timer timerIdle;
 
 	/** Milissemundos sem interacao ate o avatar trocar pra imagem ociosa. */
@@ -93,6 +95,9 @@ public class Face extends JFrame {
 
 		avatarConversa = carregaAvatar("kaira_conversa.png");
 		avatarIdle = carregaAvatar("kaira_idle.png");
+		// #34 - variantes por faixa de humor; ausentes caem na conversa
+		avatarBaixa = carregaAvatar("kaira_baixa.png");
+		avatarAlta = carregaAvatar("kaira_alta.png");
 		if (avatarConversa != null)
 			lblAvatar.setIcon(avatarConversa);
 
@@ -163,12 +168,31 @@ public class Face extends JFrame {
 		botao.setFocusPainted(false);
 	}
 
-	/** Qualquer interacao devolve o avatar ao estado conversando e reinicia o relogio. */
+	/**
+	 * Qualquer interacao devolve o avatar ao estado ativo escolhendo a
+	 * expressao pela faixa de humor da sessao (#34) e reinicia o relogio
+	 * da ociosidade.
+	 */
 	private void reativaConversa() {
-		if (avatarConversa != null)
-			lblAvatar.setIcon(avatarConversa);
+		ImageIcon icone = avatarPorHumor();
+		if (icone != null)
+			lblAvatar.setIcon(icone);
 		if (timerIdle != null)
 			timerIdle.restart();
+	}
+
+	/**
+	 * #34 - 0..3 cara fechada, 4..6 a conversa (padrao, e onde a janela
+	 * abre), 7..10 animada. Variante ausente cai na conversa: nunca zera
+	 * o icone por falta de arquivo.
+	 */
+	private ImageIcon avatarPorHumor() {
+		int humor = ControleSessao.get().getHumor();
+		if (humor <= 3 && avatarBaixa != null)
+			return avatarBaixa;
+		if (humor >= 7 && avatarAlta != null)
+			return avatarAlta;
+		return avatarConversa;
 	}
 
 	/**
