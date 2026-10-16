@@ -53,6 +53,10 @@ public class FormulaResposta {
             }
 
             Registro.linha("DEGRAU    : " + degrau);
+            // #29 - detalhe da classificacao: intento, score, frase-exemplo, tokens
+            String match = ControleResposta.getUltimoMatchLog();
+            if (match != null)
+                Registro.linha("MATCH     : " + match);
             criacaoLeituraRespostas(falaUsuario);
         }else{
             Registro.linha("DEGRAU    : comando");

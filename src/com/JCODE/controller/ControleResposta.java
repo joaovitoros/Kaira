@@ -4,6 +4,7 @@ import com.JCODE.domain.*;
 import com.JCODE.util.Calculos;
 import com.JCODE.util.Caminhos;
 import com.JCODE.util.Normalizador;
+import com.JCODE.util.Registro;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.BufferedReader;
@@ -308,6 +309,8 @@ public class ControleResposta {
 			return respostaFallback();
 
 		String respostaEscolhida = escolheMultiRespostas(prontas.isEmpty() ? pool : prontas);
+		// #29 - template escolhido antes dos slots (o KAIRA : ja mostra o final)
+		Registro.linha("RESPOSTA  : " + respostaEscolhida);
 
 		// #27 hotfix - intencao sem "acoes" no JSON derrubava aqui com NPE ao vivo
 		List<String> acoes = resposta.getAcoes() == null ? List.of() : resposta.getAcoes();
@@ -417,7 +420,16 @@ public class ControleResposta {
 		return retorno;
 	}
 
+	// #29 - detalhe da ultima classificacao pro log do turno; sem I/O
+	// aqui (o classificador roda 2-3x por turno e em massa nos testes)
+	private static String ultimoMatchLog;
+
+	public static String getUltimoMatchLog() {
+		return ultimoMatchLog;
+	}
+
 	public static MatchIntencao melhorIntencaoDetalhado(Intencoes raiz, String entradaNormalizada){
+		ultimoMatchLog = null;
 		Set<String> palavrasEntrada = tokensDe(entradaNormalizada);
 
 		if(palavrasEntrada.isEmpty())
@@ -493,6 +505,11 @@ public class ControleResposta {
 			ControleSessao.topico(melhorIntencao.getIntento());
 		else
 			ControleSessao.pedeContinuacao(); // #28 - o turno e dela: segura o pool
+		// #29 - linha de detalhe pro log (decifrar imprime 1x por turno)
+		ultimoMatchLog = "intento=" + melhorIntencao.getIntento()
+				+ String.format(Locale.ROOT, " score=%.2f", melhorScore)
+				+ " frase=\"" + melhorFraseIntencao + "\""
+				+ " tokens=" + palavrasEntrada;
 		return new MatchIntencao(melhorFraseIntencao, melhorIntencao, melhorScore);
 	}
 

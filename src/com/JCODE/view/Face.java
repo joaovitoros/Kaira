@@ -62,6 +62,12 @@ public class Face extends JFrame {
 		JButton btnSinalizar = new JButton("!");
 		btnSinalizar.setBounds(134, 10, 44, 23);
 		contentPane.add(btnSinalizar);
+
+		// #29 - tela de log ao vivo (instancia unica via TelaLog.abrir)
+		JButton btnLog = new JButton("Log");
+		btnLog.setBounds(460, 10, 104, 23);
+		contentPane.add(btnLog);
+		btnLog.addActionListener(e -> TelaLog.abrir());
 		
 		ControleFace contface = new ControleFace(areaConversa, textAreaUsuario, btnSinalizar);
 
