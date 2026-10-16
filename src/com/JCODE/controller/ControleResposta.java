@@ -309,11 +309,14 @@ public class ControleResposta {
 
 		String respostaEscolhida = escolheMultiRespostas(prontas.isEmpty() ? pool : prontas);
 
-		if(resposta.getAcoes().contains("MOSTRAR_HUMOR")){
+		// #27 hotfix - intencao sem "acoes" no JSON derrubava aqui com NPE ao vivo
+		List<String> acoes = resposta.getAcoes() == null ? List.of() : resposta.getAcoes();
+
+		if(acoes.contains("MOSTRAR_HUMOR")){
 			respostaEscolhida= respostaEscolhida + "\nnivel de humor em " + ControleSessao.get().getHumor() + " de 10";
-		}else if(resposta.getAcoes().contains("MOSTRAR_VERSAO")){
+		}else if(acoes.contains("MOSTRAR_VERSAO")){
 			respostaEscolhida= respostaEscolhida + "\nnumero de "+ ControleKaira.buscaDadosGerais().getVersao();
-		}else if(resposta.getAcoes().contains("DESLIGAR")){
+		}else if(acoes.contains("DESLIGAR")){
 			System.exit(0);
 		}
 

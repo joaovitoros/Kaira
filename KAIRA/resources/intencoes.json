@@ -9083,7 +9083,8 @@
             "followups": [
                 "E o que mais te prende nisso?",
                 "Me conta mais como foi pra você."
-            ]
+            ],
+            "acoes": []
         },
         {
             "intento": "mudar_assunto",
