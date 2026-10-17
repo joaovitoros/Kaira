@@ -143,16 +143,21 @@ public class FluxoConversaRealTest {
 		assertEquals("topico troca de volta", "filme",
 				ControleSessao.get().getTopicoAtual());
 
-		// 17:12:20 - erro de digitação ("fimle"): o classificador direto nao
-		// passa do limiar e o degrau de correcao entra; o match vem do texto
-		// corrigido e ainda assim resolve pro topico certo
+		// 17:12:20 - erro de digitacao ("fimle"): o classificador direto nao
+		// passa do limiar e o degrau de correcao entra. O match tem que vir
+		// FORTE (1.00), nao fraco: "fimle" fica a distancia 2 de "fome" e de
+		// "filme", o que vence e a ORDEM no palavras.json (< estrito premia o
+		// primeiro), e "filme" ali esta ANTES do "fome". Sem "filme" no
+		// dicionario a correcao devolvia "fome", o match caia pra 0.61 e o
+		// grupo sinonimo seu~sua deixava "qual a sua cor favorita" (gostos_ia)
+		// empatar - medido. Entao 1.00 aqui protege o dicionario inteiro.
 		String falaComErro = "qual seu fimle favorita?";
 		ControleSessao.processa(falaComErro);
 		String normalizada = Normalizador.texto(ControleSessao.tiraNome(falaComErro));
 		assertNotNull("correcao de palavra devolve resposta",
 				ControleCorrecao.corrigirPalavras(normalizada));
-		assertTrue("match vem do texto corrigido: " + match(),
-				match().contains("intento=filme"));
+		assertTrue("correcao acerta o alvo e o match vem forte: " + match(),
+				match().contains("intento=filme score=1.00"));
 		assertEquals("correcao leva pro topico certo", "filme",
 				ControleSessao.get().getTopicoAtual());
 
