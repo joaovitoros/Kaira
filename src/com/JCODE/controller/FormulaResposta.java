@@ -11,6 +11,7 @@ public class FormulaResposta {
 
     public static void decifrar(String falaUsuario) {
 
+        Registro.linha("---------------------------");
         Registro.linha("ENTRADA   : " + falaUsuario);
 
         ControleSessao.processa(falaUsuario);
@@ -26,6 +27,15 @@ public class FormulaResposta {
         falaUsuario = Normalizador.texto(falaUsuario);
 
         System.out.println("texto recebido pós replaces "+falaUsuario);
+
+        // #39 - aposta pendente: "isso" confirma e entrega o candidato na hora,
+        // sem passar pelo classificador
+        String confirmada = ControleResposta.entregaApostaPendente(falaUsuario);
+        if (confirmada != null) {
+            Registro.linha("DEGRAU    : confirma-aposta");
+            enviarResposta(confirmada, falaUsuario);
+            return;
+        }
 
         if(!ControleComandos.validaComandos(falaUsuario)){
             String degrau = "aprender";

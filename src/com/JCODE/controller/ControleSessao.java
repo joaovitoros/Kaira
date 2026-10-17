@@ -88,6 +88,7 @@ public class ControleSessao {
         turnosDesdePergunta = 0;
         turnoDeContinuacao = false;
         ultimoInteresse = null;
+        apostaPendente = null;
     }
 
     public static void processa(String falaUsuario) {
@@ -118,8 +119,8 @@ public class ControleSessao {
         turnoDeContinuacao = true;
     }
 
-    // #39 - spec ApostaPendenteTest: estado minimo (stub) pra spec ficar
-    // vermelha; confirmacao/entrega vem na correcao
+    // #39 - aposta pendente: o candidato que a aposta propôs fica guardado no
+    // turno seguinte - confirmacao entrega, continuacao segue, match novo descarta
     private static String apostaPendente = null;
 
     public static void apostaPendente(String intento) {
@@ -134,6 +135,29 @@ public class ControleSessao {
     public static String consomeApostaPendente() {
         String pendente = apostaPendente;
         apostaPendente = null;
+        return pendente;
+    }
+
+    // #39 - confirmacao explicita: "isso", "e isso", "confirma"... frases curtas
+    // que so confirmam; qualquer outra deixa a pendencia quieta
+    private static final java.util.List<String> CONFIRMACOES =
+            java.util.List.of("isso", "e isso", "isso mesmo", "confirma", "confirma?",
+                    "com certeza", "certo", "isso ai", "exato", "eh isso", "isso aí");
+
+    /** #39 - a frase normalizada e uma confirmacao da aposta pendente? */
+    public static boolean ehConfirmacao(String falaNormalizada) {
+        if (falaNormalizada == null)
+            return false;
+        String limpa = falaNormalizada.trim().toLowerCase(java.util.Locale.ROOT)
+                .replaceAll("[!?.,]", "").trim();
+        return CONFIRMACOES.contains(limpa);
+    }
+
+    /** #39 - confirmou: a pendencia vira topico de verdade e sai da fila. */
+    public static String confirmaApostaPendente() {
+        String pendente = consomeApostaPendente();
+        if (pendente != null)
+            topico(pendente);
         return pendente;
     }
 

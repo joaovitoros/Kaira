@@ -31,6 +31,18 @@ public class ControleResposta {
 
 	private static final double LIMIAR_MEDIA = 0.3;
 
+	// #41 - tokens que nao carregam assunto sozinhos: quando a frase e SÓ isso,
+	// o topico da conversa decide (§5.1 desempate por contexto)
+	private static final List<String> TOKENS_GENERICOS_BRUTOS = List.of(
+			"seu", "sua", "seus", "suas", "qual", "quais",
+			"isso", "esse", "essa", "este", "esta", "aquilo", "algo",
+			"coisa", "coisas", "assunto", "assuntos",
+			"preferido", "preferida", "favorito", "favorita",
+			"gostar", "querer", "falar", "dizer", "contar",
+			"sobre", "mais", "menos", "tambem", "mesmo", "outra", "outro");
+
+	private static Set<String> tokensGenericos = null;
+
 	static Set<String> stopwords;
 
 	private static final List<String> FRASES_FALLBACK = List.of(
@@ -121,13 +133,83 @@ public class ControleResposta {
 			stopwords = null;   // sem arquivo: sem filtro, sem explodir
 		}
 
+		// #41 - genericos stemmados no MESMO pipeline dos tokens da frase
+		tokensGenericos = new HashSet<>();
+		for (String g : TOKENS_GENERICOS_BRUTOS)
+			tokensGenericos.add(Normalizador.stem(Normalizador.texto(g)));
+
+	}
+
+	/** #41 - a frase, sem stopwords, so tem token generico (nenhuma palavra de
+	 * assunto)? Frase com palavra especifica nunca cai no desempate. */
+	private static boolean fraseSoGenerica(Set<String> palavrasEntrada) {
+		return !palavrasEntrada.isEmpty() && tokensGenericos.containsAll(palavrasEntrada);
+	}
+
+	/** #41 - devolve a intencao do topico atual quando a frase e so generica e o
+	 * topico tem algum exemplo que casa (score > 0); senao null (nao mexe). */
+	private static Intencao desempatePorContexto(Intencoes raiz, String entradaNormalizada) {
+		return desempatePorContexto(raiz, entradaNormalizada, ControleSessao.get().getTopicoAtual());
+	}
+
+	/** #41 - mesma regra, mas com o topico passado explicitamente: o chamador
+	 * guarda o topico ANTERIOR a classificacao (que seta topico como efeito
+	 * colateral) e consulta o contexto sem risco de o vencedor ruidoso trocar
+	 * o assunto no meio do caminho. */
+	private static Intencao desempatePorContexto(Intencoes raiz, String entradaNormalizada, String topico) {
+		if (topico == null || topico.isBlank())
+			return null;
+
+		Set<String> palavrasEntrada = tokensDe(entradaNormalizada);
+		if (!fraseSoGenerica(palavrasEntrada))
+			return null;
+
+		Intencao candidata = raiz.getIntencoes().stream()
+				.filter(i -> topico.equalsIgnoreCase(i.getIntento()))
+				.findFirst().orElse(null);
+		if (candidata == null)
+			return null;
+
+		garanteCacheIdf(raiz);
+		for (Exemplo frase : candidata.getExemplos()) {
+			Set<String> palavraFrase = cacheTokensExemplos.get(frase);
+			if (palavraFrase == null)
+				continue;
+			boolean casa = palavrasEntrada.stream()
+					.anyMatch(e -> palavraFrase.stream()
+							.anyMatch(f -> ControleSinonimo.mesmaPalavra(e, f)));
+			if (casa)
+				return candidata;
+		}
+		return null;
 	}
 
 	private static Set<String> tokensDe(String frase){
-		return Arrays.stream(Normalizador.texto(frase).split(" "))
-				.map(Normalizador::stem)
-				.filter(it -> !it.isEmpty() && (stopwords == null || !stopwords.contains(it)))
-				.collect(Collectors.toSet());
+		return tokensDe(frase, false);
+	}
+
+	// #39/#40 - piso: quando TODAS as palavras sao stopword, sobram os radicais
+	// de conteudo (ex.: "quem" de "quem e voce"). Sem isso a frase vira conjunto
+	// vazio e o match morre. USADO TAMBEM pros exemplos (L228): a entrada e o
+	// exemplo tem que ser tokenizados IGUAIS, senao "quem" some dos exemplos,
+	// a intersecao zera e o identidade nunca vence.
+	private static Set<String> tokensDe(String frase, boolean comFallback){
+		Set<String> principais = new java.util.LinkedHashSet<>();
+		Set<String> deConteudo = new java.util.LinkedHashSet<>();
+		for (String bruta : Normalizador.texto(frase).split(" ")) {
+			if (bruta.isEmpty())
+				continue;
+			String radical = Normalizador.stem(bruta);
+			boolean ehStop = stopwords != null && stopwords.contains(radical);
+			if (!ehStop) {
+				principais.add(radical);
+				deConteudo.add(radical);
+			}
+			else if (comFallback && Normalizador.ehRadicalDeConteudo(radical)) {
+				deConteudo.add(radical);   // guarda, so usa se zerar tudo
+			}
+		}
+		return principais.isEmpty() && comFallback ? deConteudo : principais;
 	}
 
 	/** #26 - cache por base: mesma Intencoes devolve o mesmo mapa (imutavel). */
@@ -146,7 +228,7 @@ public class ControleResposta {
 
 		cacheTokensExemplos = new HashMap<>();
 		for(Exemplo e : todos)
-			cacheTokensExemplos.put(e, tokensDe(e.getTexto()));
+			cacheTokensExemplos.put(e, tokensDe(e.getTexto(), true));
 
 		int total = todos.size();
 		cacheTotalExemplos = total;
@@ -334,7 +416,14 @@ public class ControleResposta {
 		// a substancia do topico (resumo do dicionario) em vez do bank generico;
 		// sem entrada, cai no bank atual (fallback nunca piora)
 		if ("continuacao_topico".equals(resposta.getIntento())) {
-			String topico = ControleSessao.get().getTopicoAtual();
+			// #39 - continuacao logo apos aposta segue o candidato proposto, nao
+			// o topico antigo; confirmou por continuacao e vira topico
+			String pendente = ControleSessao.consomeApostaPendente();
+			String topico = pendente != null
+					? pendente
+					: ControleSessao.get().getTopicoAtual();
+			if (pendente != null)
+				ControleSessao.topico(pendente);
 			String resumo = ControleConhecimento.resumo(topico);
 			if (resumo != null) {
 				Registro.linha("CONHECE  : termo=" + topico);
@@ -400,11 +489,24 @@ public class ControleResposta {
 
 	public static String fraseExata(String entradaNormalizada) {
 		if (intencoesCache == null) carregaCache();
-		return intencoesCache.getIntencoes().stream()
-				.flatMap(i -> i.getExemplos().stream())
-				.map(Exemplo::getTexto)
-				.filter(texto -> Normalizador.texto(texto).equalsIgnoreCase(entradaNormalizada))
+
+		Intencao intencao = intencoesCache.getIntencoes().stream()
+				.filter(i -> i.getExemplos().stream().anyMatch(e -> Normalizador.texto(e.getTexto()).equalsIgnoreCase(entradaNormalizada)))
 				.findFirst().orElse(null);
+
+		if(intencao!=null){
+			String resposta = intencao.getExemplos().stream()
+					.map(Exemplo::getTexto)
+					.filter(texto -> Normalizador.texto(texto).equalsIgnoreCase(entradaNormalizada))
+					.findFirst().orElse(null);
+
+			if(resposta!=null) {
+				logaFraseExata(intencao); // #40 - frase exata tambem loga
+				return resposta;
+			}
+		}
+
+		return null;
 	}
 
 	public static String resolver(String entradaNormalizada){
@@ -422,38 +524,59 @@ public class ControleResposta {
 	}
 
 	public static Intencao buscaResposta(String entradaNormalizada){
-
 		if(intencoesCache==null)
 			carregaCache();
+		return buscaResposta(intencoesCache, entradaNormalizada);
+	}
 
-		Intencao resposta = null;
+	public static Intencao buscaResposta(Intencoes raiz, String entradaNormalizada){
 
-		resposta = intencoesCache.getIntencoes().stream().filter(intencao -> intencao.getExemplos().stream()
+		if(raiz==null) {
+			if(intencoesCache==null)
+				carregaCache();
+			raiz = intencoesCache;
+		}
+
+		// #41 - o topico ANTERIOR a classificacao: melhorIntencaoDetalhado seta
+		// topico como efeito colateral em qualquer match real (>= LIMIAR), entao
+		// tem que guardar antes, senao o vencedor de token generico (ex. gostos_ia)
+		// sequestra o assunto antes de o contexto ser consultado
+		String topicoAnterior = ControleSessao.get().getTopicoAtual();
+
+		// #41 - frase so com palavras genericas (nenhuma palavra de assunto)?
+		// Nesse caso o topico ANTERIOR decide antes de qualquer match ruidoso
+		if (fraseSoGenerica(tokensDe(entradaNormalizada))) {
+			Intencao doTopico = desempatePorContexto(raiz, entradaNormalizada, topicoAnterior);
+			if (doTopico != null) {
+				// entrega o topico escolhido pelo contexto; o classificador
+				// normal nao roda nesse ramo entao nao tem ruido de score
+				if (!"continuacao_topico".equals(doTopico.getIntento()))
+					ControleSessao.topico(doTopico.getIntento());
+				logaFraseExata(doTopico);
+				return doTopico;
+			}
+		}
+
+		Intencao resposta = raiz.getIntencoes().stream().filter(intencao -> intencao.getExemplos().stream()
 				.anyMatch(it -> Normalizador.texto(it.getTexto()).equalsIgnoreCase(entradaNormalizada))).findFirst().orElse(null);
 
-		if(resposta==null) {
+		if(resposta!=null) {
+			logaFraseExata(resposta); // #40 - frase exata tambem loga
+			ancoraTopico(resposta);   // #41 - frase exata e match de verdade
+			return resposta;
+		}
 
-			var aux = melhorIntencao(entradaNormalizada);
+		var aux = melhorIntencao(raiz, entradaNormalizada);
 
-			if(aux!=null){
-				Iterator<Intencao> iterator = aux.values().iterator();
-				if (iterator.hasNext()) {
-					resposta = iterator.next();
-				}
-
+		if(aux!=null){
+			Iterator<Intencao> iterator = aux.values().iterator();
+			if (iterator.hasNext()) {
+				resposta = iterator.next();
 			}
-
 		}
 
 		return resposta;
 	}
-
-	// #41 - spec DesempateContextoTest: overload com raiz explicita; ainda
-	// sem desempate por contexto (o corpo verde vem na correcao)
-	public static Intencao buscaResposta(Intencoes raiz, String entradaNormalizada) {
-		return buscaResposta(entradaNormalizada);
-	}
-
 
 	public static Map<String, Intencao> melhorIntencao(String entradaNormalizada){
 		if(intencoesCache == null)
@@ -485,9 +608,33 @@ public class ControleResposta {
 		return ultimoMatchLog;
 	}
 
+	// #40 - frase exata casou: o log do turno precisa do match FINAL, senao vaza
+	// o 0.00 morto do primeiro passo (caso "conte mais" corrigido ao vivo)
+	private static void logaFraseExata(Intencao intencao) {
+		ultimoMatchLog = "intento=" + intencao.getIntento()
+				+ " score=1.00 (frase exata)";
+	}
+
+	// #38/#39/#41 - a UNICA regra de ancoragem do topico. Ela tava duplicada no
+	// classificador e na frase exata, e a frase exata ESQUECEU de ancorar (ao
+	// vivo 17/10: "voce gosta de filmes?" casou exato sem gravar topico, e
+	// "qual seu preferido?" virou gostos_ia com 1.00 - sem contexto pra brigar).
+	// Regra: so match de verdade de assunto novo vira topico; continuacao_topico
+	// nao e assunto (segura o pool); match do proprio candidato da aposta vira
+	// topico mas NAO consome a pendencia (confirmacao explicita fica pendente)
+	private static void ancoraTopico(Intencao intencao) {
+		if (!"continuacao_topico".equals(intencao.getIntento())) {
+			if (!intencao.getIntento().equals(ControleSessao.getApostaPendente()))
+				ControleSessao.consomeApostaPendente();
+			ControleSessao.topico(intencao.getIntento());
+		}
+		else
+			ControleSessao.pedeContinuacao(); // #28 - o turno e dela: segura o pool
+	}
+
 	public static MatchIntencao melhorIntencaoDetalhado(Intencoes raiz, String entradaNormalizada){
 		ultimoMatchLog = null;
-		Set<String> palavrasEntrada = tokensDe(entradaNormalizada);
+		Set<String> palavrasEntrada = tokensDe(entradaNormalizada, true);
 
 		if(palavrasEntrada.isEmpty())
 			return null;
@@ -560,13 +707,15 @@ public class ControleResposta {
 		// #38 - so um match de verdade vira topico: score < LIMIAR (frase sem
 		// match nenhum ou aposta ainda nao confirmada) nao pode trocar o assunto
 		if (melhorScore >= LIMIAR) {
-			if (!"continuacao_topico".equals(melhorIntencao.getIntento()))
-				ControleSessao.topico(melhorIntencao.getIntento());
-			else
-				ControleSessao.pedeContinuacao(); // #28 - o turno e dela: segura o pool
+			ancoraTopico(melhorIntencao); // regra unica no helper (ver L604)
 		}
 		// #29 - linha de detalhe pro log (decifrar imprime 1x por turno)
-		ultimoMatchLog = "intento=" + melhorIntencao.getIntento()
+		// #40 - score 0.00 nao e match fraco: e ausencia de match; o log tem que
+		// dizer isso em vez de "intento=X score=0.00" (que enganava o diagnostico)
+		String rotulo = melhorScore <= 0.0
+				? "sem match (melhor=" + melhorIntencao.getIntento() + ")"
+				: "intento=" + melhorIntencao.getIntento();
+		ultimoMatchLog = rotulo
 				+ String.format(Locale.ROOT, " score=%.2f", melhorScore)
 				+ " frase=\"" + melhorFraseIntencao + "\""
 				+ " tokens=" + palavrasEntrada;
@@ -600,9 +749,27 @@ public class ControleResposta {
 		return aposta == null ? null : aposta + " Foi isso que você quis dizer?";
 	}
 
-	// #39 - spec ApostaPendenteTest: stub; confirmacao + entrega vem na correcao
+	// #39 - confirmacao da aposta: entrega a resposta real do candidato e ancora
+	// o topico; null quando nao e confirmacao (o fluxo normal segue)
 	static String entregaApostaPendente(String falaNormalizada) {
-		return null;
+		String pendente = ControleSessao.getApostaPendente();
+		if (pendente == null || !ControleSessao.ehConfirmacao(falaNormalizada))
+			return null;
+
+		Intencao alvo = getIntencoes().stream()
+				.filter(i -> pendente.equals(i.getIntento()))
+				.findFirst().orElse(null);
+
+		ControleSessao.confirmaApostaPendente(); // consumiu + ancora o candidato
+		if (alvo == null)
+			return null;
+
+		String entrega = comandosResposta(alvo);
+		if (entrega == null)
+			return null;
+		Registro.linha("CONHECE  : intento=" + pendente);
+		Registro.linha("RESPOSTA  : " + entrega);
+		return entrega;
 	}
 
 	public static String respostaFallback() {

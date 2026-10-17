@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import com.JCODE.domain.Exemplo;
 import com.JCODE.domain.Intencao;
 import com.JCODE.domain.Intencoes;
+import com.JCODE.util.Normalizador;
 
 import org.junit.After;
 import org.junit.Before;
@@ -106,5 +107,26 @@ public class DesempateContextoTest {
 		assertEquals("com topico de filme o genericos segue o assunto",
 				"filme",
 				ControleResposta.buscaResposta("qual seu preferido").getIntento());
+	}
+
+	/** Reproducao ao vivo (17/10): a frase exata tem que ancorar o topico.
+	 *  "voce gosta de filmes?" casa por frase exata e SAIA sem gravar topico;
+	 *  a proxima generica ("qual seu preferido?") ficava sem contexto e o
+	 *  gostos_ia sequestrava o assunto com 1.00 em "seu passatempo preferido".
+	 *
+	 *  O anchor mora no buscaResposta (caminho do app), nao no fraseExata
+	 *  (caminho so do avaliador). */
+	@Test
+	public void fraseExataAncoraTopicoProProximoTurno() {
+		ControleResposta.carregaCache();
+		ControleSessao.get().setTopicoAtual(null);
+
+		Intencao exata = ControleResposta.buscaResposta(Normalizador.texto("voce gosta de filmes?"));
+		assertEquals("frase exata de filme", "filme", exata.getIntento());
+		assertEquals("frase exata tem que ancorar o topico",
+				"filme", ControleSessao.get().getTopicoAtual());
+
+		assertEquals("generica segue o topico que a frase exata ancorou",
+				"filme", ControleResposta.buscaResposta("qual seu preferido").getIntento());
 	}
 }
