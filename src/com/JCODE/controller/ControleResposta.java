@@ -551,11 +551,14 @@ public class ControleResposta {
 		if (melhorIntencao == null)
 			return null;
 
-		// #27 - continuar o assunto nao vira o novo topico
-		if (!"continuacao_topico".equals(melhorIntencao.getIntento()))
-			ControleSessao.topico(melhorIntencao.getIntento());
-		else
-			ControleSessao.pedeContinuacao(); // #28 - o turno e dela: segura o pool
+		// #38 - so um match de verdade vira topico: score < LIMIAR (frase sem
+		// match nenhum ou aposta ainda nao confirmada) nao pode trocar o assunto
+		if (melhorScore >= LIMIAR) {
+			if (!"continuacao_topico".equals(melhorIntencao.getIntento()))
+				ControleSessao.topico(melhorIntencao.getIntento());
+			else
+				ControleSessao.pedeContinuacao(); // #28 - o turno e dela: segura o pool
+		}
 		// #29 - linha de detalhe pro log (decifrar imprime 1x por turno)
 		ultimoMatchLog = "intento=" + melhorIntencao.getIntento()
 				+ String.format(Locale.ROOT, " score=%.2f", melhorScore)
