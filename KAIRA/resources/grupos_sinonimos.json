@@ -1,6 +1,8 @@
 {
-  "fonte": "Wiktionary (pt) via kaikki.org/wiktextract - CC BY-SA 4.0",
+  "fonte": "Wiktionary (pt) via kaikki.org/wiktextract - CC BY-SA 4.0 (+2 grupos de alinhamento de genero dos 'favoritos', curadoria out/2026: favorito/favorita e preferido/preferida - o dump nao liga variantes de genero, o que quebrava o desempate por contexto)",
   "grupos": [
+    ["favorito", "favorita", "favoritos", "favoritas"],
+    ["preferido", "preferida", "preferidos", "preferidas"],
     ["aachen", "aquisgrano"],
     ["aaleniano", "aalenio"],
     ["aardvark", "jimbo", "oricterope", "oricteropo", "timba", "timbo"],
