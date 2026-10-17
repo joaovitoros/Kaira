@@ -269,7 +269,11 @@ Detalhes práticos:
 - [x] Implementar **TF-IDF simplificado** (ver pseudo-código no [Apêndice B](#apêndice-b--exemplos-de-código)) — dá pra fazer em Java puro, ~50 linhas — *(feito: `pesosIdf` = log(N/df) por token pos-stem; score = pesos dos casados ÷ pesos da entrada; denominador 0 cai na cobertura uniforme — issue #14)*
 - [x] Ou, versão mínima viável: **Jaccard sobre conjuntos de palavras** (`interseção / união`) — 10 linhas — *(descartado — o TF-IDF acima cumpriu a mesma função)*
 - [x] Definir limiar de confiança (ex.: ≥ 0,5 → acionar intenção; entre 0,3 e 0,5 → responder com a melhor aposta + "Foi isso que você quis dizer?"; < 0,3 → fallback) — *(faixas entregues: ALTA ≥ 0,6 responde direto · MÉDIA 0,3–0,6 aposta + "Foi isso que você quis dizer?" · BAIXA < 0,3 fallback — issue #16, commit 08e1666)*
-- [ ] Empate entre intenções → desempatar pelo **contexto** da Fase 2 (tópico atual) — *(pendente: exige Sessão, §6.1)*
+- [x] Empate entre intenções → desempatar pelo **contexto** da Fase 2 (tópico atual) — *(entregue: issue #41 — `desempatePorContexto` no `buscaResposta`: frase só com tokens genéricos + tópico com exemplo que casa → o tópico decide **antes** do match ruidoso; spec `DesempateContextoTest`)*
+  - **Achados do uso real (out/2026) — dois buracos independentes, "a ver depois":**
+    1. **A âncora do tópico não rodava no match exato.** O ramo de igualdade literal do `buscaResposta` dá `return` **antes** de ancorar → o tópico ficava vazio → o desempate não tinha o que usar. É o que fazia "qual seu favorito" cair em `gostos_ia` (o tópico filme nunca foi gravado). **Em correção pela casa (out/2026).** Lição: o `AncoraTopicoTest` (#38) afirmava "match de verdade ancora o tópico" chamando `melhorIntencaoDetalhado` **direto** — nunca o caminho do app; por isso o buraco passou.
+    2. **Gênero no desempate.** Ele casa por **token compartilhado**, e o dump não liga variantes de gênero (`favorito ≁ favorita`, `seu ≁ sua`) → tópicos com exemplo feminino (`musica`, `serie`) ficavam inalcançáveis: "qual seu favorito" com tópico musica respondia **filme**. **Parcialmente corrigido nos dados (out/2026):** +2 grupos de alinhamento de gênero em `grupos_sinonimos.json` (favorito/favorita, preferido/preferida), proveniência anotada no campo `fonte`. **MAS o bug sobrevive ao vivo (repro 17/10 16:18:27):** topico `musica`, "qual o seu preferido?" → tokens `[seu, preferido]` vs exemplos de musica `[sua, favorita]` → nenhum grupo cobre `seu`×`sua` (gênero **supletivo** — o `stem` não unifica, medido) nem `preferido`×`favorito` (sinônimo, não gênero) → desempate devolve null → `gostos_ia` sequestra com 1.00. **Pendente.** **Alternativa de código:** tratar `TOKENS_GENERICOS_BRUTOS` como **grupos** em vez de lista chata.
+    3. **Borda restante:** intenção **sem nenhum exemplo de "favorito"** (arte, história, clima, podcast...) → o desempate devolve null → a pergunta genérica cai no vencedor por frame/ordem em vez de reconhecer "não tenho favorito de X". Candidato a resolver com `{topico}` na resposta.
 
 **Limite da cobertura (por que a pré-análise da §5.7 existe):** o pareamento por exemplos casa a entrada com frases **já vistas**. Pra um tópico novo fora da base (ex.: "qual seu carro favorito?", nunca visto) a cobertura só pega o que tiver em comum com exemplos parecidos ("qual seu jogo favorito") e ainda assim precisa de uma resposta pro tópico novo — ver [§5.7](#57-pré-análise-frame--slot-tarefa-8).
 
@@ -444,6 +448,20 @@ Substituir o "Não sei como responder a isso" seco:
 
 **Aviso honesto:** Markov impressiona nos primeiros 30 segundos e depois quebra. É uma fase de aprendizado, não de produto.
 
+**Refinamento (ideia do autor + análise out/2026) — Markov como FILLER do ciclo:**
+
+- **A ideia:** quando ela já falou todas as frases que sabe sobre um assunto, antes de reiniciar a lista, soltar **uma última resposta curta gerada** — "aleatória" no meio do ciclo, para mascarar a rotatividade. O *encaixe* é bom: o reinício visível fica 1 turno mais longe e o padrão percebido "quebra".
+- **O acerto em relação à versão original desta seção:** treinar **por intent** (corpus estreito e coerente — mesmo tema, mesma persona) é muito melhor que treinar na base inteira (que mistura vozes e assuntos). A qualidade do Markov depende do corpus; corpus por tema ataca exatamente o defeito antigo.
+- **Por que NÃO dá agora (limite técnico, não de vontade):** os pools têm **4–12 respostas curtas** por intent (`lembra_*` tem 4; as diárias, 6–12, depois da leva de dados out/2026). Nesse tamanho, uma cadeia ordem-2/3 tem ~60–120 bigramas → a saída tende a ser **cópia ou quase-cópia** (não mascara — denuncia), e a higiene "nunca gerar frase idêntica" rejeita o resto → sobra quase nada → o gerador cai de volta na frase original (o filler não existe). Dead ends e loops também são frequentes.
+- **Custo assimétrico:** repetir é "meh"; uma frase gerada meio sem sentido no meio de um papo bom é um "**quê?**" — quebra a ilusão *mais* do que a repetição que ia mascarar.
+- **O mesmo slot com motores melhores (risco zero, e quase sem código novo):**
+  1. **Pool de conectores curados** — frases curtas, vagas e na voz dela, topic-agnostic ("Pois é.", "Hmm, tô digerindo isso.", "Isso rende conversa, viu."). Curado = testável (o projeto sabe validar); vago mascara melhor que texto gerado.
+  2. **Conector com `{topico}`** — o slot **já existe e já renderiza** (`ControleResposta.preencheSlots`, default "tudo um pouco"): *"Pois é, {topico} é desses assuntos que rendem."* → filler ciente do tema com **zero código novo** (reusa a máquina de #27/#28).
+  3. **Emprestar o pool de `reacao_curta`** (introduzido na leva de dados out/2026) — perfil exato de filler ("Verdade. Continua, tô ouvindo."). Cruzamento entre intents, custo mínimo.
+  - Regra do encaixe: **quando a janela recente do intent esgota** (o anti-repetição #35 já controla essa janela — N=2), sai um conector **antes** do sorteio normal voltar.
+- **Onde a ideia TEM futuro:** quando o corpus por tema for **rico** — o dicionário de conhecimentos (§12.1/C3, lead da Wikipédia + OpenWordnet atrás do `{topico}`). Com parágrafos por tema em vez de 6 frases, a recomposição por fragmento deixa de ser frágil e vira motor natural (resumir, comentar, recombinar). **Não descartar — guardar para a era do dicionário.**
+- **Decidir com evidência, não intuição:** medir a **taxa de exaustão** em sessões reais (mesmo intent acionado mais de N (= tamanho do pool) vezes numa sessão) usando o `conversas.log` — **depois da higiene C2** (hoje o log é poluído pelos testes; ver §6-C2 do `BRIEFING_EXPANSAO_DIALOGO.md`). Se a exaustão é rara, o filler é otimização de caso raro; se é comum, o slot merece investimento.
+
 ---
 
 ## 9. Fase 5 — IA de verdade (LLM)
@@ -593,6 +611,41 @@ Pra dar resposta curta e fresca sobre preferência dela, usar respostas **parame
 Hoje o modo ensino (#33) "para" a conversa: o próximo turno vira resposta sem aviso. Inverter: quando ela não entende um tópico, **ela pergunta**, e a resposta do usuário é absorvida pelo contexto (tópico + tipo da pergunta) direto pro intent certo — sem entrar em "modo". Mesma tese do desempate por contexto (#41) do outro lado: lá o contexto decide **qual intent responder**, aqui decide **onde guardar** o que o usuário disse. Por isso **#41 vem antes**.
 
 **Ordem natural:** fechar #39–#41 → trilho #42–#45 (perguntas, fatos dela, Fase 4-piloto, aprendizado orgânico). A validar o ganho real do Markov e do piloto do dicionário (C3) antes de escalar qualquer um.
+
+**Ganho real das 3 ideias (análise out/2026, base em 98 intenções / 2.420 exemplos / 1.291 respostas):**
+
+> Análise feita contra o estado atual — cada ideia foi confrontada com o que **já existe**, para separar o ganho real do ganho imaginado. O achado transversal está no fim.
+
+**Ideia 1 — fatos dela / consistência: ganho ALTO em personalidade, escopo MENOR do que parece.**
+- *O que já existe (não é o novo):* a **tipagem da pergunta** já está feita por intents — `"qual a sua cor preferida"` é **exemplo exato** de `gostos_ia` (19 ex, 21 resp) e o avaliador congela esse caso como regressão; `"o que você gosta?"` cai em `gostos_ia`. O "tipo de pergunta" não é o buraco.
+- *O buraco real:* (a) **memória das preferências dela** (`kaira.json` tem só `{nome, versao}`) e (b) o **fluxo interativo** (ela pergunta as opções → usuário lista → ela escolhe e grava).
+- *Por que vale:* **consistência temporal** — hoje ela sorteia entre 21 respostas e pode dizer "verde" hoje e "azul" amanhã, o que quebra a ilusão de pessoa. Fato persistido = a mesma coerência que o `sessao.json` já deu ao usuário. Bônus: **inversão de papéis** (o usuário define o gosto dela) — mecânica de vínculo, simétrica ao "ela lembra de você".
+- *Riscos:* **coerência de persona** (ela se define como IA "sem corpo, sem ver cores" — a resposta precisa reconciliar: "não vejo cores, mas se eu escolhesse, seria o verde que *você* me deu"); e o fluxo de opções é **multi-turno com estado** → é a **mesma máquina da Ideia 3/#41** (não construir duas).
+- *Métrica:* coerência entre sessões (mesma pergunta em 2 execuções → mesma resposta) + taxa de conclusão do fluxo de opções.
+
+**Ideia 2 — respostas compostas: ganho MÉDIO e LOCALIZADO.**
+- *Onde é ouro:* nas famílias **resposta-por-fato** — `lembra_*` tem **4 respostas cada** e são templates com slot; `[moldura sorteada] + {fato:X}` multiplica 4 → dezenas de variações quase de graça, justamente onde a repetição dói (o usuário testa "você lembra?" várias vezes).
+- *Onde NÃO vale:* como substituto geral dos pools — o ganho grande de variedade o projeto comprou **com dados** (a leva out/2026: +156 respostas, faixa-a-faixa). Composto por cima é multiplicador, não fonte primária.
+- *Alerta:* **`CriarResposta` NÃO deve ser o motor** — trocar palavra por sinônimo aleatório é a antiga "roleta" que o diagnóstico matou (G2). O motor certo é **moldura curada + slot**.
+- *Markov:* ver o refinamento na **[§8.2](#82-cadeia-de-markov-para-curiosidade)** (filler do ciclo; per-intent > base inteira; corpus pequeno não sustenta geração agora; conectores curados + `{topico}` pegam o efeito).
+- *Métrica:* taxa de repetição intra-conversa — a infra do **#35** já mede.
+
+**Ideia 3 — aprendizado orgânico: ganho ALTO — o maior dos três em UX percebida.**
+- *Por quê:* mata o **sequestro do próximo turno** (hoje o fallback arma o `!` e a fala seguinte do usuário é consumida como resposta, sem aviso — se ele mudar de assunto, o assunto vira resposta); transforma a mina de dados do §11.1 em coleta natural; e casa com o **#41** (lá o contexto decide *qual* intent responde, aqui *onde* guardar — mesma tese invertida).
+- *Reuso:* o #33 já resolveu o "onde guardar" por score (≥0,6 → intent certo).
+- *Riscos:* **ruído de aprendizado** (se ela pergunta "o que é X?" e o usuário responde "sei lá, tô com sono", guardar envenena a base → precisa de porteiro: score do #33 + confirmação) e **ambiguidade de turno** (sem o modo explícito, como saber que a fala seguinte é a resposta? — é exatamente o que o **#41** resolve; a dependência declarada está certa).
+- *Métrica:* queda do "turno sequestrado" + taxa de aprendizado aproveitado (a linha `APRENDE` do log já mede).
+
+**Ranking e o achado transversal:**
+
+| # | Ideia | Ganho real | Depende de |
+|---|---|---|---|
+| 1º | Aprendizado orgânico | Alto (UX imediata; o "hijack" do turno é a pior aresta de hoje) | #41 (na ordem certa) |
+| 2º | Fatos dela / consistência | Alto (personalidade; escopo menor do que parece) | mesma máquina de contexto |
+| 3º | Respostas compostas | Médio e localizado (famílias de fato; Markov ver §8.2) | #35 pra medir |
+
+- **As três são da mesma família (estado/contexto) e precisam da MESMA peça ausente** — a máquina de multi-turno que o **#41 vai provar**. Feitas em paralelo = 3 máquinas; feitas depois do #41 = **1 máquina, 3 usos**. É o argumento mais forte para não furar a fila — a ordem do plano está certa.
+- **Ajuste de expectativa:** a base acabou de resolver **variedade com dados**; essas ideias atacam **coerência/estado**. Eixo diferente, complementar — nenhuma "conserta" o que a base cobre; todas *dependem* de a base estar boa (agora está). O ganho delas é sobre **parecer alguém**, não sobre **entender mais**.
 
 ---
 
