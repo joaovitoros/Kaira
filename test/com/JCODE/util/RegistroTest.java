@@ -1,7 +1,10 @@
 package com.JCODE.util;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.nio.charset.StandardCharsets;
@@ -23,11 +26,33 @@ import java.util.regex.Pattern;
  * estrutural (try/catch dentro de linha()) e e exercitado indiretamente por
  * TODA a suíte: os hooks de decifrar/processa chamam o Registro a cada teste
  * que toca sessao/resposta, e a suíte inteira roda sem estourar.
+ *
+ * #36 (C2 - higiene do log): quinto ponto - o destino e configuravel
+ * (-Dkaira.log.destino). A suite redireciona o proprio log e o conversas.log
+ * real fica intocado, so com uso da janela - e passa a servir de insumo de
+ * curadoria (fallback, aposta, temas repetidos).
  */
 public class RegistroTest {
 
+	/** #36 - salva/restaura a propriedade: teste que mexe nela nao pode vazar
+	 * escrita pro conversas.log real depois de si. */
+	private String destinoOriginal;
+
+	@Before
+	public void salvaDestino() {
+		destinoOriginal = System.getProperty("kaira.log.destino");
+	}
+
+	@After
+	public void restauraDestino() {
+		if (destinoOriginal == null)
+			System.clearProperty("kaira.log.destino");
+		else
+			System.setProperty("kaira.log.destino", destinoOriginal);
+	}
+
 	private Path arquivo() {
-		return Caminhos.base().resolve("conversas.log");
+		return Registro.arquivo();
 	}
 
 	/** Cria o log (se preciso) e grava um evento marcado com nonce proprio. */
@@ -70,5 +95,28 @@ public class RegistroTest {
 		String texto = new String(Files.readAllBytes(arquivo()), StandardCharsets.UTF_8);
 		assertTrue("evento com acento nao sobreviveu ao log (UTF-8 vazou)",
 				texto.contains(marcador));
+	}
+
+	/**
+	 * #36 (C2): a propriedade kaira.log.destino redireciona a escrita - e o
+	 * motivo de a suíte nao poluir mais o conversas.log real.
+	 */
+	@Test
+	public void propriedadeRedirecionaODestino() throws Exception {
+		Path temporario = Files.createTempFile("kaira-log-teste", ".log");
+		System.setProperty("kaira.log.destino", temporario.toString());
+
+		String marcador = "registro-destino-" + System.nanoTime();
+		Registro.linha(marcador);
+
+		String texto = new String(Files.readAllBytes(temporario), StandardCharsets.UTF_8);
+		assertTrue("evento nao foi pro destino redirecionado", texto.contains(marcador));
+	}
+
+	/** Sem propriedade, o destino e o conversas.log da raiz (janela real). */
+	@Test
+	public void semPropriedadeOCaminhoEOConversasLog() {
+		System.clearProperty("kaira.log.destino");
+		assertEquals(Caminhos.base().resolve("conversas.log"), Registro.arquivo());
 	}
 }

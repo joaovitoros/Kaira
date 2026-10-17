@@ -1,6 +1,6 @@
 package com.JCODE.view;
 
-import com.JCODE.util.Caminhos;
+import com.JCODE.util.Registro;
 import com.JCODE.util.Tema;
 
 import javax.swing.BorderFactory;
@@ -113,7 +113,8 @@ public class TelaLog extends JFrame {
 	}
 
 	private Path arquivo() {
-		return Caminhos.base().resolve("conversas.log");
+		// #36 - fonte unica: mesma regra do Registro (janela real = conversas.log)
+		return Registro.arquivo();
 	}
 
 	/** Ultimas 2000 linhas; offset = fim do arquivo em bytes. */
