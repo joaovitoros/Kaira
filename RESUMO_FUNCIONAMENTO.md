@@ -25,7 +25,7 @@
 | `domain/` | `Intencoes`, `Intencao`, `Exemplo`, `RespostaIntencao`, `Sessao`, `MatchIntencao`… |
 | `util/Tema.java` | Paleta única preto/verde (#31) — única fonte de cor da UI. |
 | `util/Caminhos.java` | `recurso(nome)` → `KAIRA/resources/`. **Nunca escreva o caminho literal** (teste `SemCaminhoHardcodedTest` flagra, inclusive em comentário). |
-| `util/Registro.java` | `linha(evento)` → `conversas.log` (gitignored). À prova de falha: log nunca derruba o fluxo. |
+| `util/Registro.java` | `linha(evento)` → `Registro.arquivo()` (gitignored). **#36 (higiene):** `-Dkaira.log.destino` redireciona — a suíte grava em arquivo de teste e o `conversas.log` fica **só com uso real** (insumo de curadoria: fallback, aposta, temas repetidos). À prova de falha: log nunca derruba o fluxo. |
 | `KAIRA/resources/intencoes.json` | **O banco** (UTF-8 sem BOM): 98 intents com exemplos/respostas/followups/acoes. |
 | `KAIRA/resources/avatar/` | `kaira_conversa`, `kaira_idle`, `kaira_baixa`, `kaira_alta` (+ `avatar_01..09` arquivadas). |
 | `sessao.json` | Persistência da sessão (nome, humor, tópico, turnos). |
@@ -219,7 +219,9 @@ Tudo em `conversas.log` (gitignored) + tela ao vivo no botão **Log** (#29).
 - `powershell -NoProfile -ExecutionPolicy Bypass -File run_tests.ps1`
   → compila `src` + `test`, roda a suíte headless (JUnitCore, auto-descoberta das
   classes `*Test`) e o **avaliador 14/14** (conjunto congelado de 14 frases —
-  regressão nunca pode cair). Flag `-SkipBuild` reusa o build anterior.
+  regressão nunca pode cair). Flag `-SkipBuild` reusa o build anterior. O log
+  da suíte vai pra `%TEMP%\kaira_suites_conversas.log` (#36) — o `conversas.log`
+  nunca é tocado por teste.
 - Specs por issue vivem em `test/com/JCODE/...` (`FatosNovosTest`,
   `EnsinoTurbinadoTest`, `CuradoriaTemasTest`, `IniciativaPropriaTest`, …).
 - Fluxo da casa: issue → spec vermelho → receita → verde → `Fixes #N` → docs.
@@ -252,8 +254,12 @@ Tudo em `conversas.log` (gitignored) + tela ao vivo no botão **Log** (#29).
   intento (`ultimasRespostas`, últimas 2 frases fora do sorteio) em
   `ControleResposta.comandosResposta`; spec `AntiRepeticaoTurnoTest` verde
   (sorteio determinístico via o gancho `semeador`).
-- Código pendente do briefing §6: **C2 (higiene do log** — testes sujam o `conversas.log`**)**
-  e **C3 (base de conhecimento atrás do `{topico}`, §12.1)**.
+- **C2 (higiene do log, briefing §6): CONCLUÍDA — issue #36** — suíte roda com
+  `-Dkaira.log.destino` (arquivo em `%TEMP%`) e o `conversas.log` fica só com
+  uso real. **Legado: o log atual (6,3 MB) é mistura teste+real — minerar só o
+  segmento novo (pós-#36) ou filtrar os ~31 reais.**
+- Código pendente do briefing §6: **C3 (base de conhecimento atrás do `{topico}`,
+  §12.1)**.
 - §7.3 restante: degrau médio com `{palavrasChave}` + followup (issue #16 parcial);
   frame reconhecido/slot novo (§5.7).
 - Classificador: **negação é cega** ("não" é stopword) — causa raiz dos empates `{gosto}/{entende}`;
