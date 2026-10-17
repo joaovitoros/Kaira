@@ -16,7 +16,7 @@
 | **Matcher / classificador** | `ControleRespostaMelhorIntencaoTest`, `ControleRespostaMatcherUnificadoTest`, `ControleRespostaPesosIdfTest`, `ControleRespostaStemStopwordsTest`, `ControleRespostaSinonimoGruposTest`, `ControleRespostaFaixaConfiancaTest`, `ControleRespostaFraseExataTest`, `ControleRespostaCarregaCacheTest`, `ControleRespostaCacheIdfTest`, `ControlePreAnaliseTest` | 45 | base real + fixtures |
 | **Sessão / contexto** | `ControleSessaoTest`, `ControleSessaoPersistenciaTest`, `ControleSessaoNomeTest`, `FatosNovosTest`, `AncoraTopicoTest`, `DesempateContextoTest`, `ContinuacaoTopicoTest`, `IniciativaPropriaTest`, `ApostaPendenteTest` | 57 | base real + fixtures |
 | **Resposta / comportamento** | `ControleRespostaFallbackTest`, `ControleRespostaSlotsTest`, `ControleRespostaCriarRespostaTest`, `ControleRespostaAprendizadoTest`, `EnsinoTurbinadoTest`, `AntiRepeticaoTurnoTest`, `SistemaDeHumorTest`, `LogMatchTest`, `ControleConhecimentoTest` | 46 | base real + fixtures |
-| **Fluxo fim-a-fim** | `FluxoConversaRealTest` | 1 | **base real**, transcrito do `conversas.log` de 17/10 (10 turnos) |
+| **Fluxo fim-a-fim** | `FluxoConversaRealTest` | 1 | **base real**, transcrito do `conversas.log` de 17/10 (10 turnos + 1 variante limpa) |
 | **UI** | `ControleFaceTest` | 10 | HTML interno da Face |
 | | **44 classes** | **228** | |
 
@@ -49,7 +49,7 @@ O bug da âncora do tópico (frase **exata** não gravava o tópico → "qual se
 | Normalizador/stem/stopwords | ✅ | ✅ | — |
 | Classificador (matcher) | ✅ | ✅ | ⚠ (frases soltas, não em sequência) |
 | Curadoria de dados | ✅ matriz | ✅ | — |
-| **Tópico / desempate por contexto** | ✅ | ✅ | ✅ `FluxoConversaRealTest` (10 turnos, log real) |
+| **Tópico / desempate por contexto** | ✅ | ✅ | ✅ `FluxoConversaRealTest` (11 turnos, log real) |
 | Continuação (`continuacao_topico`) | ✅ | ✅ | ⚠ (testa o turno, não a sequência com tema anterior real) |
 | Iniciativa (followups) | ✅ | ✅ | ⚠ |
 | Humor | ✅ | ✅ | ⚠ (3 elogios em sequência ✅ — esse tem!) |
@@ -65,7 +65,7 @@ O bug da âncora do tópico (frase **exata** não gravava o tópico → "qual se
 
 Dirigir o **pipeline sem cabeça de UI** (`buscaResposta` + `ControleSessao`) sobre a **base real**, com **scripts de 2–3 turnos**, assertando o **observável** (intento escolhido, tópico após o turno, slot renderizado). Casos mínimos:
 
-1. **Tópico (o bug de hoje):** `"assisti um filme ontem a noite"` → tópico `filme` → `"qual seu favorito"` → **filme**. Idem com **música** (o caso de gênero). ✅ **entregue** — o `FluxoConversaRealTest` cobre isto e mais, com os 10 turnos reais do `conversas.log` de 17/10 (inclui a mesma frase genérica resolvendo pra `filme` e pra `musica` conforme o tópico, a troca de assunto legítima pelo classificador, e o degrau de correção de palavra).
+1. **Tópico (o bug de hoje):** `"assisti um filme ontem a noite"` → tópico `filme` → `"qual seu favorito"` → **filme**. Idem com **música** (o caso de gênero). ✅ **entregue** — o `FluxoConversaRealTest` cobre isto e mais, com os 10 turnos reais do `conversas.log` de 17/10 (inclui a mesma frase genérica resolvendo pra `filme` e pra `musica` conforme o tópico, a troca de assunto legítima pelo classificador, e o degrau de correção de palavra). Ganhou ainda uma **variante limpa** do mesmo turno (`"qual seu filme favorita?"`, sem o erro de digitação) como contraponto: sem erro o match é **direto** no classificador (1.00, 3/3 tokens), com erro cai pra **0.61** pela correção — ou seja, o teste agora prova que a correção só é necessária quando existe erro.
 2. **Continuação:** filme → `"conta mais"` → `continuacao_topico` **e** tópico preservado (`filme`). ⬜ aberto.
 3. **Ensino engatilhado:** frase sem match → `!` armado → a próxima fala vira resposta no **intent certo** (#33) e **não** polui o tópico. ⬜ aberto.
 4. **Nome:** `"meu nome e X"` → resposta de nome, turno encerra sem passar pelo classificador. ✅ **parcial** — a captura do nome na janela da pergunta está no fluxo; o turno `"meu nome e X"` (padrão explícito, não o nome pelado) não.

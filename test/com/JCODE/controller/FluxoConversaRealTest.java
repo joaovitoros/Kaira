@@ -156,6 +156,22 @@ public class FluxoConversaRealTest {
 		assertEquals("correcao leva pro topico certo", "filme",
 				ControleSessao.get().getTopicoAtual());
 
+		// O MESMO turno de cima, mas sem o erro de digitacao. E o contraponto
+		// que mostra que o degrau de correcao so e NECESSARIO quando ha erro:
+		// aqui "filme" esta certo, entao o classificador casa de primeira
+		// (3/3: seu + filme + favorita~favorito via sinonimo) e o match e
+		// direto - nao passa pela correcao nem pelo desempate.
+		i = turno("qual seu filme favorita?");
+		assertEquals("sem erro, casa de primeira no intento certo",
+				"filme", i.getIntento());
+		String limpo = match();
+		assertTrue("match direto pelo classificador: " + limpo,
+				limpo.contains("intento=filme score=1.00"));
+		assertTrue("nao foi nem correcao nem desempate: " + limpo,
+				!limpo.contains("frase exata") && !limpo.contains("desempate"));
+		assertEquals("topico continua filme", "filme",
+				ControleSessao.get().getTopicoAtual());
+
 		// 17:12:40 - generica so com variantes de genero (sua, favorita): o
 		// desempate casa pelo topico sem nenhuma igualdade direta de token
 		i = turno("e qual sua favorita?");
