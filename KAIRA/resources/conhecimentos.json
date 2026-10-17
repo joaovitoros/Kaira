@@ -1,0 +1,94 @@
+{
+  "conhecimentos": [
+    {
+      "termo": "trabalho_usuario",
+      "resumo": "Trabalho é o fator de produção mais importante de uma economia - os economistas medem ele em horas, salário ou eficiência.",
+      "texto": "Trabalho é o fator de produção mais importante. Os economistas costumam medir o trabalho em horas dedicadas, salário ou eficiência - e ele funciona como meio de sustento e realização das pessoas.",
+      "origem": "Wikipédia PT (CC BY-SA 3.0) - verbete 'Trabalho (economia)' - pt.wikipedia.org/wiki/Trabalho_(economia) - adaptado out/2026"
+    },
+    {
+      "termo": "esporte",
+      "resumo": "Esporte é toda forma de praticar atividade física de maneira metódica, geralmente com fim competitivo - pra manter ou melhorar habilidades do corpo e da cabeça.",
+      "texto": "Esporte (desporto em Portugal) é atividade física ou jogo: toda forma de praticar atividade física de forma metódica, com objetivos competitivos, pra usar, manter ou melhorar habilidades físicas e mentais - dando diversão aos praticantes e, às vezes, entretenimento pra quem assiste.",
+      "origem": "Wikipédia PT (CC BY-SA 3.0) - verbete 'Desporto' - pt.wikipedia.org/wiki/Desporto - adaptado out/2026"
+    },
+    {
+      "termo": "tecnologia_usuario",
+      "resumo": "Tecnologia é o conjunto de processos e habilidades que a gente usa pra produzir bens e serviços ou cumprir objetivos.",
+      "texto": "Tecnologia é o conjunto de processos e habilidades usados na produção de bens e serviços ou na realização de objetivos, como investigações científicas. Pode ficar embutida em máquinas: aí você usa sem precisar saber como cada peça funciona por dentro.",
+      "origem": "Wikipédia PT (CC BY-SA 3.0) - verbete 'Tecnologia' - pt.wikipedia.org/wiki/Tecnologia - adaptado out/2026"
+    },
+    {
+      "termo": "estudos",
+      "resumo": "Educação é uma atividade proposital pra transmitir conhecimento e desenvolver habilidades - e o pensamento crítico é o que separa educação de doutrinação.",
+      "texto": "Educação é atividade proposital pra atingir objetivos como transmitir conhecimento ou promover habilidades e traços de caráter - incluindo compreensão, racionalidade e honestidade. Nascida da transmissão do patrimônio cultural de uma geração pra outra, hoje abrange até empatia e habilidades pra sociedade moderna.",
+      "origem": "Wikipédia PT (CC BY-SA 3.0) - verbete 'Educação' - pt.wikipedia.org/wiki/Educação - adaptado out/2026"
+    },
+    {
+      "termo": "dinheiro_usuario",
+      "resumo": "Dinheiro é o meio de troca de bens - mas no fundo ele é um signo: informação que representa valores e compromissos entre as pessoas.",
+      "texto": "Dinheiro é o meio usado na troca de bens - moedas, notas ou, hoje em dia, sinais elétricos carregados de informação. No fundo o dinheiro é um signo: representativo de valores - os das coisas que circulam nos mercados e, principalmente, os das dívidas e créditos que as pessoas estabelecem entre si.",
+      "origem": "Wikipédia PT (CC BY-SA 3.0) - verbete 'Dinheiro' - pt.wikipedia.org/wiki/Dinheiro - adaptado out/2026"
+    },
+    {
+      "termo": "comida",
+      "resumo": "Alimentação é o processo em que o organismo obtém e assimila nutrientes pra todas as suas funções vitais.",
+      "texto": "Alimentação é o processo pelo qual os organismos obtêm e assimilam alimentos ou nutrientes pra suas funções vitais - crescer, se mover, se reproduzir e manter a temperatura do corpo.",
+      "origem": "Wikipédia PT (CC BY-SA 3.0) - verbete 'Alimentação' - pt.wikipedia.org/wiki/Alimentação - adaptado out/2026"
+    },
+    {
+      "termo": "cozinhar_usuario",
+      "resumo": "Culinária é a arte de cozinhar, e virou cultura: os métodos mudam de região pra região, em ingredientes, técnicas e até utensílios.",
+      "texto": "Culinária é a arte de confeccionar alimentos. Evoluiu ao longo da história dos povos até virar parte da cultura de cada lugar, associada à cozinha. Os métodos variam de região pra região - ingredientes, técnicas e utensílios: no Brasil, feijoada e churrasco; em Portugal, cataplana e alheira.",
+      "origem": "Wikipédia PT (CC BY-SA 3.0) - verbete 'Culinária' - pt.wikipedia.org/wiki/Culinária - adaptado out/2026"
+    },
+    {
+      "termo": "clima",
+      "resumo": "Clima é o comportamento médio da atmosfera num lugar - se mede com dados de pelo menos trinta anos, não de um dia.",
+      "texto": "Clima é um padrão da atmosfera da Terra: frentes frias, tempestades e furacões entram nas leis físicas e também em variações aleatórias investigadas pela estatística. Resumindo: o clima é o comportamento médio dos elementos atmosféricos num lugar, medido num período de pelo menos trinta anos.",
+      "origem": "Wikipédia PT (CC BY-SA 3.0) - verbete 'Clima' - pt.wikipedia.org/wiki/Clima - adaptado out/2026"
+    },
+    {
+      "termo": "sono",
+      "resumo": "Sono é um estado da mente e do corpo: consciência alterada, sentidos recuados e músculos mais leves - bem menos reativo que a vigília.",
+      "texto": "Sono é estado sedentário da mente e do corpo, com consciência alterada, atividade sensorial bem inibida, muscular reduzida e pouca interação com o ambiente. Difere da vigília por reagir menos a estímulos - mas mais que um coma, com padrões cerebrais ativos bem diferentes.",
+      "origem": "Wikipédia PT (CC BY-SA 3.0) - verbete 'Sono' - pt.wikipedia.org/wiki/Sono - adaptado out/2026"
+    },
+    {
+      "termo": "musica",
+      "resumo": "Música é um arranjo de sons em forma, harmonia, melodia e ritmo - e é considerada um elemento cultural universal, presente em toda sociedade.",
+      "texto": "Música é arranjo de sons feitos pra criar combinações de forma, harmonia, melodia, ritmo ou conteúdo expressivo. É elemento cultural universal, presente em todas as sociedades humanas - as definições variam, mas é um meio altamente versátil de expressão da criatividade. Dá pra fazer com instrumentos ou com a própria voz.",
+      "origem": "Wikipédia PT (CC BY-SA 3.0) - verbete 'Música' - pt.wikipedia.org/wiki/Música - adaptado out/2026"
+    },
+    {
+      "termo": "filme",
+      "resumo": "Cinema é a Sétima Arte: a técnica de reproduzir fotogramas em sequência rápida pra criar ilusão de movimento - e o nome também pra sala.",
+      "texto": "Cinema, a Sétima Arte, é a técnica e a arte de reproduzir fotogramas de forma rápida e sequencial, criando a ilusão de movimento - junto com a indústria que produz essas imagens. O termo também designa a sala onde os filmes são projetados.",
+      "origem": "Wikipédia PT (CC BY-SA 3.0) - verbete 'Cinema' - pt.wikipedia.org/wiki/Cinema - adaptado out/2026"
+    },
+    {
+      "termo": "livro",
+      "resumo": "Literatura é a arte da linguagem escrita - em prosa ou verso - e junta os textos em que se reconhece valor estético.",
+      "texto": "Literatura é a arte que usa a linguagem escrita como meio de expressão, em prosa ou verso, de acordo com princípios teóricos e práticos - e reúne os textos em que se reconhece valor estético. O que define um texto como literário chama literariedade, e as categorias que os distinguem são os gêneros literários.",
+      "origem": "Wikipédia PT (CC BY-SA 3.0) - verbete 'Literatura' - pt.wikipedia.org/wiki/Literatura - adaptado out/2026"
+    },
+    {
+      "termo": "pet",
+      "resumo": "Animal de estimação é o bicho doméstico escolhido pra companhia e diversão - e hoje é mais que isso na sociedade.",
+      "texto": "Animal de estimação é o animal doméstico selecionado pro convívio com humanos por companheirismo ou divertimento - sem significar que essa seja a única função dessas espécies na nossa sociedade.",
+      "origem": "Wikipédia PT (CC BY-SA 3.0) - verbete 'Animal de estimação' - pt.wikipedia.org/wiki/Animal_de_estimação - adaptado out/2026"
+    },
+    {
+      "termo": "viagem",
+      "resumo": "Viagem é o movimento entre locais distantes, com qualquer propósito - por mar, terra ou ar - e vale pelo percurso e pela estadia.",
+      "texto": "Viagem é o movimento de pessoas entre locais relativamente distantes, com qualquer propósito e duração, com ou sem transporte: o percurso pode ser por mar, terra ou ar. Também se entende como viagem o período de deslocações com estadias mais ou menos longas em alguns destinos.",
+      "origem": "Wikipédia PT (CC BY-SA 3.0) - verbete 'Viagem' - pt.wikipedia.org/wiki/Viagem - adaptado out/2026"
+    },
+    {
+      "termo": "historia",
+      "resumo": "História é o estudo e a documentação do passado humano - e o que é anterior à escrita chama pré-história.",
+      "texto": "História é o estudo e a documentação sistemática do passado humano: o período anterior à invenção dos sistemas de escrita é pré-história. O termo é abrangente - eventos passados, memória, descoberta, coleção, organização, apresentação e interpretação - e os historiadores buscam esse conhecimento em fontes: documentos, relatos orais, arte e artefatos.",
+      "origem": "Wikipédia PT (CC BY-SA 3.0) - verbete 'História' - pt.wikipedia.org/wiki/História - adaptado out/2026"
+    }
+  ]
+}

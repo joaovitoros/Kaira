@@ -330,6 +330,20 @@ public class ControleResposta {
 	// #35 - package-private: spec chama direto (fixture isolada)
 	static String comandosResposta(Intencao resposta){
 
+		// #37 (C3 piloto): continuacao_topico com conhecimento cadastrado fala
+		// a substancia do topico (resumo do dicionario) em vez do bank generico;
+		// sem entrada, cai no bank atual (fallback nunca piora)
+		if ("continuacao_topico".equals(resposta.getIntento())) {
+			String topico = ControleSessao.get().getTopicoAtual();
+			String resumo = ControleConhecimento.resumo(topico);
+			if (resumo != null) {
+				Registro.linha("CONHECE  : termo=" + topico);
+				String falado = preencheSlots(resumo);
+				Registro.linha("RESPOSTA  : " + falado);
+				return falado;
+			}
+		}
+
 		if(resposta==null)
 			return null;
 
