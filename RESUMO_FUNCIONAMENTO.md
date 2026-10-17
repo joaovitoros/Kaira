@@ -268,8 +268,13 @@ Tudo em `conversas.log` (gitignored) + tela ao vivo no botão **Log** (#29).
   escala da base + OpenWordnet-PT (CC BY 4.0).
 - §7.3 restante: degrau médio com `{palavrasChave}` + followup (issue #16 parcial);
   frame reconhecido/slot novo (§5.7).
+- **#38 (âncora de tópico): CONCLUÍDA** — `topicoAtual` só ancora com
+  `melhorScore >= LIMIAR`; frase sem match (score 0.00) e aposta não
+  confirmada não trocam mais o assunto (bug do log 16/10: "filme" virou
+  "identidade" no argmax de zeros). Spec `AncoraTopicoTest`.
 - Classificador: **negação é cega** ("não" é stopword) — causa raiz dos empates `{gosto}/{entende}`;
-  fix de código, não de dados.
+  fix de código, não de dados. **Fila:** colisão `fala/fale` ("fale mais sobre isso" →
+  `convite_conversa` por token-set `[fale, sobre]` — vaza do `continuacao_topico`).
 - Opcional: theming dos `JOptionPane` (saem no estilo do sistema);
   decaimento do humor por dia sem interação (§7.1 opcional);
   `CriarResposta` — retorno descartado (decidir: usar ou remover).
