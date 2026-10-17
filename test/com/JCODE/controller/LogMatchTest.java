@@ -1,5 +1,6 @@
 package com.JCODE.controller;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -62,5 +63,27 @@ public class LogMatchTest {
 		assertTrue("match real loga o intento: " + log,
 				log.startsWith("intento=identidade"));
 		assertTrue("match real loga o score: " + log, log.contains("score=1.00"));
+	}
+
+	/** O desempate por contexto (#41) nao e frase exata. Ao vivo (17/10 16:12:26)
+	 *  "qual sua preferida?" casou pelo CONTEXTO com elogio e o log dizia
+	 *  "(frase exata)" - mentira de log, o mesmo peco que o #40 matou. */
+	@Test
+	public void desempateLogaComoDesempate() {
+		ControleResposta.carregaCache();
+		// zera o log estatico antes: sem isso o resto da suite engana
+		ControleResposta.melhorIntencao("zzqqxx");
+		ControleSessao.get().setTopicoAtual("musica");
+
+		// {sua, preferida} casa com "qual sua musica favorita" - roda o desempate
+		Intencao resolvida = ControleResposta.buscaResposta("qual sua preferida");
+		assertNotNull("com topico de musica a generica resolve", resolvida);
+
+		String log = ControleResposta.getUltimoMatchLog();
+		assertNotNull("desempate tem que registrar o match no log", log);
+		assertTrue("log tem que dizer que veio do desempate: " + log,
+				log.contains("desempate"));
+		assertFalse("desempate nao pode se passar por frase exata: " + log,
+				log.contains("frase exata"));
 	}
 }

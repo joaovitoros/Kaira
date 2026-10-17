@@ -1,6 +1,7 @@
 package com.JCODE.controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import com.JCODE.domain.Exemplo;
 import com.JCODE.domain.Intencao;
@@ -128,5 +129,48 @@ public class DesempateContextoTest {
 
 		assertEquals("generica segue o topico que a frase exata ancorou",
 				"filme", ControleResposta.buscaResposta("qual seu preferido").getIntento());
+	}
+
+	/** Reproducao ao vivo (17/10 16:18): topico musica + generica com genero/
+	 *  sinonimo diferente do exemplo. A base tem SO UM exemplo de preferencia
+	 *  em musica - "qual sua musica favorita" -> {sua, musica, favorita}; a
+	 *  entrada "qual seu preferido" -> {seu, preferido}. Sem genero (seu~sua) e
+	 *  sinonimo (preferido~favorito) no desempate, nenhum token casa -> null ->
+	 *  gostos_ia sequestra com 1.00 em "seu passatempo preferido". */
+	@Test
+	public void desempateCasaGeneroESinonimoNaBaseReal() {
+		ControleResposta.carregaCache();
+		ControleSessao.get().setTopicoAtual("musica");
+
+		assertEquals("genero supletivo (seu~sua) tem que casar no desempate",
+				"musica",
+				ControleResposta.buscaResposta("qual seu preferido").getIntento());
+
+		ControleSessao.get().setTopicoAtual("musica");
+		assertEquals("sinonimo+genero (favorito~favorita) tem que casar no desempate",
+				"musica",
+				ControleResposta.buscaResposta("qual seu favorito").getIntento());
+	}
+
+	/** Fixture isolada da base: genero/sinonimo e o UNICO caminho de match
+	 *  (a entrada nao compartilha token nenhum com o exemplo por igualdade). */
+	@Test
+	public void desempateCasaGeneroSemIgualdadeDireta() {
+		ControleResposta.carregaCache();
+		ControleSessao.get().setTopicoAtual("carro_teste");
+
+		Intencao vencida = ControleResposta.buscaResposta(baseDeGenero(), "qual seu preferido");
+
+		assertNotNull("frase so de genericos tem que resolver pelo topico", vencida);
+		assertEquals("genero/sinonimo no desempate", "carro_teste", vencida.getIntento());
+	}
+
+	private Intencoes baseDeGenero() {
+		Intencoes raiz = new Intencoes();
+		ArrayList<Intencao> lista = new ArrayList<>();
+		lista.add(intentoComExemplo("carro_teste", "qual sua cor de carro favorita"));
+		lista.add(intentoComExemplo("outro_teste", "seu colega chegou cedo"));
+		raiz.setIntencoes(lista);
+		return raiz;
 	}
 }

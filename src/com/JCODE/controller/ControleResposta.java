@@ -31,17 +31,28 @@ public class ControleResposta {
 
 	private static final double LIMIAR_MEDIA = 0.3;
 
-	// #41 - tokens que nao carregam assunto sozinhos: quando a frase e SÓ isso,
-	// o topico da conversa decide (§5.1 desempate por contexto)
-	private static final List<String> TOKENS_GENERICOS_BRUTOS = List.of(
-			"seu", "sua", "seus", "suas", "qual", "quais",
-			"isso", "esse", "essa", "este", "esta", "aquilo", "algo",
-			"coisa", "coisas", "assunto", "assuntos",
-			"preferido", "preferida", "favorito", "favorita",
-			"gostar", "querer", "falar", "dizer", "contar",
-			"sobre", "mais", "menos", "tambem", "mesmo", "outra", "outro");
+	// #41/#42 - tokens que nao carregam assunto sozinhos, agora em GRUPOS de
+	// variante (genero/numero/sinonimo). A fraseSoGenerica usa o flatten (mesmo
+	// comportamento de antes), mas o desempate (#41) casa variante com variante:
+	// "seu"~"sua" e "preferido"~"favorito". E o stem que NAO faz (medido:
+	// stem("seu")="seu", stem("sua")="sua"), e o sinonimo do dump tambem nao
+	// cobria - o caso vivo de 17/10 ("qual o seu preferido?" com topico musica)
+	// caia no gostos_ia 1.00 por isso.
+	private static final List<List<String>> TOKENS_GENERICOS_GRUPOS = List.of(
+			List.of("seu", "sua", "seus", "suas"),
+			List.of("qual", "quais"),
+			List.of("isso", "esse", "essa", "este", "esta", "aquilo", "algo"),
+			List.of("coisa", "coisas", "assunto", "assuntos"),
+			List.of("preferido", "preferida", "favorito", "favorita",
+					"preferidos", "preferidas", "favoritos", "favoritas"),
+			List.of("gostar", "querer", "falar", "dizer", "contar"),
+			List.of("sobre", "mais", "menos", "tambem", "mesmo"),
+			List.of("outra", "outro"));
 
 	private static Set<String> tokensGenericos = null;
+	// #42 - token generico stemmado -> tokens stemmados do seu grupo (pro
+	// desempate casar variante com variante)
+	private static Map<String, Set<String>> gruposGenericos = null;
 
 	static Set<String> stopwords;
 
@@ -133,10 +144,19 @@ public class ControleResposta {
 			stopwords = null;   // sem arquivo: sem filtro, sem explodir
 		}
 
-		// #41 - genericos stemmados no MESMO pipeline dos tokens da frase
+	// #41 - genericos stemmados no MESMO pipeline dos tokens da frase.
+	// #42 - o flatten vira o set de "e generico" (igual antes) e, junto, o
+	// mapa token->grupo pro desempate casar variante com variante
 		tokensGenericos = new HashSet<>();
-		for (String g : TOKENS_GENERICOS_BRUTOS)
-			tokensGenericos.add(Normalizador.stem(Normalizador.texto(g)));
+		gruposGenericos = new HashMap<>();
+		for (List<String> grupo : TOKENS_GENERICOS_GRUPOS) {
+			Set<String> stemmado = new HashSet<>();
+			for (String g : grupo)
+				stemmado.add(Normalizador.stem(Normalizador.texto(g)));
+			tokensGenericos.addAll(stemmado);
+			for (String g : stemmado)
+				gruposGenericos.put(g, stemmado);
+		}
 
 	}
 
@@ -177,11 +197,21 @@ public class ControleResposta {
 				continue;
 			boolean casa = palavrasEntrada.stream()
 					.anyMatch(e -> palavraFrase.stream()
-							.anyMatch(f -> ControleSinonimo.mesmaPalavra(e, f)));
+							.anyMatch(f -> ControleSinonimo.mesmaPalavra(e, f)
+									|| mesmoGrupoGenerico(e, f)));
 			if (casa)
 				return candidata;
 		}
 		return null;
+	}
+
+	// #42 - no desempate, variante do mesmo grupo casa com variante ("seu"~
+	// "sua", "preferido"~"favorito"). SO no desempate: o classificador continua
+	// so com mesmaPalavra, porque um grupo largo ali desloca os pesos e amarra
+	// os 14 casos congelados do avaliador.
+	private static boolean mesmoGrupoGenerico(String a, String b) {
+		Set<String> grupo = gruposGenericos.get(a);
+		return grupo != null && grupo.contains(b);
 	}
 
 	private static Set<String> tokensDe(String frase){
@@ -552,7 +582,7 @@ public class ControleResposta {
 				// normal nao roda nesse ramo entao nao tem ruido de score
 				if (!"continuacao_topico".equals(doTopico.getIntento()))
 					ControleSessao.topico(doTopico.getIntento());
-				logaFraseExata(doTopico);
+				logaDesempate(doTopico); // #43 - rotulo proprio, nao "frase exata"
 				return doTopico;
 			}
 		}
@@ -613,6 +643,15 @@ public class ControleResposta {
 	private static void logaFraseExata(Intencao intencao) {
 		ultimoMatchLog = "intento=" + intencao.getIntento()
 				+ " score=1.00 (frase exata)";
+	}
+
+	// #43 - o desempate nao e frase exata: o log tem que dizer o caminho que
+	// resolveu. Ao vivo (17/10 16:12:26) "qual sua preferida?" casou pelo
+	// CONTEXTO e o log dizia "(frase exata)" - mentira de log, o mesmo peco que
+	// o #40 matou.
+	private static void logaDesempate(Intencao intencao) {
+		ultimoMatchLog = "intento=" + intencao.getIntento()
+				+ " score=1.00 (desempate por topico)";
 	}
 
 	// #38/#39/#41 - a UNICA regra de ancoragem do topico. Ela tava duplicada no
