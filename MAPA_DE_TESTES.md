@@ -1,7 +1,7 @@
 # MAPA DE TESTES — amplitude de cobertura do KAIRA
 
 > Levantamento out/2026 (a pedido, depois do bug da âncora do tópico). Objetivo: garantir que a suíte **pegue o tipo de bug que passa por costura entre camadas** — não só o que cada método faz sozinho.
-> Estado na data: **44 classes · 228 testes · avaliador 14/14**, tudo verde.
+> Estado na data: **44 classes · 230 testes · avaliador 14/14**, tudo verde.
 
 ---
 
@@ -14,11 +14,11 @@
 | **Dados / curadoria** | `CuradoriaTemasTest`, `CuradoriaConsultoriaTest`, `IntencoesCuradoNaoDegradadoTest`, `GruposSinonimosCuradoTest`, `StopwordsCuradoTest`, `ControlePalavraCorrecaoTest`, `ControleSinonimoGruposTest` | 36 | **base real** (+ dicionário) |
 | **Regressão** | `AvaliadorTest` (dataset congelado, 14 casos) | 2 | **base real** |
 | **Matcher / classificador** | `ControleRespostaMelhorIntencaoTest`, `ControleRespostaMatcherUnificadoTest`, `ControleRespostaPesosIdfTest`, `ControleRespostaStemStopwordsTest`, `ControleRespostaSinonimoGruposTest`, `ControleRespostaFaixaConfiancaTest`, `ControleRespostaFraseExataTest`, `ControleRespostaCarregaCacheTest`, `ControleRespostaCacheIdfTest`, `ControlePreAnaliseTest` | 45 | base real + fixtures |
-| **Sessão / contexto** | `ControleSessaoTest`, `ControleSessaoPersistenciaTest`, `ControleSessaoNomeTest`, `FatosNovosTest`, `AncoraTopicoTest`, `DesempateContextoTest`, `ContinuacaoTopicoTest`, `IniciativaPropriaTest`, `ApostaPendenteTest` | 57 | base real + fixtures |
+| **Sessão / contexto** | `ControleSessaoTest`, `ControleSessaoPersistenciaTest`, `ControleSessaoNomeTest`, `FatosNovosTest`, `AncoraTopicoTest`, `DesempateContextoTest`, `ContinuacaoTopicoTest`, `IniciativaPropriaTest`, `ApostaPendenteTest` | 59 | base real + fixtures |
 | **Resposta / comportamento** | `ControleRespostaFallbackTest`, `ControleRespostaSlotsTest`, `ControleRespostaCriarRespostaTest`, `ControleRespostaAprendizadoTest`, `EnsinoTurbinadoTest`, `AntiRepeticaoTurnoTest`, `SistemaDeHumorTest`, `LogMatchTest`, `ControleConhecimentoTest` | 46 | base real + fixtures |
 | **Fluxo fim-a-fim** | `FluxoConversaRealTest` | 1 | **base real**, transcrito do `conversas.log` de 17/10 (10 turnos + 1 variante limpa) |
 | **UI** | `ControleFaceTest` | 10 | HTML interno da Face |
-| | **44 classes** | **228** | |
+| | **44 classes** | **230** | |
 
 > **Nota de rastreio:** `CuradoriaConsultoriaTest` (4 testes) roda na suíte local mas **não está commitado** — depende dos `KAIRA/resources/intencoes-consultoria-*.json` (também não commitados; leva de dados em curadoria). Ao clonar o repo limpo, a suíte tem **43 classes / 224 testes** até a leva de consultoria ser commitada.
 
