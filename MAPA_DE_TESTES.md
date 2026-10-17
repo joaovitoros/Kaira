@@ -1,7 +1,7 @@
 # MAPA DE TESTES — amplitude de cobertura do KAIRA
 
 > Levantamento out/2026 (a pedido, depois do bug da âncora do tópico). Objetivo: garantir que a suíte **pegue o tipo de bug que passa por costura entre camadas** — não só o que cada método faz sozinho.
-> Estado na data: **43 classes · 224 testes · avaliador 14/14**, tudo verde.
+> Estado na data: **44 classes · 228 testes · avaliador 14/14**, tudo verde.
 
 ---
 
@@ -11,14 +11,18 @@
 |---|---|---|---|
 | **Fundação / unidade pura** | `NormalizadorTest`, `NormalizadorStemTest`, `CalculosLevenshteinTest`, `CaminhosTest`, `RegistroTest` | 30 | fixture pura |
 | **Arquitetura** | `SemCaminhoHardcodedTest` | 1 | varre `src/` |
-| **Dados / curadoria** | `CuradoriaTemasTest`, `CuradoriaConsultoriaTest`, `IntencoesCuradoNaoDegradadoTest`, `GruposSinonimosCuradoTest`, `StopwordsCuradoTest`, `ControlePalavraCorrecaoTest` | 29 | **base real** (+ dicionário) |
+| **Dados / curadoria** | `CuradoriaTemasTest`, `CuradoriaConsultoriaTest`, `IntencoesCuradoNaoDegradadoTest`, `GruposSinonimosCuradoTest`, `StopwordsCuradoTest`, `ControlePalavraCorrecaoTest`, `ControleSinonimoGruposTest` | 36 | **base real** (+ dicionário) |
 | **Regressão** | `AvaliadorTest` (dataset congelado, 14 casos) | 2 | **base real** |
-| **Matcher / classificador** | `ControleRespostaMelhorIntencaoTest`, `MatcherUnificadoTest`, `PesosIdfTest`, `StemStopwordsTest`, `SinonimoGruposTest`, `FaixaConfiancaTest`, `FraseExataTest`, `PreAnaliseTest`, `CarregaCacheTest` | 41 | base real + fixtures |
-| **Sessão / contexto** | `ControleSessaoTest`, `SessaoPersistenciaTest`, `ControleSessaoNomeTest`, `FatosNovosTest`, `AncoraTopicoTest`, `DesempateContextoTest`, `ContinuacaoTopicoTest`, `IniciativaPropriaTest`, `ApostaPendenteTest` | 54 | base real + fixtures |
-| **Resposta / comportamento** | `FallbackTest`, `SlotsTest`, `CriarRespostaTest`, `AprendizadoTest`, `EnsinoTurbinadoTest`, `AntiRepeticaoTurnoTest`, `SistemaDeHumorTest`, `LogMatchTest`, `ControleConhecimentoTest` | 47 | base real + fixtures |
+| **Matcher / classificador** | `ControleRespostaMelhorIntencaoTest`, `ControleRespostaMatcherUnificadoTest`, `ControleRespostaPesosIdfTest`, `ControleRespostaStemStopwordsTest`, `ControleRespostaSinonimoGruposTest`, `ControleRespostaFaixaConfiancaTest`, `ControleRespostaFraseExataTest`, `ControleRespostaCarregaCacheTest`, `ControleRespostaCacheIdfTest`, `ControlePreAnaliseTest` | 45 | base real + fixtures |
+| **Sessão / contexto** | `ControleSessaoTest`, `ControleSessaoPersistenciaTest`, `ControleSessaoNomeTest`, `FatosNovosTest`, `AncoraTopicoTest`, `DesempateContextoTest`, `ContinuacaoTopicoTest`, `IniciativaPropriaTest`, `ApostaPendenteTest` | 57 | base real + fixtures |
+| **Resposta / comportamento** | `ControleRespostaFallbackTest`, `ControleRespostaSlotsTest`, `ControleRespostaCriarRespostaTest`, `ControleRespostaAprendizadoTest`, `EnsinoTurbinadoTest`, `AntiRepeticaoTurnoTest`, `SistemaDeHumorTest`, `LogMatchTest`, `ControleConhecimentoTest` | 46 | base real + fixtures |
+| **Fluxo fim-a-fim** | `FluxoConversaRealTest` | 1 | **base real**, transcrito do `conversas.log` de 17/10 (10 turnos) |
 | **UI** | `ControleFaceTest` | 10 | HTML interno da Face |
+| | **44 classes** | **228** | |
 
-> **Nota de rastreio:** `CuradoriaConsultoriaTest` (4 testes) roda na suíte local mas **não está commitado** — depende dos `KAIRA/resources/intencoes-consultoria-*.json` (também não commitados; leva de dados em curadoria). Ao clonar o repo limpo, a suíte tem **42 classes / 220 testes** até a leva de consultoria ser commitada.
+> **Nota de rastreio:** `CuradoriaConsultoriaTest` (4 testes) roda na suíte local mas **não está commitado** — depende dos `KAIRA/resources/intencoes-consultoria-*.json` (também não commitados; leva de dados em curadoria). Ao clonar o repo limpo, a suíte tem **43 classes / 224 testes** até a leva de consultoria ser commitada.
+
+> **Nota de método:** as contagens acima foram **medidas** (contagem de `@Test` por arquivo), não estimadas. A versão anterior deste inventário abreviava nomes de classe (`MatcherUnificadoTest`, `FallbackTest`, `AvaliadorTest`...) e várias somas não fechavam; se for mexer aqui, meça de novo.
 
 **Leitura rápida:** as camadas de **dado** e **unidade** estão muito bem guardadas (curadoria com matriz de auto-classificação, avaliador congelado, specs por issue). O que falta não é quantidade — é **camada de integração**.
 
@@ -45,7 +49,7 @@ O bug da âncora do tópico (frase **exata** não gravava o tópico → "qual se
 | Normalizador/stem/stopwords | ✅ | ✅ | — |
 | Classificador (matcher) | ✅ | ✅ | ⚠ (frases soltas, não em sequência) |
 | Curadoria de dados | ✅ matriz | ✅ | — |
-| **Tópico / desempate por contexto** | ✅ | ✅ | ❌ **nenhum** |
+| **Tópico / desempate por contexto** | ✅ | ✅ | ✅ `FluxoConversaRealTest` (10 turnos, log real) |
 | Continuação (`continuacao_topico`) | ✅ | ✅ | ⚠ (testa o turno, não a sequência com tema anterior real) |
 | Iniciativa (followups) | ✅ | ✅ | ⚠ |
 | Humor | ✅ | ✅ | ⚠ (3 elogios em sequência ✅ — esse tem!) |
@@ -57,18 +61,20 @@ O bug da âncora do tópico (frase **exata** não gravava o tópico → "qual se
 
 ## 3. Recomendações (amplitude de verdade)
 
-### R1 — Spec de conversa fim-a-fim (`ConversaFimAFimTest`) — **a peça que falta**
+### R1 — Spec de conversa fim-a-fim (`FluxoConversaRealTest`) — **parcialmente entregue**
 
 Dirigir o **pipeline sem cabeça de UI** (`buscaResposta` + `ControleSessao`) sobre a **base real**, com **scripts de 2–3 turnos**, assertando o **observável** (intento escolhido, tópico após o turno, slot renderizado). Casos mínimos:
 
-1. **Tópico (o bug de hoje):** `"assisti um filme ontem a noite"` → tópico `filme` → `"qual seu favorito"` → **filme**. Idem com **música** (o caso de gênero).
-2. **Continuação:** filme → `"conta mais"` → `continuacao_topico` **e** tópico preservado (`filme`).
-3. **Ensino engatilhado:** frase sem match → `!` armado → a próxima fala vira resposta no **intent certo** (#33) e **não** polui o tópico.
-4. **Nome:** `"meu nome e X"` → resposta de nome, turno encerra sem passar pelo classificador.
-5. **Aposta pendente (#39):** frase de faixa média → aposta + confirmação/correção no turno seguinte.
-6. **Humor:** 3 elogios → faixa alta no pool (versão E2E do que o `SistemaDeHumorTest` já cobre em unidade).
+1. **Tópico (o bug de hoje):** `"assisti um filme ontem a noite"` → tópico `filme` → `"qual seu favorito"` → **filme**. Idem com **música** (o caso de gênero). ✅ **entregue** — o `FluxoConversaRealTest` cobre isto e mais, com os 10 turnos reais do `conversas.log` de 17/10 (inclui a mesma frase genérica resolvendo pra `filme` e pra `musica` conforme o tópico, a troca de assunto legítima pelo classificador, e o degrau de correção de palavra).
+2. **Continuação:** filme → `"conta mais"` → `continuacao_topico` **e** tópico preservado (`filme`). ⬜ aberto.
+3. **Ensino engatilhado:** frase sem match → `!` armado → a próxima fala vira resposta no **intent certo** (#33) e **não** polui o tópico. ⬜ aberto.
+4. **Nome:** `"meu nome e X"` → resposta de nome, turno encerra sem passar pelo classificador. ✅ **parcial** — a captura do nome na janela da pergunta está no fluxo; o turno `"meu nome e X"` (padrão explícito, não o nome pelado) não.
+5. **Aposta pendente (#39):** frase de faixa média → aposta + confirmação/correção no turno seguinte. ⬜ aberto.
+6. **Humor:** 3 elogios → faixa alta no pool (versão E2E do que o `SistemaDeHumorTest` já cobre em unidade). ⬜ aberto.
 
 > Cada **bug visto no uso real** vira caso deste spec (o log do #40 ajuda a extrair o par de turnos). Cultura: **bug → spec E2E** antes do fix.
+
+**Achado de infra do próprio R1:** os testes que dirigem o `buscaResposta` precisam carregar os **três** caches que o app carrega no `ControleCache.carregaCacheGeral()` (`ControleResposta`, `ControlePalavra`, `ControleSinonimo`). Sem o `ControleSinonimo`, o `mesmaPalavra` cai no fallback `equalsIgnoreCase` e o teste roda numa configuração que **não é a de produção** — isso mudou o desfecho de um turno de verdade no primeiro dia (ver `FluxoConversaRealTest.prepara`).
 
 ### R2 — Regra de camada (convenção)
 

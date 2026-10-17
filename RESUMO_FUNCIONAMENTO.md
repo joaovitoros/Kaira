@@ -2,7 +2,7 @@
 
 > Consulta rápida pra não esquecer os mecanismos do projeto. Tudo abaixo foi
 > conferido no código (não é de memória). Última revisão: out/2026, head
-> `283fc17` — suíte 199 testes + avaliador 14/14. *(estado atual: 224 testes + avaliador 14/14 — issues #39–#41 fechadas)*
+> `283fc17` — suíte 199 testes + avaliador 14/14. *(estado atual: 228 testes + avaliador 14/14 — issues #39–#43; inclui o `FluxoConversaRealTest`, 10 turnos transcritos do `conversas.log` de 17/10)*
 >
 > Pra detalhes de planejamento/decisões: `PLANO_DE_EVOLUCAO.md` e
 > `BRIEFING_EXPANSAO_DIALOGO.md`. Pra rodar: `run_tests.ps1` (fim do arquivo).
