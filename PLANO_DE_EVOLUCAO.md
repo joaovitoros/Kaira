@@ -571,6 +571,29 @@ Escrever por **categoria de intenção**, com checklist de cobertura. Mínimo pa
 - "Montar uma frase inacabada" = resposta **por fragmentos**, não frase inteira pronta — linha já prevista no plano: respostas compostas `[reação ao tópico] + [followup]` (§7.1 e o checklist de `followups` do §6).
 - Encaixes prontos: `Sessao.topicoAtual`/`historico` (issue #19); desempate por contexto (pendência do §5.1); campo `followups` **em uso desde a issue #25** (`perguntaInteresse`); placeholders `{topico}` (pendência do §6).
 
+### 12.3 Ideias do usuário (out/2026) — identidade, memória e aprendizado orgânico
+
+> Brainstorm do autor em out/2026. Anotadas aqui antes de virarem issue; nenhuma começou. Depende do trilho novo (#42–#45) que fecha depois de #39–#41.
+
+**Ideia 1 — Identificar tipos de pergunta + memória dela em `kaira.json`.**
+A KAIRA precisa tipar a pergunta e reagir por família:
+
+| Família | Exemplo | Estado hoje |
+|---|---|---|
+| Conceito | "o que é dinheiro?" | existe (`duvida_dinheiro`…) |
+| Sobre o usuário | "o que eu gosto?" | existe (fatos em `Sessao.fatos` + `PADROES_FATO`) |
+| **Sobre ela** | "qual sua cor preferida?", "o que você gosta?" | **não existe — é o novo** |
+
+O `kaira.json` já existe (`KAIRA/resources/`, lido pelo `ControleKaira`) mas só tem `{"nome":"K.A.I.R.A","versao":"0.0.1"}` — é o lugar certo pra crescer os **fatos da KAIRA** (mesmo padrão do `sessao.json`, que já persiste os fatos do usuário). Fluxo-piloto "cor favorita": pergunta sobre ela → busca nos fatos dela → acha, responde; não acha → "quais são as minhas opções?" → usuário lista → ela escolhe e grava. Caso bom de piloto; a lógica geral nasce como **fato com opções conhecidas vs. fato aberto**.
+
+**Ideia 2 — Respostas compostas da Fase 4 (§8.1) pra responder de memória.**
+Pra dar resposta curta e fresca sobre preferência dela, usar respostas **parametrizadas compostas** (`[saudação] + [reação ao tópico] + [followup]`, §8.1) — peça do fato ("verde") + moldura sorteada → frase nova a cada vez, sem repetir banco e sem LLM. Combate o "primeiros 30s é bom, depois fica chato". O `CriarResposta` (`ControleResposta:668`, troca palavra por sinônimo) existe e hoje joga o retorno fora — é infra aliada, não a Fase 4 em si. **Markov (§8.2) fica em aberto:** validar o ganho real antes de decidir se entra.
+
+**Ideia 3 — Aprendizado orgânico (sem "parar" a conversa).**
+Hoje o modo ensino (#33) "para" a conversa: o próximo turno vira resposta sem aviso. Inverter: quando ela não entende um tópico, **ela pergunta**, e a resposta do usuário é absorvida pelo contexto (tópico + tipo da pergunta) direto pro intent certo — sem entrar em "modo". Mesma tese do desempate por contexto (#41) do outro lado: lá o contexto decide **qual intent responder**, aqui decide **onde guardar** o que o usuário disse. Por isso **#41 vem antes**.
+
+**Ordem natural:** fechar #39–#41 → trilho #42–#45 (perguntas, fatos dela, Fase 4-piloto, aprendizado orgânico). A validar o ganho real do Markov e do piloto do dicionário (C3) antes de escalar qualquer um.
+
 ---
 
 ## Apêndice A — Esquema JSON proposto
