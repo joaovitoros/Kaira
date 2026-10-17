@@ -118,6 +118,25 @@ public class ControleSessao {
         turnoDeContinuacao = true;
     }
 
+    // #39 - spec ApostaPendenteTest: estado minimo (stub) pra spec ficar
+    // vermelha; confirmacao/entrega vem na correcao
+    private static String apostaPendente = null;
+
+    public static void apostaPendente(String intento) {
+        apostaPendente = intento;
+    }
+
+    public static String getApostaPendente() {
+        return apostaPendente;
+    }
+
+    /** #39 - pega e limpa: consumiu a pendencia no turno. */
+    public static String consomeApostaPendente() {
+        String pendente = apostaPendente;
+        apostaPendente = null;
+        return pendente;
+    }
+
     public static String perguntaDeNome() {
         if (sessao.getNomeUsuario() != null || perguntouNome)
             return null;

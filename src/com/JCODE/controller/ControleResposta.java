@@ -448,6 +448,12 @@ public class ControleResposta {
 		return resposta;
 	}
 
+	// #41 - spec DesempateContextoTest: overload com raiz explicita; ainda
+	// sem desempate por contexto (o corpo verde vem na correcao)
+	public static Intencao buscaResposta(Intencoes raiz, String entradaNormalizada) {
+		return buscaResposta(entradaNormalizada);
+	}
+
 
 	public static Map<String, Intencao> melhorIntencao(String entradaNormalizada){
 		if(intencoesCache == null)
@@ -592,6 +598,11 @@ public class ControleResposta {
 		String aposta = comandosResposta(match.getIntencao());
 
 		return aposta == null ? null : aposta + " Foi isso que você quis dizer?";
+	}
+
+	// #39 - spec ApostaPendenteTest: stub; confirmacao + entrega vem na correcao
+	static String entregaApostaPendente(String falaNormalizada) {
+		return null;
 	}
 
 	public static String respostaFallback() {
