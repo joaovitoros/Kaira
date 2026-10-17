@@ -575,6 +575,7 @@ public class ControleResposta {
 
 		// #41 - frase so com palavras genericas (nenhuma palavra de assunto)?
 		// Nesse caso o topico ANTERIOR decide antes de qualquer match ruidoso
+		boolean genericaSemDesempate = false;
 		if (fraseSoGenerica(tokensDe(entradaNormalizada))) {
 			Intencao doTopico = desempatePorContexto(raiz, entradaNormalizada, topicoAnterior);
 			if (doTopico != null) {
@@ -585,6 +586,13 @@ public class ControleResposta {
 				logaDesempate(doTopico); // #43 - rotulo proprio, nao "frase exata"
 				return doTopico;
 			}
+			// §5.2 (borda): a frase e generica E o topico nao tem nenhum
+			// exemplo de favorito/preferido. O desempate devolveu null e o
+			// classificador vai entrar - mas ele NAO PODE herdar o topico:
+			// a frase nao tem palavra de assunto, entao o match dele e ruido
+			// de token generico. Sem isto, "historia"/"clima" viravam
+			// "gostos_ia" e o tema do usuario sumia da conversa.
+			genericaSemDesempate = true;
 		}
 
 		Intencao resposta = raiz.getIntencoes().stream().filter(intencao -> intencao.getExemplos().stream()
@@ -604,6 +612,13 @@ public class ControleResposta {
 				resposta = iterator.next();
 			}
 		}
+
+		// §5.2 - generica sem desempate nao pode ancorar topico novo: o match
+		// do classificador ali em cima e ruido de token generico, nao assunto.
+		// So restaura quando HAVIA topico antes (nada a preservar = deixa o
+		// comportamento de sempre)
+		if (genericaSemDesempate && topicoAnterior != null)
+			ControleSessao.get().setTopicoAtual(topicoAnterior);
 
 		return resposta;
 	}

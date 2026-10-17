@@ -173,4 +173,52 @@ public class DesempateContextoTest {
 		raiz.setIntencoes(lista);
 		return raiz;
 	}
+
+	/** §5.2 (borda restante) - topico SEM nenhum exemplo de favorito/
+	 *  preferido. O desempate nao tem o que casar e devolve null; o
+	 *  classificador entra e vence (aqui gostos_ia_teste), MAS nao pode
+	 *  HERDAR o topico do usuario. A pergunta generica e sobre o assunto
+	 *  dele, entao o assunto tem que sobreviver.
+	 *
+	 *  Antes do fix: o ancoraTopico gravava o vencedor do classificador e
+	 *  APAGAVA o topico do usuario - a conversa virava sobre gostos e o
+	 *  tema sumia (sequestro, o mesmo peco do #41 por outro caminho). */
+	@Test
+	public void genericaSemExemploDeFavoritoNaoSequestraOTopico() {
+		ControleResposta.carregaCache();
+		ControleSessao.get().setTopicoAtual("historia_teste");
+
+		Intencao vencida = ControleResposta.buscaResposta(baseSemFavorito(), "qual seu preferido");
+
+		assertNotNull("a pergunta generica ainda tem match", vencida);
+		assertEquals("o topico do usuario sobrevive a generica sem favorito",
+				"historia_teste", ControleSessao.get().getTopicoAtual());
+	}
+
+	/** A MESMA borda na BASE REAL. Medido: 82 dos 98 intents nao tem nenhum
+	 *  exemplo de favorito/preferido; historia e clima estao entre eles e
+	 *  existem de verdade. Com o fix, os dois sobrevivem a pergunta
+	 *  generica - sem o fix, os dois viravam gostos_ia. */
+	@Test
+	public void bordaRealTopicoSemFavoritoNaoSequestrado() {
+		ControleResposta.carregaCache();
+
+		for (String topico : new String[] { "historia", "clima" }) {
+			ControleSessao.get().setTopicoAtual(topico);
+			ControleResposta.buscaResposta(Normalizador.texto("qual seu preferido"));
+			assertEquals("topico " + topico + " sobrevive a generica sem favorito",
+					topico, ControleSessao.get().getTopicoAtual());
+		}
+	}
+
+	private Intencoes baseSemFavorito() {
+		Intencoes raiz = new Intencoes();
+		ArrayList<Intencao> lista = new ArrayList<>();
+		// o topico do usuario: exemplo SEM nenhuma variante de favorito, entao
+		// o desempate nao tem o que casar com {seu, preferido}
+		lista.add(intentoComExemplo("historia_teste", "eu adoro historia antiga"));
+		lista.add(intentoComExemplo("gostos_ia_teste", "seu passatempo preferido"));
+		raiz.setIntencoes(lista);
+		return raiz;
+	}
 }
