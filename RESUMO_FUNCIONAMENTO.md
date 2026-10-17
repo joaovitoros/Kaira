@@ -27,6 +27,7 @@
 | `util/Caminhos.java` | `recurso(nome)` → `KAIRA/resources/`. **Nunca escreva o caminho literal** (teste `SemCaminhoHardcodedTest` flagra, inclusive em comentário). |
 | `util/Registro.java` | `linha(evento)` → `Registro.arquivo()` (gitignored). **#36 (higiene):** `-Dkaira.log.destino` redireciona — a suíte grava em arquivo de teste e o `conversas.log` fica **só com uso real** (insumo de curadoria: fallback, aposta, temas repetidos). À prova de falha: log nunca derruba o fluxo. |
 | `KAIRA/resources/intencoes.json` | **O banco** (UTF-8 sem BOM): 98 intents com exemplos/respostas/followups/acoes. |
+| `KAIRA/resources/conhecimentos.json` | **#37 (C3 piloto):** dicionário — termo (= nome de intent) → `resumo` (falado em "conta mais") / `texto` (reserva "explica melhor"), `origem` com fonte+licença por item (Wikipédia PT CC BY-SA, adaptado). Lookup `ControleConhecimento.resumo()` — null-seguro. |
 | `KAIRA/resources/avatar/` | `kaira_conversa`, `kaira_idle`, `kaira_baixa`, `kaira_alta` (+ `avatar_01..09` arquivadas). |
 | `sessao.json` | Persistência da sessão (nome, humor, tópico, turnos). |
 
@@ -258,8 +259,13 @@ Tudo em `conversas.log` (gitignored) + tela ao vivo no botão **Log** (#29).
   `-Dkaira.log.destino` (arquivo em `%TEMP%`) e o `conversas.log` fica só com
   uso real. **Legado: o log atual (6,3 MB) é mistura teste+real — minerar só o
   segmento novo (pós-#36) ou filtrar os ~31 reais.**
-- Código pendente do briefing §6: **C3 (base de conhecimento atrás do `{topico}`,
-  §12.1)**.
+- **C3 (dicionário de conhecimentos, §12.1): PILOTO ENTREGUE — issue #37** —
+  15 entradas em `conhecimentos.json` (Wikipédia PT CC BY-SA, texto adaptado,
+  origem por item), `ControleConhecimento` (null-seguro) e encaixe no
+  `continuacao_topico`: pedir "conta mais" sobre trabalho/esporte/música...
+  agora fala a substância do tópico. **Próximas fatias:** "explica melhor"
+  (campo `texto` já existe), extrator automático de resumo (stopwords/IDF),
+  escala da base + OpenWordnet-PT (CC BY 4.0).
 - §7.3 restante: degrau médio com `{palavrasChave}` + followup (issue #16 parcial);
   frame reconhecido/slot novo (§5.7).
 - Classificador: **negação é cega** ("não" é stopword) — causa raiz dos empates `{gosto}/{entende}`;
