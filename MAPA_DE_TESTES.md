@@ -34,7 +34,7 @@ O bug da âncora do tópico (frase **exata** não gravava o tópico → "qual se
 
 | Medição | Resultado |
 |---|---|
-| Classes que exercitam `FormulaResposta.decifrar` (**o pipeline real do turno**) | **2** (`EnsinoOrganicoTest` + `FluxoConversaReal18Test`, #49) |
+| Classes que exercitam `FormulaResposta.decifrar` (**o pipeline real do turno**) | **2** (`EnsinoOrganicoTest` + `FluxoConversaReal18Test`, #48) |
 | Classes que exercitam `buscaResposta` (a costura exato↔fuzzy) | **4** (`DesempateContextoTest`, `FaixaConfiancaTest`, `LogMatchTest`, `MatcherUnificadoTest`) |
 | `AncoraTopicoTest` (#38), que **afirma** "o tópico ancora" | chama `melhorIntencaoDetalhado` **direto** — nunca `buscaResposta` |
 
