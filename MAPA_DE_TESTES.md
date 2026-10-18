@@ -1,7 +1,7 @@
 # MAPA DE TESTES — amplitude de cobertura do KAIRA
 
 > Levantamento out/2026 (a pedido, depois do bug da âncora do tópico). Objetivo: garantir que a suíte **pegue o tipo de bug que passa por costura entre camadas** — não só o que cada método faz sozinho.
-> Estado na data: **48 classes · 239 testes · avaliador 14/14**, tudo verde.
+> Estado na data: **50 classes · 248 testes · avaliador 14/14**, tudo verde.
 
 ---
 
@@ -16,11 +16,11 @@
 | **Matcher / classificador** | `ControleRespostaMelhorIntencaoTest`, `ControleRespostaMatcherUnificadoTest`, `ControleRespostaPesosIdfTest`, `ControleRespostaStemStopwordsTest`, `ControleRespostaSinonimoGruposTest`, `ControleRespostaFaixaConfiancaTest`, `ControleRespostaFraseExataTest`, `ControleRespostaCarregaCacheTest`, `ControleRespostaCacheIdfTest`, `ControlePreAnaliseTest` | 45 | base real + fixtures |
 | **Sessão / contexto** | `ControleSessaoTest`, `ControleSessaoPersistenciaTest`, `ControleSessaoNomeTest`, `FatosNovosTest`, `AncoraTopicoTest`, `DesempateContextoTest`, `ContinuacaoTopicoTest`, `IniciativaPropriaTest`, `ApostaPendenteTest` | 59 | base real + fixtures |
 | **Resposta / comportamento** | `ControleRespostaFallbackTest`, `ControleRespostaSlotsTest`, `ControleRespostaCriarRespostaTest`, `ControleRespostaAprendizadoTest`, `EnsinoTurbinadoTest`, `AntiRepeticaoTurnoTest`, `SistemaDeHumorTest`, `LogMatchTest`, `ControleConhecimentoTest` | 46 | base real + fixtures |
-| **Fluxo fim-a-fim** | `FluxoConversaRealTest`, `EnsinoFluxoTest` | 3 | **base real** + base isolada — o primeiro transcrito do `conversas.log` de 17/10 (10 turnos + 1 variante limpa); o segundo é o loop de 3 turnos do ensino |
+| **Fluxo fim-a-fim** | `FluxoConversaRealTest`, `EnsinoFluxoTest`, `EnsinoOrganicoTest`, `FluxoConversaReal18Test` | 11 | **base real** + base isolada — o primeiro transcrito do `conversas.log` de 17/10 (10 turnos + 1 variante limpa); o segundo é o loop de 3 turnos do ensino; o terceiro e o `EnsinoOrganicoTest` (#48), o ciclo N->N+1 do aprendizado organico; o quarto e o `FluxoConversaReal18Test`, o uso real de 18/10 transcrito do `conversas.log` |
 | **UI** | `ControleFaceTest` | 10 | HTML interno da Face |
-| | **48 classes** | **239** | |
+| | **50 classes** | **248** | |
 
-> **Nota de rastreio:** `CuradoriaConsultoriaTest` (4 testes) roda na suíte local mas **não está commitado** — depende dos `KAIRA/resources/intencoes-consultoria-*.json` (também não commitados; leva de dados em curadoria). Ao clonar o repo limpo, a suíte tem **47 classes / 235 testes** até a leva de consultoria ser commitada. *(medido de novo na #46: `ControleRespostaCacheIdfTest` só cita "consultoria" no javadoc, não depende do dado)*
+> **Nota de rastreio:** `CuradoriaConsultoriaTest` (4 testes) roda na suíte local mas **não está commitado** — depende dos `KAIRA/resources/intencoes-consultoria-*.json` (também não commitados; leva de dados em curadoria). Ao clonar o repo limpo, a suíte tem **49 classes / 244 testes** até a leva de consultoria ser commitada. *(medido de novo na #46: `ControleRespostaCacheIdfTest` só cita "consultoria" no javadoc, não depende do dado)*
 
 > **Nota de método:** as contagens acima foram **medidas** (contagem de `@Test` por arquivo), não estimadas. A versão anterior deste inventário abreviava nomes de classe (`MatcherUnificadoTest`, `FallbackTest`, `AvaliadorTest`...) e várias somas não fechavam; se for mexer aqui, meça de novo.
 
@@ -34,7 +34,7 @@ O bug da âncora do tópico (frase **exata** não gravava o tópico → "qual se
 
 | Medição | Resultado |
 |---|---|
-| Classes que exercitam `FormulaResposta.decifrar` (**o pipeline real do turno**) | **0** |
+| Classes que exercitam `FormulaResposta.decifrar` (**o pipeline real do turno**) | **2** (`EnsinoOrganicoTest` + `FluxoConversaReal18Test`, #49) |
 | Classes que exercitam `buscaResposta` (a costura exato↔fuzzy) | **4** (`DesempateContextoTest`, `FaixaConfiancaTest`, `LogMatchTest`, `MatcherUnificadoTest`) |
 | `AncoraTopicoTest` (#38), que **afirma** "o tópico ancora" | chama `melhorIntencaoDetalhado` **direto** — nunca `buscaResposta` |
 

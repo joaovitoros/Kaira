@@ -595,7 +595,7 @@ Escrever por **categoria de intenção**, com checklist de cobertura. Mínimo pa
 
 ### 12.3 Ideias do usuário (out/2026) — identidade, memória e aprendizado orgânico
 
-> Brainstorm do autor em out/2026. Anotadas aqui antes de virarem issue; nenhuma começou. Depende do trilho novo (#42–#45) que fecha depois de #39–#41.
+> Brainstorm do autor em out/2026. Anotadas aqui antes de virarem issue; a **Ideia 3** saiu na #48 (entregue - ver status no fim da secao); as demais nenhuma começou. Depende do trilho novo (#42–#45) que fecha depois de #39–#41.
 
 **Ideia 1 — Identificar tipos de pergunta + memória dela em `kaira.json`.**
 A KAIRA precisa tipar a pergunta e reagir por família:
@@ -684,6 +684,8 @@ Hoje o modo ensino (#33) "para" a conversa: o próximo turno vira resposta sem a
 - **Sequenciamento — boa notícia:** o desenho **quase não depende do #41**. Ele roteia por "o pipeline entendeu?", não pelo desempate por contexto; as peças que usa (cascata, #33, `ehConfirmacao` do #39, `bufferFrases`) **já existem**. A dependência real é só o **#39** (pro `ehConfirmacao`) — pode começar antes do que a nota original sugeria.
 - **Aceitação = specs E2E** (o buraco que o `MAPA_DE_TESTES.md` mediu: ciclo de vida N→N+1): *fallback → resposta → absorvido* · *fallback → lixo → P2 → confirma/recusa* · **e o que mata o bug atual: fallback → usuário muda de assunto → NADA é gravado**. Passando esses três ponta a ponta, o desenho está provado.
 
+**Status (out/2026): ENTREGUE na #48** - o desenho saiu como escrito, com a segunda opiniao adotada integralmente: maquina P1/P2 dentro do `decifrar` (novo campo `respostaEnsino`), porteiro com `piso = 0.10` (medido pelo ProbePiso: lixo puro 0.000, topical 0.192+), vocabulario proprio de sim/nao do ensino, acks curados em pools proprios, `MandarFrase` sem roteamento (so brilho visual) e log `ENSINO :` com o score do porteiro. Spec `EnsinoOrganicoTest` (6 E2E na base real isolada) cobre as 3 aceitacoes + a invariante "nada grava sem sim explicito"; a ordem P1/P2 antes da captura de nome ficou travada em spec. A conversa real de 18/10 (o loop do elefante e a recuperacao de musica) virou a spec `FluxoConversaReal18Test` (3 E2E na base real isolada, par medido no dicionario real), e o par ensinado ao vivo subiu por curadoria pro intento `curiosidade` com o erro de digitacao corrigido ("lebrar" -> "lembrar"), zerando a caixa de entrada (a guarda do #8 continuou verde, pegou o item no inbox). Suite em **50 classes / 248 testes**, regressao 14/14 - o loop completo (fallback, absorvido, respondeu) aconteceu no uso real de 18/10 e esta congelado em spec.
+
 **Ranking e o achado transversal:**
 
 | # | Ideia | Ganho real | Depende de |
@@ -697,7 +699,8 @@ Hoje o modo ensino (#33) "para" a conversa: o próximo turno vira resposta sem a
 
 **Adiamentos (out/2026 — decisão do autor, o foco é a Ideia 3 acima):**
 
-- **Desempate por intent/topo — adiado** (era o candidato **#48**). Ideia do autor: no empate da correção, decidir pelo intent/topo dono da palavra usando o ranking do **1º degrau**, que **já rodou antes da correção** (estado zero novo — reuso puro, sem mexer no matcher). Dado na mesa (medido na #46, dicionário de 2115): empate em **6,4%** dos erros de 1 edição e, lá, a ordem só acerta **44%**. É **refino de algo que meio que já funciona**; a melhoria importante é o aprendizado. Se voltar: **re-medir o `ProbeEmpates` no dicionário de 20673** (o 6,4% é do arquivo antigo, sem os 18660 sinônimos).
+- **Desempate por intent/topo — adiado** (era o candidato a issue seguinte). Ideia do autor: no empate da correção, decidir pelo intent/topo dono da palavra usando o ranking do **1º degrau**, que **já rodou antes da correção** (estado zero novo — reuso puro, sem mexer no matcher). Dado na mesa (medido na #46, dicionário de 2115): empate em **6,4%** dos erros de 1 edição e, lá, a ordem só acerta **44%**. É **refino de algo que meio que já funciona**; a melhoria importante é o aprendizado. Se voltar: **re-medir o `ProbeEmpates` no dicionário de 20673** (o 6,4% é do arquivo antigo, sem os 18660 sinônimos).
+- **Higienizacao da frase antes de gravar o ensino - adiada** (medido no uso real de 18/10: o autor escreveu "lebrar" e a KAIRA absorveu o erro, e o `chamadaFrase` ainda registrou a palavra errada no dicionario via `gravaPalavra`). Tratamento conservador: corrigir pergunta, resposta e o eco do ack ANTES de gravar, so com confianca do dicionario (mesma regua do #46); palavra genuinamente nova passa direto - o catch de desconhecida e o feature, nao o bug.
 - **Uniformização de docs — adiada:** a célula de **UI** do MAPA (❌ — "não há teste do `decifrar` entregando na Face"), a cláusula **"não polui o tópico"** do ensino que a spec #45 **não** asserta (MAPA R1.3 — o teste isola a base justamente pra não vazar), e o **item stale** do §5.1 (o "Em correção pela casa" da âncora no match exato — o caminho do app já cobre, o texto não foi atualizado).
 
 ---
