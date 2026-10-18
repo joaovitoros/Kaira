@@ -566,6 +566,46 @@ Escrever por **categoria de intenção**, com checklist de cobertura. Mínimo pa
 - **Transcrições TED (PT)** — linguagem mais formal; útil para perguntas factuais, não para papo
 - **Seu próprio `conversas.log`** (Fase 2) — com tempo, a melhor fonte de todas: são as conversas *reais* com a KAIRA
 
+### 11.4 Achados da 1ª sessão de uso externo (out/2026) — o log pagou o investimento
+
+Primeira sessão real (23 turnos, testador externo). **~30% dos turnos foram sequestrados** por `cumprimentar`/`agradecimento` — e a causa **não é o fluxo novo** (o aprendizado orgânico funcionou ponta a ponta: `ENSINO P1` → `porteiro 0.240 / piso 0.1` → `absorvido` + ack; e `cancelado (fala entendida)` quando o usuário mudou de assunto). São **dados**:
+
+| Entrada real | Caiu em | Mecanismo |
+|---|---|---|
+| "prazer tmbm" | agradecimento 0.48 (aposta) | "prazer" só existia no exemplo "muito obrigado o prazer e meu" |
+| "não, fiquei feliz em te conhecer" | noticias 0.38 (aposta) | conhecer~saber (sinônimo legítimo) + frase ausente na base |
+| "…gosta…gato…" / "tenho 4 gato" | **cumprimentar 0.52 / 0.30** | **grupo falso do dump: `["bom","gato","pao"]`** — "gato" casava com "bom dia" |
+| "obrigada a todos" (via `corrigida-frase`) | **agradecimento 1.00** | 619 exemplos + fuzzy 60% → quase qualquer frase gruda num obrigado |
+| "agradeço desde já" | agradecimento 1.00 | match "legítimo", mas o pool de 101 respostas respondeu "obrigada pelo almoço" |
+
+**Causas estruturais:** (1) **pares falsos reintroduzidos pelo dump em massa** (o G2 voltou em escala — 14,3 mil grupos, com pontes como bom~gato~pão); (2) `agradecimento` com **619 exemplos** + o degrau `corrigida-frase`; (3) **ordem do arquivo como desempate** (cumprimentar era a intenção nº 1 e agradecimento a nº 17 — venciam empates); (4) pools de resposta legados e sem contexto.
+
+**Correções aplicadas (out/2026 — dados, com validação: suíte 248 testes + avaliador 14/14 verde):**
+- grupo falso `bom~gato~pão` **removido** de `grupos_sinonimos.json` (proveniência anotada na `fonte`);
+- **+10 exemplos de uso real** (`intencoes-curadoria-uso-real.json`, origem `curadoria uso-real out/2026`): `cumprimentar` ganhou "prazer em te conhecer", "prazer tmbm/tambem", "igualmente", "foi um prazer", "fiquei feliz em te conhecer"; `pet` ganhou "tenho 4 gatos", "tenho um gato", "tenho dois gatos", "meu gato tem 4 anos";
+- **poda do `agradecimento`: 619 → 437** (182 removidas por redundância real — token-set contido em outro exemplo do mesmo intento). Potencial semelhante **medido e não aplicado** em cumprimentar (53→40), despedida (80→61) e elogio (62→55);
+- **reorder**: `cumprimentar` e `agradecimento` movidos para o **fim** do arquivo (o desempate por ordem deixa de ser deles; os exatos do avaliador são ordem-independentes);
+- **par ensinado na sessão** (que havia caído em `auto_aprendizado` — e deixado a guarda do arquivo curado vermelha) **rotacionado para `saude_usuario`** ("tirei o aparelho fixo do dente…" + a explicação), preservando o ensinamento e devolvendo a caixa de entrada ao estado "nasce vazia".
+- **poda complementar do `agradecimento`** (sessão de teste às cegas, leva de fechamento da sessao 01): +11 falsos amigos removidos dos exemplos (`obrigado` como ADJETIVO - "tu es obrigada a fazer isso", "sou obrigado a obter um visto", "nao quero ser obrigado a fazer isso"... - 437→425) e a frankenfrase "muito obrigado o prazer e meu"; **pool de RESPOSTAS podado 101→74** (saíram comida/objeto/carona que a IA nao pode receber - "obrigado pelo almoço", "obrigado pela carona", "obrigado pelo livro" - e sarcasmos - "obrigado por nada", "obrigado de nada"); "obrigado a todos" (gratidão legítima) permanece
+
+**Ficou de fora (anotado para depois):**
+- **Código:** `corrigirFrases` só deveria aceitar correção que **melhore** o score (hoje gruda por 60%); e o `ENTRADA` do log **perde o texto quando a fala tem quebra de linha** (vários turnos logados com entrada vazia + texto na linha seguinte — atrapalha a mineração do §11.1);
+- **Tensão de design (decisão pendente):** o aprendizado em runtime grava no **mesmo** `intencoes.json` curado — qualquer sessão real deixa `auto_aprendizado` com dados e a guarda do arquivo curado fica vermelha. Opções: (a) arquivo próprio de aprendizados (`aprendizados.json`) mesclado na carga; (b) reset pré-commit do inbox; (c) a guarda comparar só o HEAD;
+- **Casos restantes da sessão:** "sabe quem é o X?" caiu em `habilidades` (candidato ao dicionário C3); `"como vc é?"` caiu em `identidade` pelo radical de stopword "como" (ambíguo por natureza — status × identidade).
+
+**2ª rodada — 20 baterias de teste às cegas (out/2026, `logs/baterias/`):**
+
+> 20 personas × ~21 falas; as 10 primeiras pelo `kaira.jar` (**base antiga**), as 10 últimas pelo código-fonte (**base com o refino**). Média **3,2/10** (social 5,5 · naturalidade 4,0 · intenção 3,5 · contexto 3,5 · relevância 3,0 · **empatia 2,5 — o pior**). Medição minha nos **432 turnos**: **40% caíram em `aposta`** (só 34% `direto`) — o "erra o alvo com frequência" do relatório, quantificado.
+
+- **`kaira` → piada (11 ocorrências) — CORRIGIDO (dados):** o token raro `kaira` (do MEU exemplo "piada ruim essa kaira") dominava o score. **`kaira` virou stopword** (o nome do bot não carrega assunto) → "tchau kaira" → despedida, "oi kaira" → cumprimentar.
+- **⚠ Regressão da MINHA poda por subconjunto — CORRIGIDA (dados):** ela removeu **79 âncoras canônicos** (`obrigado`, `obrigada`, `valeu`, `de nada`, `muito obrigado`…) por serem subconjuntos de exemplos maiores — sem o âncora de **resto 0**, o empate caía em `elogio` (exemplo "obrigado por existir"). Poda **revertida** (425 → 607), mantida a curadoria semântica do autor. **Lição:** podar por **subconjunto** quebra o desempate por resto/ordem do classificador; só **duplicata exata** é segura — o alvo "619 → ~250" fica **revisto**.
+- **Pool do `agradecimento` invertido (35 respostas nas baterias) — CORRIGIDO (dados):** 65 de 74 respostas eram ela **agradecendo** quando o usuário agradecia ("obrigado por X" — papel trocado). Pool **74 → 19**, só aceitações ("De nada :)", "Por nada, foi um prazer." + 10 novas curadas na voz dela).
+- **Empatia (nota 2,5 — o pior) — ABERTO:** conteúdo sensível caía em resposta alegre/fora de contexto ("meu marido faleceu" → "Boa! … Como você comemorou?"). O refino já empurrou para **fallback honesto**, mas **não há camada acolhedora** — proposta de intento dedicado (dados, texto sob aprovação do autor) + camada de segurança emocional (código) em avaliação.
+- **Token comum decide o match — CÓDIGO:** 29 matches por 1 token (`eh`, `foi`, `tem`, `esta`, `amo`…) e 40% de apostas. O fix é tratar tokens comuns como stopword no matching e **exigir ≥2 tokens de peso** para vencer.
+- **Captura de nome indevida (32 capturas, 9 ruins) — CÓDIGO:** "sou corinthiano roxo", "sou enfermeira", "kkkk", "bom dia" viraram nome. Lista de bloqueio (saudações/riso/profissões) + confirmação.
+- **Aprendizado aceita qualquer coisa (4 eventos, score 0.22–0.29 ≥ piso 0.1) — CÓDIGO:** absorveu até um bug-report ("às vezes você responde coisa sem sentido") e uma equação. Dado real para **calibrar o `piso`** (ou exigir confirmação).
+- **Outros (código):** `Runtime.exec` (G6/§Fase 0), ENTER residual "\n" na UI, linha de humor do `stdout` sem timestamp no log.
+
 ---
 
 ## 12. Ideias em estudo (backlog)

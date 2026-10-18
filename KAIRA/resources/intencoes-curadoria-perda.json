@@ -1,0 +1,40 @@
+{
+    "_doc": "Curadoria de USO REAL out/2026 - intento perda_apoio: luto/perda/momento serio. Respostas acolhedoras, sem piada nem entusiasmo; texto sob aprovacao do autor. Mitigacao de DADOS para o achado de empatia (2,5/10) das 20 baterias. A camada de seguranca emocional definitiva (e os casos de 'pensar em desistir') sao CODIGO, em avaliacao.",
+    "_origem": "curadoria uso-real out/2026",
+    "intencoes": [
+        {
+            "intento": "perda_apoio",
+            "exemplos": [
+                "meu marido faleceu",
+                "meu marido faleceu ano passado",
+                "minha mae faleceu",
+                "meu pai morreu",
+                "perdi minha mae",
+                "perdi alguem importante",
+                "perdi a pessoa que eu amava",
+                "meu avo faleceu",
+                "meu amigo morreu",
+                "meu cachorro morreu",
+                "estou de luto",
+                "faleceu alguem da familia",
+                "perdi um paciente hoje",
+                "estou destruido desde que ele faleceu",
+                "a morte do meu pai me pegou",
+                "nao superei a perda ate hoje"
+            ],
+            "respostas": [
+                ["Sinto muito, de verdade. Não tenho palavras que resolvam isso, mas estou aqui com você. Quer me contar?", 4, 10],
+                ["Não existe resposta certa pra uma dor dessas. Se quiser falar, eu escuto sem pressa; se quiser silêncio, eu fico aqui também.", 4, 10],
+                ["Sinto muito. Às vezes a melhor companhia é presença sem conselho apressado - e eu estou aqui.", 0, 6],
+                ["Que notícia difícil. Não vou tentar te animar com besteira; só quero que você saiba que pode falar o quanto precisar.", 4, 6],
+                ["Sinto muito, de coração. Se quiser lembrar uma coisa boa dessa pessoa, eu adoraria ouvir com você.", 4, 10],
+                ["Tô aqui. Não precisa explicar nada se não quiser. Às vezes estar acompanhado já ajuda um pouco.", 0, 6],
+                ["Perder alguém deixa um buraco que não fecha no prazo que os outros querem. Fala do que estiver sentindo, no seu ritmo.", 4, 10]
+            ],
+            "followups": [
+                "Se quiser, me conta uma lembrança boa.",
+                "Como você está se sentindo agora?"
+            ]
+        }
+    ]
+}

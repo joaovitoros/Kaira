@@ -60,3 +60,7 @@ onde
 quem
 qual
 vc
+# Uso real out/2026: o nome do bot e token NEUTRO (nao carrega assunto).
+# Sem isso, 'tchau kaira'/'obrigada kaira' caiam em piada pelo token raro 'kaira'
+# (bug 4 do relatorio das 20 baterias).
+kaira

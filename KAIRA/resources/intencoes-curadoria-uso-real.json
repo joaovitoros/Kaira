@@ -1,0 +1,26 @@
+{
+    "_doc": "Curadoria de USO REAL out/2026 - 1a sessao externa (23 turnos). Frases que foram sequestradas por cumprimentar/agradecimento/noticias ganham casa no intento certo. Mesmo formato compacto.",
+    "_origem": "curadoria uso-real out/2026",
+    "intencoes": [
+        {
+            "intento": "cumprimentar",
+            "exemplos": [
+                "prazer em te conhecer",
+                "prazer tmbm",
+                "prazer tambem",
+                "igualmente",
+                "foi um prazer",
+                "fiquei feliz em te conhecer"
+            ]
+        },
+        {
+            "intento": "pet",
+            "exemplos": [
+                "tenho 4 gatos",
+                "tenho um gato",
+                "tenho dois gatos",
+                "meu gato tem 4 anos"
+            ]
+        }
+    ]
+}

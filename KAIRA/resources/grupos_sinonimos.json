@@ -1,5 +1,5 @@
 {
-  "fonte": "Wiktionary (pt) via kaikki.org/wiktextract - CC BY-SA 4.0 (+2 grupos de alinhamento de genero dos 'favoritos', curadoria out/2026: favorito/favorita e preferido/preferida - o dump nao liga variantes de genero, o que quebrava o desempate por contexto)",
+  "fonte": "Wiktionary (pt) via kaikki.org/wiktextract - CC BY-SA 4.0 (curadoria out/2026: +2 grupos de alinhamento de genero dos 'favoritos'; -1 grupo falso removido: bom~gato~pao, que ligava frase de gato a 'bom dia')",
   "grupos": [
     ["favorito", "favorita", "favoritos", "favoritas", "preferido", "preferida", "preferidos", "preferidas"],
     ["seu", "sua", "seus", "suas"],
@@ -4014,7 +4014,6 @@
     ["bom", "bafonico", "bonito"],
     ["bom", "benefico", "benfazejo", "positivo"],
     ["bom", "benfazejo", "benigno"],
-    ["bom", "gato", "pao"],
     ["bom", "generoso", "gentil"],
     ["bom", "razoavel", "significante"],
     ["bomba", "explosivo"],

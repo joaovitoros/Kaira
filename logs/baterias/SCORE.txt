@@ -1,0 +1,26 @@
+﻿BATERIA  TURNOS  BOM  PARC  RUIM  GRAVE  NOTA   PRINCIPAIS SINAIS
+conversas-1     22    7     7     8      0     4   thanks-fake=1, ensino=5, match-fraco=2, fora-do-assunto=2
+conversas-2     22    7     6     9      0     4   thanks-fake=4, ensino=3, match-fraco=4, fora-do-assunto=2, fragmento=1
+conversas-3     22    8     9     4      1     4   empatia=1, piada-fora=1, ensino=1, match-fraco=4, fora-do-assunto=1
+conversas-4     22    4     8    10      0     3   thanks-fake=2, piada-fora=1, ensino=2, match-fraco=6, fora-do-assunto=5
+conversas-5     22    8     9     5      0     5   thanks-fake=1, piada-fora=1, ensino=3, match-fraco=1
+conversas-6     22    3    10     9      0     3   nome-suspeito=1, thanks-fake=2, piada-fora=1, ensino=2, match-fraco=3, fora-do-assunto=4
+conversas-7     21    4     7    10      0     3   nome-suspeito=1, thanks-fake=2, piada-fora=2, ensino=4, match-fraco=2, fora-do-assunto=2
+conversas-8     22    6    12     4      0     4   piada-fora=1, ensino=1, match-fraco=2, fora-do-assunto=3
+conversas-9     21   12     5     4      0     6   piada-fora=1, ensino=3, match-fraco=2
+conversas-10     21   12     7     2      0     7   ensino=1, match-fraco=4
+conversas-11     22    7    10     5      0     4   piada-fora=1, ensino=4, match-fraco=2
+conversas-12     21    5     9     7      0     4   ensino=4, match-fraco=4, fora-do-assunto=1, fragmento=1
+conversas-13     21    7     6     8      0     4   nome-suspeito=1, ensino=4, match-fraco=1, fora-do-assunto=4
+conversas-14     22    8    12     2      0     5   nome-suspeito=1, match-fraco=4
+conversas-15     22    9     5     8      0     5   piada-fora=1, ensino=7, match-fraco=5
+conversas-16     22    8     8     6      0     5   nome-suspeito=1, thanks-fake=1, piada-fora=1, match-fraco=3, fora-do-assunto=1, fragmento=1
+conversas-17     21    6     7     8      0     4   nome-suspeito=2, thanks-fake=1, ensino=3, match-fraco=3, fora-do-assunto=1
+conversas-18     21    9     8     4      0     5   nome-suspeito=1, thanks-fake=1, ensino=1, match-fraco=2, fora-do-assunto=2
+conversas-19     22   13     3     6      0     6   thanks-fake=2, piada-fora=1, ensino=2, match-fraco=2
+conversas-20     21    8    10     3      0     5   nome-suspeito=1, ensino=1, match-fraco=3
+
+GERAL: 20 baterias | 432 turnos | media 4,5/10
+       BOM 151  PARCIAL 158  RUIM 122  GRAVE 1
+       media 1-10 : 4,3
+       media 11-20: 4,7

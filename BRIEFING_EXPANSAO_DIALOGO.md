@@ -2,7 +2,7 @@
 
 > **Para quem é este documento:** agente responsável pela próxima leva de dados/conteúdo do banco de intenções. Ele é auto-contido: não depende de conversa anterior.
 > **Origem:** auditoria de sobreposição (out/2026, aprovada) + sonda de lacunas no classificador real (fumaca de frases, output colado abaixo).
-> **Estado do projeto no momento:** 209 testes Java verdes + avaliador 14/14, com a base em **98 intenções / 2.420 exemplos / 1.291 respostas / 211 followups**. **Leva de dados DIALOGO out/2026 executada** (patches `intencoes-dialogo-*.json` + `merge_intencoes_consultoria.py`, origem 'curadoria dialogo out/2026' + literais de match exato em origem 'autor'): **P1 ✅** (pergunta_kaaira — literais 'e voce'/'e vc' + variantes, todos com >0,6 ou match exato), **P3 ✅** (reacao_curta), **P4 ✅** (trabalho social/marcos), **P5 ✅** (casa_usuario), **P6 ✅** (hobbies), **pools de resposta por faixa ✅** (as 33 de conversa diária saíram de 1 para ≥3 na faixa seca — +156 respostas), **P7.5 parcial** ({nome} em pools), **P7.3 parcial** (3 dos 8 empates dissolvidos; 5 documentados — avaliador-locked ou colapso de negação, ver §2-P7). **P7.1 (podar agradecimento) segue pendente.** **C1 do §6 concluído (issue #35 — anti-repetição de resposta).**
+> **Estado do projeto no momento:** **248 testes Java verdes** + avaliador 14/14, com a base em **99 intenções / 2.436 exemplos / 1.218 respostas / 213 followups**. **Leva de dados DIALOGO out/2026 executada** (patches `intencoes-dialogo-*.json` + `merge_intencoes_consultoria.py`, origem 'curadoria dialogo out/2026' + literais de match exato em origem 'autor'): **P1 ✅** (pergunta_kaaira — literais 'e voce'/'e vc' + variantes, todos com >0,6 ou match exato), **P3 ✅** (reacao_curta), **P4 ✅** (trabalho social/marcos), **P5 ✅** (casa_usuario), **P6 ✅** (hobbies), **pools de resposta por faixa ✅** (as 33 de conversa diária saíram de 1 para ≥3 na faixa seca — +156 respostas), **P7.5 parcial** ({nome} em pools), **P7.3 parcial** (3 dos 8 empates dissolvidos; 5 documentados — avaliador-locked ou colapso de negação, ver §2-P7). **P7.1 executado e REVISTO em out/2026:** a poda por *subconjunto* foi **revertida** (quebrava os âncoras canônicos — `obrigado`/`obrigada`/`valeu`/`de nada` caíam em `elogio`); mantida a curadoria **semântica** (12 falsos amigos do `obrigado` adjetivo, autor) e o **pool de respostas 101→19** (só aceitações, "De nada :)"). **C1 do §6 concluído (issue #35).** **Rodada de uso real (20 baterias) + intento `perda_apoio` + a lição da poda: ver §8.**
 >
 > **Issues da casa fechadas (contexto):** #24 (resposta ao pedido de nome), #25 (iniciativa própria — `perguntaInteresse()` lê os `followups` do tópico atual), #26 (P7.2 — cache de `pesosIdf`, suíte ~4x mais rápida), #27/#28 (P2 — `continuacao_topico` + pool segurado no turno do pedido), #32 (P7.4 — fatos novos: time, música, pet, sonho, "nasceu em", "meu X favorito é Y"), #33 (ensino turbinado). Specs verdes: `ControleSessaoNomeTest`, `IniciativaPropriaTest`, `ContinuacaoTopicoTest`, `ControleRespostaCacheIdfTest`, `FatosNovosTest`, `EnsinoTurbinadoTest`, `CuradoriaConsultoriaTest` (cobre as duas levas + literais de match exato).
 
@@ -122,7 +122,7 @@ Reações curtas são o combustível do papo e hoje cada uma cai num lugar absur
 
 ### P7 — Higiene e performance (transversal, prioridade entre P1–P6 ou depois)
 
-1. **Podar `agradecimento`** (619 → ~250): ~46% de redundância interna (família "obrigado pela ajuda"); efeitos: base menor, classificação mais rápida, menos ruído.
+1. **Podar `agradecimento`** (619 → ~250): ~46% de redundância interna (família "obrigado pela ajuda"); efeitos: base menor, classificação mais rápida, menos ruído. — *(out/2026 — **REVISTO**: a poda por *subconjunto* (619→437) foi **revertida para 607**; ela removia os âncoras canônicos de 1–2 tokens (`obrigado`, `obrigada`, `valeu`, `de nada`, `muito obrigado`) e, sem o âncora de **resto 0**, o empate caía em `elogio` ("obrigado por existir"). **Regra corrigida:** podar só **duplicata exata** de token-set; **nunca por subconjunto** (o desempate por resto/ordem depende das formas curtas). Mantida a curadoria **semântica** do autor (12 falsos amigos do `obrigado` adjetivo → 619−12=607). Evidência e o resto no **§11.4 do PLANO**)*
 2. **Cachear `pesosIdf`** (código): hoje é recalculado varrendo TODOS os exemplos em CADA classificação → cada mensagem é O(N²). Com 2.311 exemplos, dobra o custo de toda resposta — *(entregue — issue #26: cache por base de `pesosIdf` + tokens de exemplos (`garanteCacheIdf`, rebuild por identidade; `invalidaCacheIdf` no `ensinaEm`); scoring e desempate leem o cache)*
 3. **Dissolver os 8 empates de token-único da base antiga** (tabela no relatório de auditoria `AppData\Local\Temp\opencode\auditoria_sobreposicao.md`). **Resultado (leva diálogo):** 3 dissolvidos em `reacao_diversa` ("legal"→"legal demais", "nao obrigado"→"nao obrigado agora", "mais nada"→"mais nada entao"); **5 ficam documentados como aceitos** e não se resolvem por dados: `{bem,tudo}` e `{esta}` são **avaliador-locked** (editar quebraria as regressões "tudo bem"/"como vc está"/"onde você está"); `{gosto}`, `{entende}` e `{robo}` sofrem **colapso de negação/lexical** ("eu nao gosto" ≡ "gosto"; "voce nao entende" ≡ "entende") — qualquer edição só move a ambiguidade e piora algum literal. **Fix de verdade é código** (o classificador tratar negação) — vale abrir issue própria.
 4. **Fatos novos na sessão** (código `ControleSessao` FATOS + intents `lembra_*`): hoje só gosta/mora/trabalha — adicionar time de futebol, música favorita, nome do pet, sonho. Estrutura idêntica às existentes.
@@ -179,5 +179,30 @@ P1 (maior ganho percebido, só dados) → P3 (só dados, alivia misroutes irrita
 - **Fato que motiva:** o P2 (continuação, #27/#28) já funciona — "conta mais" cai em `continuacao_topico` e a resposta usa `{topico}`. Mas **não há conteúdo atrás do tópico**: por isso a resposta é genérica.
 - **Receita:** o recorte de bases livres já levantadas no plano (OpenWordnet-PT CC BY 4.0 + lead da Wikipédia PT) → `KAIRA/resources/conhecimentos.json` no padrão do projeto (origem por item, como sempre). A intenção de continuação passa a montar a resposta do verbete do tópico atual em vez da frase genérica.
 - **Dependência:** vem depois de C1/C2 e do fechamento da leva de dados — é o item que separa "classificador bom" de "conversa de verdade".
-- **Resultado (piloto, issue #37):** `conhecimentos.json` com 15 entradas-curadoria (Wikipédia PT CC BY-SA 3.0, texto adaptado, origem por item), `ControleConhecimento` (null-seguro) e encaixe no `continuacao_topico` — pedir "conta mais" sobre trabalho/esporte/música... agora fala a substância do tópico. Próximas fatias: "explica melhor" (campo `texto` já existe no dicionário), extrator automático de resumo (stopwords/IDF), escala da base + OpenWordnet-PT.
+- **Resultado (piloto, issue #37):** `conhecimentos.json` com 15 entradas-curadoria (Wikipédia PT CC BY-SA 3.0, texto adaptado, origem por item), `ControleConhecimento` (null-seguro) e encaixe no `continuacao_topico` - pedir "conta mais" sobre trabalho/esporte/música... agora fala a substância do tópico. Próximas fatias: "explica melhor" (campo `texto` já existe no dicionário), extrator automático de resumo (stopwords/IDF), escala da base + OpenWordnet-PT.
+
+---
+
+## 8. Rodada de uso real (20 baterias) — entregas, lições e o que fica
+
+> Relatório completo em `logs/baterias/RELATORIO.txt` (20 personas × ~21 falas; as 10 primeiras pelo `.jar` com a **base antiga**, as 10 últimas pelo fonte com o **refino**). Média **3,2/10**. Medição nos **432 turnos**: **40% `aposta`**, 34% `direto`, 8% `aprender` — o "erra o alvo com frequência" do relatório, quantificado.
+
+### Entregue pela leva de dados (out/2026)
+
+- **`perda_apoio` (novo intento):** luto/perda → respostas acolhedoras, sem piada. "meu marido faleceu" / "perdi um paciente" agora vão pra ele (antes: felicidade/raiva/fallback). **Os casos de "pensar em desistir" NÃO entram** — dependem da camada de segurança (código).
+- **`kaira` virou stopword:** o nome do bot não carrega assunto → "tchau kaira" → despedida (antes: piada, 11× nas baterias).
+- **Poda do `agradecimento` revertida** (ver §P7-1): **607 exemplos**, âncoras canônicos restaurados; a curadoria semântica do autor (12 falsos amigos) mantida.
+- **Pool do `agradecimento`:** 101 → 74 → **19**, só aceitações ("De nada :)"); as 65 invertidas ("obrigado por X" = ela agradecendo) saíram — eram **35 respostas erradas** nas baterias.
+
+### Fica para CÓDIGO (a casa) — achados das baterias
+
+- **Matching por token comum (o que mais erra):** 29 matches decididos por **1 token** (`eh`, `foi`, `tem`, `esta`, `amo`) e 40% de apostas → tratar comuns como stopword no matching e **exigir ≥2 tokens de peso**.
+- **Captura de nome indevida (32 capturas, 9 ruins):** "sou corinthiano roxo", "sou enfermeira", "kkkk", "bom dia" viraram nome → lista de bloqueio (saudação/riso/profissão) + confirmação.
+- **`piso` do aprendizado:** lixo real medido em **0.22–0.29** (≥ piso 0.1) — absorveu até um bug-report e uma equação → subir o piso ou exigir confirmação.
+- **`Runtime.exec`** (G6/§Fase 0) · **ENTER "\n" residual** na UI · **linha de humor sem timestamp** no log · **`corrigirFrases`** só aceitar correção que **melhore** o score.
+- **Camada de segurança emocional** (luto/violência/"desistir"): o relatório é explícito — não deve existir sem ela. O `perda_apoio` é mitigação de dados, **não** a camada.
+
+### Regra de curadoria nova (lição da poda)
+
+- **Nunca podar por subconjunto de token-set.** O desempate do classificador é por *resto* e por *ordem*: as formas curtas (`obrigado`, `valeu`, `de nada`) são âncoras de resto 0. Poda segura = só **duplicata exata** (mesmo token-set), mantendo a forma canônica.
 

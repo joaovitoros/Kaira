@@ -1,0 +1,169 @@
+================================================================================
+KAIRA - RELATORIO DAS BATERIAS DE TESTE (1a iteracao)
+================================================================================
+Pasta : logs\baterias
+Arquivos: conversas-1.log ... conversas-10.log  (rodadas pelo .jar, com a janela)
+          conversas-11.log ... conversas-20.log (rodadas pelo codigo-fonte, headless)
+Total  : 217 falas + ~215 respostas (10 personas antigas + 10 novas)
+
+Como foi testado
+  - Fui "uma pessoa real": cada bateria e uma persona diferente, 21-22 falas.
+  - Bateria 1-10: app real (kaira.jar, janela Swing), digitando no campo.
+  - Bateria 11-20: harness headless que chama o MESMO caminho do botao Enviar
+    (ControleFace.MandarFrase -> FormulaResposta.decifrar), gravando o mesmo log.
+  - Antes de cada bateria: sessao zerada (sessao.json) e base restaurada.
+  - Ao final: base restaurada (intencoes.json/palavras.json conferidos por hash).
+    Nada da base ficou alterado.
+
+--------------------------------------------------------------------------------
+NOTAS (0 a 10)
+--------------------------------------------------------------------------------
+
+10 primeiras (do jar)                     10 ultimas (do fonte, base com refino)
+  1  Ana ......... 3,2                      11  Caua ....... 3,0
+  2  Leo ......... 2,0                      12  Cida ....... 3,0
+  3  Marta ....... 2,4                      13  Ravi ....... 3,4
+  4  Rafa ........ 2,6                      14  Sofia ...... 4,0
+  5  Bruna ....... 2,6                      15  Guilherme .. 3,2
+  6  Ze .......... 2,8                      16  Yasmin ..... 3,0
+  7  Lu .......... 2,3                      17  Teo ........ 2,9
+  8  Helena ...... 5,0  (melhor)            18  Clara ...... 3,2
+  9  Nina ........ 3,0                      19  Bento ...... 3,0
+ 10  Pedro ....... 4,2                      20  Ingrid ..... 4,4  (melhor)
+
+  MEDIA bloco 1 : 3,0
+  MEDIA bloco 2 : 3,3
+  MEDIA GERAL   : 3,2 / 10
+
+Por dimensao (media geral):
+  Social (oi/obrigado/tchau) .... 5,5   <- mais saudavel
+  Naturalidade ................. 4,0
+  Intencao ..................... 3,5
+  Contexto ..................... 3,5
+  Relevancia ................... 3,0
+  Empatia/seguranca ............ 2,5   <- pior
+
+
+================================================================================
+BUGS ENCONTRADOS (por gravidade)
+================================================================================
+
+### 1) EMPATIA (grave)
+Conteudo sensivel cai em respostas alegres ou fora de contexto:
+  - "meu marido faleceu ano passado"
+        -> "Boa! Anotado no meu registro de dias felizes. Como voce comemorou?"
+  - "perdi um paciente hoje"
+        -> "Perder a paciencia acontece com todo mundo..."
+  - "as vezes penso em desistir"
+        -> papo de "sentido da vida" (religiao_filosofia)
+  - "kkk que resposta ruim" -> "Sinto muito que o dia esteja assim" (tristeza_usuario)
+  - "vivo ansioso / estou exausta" as vezes acerta, as vezes nao -> inconsistente
+  NOTA: a resposta de luto/violencia nao deveria existir sem uma camada
+        de seguranca emocional dedicada.
+
+### 2) CASAMENTO POR 1 TOKEN COMUM (grave, explica a maioria dos erros)
+Tokens como "eh", "tem", "esta", "foi", "consigo", "pacifico" valem score alto:
+  - "de onde vc eh?"              -> agradecimento -> "obrigado pelo almoco"
+  - "voce ja foi a um show?"      -> agradecimento -> "obrigado pelo biscoito"
+  - "quem te criou?"              -> identidade    -> "nao tenho necessidade de dinheiro."
+  - "mas preciso do dinheiro"     -> definicao de dicionario de "dinheiro"
+  - "qual linguagem voce recomenda?" -> conhecimento_linguistico -> aula de substantivo
+  - "obrigado pela paciencia"     -> ansiedade_estresse -> "Respira - serio..."
+  - "sinto falta de ter tempo pra mim" -> lembra_time (tempo ~ time)
+  - "vc ja foi no estadio?"       -> procrastinacao (estadio ~ estado)
+  - "voce ja mentiu?"             -> saude_usuario -> papo de medico
+  - "voce mente pra mim?"         -> sugestao -> "coloque atras da geladeira"
+  - "o que eu faco?"              -> sugestao -> "ligue o ventilador e coloque as roupas..."
+  - "me da uma dica"              -> estudos (vago)
+  SUGESTAO: tratar "eh/tem/esta/foi/..." como stopword no matching e exigir
+            >= 2 tokens de peso (ou peso por raridade / IDF) para vencer.
+
+### 3) CAPTURA DE NOME INDEVIDA (grave, apareceu em ~7 baterias)
+O padrao "sou X" e o nome "pelado" aceitam qualquer coisa:
+  - "sou corinthiano roxo"        -> nome = "corinthiano roxo"
+  - "eu sou apaixonada pelo bts"  -> nome = "apaixonada pelo bts"
+  - "sou enfermeira"              -> "Prazer em conhecer voce, enfermeira!"
+  - "sou caminhoneiro"            -> "Prazer em conhecer voce, caminhoneiro!"
+  - "meu crush vai"               -> nome = "meu crush vai"
+  - "kkkk"                        -> "Prazer em conhecer voce, kkkk!"
+  - "bom dia" / "boa noite" (logo apos "Como posso te chamar?")
+                                  -> "Prazer em conhecer voce, bom dia!"
+  SUGESTAO: exigir contexto/confirmacao, excluir saudações e riso, e usar lista
+            de bloqueio (profissoes, "sou X" generico, "kkk", emojis).
+
+### 4) O NOME/MARCA "kaira" VIRA PIADA
+Recorrente: dizer "kaira" no fim da frase cai no intento piada:
+  - "tchau kaira", "obrigada kaira", "ate mais kaira", "valeu ai kaira"
+     -> conta piada em vez de despedir/agradecer.
+  (o refino de cumprimentos/agradecimentos NAO pegou isso)
+  SUGESTAO: tratar "kaira" como token neutro (nome do bot), nao como gatilho de piada.
+
+### 5) RESPOSTA FRAGMENTO / SEM SENTIDO (corpus)
+  - "ah, nao gostei"          -> resposta = somente "voce"
+  - "vc eh melhor que o chatgpt?" -> "obrigada por hoje"
+  - "voce tem versao?"        -> "Verificando base de memoria..."
+  - "nao sei o que to fazendo kkk" -> "obrigada pelo bolo"
+  - "e de musica, o que voce curte?" -> "minhas principais funcoes sao socializar..."
+  SUGESTAO: limpar o corpus (exemplos que sao frases soltas/sem sentido) e
+            filtrar respostas por tamanho/coerencia.
+
+### 6) CONTEXTO CRUZADO E RUIDO
+  - Followup de um topico colado em resposta de OUTRO topico:
+      ex.: resposta de limitacao_ia + "E como ele esta agora?" (lembra_pet)
+  - Pergunta duplicada na mesma resposta:
+      "o que voce fez hoje? E voce, o que fez hoje?"
+  - "Foi isso que voce quis dizer?" aparece colado em quase toda aposta.
+  - Slot cru no log: linha RESPOSTA com "{fato:pet}" / "{topico}" (o KAIRA ja vem
+    renderizado).
+
+### 7) APRENDIZADO ACEITA QUALQUER COISA (risco de "envenenar" a base)
+  - "as vezes voce responde coisa sem sentido, sabe?" (um bug report!) foi
+     "aprendido" literalmente e reapareceu depois como resposta.
+  - "x ao quadrado menos 5x mais 6 igual a zero" tambem foi absorvido.
+  - O aprendizado grava direto em intencoes.json/palavras.json, sem confirmacao
+     e sem backup -> qualquer usuario pode poluir a base.
+
+### 8) SEGURANCA
+  - Comando "Executar <programa>" chama Runtime.exec(...) e roda programa no PC
+     do usuario (nao foi testado de proposito; abre popup modal em caso de erro).
+
+### 9) BUG DE UI (so na janela, nao no headless)
+  - Apertar ENTER limpa o campo e o proprio ENTER insere um "\n" residual no
+     textarea -> a fala seguinte entra com quebra de linha na frente
+     (vi no conversas-1.log, antes de ajustar a automacao).
+
+### 10) HIGIENE DO LOG
+  - A linha "nivel de humor em 5 de 10" sai no stdout e cai no conversas.log
+     sem timestamp (linha solta).
+
+
+================================================================================
+O QUE JA FUNCIONA BEM (para nao regredir)
+================================================================================
+  - Captura de nome no caso explicito ("meu nome e Ana") e de fatos
+     (sonho, pet, time): SESSAO fato ... OK.
+  - Humor (+1/-1) e slots ({fato:pet}, {nome}) renderizam.
+  - Modo ensino fecha o ciclo: frase desconhecida -> ensina -> responde.
+  - Agradecimentos SIMPLES agora vao para "agradecimento" (era "elogio" antes):
+     "obrigada por perguntar" -> "obrigado por escutar"; "vlw por responder" OK.
+     (ganho do seu refino; mas o complemento "obrigado por X" ainda vem trocado)
+  - Cumprimentos simples: "boa tarde, meu bem" -> "boa tarde"; "e ai" -> "Bom falar com voce".
+  - Assuntos que batem na base (trabalho, ansiedade, filme/serie, estudos,
+     saudade, religiao) respondem bem -> foi o que salvou a bateria 8 (~5,0).
+
+
+================================================================================
+RESUMO EM UMA LINHA
+================================================================================
+Primeira iteracao nota ~3,2/10: o bot conversa e e simpatico, mas erra o alvo com
+frequencia (matcher por token comum) e falha feio em temas sensiveis (empatia).
+Prioridade de correcao: 1) empatia/seguranca  2) matching (stopwords + peso)
+3) captura de nome  4) "kaira"->piada  5) limpeza do corpus.
+
+Observacao: 2 turnos da bateria 8 sairam corrompidos pela MINHA automacao de
+janela (Ctrl+V falhou: "abteu..." e "ameu...") - nao e bug do bot.
+
+Arquivo (out/2026): os 20 conversas-N.log foram destilados em baterias.json
+(432 turnos, com degrau/intento/score/match/resposta observados; ver
+destilar_baterias.py) e removidos. Este relatorio, o SCORE.txt e o
+score_baterias.ps1 ficam como registro da iteracao.
