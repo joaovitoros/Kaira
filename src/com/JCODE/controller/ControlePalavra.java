@@ -77,7 +77,7 @@ public class ControlePalavra {
         int melhorDistancia = Integer.MAX_VALUE;
 
         for(String palavra: palavrasCache){
-            int distancia = Calculos.levenshtein(compara, palavra);
+            int distancia = Calculos.damerau(compara, palavra);
             if(distancia <= limiar && distancia < melhorDistancia){
                 melhorDistancia = distancia;
                 melhorPalavra = palavra;

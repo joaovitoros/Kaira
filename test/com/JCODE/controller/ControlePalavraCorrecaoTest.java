@@ -10,8 +10,10 @@ import java.util.Arrays;
 
 /**
  * Testa o item B da Tarefa #15 (issue #15, Secao 5.6): correcaoPalavra
- * re-wireada por distancia de Levenshtein com limiar DEPENDENTE DO TAMANHO
+ * re-wireada por distancia de edicao com limiar DEPENDENTE DO TAMANHO
  * do que foi digitado - <=4 letras aceita ate distancia 1, maior aceita 2.
+ * Desde a issue #46 a distancia e o Calculos.damerau (Levenshtein + troca
+ * de letra vizinha = 1); os casos deste arquivo valem igual nas duas formulas.
  *
  * O vocabulario e fixture injetado direto no cache (o palavras.json real e
  * dado do autor, nao fixture de teste) - e restaurado no @After.
