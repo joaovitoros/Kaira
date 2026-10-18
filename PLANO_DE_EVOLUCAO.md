@@ -640,6 +640,36 @@ Hoje o modo ensino (#33) "para" a conversa: o próximo turno vira resposta sem a
 - *Riscos:* **ruído de aprendizado** (se ela pergunta "o que é X?" e o usuário responde "sei lá, tô com sono", guardar envenena a base → precisa de porteiro: score do #33 + confirmação) e **ambiguidade de turno** (sem o modo explícito, como saber que a fala seguinte é a resposta? — é exatamente o que o **#41** resolve; a dependência declarada está certa).
 - *Métrica:* queda do "turno sequestrado" + taxa de aprendizado aproveitado (a linha `APRENDE` do log já mede).
 
+**Desenho escolhido — aprendizado orgânico (out/2026, decisão do autor; em avaliação com um segundo agente — mais opiniões são bem-vindas):**
+
+*O problema hoje (medido no código):* o fallback chama `enviarResposta(null)` → `ativarAprendizado()` liga `ControleFace.verificarManter` **na UI**, e o `MandarFrase` intercepta a **próxima fala antes de tudo**: ela vira `manterResposta` → `chamadaFrase(buffer, fala)` incondicionalmente. Sequestro de 1 turno: se o usuário mudar de assunto, o assunto vira resposta de ensino, e comando/nome/aposta também são comidos (o `decifrar` nunca roda).
+
+*Três decisões do autor (out/2026):*
+1. **Roteamento — o pipeline julga.** Fala **entendida** (comando, resposta de nome, confirmação de aposta ou match ≥ `LIMIAR` 0.6) → responde **normal** e **cancela o ensino pendente**. Fala **não entendida** com ensino pendente → é a resposta do ensino → passa pelo porteiro.
+2. **Fala ao absorver — ack curto curado** (entrada nova no pool de fallback; texto escrito pela casa, **autor aprova**).
+3. **Porteiro por score** — só absorve se o score do #33 **sobre o buffer** ≥ `piso`; abaixo, **não guarda ainda**: ela pede confirmação na hora.
+
+*Máquina (2 estados, 2 strings — sem flag nova de boolean):*
+- **P1 (armado):** `bufferFrases != null && respostaEnsino == null` — esperando a resposta.
+- **P2 (confirmação):** `bufferFrases != null && respostaEnsino != null` — a resposta chegou mas ficou **retida em espera** do porteiro.
+
+*Fluxo — todo dentro de `decifrar` (estado sai da UI; lição do #45: UI nunca é pré-condição do dado):*
+1. Fala não entendida, **sem** ensino pendente → armadura atual intacta (pool "me ensina?") → **P1**.
+2. Fala não entendida com **P1** → `score = melhorIntencaoDetalhado(base, buffer).getScore()`:
+   - `score ≥ piso` → absorve: `chamadaFrase(buffer, fala)` — o gate do #33 dentro de `ensinaEm` decide **onde** guardar (≥ 0.6 → intento certo, senão `auto_aprendizado`) — + **ack** + limpa estado;
+   - `score < piso` → **P2**: `respostaEnsino = fala` (retida), **pergunta confirmação** (nada é gravado ainda).
+3. **P2** + confirmação (vocabulário **existente** `ControleSessao.ehConfirmacao`, o mesmo do aposta #39) → absorve o par retido + ack + limpa.
+4. **Qualquer fala entendida** (regra 1) → responde normal e **limpa** `bufferFrases`/`respostaEnsino` — o sequestro morre. Pontos de limpeza: `enviarResposta` com resposta não-nula (cobre nome, aposta e todos os degraus) + o ramo de comando.
+5. `MandarFrase` **para de rotear**: sempre chama `decifrar`; `verificarManter` vira só brilho visual do botão.
+
+*Peças reusadas — nenhuma máquina nova:* o gate do #33 (`ensinaEm`, LIMIAR 0.6) decide onde guardar · o pipeline de degraus inteiro decide "entendeu" · `ehConfirmacao` (#39) decide a confirmação · `bufferFrases` já é o estado · gravação (`intencoes.json` + `palavras.json`) e `invalidaCacheIdf` vêm de `chamadaFrase` como hoje.
+
+*Em aberto (pontos de discussão pra segunda opinião — números e textos, não arquitetura):*
+- **`piso`:** a faixa de fallback é `< LIMIAR_MEDIA` (0.3), então **todo buffer chega com score < 0.3** — o piso tem que separar **lixo puro** ("blorf quantum zebra") de **frase topical não casada** ("qual seu carro favorito"). Valor sai de **medição** (distribuição de scores por probe), não de chute.
+- **Textos:** ack de absorção e pergunta de confirmação — curados, autor aprova.
+- **Negação em P2:** "não" explícito → descartar o par (lista curada no padrão `CONFIRMACOES` do #39, autor aprova) vs. deixar cair no fluxo normal. Sem negação, qualquer fala não-entendida em P2 **descarta o par e vira novo P1** (a conversa segue; nada é gravado sem confirmação).
+- **P2 × aposta pendente ao mesmo tempo:** estado raro (aposta só arma na faixa média); definir ordem de checagem — `entregaApostaPendente` já roda cedo no `decifrar`.
+
 **Ranking e o achado transversal:**
 
 | # | Ideia | Ganho real | Depende de |
