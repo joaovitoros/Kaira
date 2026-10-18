@@ -318,6 +318,7 @@ Matar o G2. Não trocar a palavra do usuário — em vez disso, duas palavras ca
 ### 5.6 Correção de erro de digitação
 
 - [x] Substituir `calculoPorcentagemPalavra` por **distância de Levenshtein** (código no [Apêndice B](#apêndice-b--exemplos-de-código)): distância 1–2 (dependendo do tamanho) → corrige — *(issue #15: `Calculos.levenshtein` do Ap. B.2; limiar por tamanho do digitado — ≤4 letras aceita 1, maior aceita 2; nota honesta: Levenshtein puro não vê anagrama — `lista`/`sltia` = 4, fica de fora)*
+- [x] Tirar o desempate da correção de cima da **ordem do `palavras.json`** — *(issue #46: no empate de distância vencia quem vinha primeiro no arquivo — `fimle` viraria `fale` numa lista alfabética; `Calculos.damerau` = Levenshtein + troca de letra vizinha = 1, e `fimle`/`filme` passa a vencer sozinho em qualquer ordem — `CorrecaoOrdemArquivoTest` + `CalculosDamerauTest`; medido: empate em 6,4% dos erros de 1 edição e lá a ordem só acerta 44%; anagrama livre continua fora do limiar, `lista`/`sltia` = 4 — Ap. B.2 segue verdadeiro)*
 - [x] Corrigir `calculoPorcentagemFrase` para comparar **palavra por palavra** (nunca `contains` na frase inteira — G8) — *(issue #15: palavra exata por palavra; "sol" dentro de "ensolarado" não conta mais)*
 - [x] A cascata de correção continua existindo, mas agora: normaliza → stemma → agrupa → classifica (muitos "erros" somem sozinhos com a pontuação) — *(mantida em 4 degraus: lerResposta → corrigirPalavras → corrigirFrases → geração)*
 
