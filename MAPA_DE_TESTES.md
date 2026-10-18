@@ -1,7 +1,7 @@
 # MAPA DE TESTES — amplitude de cobertura do KAIRA
 
 > Levantamento out/2026 (a pedido, depois do bug da âncora do tópico). Objetivo: garantir que a suíte **pegue o tipo de bug que passa por costura entre camadas** — não só o que cada método faz sozinho.
-> Estado na data: **44 classes · 230 testes · avaliador 14/14**, tudo verde.
+> Estado na data: **45 classes · 232 testes · avaliador 14/14**, tudo verde.
 
 ---
 
@@ -16,9 +16,9 @@
 | **Matcher / classificador** | `ControleRespostaMelhorIntencaoTest`, `ControleRespostaMatcherUnificadoTest`, `ControleRespostaPesosIdfTest`, `ControleRespostaStemStopwordsTest`, `ControleRespostaSinonimoGruposTest`, `ControleRespostaFaixaConfiancaTest`, `ControleRespostaFraseExataTest`, `ControleRespostaCarregaCacheTest`, `ControleRespostaCacheIdfTest`, `ControlePreAnaliseTest` | 45 | base real + fixtures |
 | **Sessão / contexto** | `ControleSessaoTest`, `ControleSessaoPersistenciaTest`, `ControleSessaoNomeTest`, `FatosNovosTest`, `AncoraTopicoTest`, `DesempateContextoTest`, `ContinuacaoTopicoTest`, `IniciativaPropriaTest`, `ApostaPendenteTest` | 59 | base real + fixtures |
 | **Resposta / comportamento** | `ControleRespostaFallbackTest`, `ControleRespostaSlotsTest`, `ControleRespostaCriarRespostaTest`, `ControleRespostaAprendizadoTest`, `EnsinoTurbinadoTest`, `AntiRepeticaoTurnoTest`, `SistemaDeHumorTest`, `LogMatchTest`, `ControleConhecimentoTest` | 46 | base real + fixtures |
-| **Fluxo fim-a-fim** | `FluxoConversaRealTest` | 1 | **base real**, transcrito do `conversas.log` de 17/10 (10 turnos + 1 variante limpa) |
+| **Fluxo fim-a-fim** | `FluxoConversaRealTest`, `EnsinoFluxoTest` | 3 | **base real** + base isolada — o primeiro transcrito do `conversas.log` de 17/10 (10 turnos + 1 variante limpa); o segundo é o loop de 3 turnos do ensino |
 | **UI** | `ControleFaceTest` | 10 | HTML interno da Face |
-| | **44 classes** | **230** | |
+| | **45 classes** | **232** | |
 
 > **Nota de rastreio:** `CuradoriaConsultoriaTest` (4 testes) roda na suíte local mas **não está commitado** — depende dos `KAIRA/resources/intencoes-consultoria-*.json` (também não commitados; leva de dados em curadoria). Ao clonar o repo limpo, a suíte tem **43 classes / 224 testes** até a leva de consultoria ser commitada.
 
@@ -53,7 +53,7 @@ O bug da âncora do tópico (frase **exata** não gravava o tópico → "qual se
 | Continuação (`continuacao_topico`) | ✅ | ✅ | ⚠ (testa o turno, não a sequência com tema anterior real) |
 | Iniciativa (followups) | ✅ | ✅ | ⚠ |
 | Humor | ✅ | ✅ | ⚠ (3 elogios em sequência ✅ — esse tem!) |
-| Ensino (`!`) | ✅ | ✅ (fixture) | ❌ (fallback→resposta não é testado ponta a ponta) |
+| Ensino (`!`) | ✅ | ✅ (fixture) | ✅ `EnsinoFluxoTest` (fallback → armo → absorvo → frase volta a casar) |
 | Slots / resposta composta | ✅ | ✅ | — |
 | UI (Face) | ✅ | — | ❌ (não há teste do `decifrar` entregando na Face) |
 
@@ -67,7 +67,7 @@ Dirigir o **pipeline sem cabeça de UI** (`buscaResposta` + `ControleSessao`) so
 
 1. **Tópico (o bug de hoje):** `"assisti um filme ontem a noite"` → tópico `filme` → `"qual seu favorito"` → **filme**. Idem com **música** (o caso de gênero). ✅ **entregue** — o `FluxoConversaRealTest` cobre isto e mais, com os 10 turnos reais do `conversas.log` de 17/10 (inclui a mesma frase genérica resolvendo pra `filme` e pra `musica` conforme o tópico, a troca de assunto legítima pelo classificador, e o degrau de correção de palavra). Ganhou ainda uma **variante limpa** do mesmo turno (`"qual seu filme favorita?"`, sem o erro de digitação) como contraponto: sem erro o match é **direto** no classificador (1.00, 3/3 tokens), com erro cai pra **0.61** pela correção — ou seja, o teste agora prova que a correção só é necessária quando existe erro.
 2. **Continuação:** filme → `"conta mais"` → `continuacao_topico` **e** tópico preservado (`filme`). ⬜ aberto.
-3. **Ensino engatilhado:** frase sem match → `!` armado → a próxima fala vira resposta no **intent certo** (#33) e **não** polui o tópico. ⬜ aberto.
+3. **Ensino engatilhado:** frase sem match → `!` armado → a próxima fala vira resposta no **intent certo** (#33) e **não** polui o tópico. ✅ **entregue** (`EnsinoFluxoTest`, #45) — o loop inteiro fecha com a **mesma string** em 3 turnos: não casa → vai pro `bufferFrases` → é ensinada **pelo buffer** (não por literal nova) → volta a casar. Foi essa spec que **revelou o bug**: o `enviarResposta` chamava `ativarAprendizado()` **antes** de gravar o `bufferFrases`, e `mudarVerificar()` estourava em `btnSinalizar` null — a UI era pre-condição do dado, e quando falhava a frase do usuário se perdia. O que **não** cobre ainda: a afirmação "não polui o tópico" no turno do ensino (o teste isola a base justamente pra não vazar, então não asserta o tópico da sessão).
 4. **Nome:** `"meu nome e X"` → resposta de nome, turno encerra sem passar pelo classificador. ✅ **parcial** — a captura do nome na janela da pergunta está no fluxo; o turno `"meu nome e X"` (padrão explícito, não o nome pelado) não.
 5. **Aposta pendente (#39):** frase de faixa média → aposta + confirmação/correção no turno seguinte. ⬜ aberto.
 6. **Humor:** 3 elogios → faixa alta no pool (versão E2E do que o `SistemaDeHumorTest` já cobre em unidade). ⬜ aberto.
