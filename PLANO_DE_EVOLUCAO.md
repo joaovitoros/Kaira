@@ -670,6 +670,20 @@ Hoje o modo ensino (#33) "para" a conversa: o próximo turno vira resposta sem a
 - **Negação em P2:** "não" explícito → descartar o par (lista curada no padrão `CONFIRMACOES` do #39, autor aprova) vs. deixar cair no fluxo normal. Sem negação, qualquer fala não-entendida em P2 **descarta o par e vira novo P1** (a conversa segue; nada é gravado sem confirmação).
 - **P2 × aposta pendente ao mesmo tempo:** estado raro (aposta só arma na faixa média); definir ordem de checagem — `entregaApostaPendente` já roda cedo no `decifrar`.
 
+**Segunda opinião (agente de dados, out/2026) — veredito e calibragem:**
+
+> 🔎 **Veredito: aprovado.** O desenho troca o certo pelo certo — "modo que suspende o pipeline" vira "estado que o pipeline consulta" — e mata a pior aresta viva (o sequestro de 1 turno). Minimalista no melhor sentido (2 states, peças reusadas, estado fora da UI). Os pontos abaixo são **calibragem e textos, não arquitetura** — na linha do que o autor já classificou.
+
+> ✅ **Status: ADOTADO INTEGRALMENTE pelo autor (out/2026)** — inclusive a **saída (a)** no ponto sensível: regra 1 mantida (≥ 0.6 cancela) **+ linha de ack transparente** no cancel ("deixa pra lá") — a tentativa de ensino não morre mais calada. Vira escopo fechado da issue: log instrumentado (`ENSINO :` + score do porteiro), pools próprios de ack, as 3 specs E2E de aceitação e a invariante **"nada grava sem sim explícito"** no spec. Ficam só pra curadoria do autor, na hora da receita: os **textos** (ack de absorção/eco, ack de cancel, ack de negação, pergunta de confirmação) e o valor do **`piso`** (medido pelas 3 famílias acima).
+
+- **⚠ O gatilho `match ≥ 0.6` na regra 1 é o ponto sensível.** Uma *resposta* a um "me ensina?" pode ser entendida pelo pipeline: ela pergunta sobre "carro"; o usuário responde "gosto muito de carro" → casa ≥ 0,6 → a regra 1 **cancela o ensino e responde normal**, e a tentativa de ensinar morre **calada**. Saídas: (a) aceitar e deixar o **ack dizer** ("beleza, deixa pra depois") — mantém "o pipeline julga", custo zero de estado; (b) em P1, tirar "≥0,6" dos cancelamentos e deixar o **porteiro** julgar (só comando / resposta de nome / aposta confirmada cancelam). Recomendação: **(a)**.
+- **`piso` por medição de 3 famílias (método, não chute):** (i) lixo puro ("blorf quantum zebra") · (ii) topical não casado ("qual seu carro favorito" — casa fraco em `transito`) · (iii) os fallbacks **reais** do log (depois da higiene C2). Se houver **vão** entre (i) e (ii)/(iii), o piso sai dele.
+- **O ack de absorção não deveria morar no pool de fallback.** Ele não é fallback (ela *entendeu o que aprendeu*): pool próprio (`FRASES_ABSORVIDO`, 3–4 frases) com anti-repetição no padrão `ultimoFallback`. Opcional de encanto barato: o ack **ecoa** o que aprendeu ("anotei: {fala} — obrigada!").
+- **Negação em P2 — confirmar a invariante no spec:** *nada grava sem um "sim" explícito.* Negação → descarta o par, ack leve, segue (sem virar novo P1 silencioso).
+- **Instrumentar o estado no log** (cultura #29/#40): linhas `ENSINO : P1/P2`, `absorvido/reteído/descartado` + o **score do porteiro**. É o que torna a métrica do ganho ("taxa de aprendizado aproveitado") medível e alimenta a calibração do piso.
+- **Sequenciamento — boa notícia:** o desenho **quase não depende do #41**. Ele roteia por "o pipeline entendeu?", não pelo desempate por contexto; as peças que usa (cascata, #33, `ehConfirmacao` do #39, `bufferFrases`) **já existem**. A dependência real é só o **#39** (pro `ehConfirmacao`) — pode começar antes do que a nota original sugeria.
+- **Aceitação = specs E2E** (o buraco que o `MAPA_DE_TESTES.md` mediu: ciclo de vida N→N+1): *fallback → resposta → absorvido* · *fallback → lixo → P2 → confirma/recusa* · **e o que mata o bug atual: fallback → usuário muda de assunto → NADA é gravado**. Passando esses três ponta a ponta, o desenho está provado.
+
 **Ranking e o achado transversal:**
 
 | # | Ideia | Ganho real | Depende de |
