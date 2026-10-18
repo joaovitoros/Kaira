@@ -2298,6 +2298,12 @@
                     "origem": "Tatoeba (CC BY 2.0 FR)",
                     "humorMin": 0,
                     "humorMax": 10
+                },
+                {
+                    "texto": "Ate mais, {nome}! Volta quando quiser.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 4,
+                    "humorMax": 10
                 }
             ],
             "followups": [],
@@ -3312,7 +3318,10 @@
                     "humorMax": 10
                 }
             ],
-            "followups": [],
+            "followups": [
+                "O que mais te agrada nisso?",
+                "Ha quanto tempo voce gosta disso?"
+            ],
             "acoes": []
         },
         {
@@ -4008,7 +4017,10 @@
                     "humorMax": 10
                 }
             ],
-            "followups": [],
+            "followups": [
+                "Quer me contar como voce esta agora?",
+                "Posso ajudar em algo mais?"
+            ],
             "acoes": []
         },
         {
@@ -4780,6 +4792,10 @@
                 },
                 {
                     "texto": "tocando violao agora",
+                    "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "minha planta floresceu",
                     "origem": "curadoria dialogo out/2026"
                 }
             ],
@@ -5664,6 +5680,24 @@
                     "origem": "curadoria out/2026",
                     "humorMin": 0,
                     "humorMax": 0
+                },
+                {
+                    "texto": "Sobre {topico}: eu paro tudo pra continuar essa conversa, {nome}. Quer que eu puxe um fio?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 4,
+                    "humorMax": 6
+                },
+                {
+                    "texto": "{topico} ainda tem pano pra manga. Me diz por onde eu sigo.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 4,
+                    "humorMax": 6
+                },
+                {
+                    "texto": "Boa, {nome}: {topico} e assunto que rende. Continuei pensando aqui - quer ouvir?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 4,
+                    "humorMax": 6
                 }
             ],
             "followups": [
@@ -7894,6 +7928,10 @@
                 {
                     "texto": "crio meu filho sozinha",
                     "origem": "curadoria rodada-2 out/2026"
+                },
+                {
+                    "texto": "minha mae",
+                    "origem": "curadoria rodada-2 out/2026"
                 }
             ],
             "palavrasChave": null,
@@ -7956,6 +7994,12 @@
                     "texto": "Adoro história de família - cada uma é novela e documentário ao mesmo tempo. Conta!",
                     "origem": "curadoria dialogo out/2026",
                     "humorMin": 7,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Familia mexe com a gente, {nome}. Quer me contar como foi?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 4,
                     "humorMax": 10
                 }
             ],
@@ -8140,6 +8184,12 @@
                     "texto": "Amigo assim é patrimônio! O que vocês fizeram juntos?",
                     "origem": "curadoria dialogo out/2026",
                     "humorMin": 7,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Amizade boa e isso, {nome}. O que voces fizeram?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 4,
                     "humorMax": 10
                 }
             ],
@@ -9308,6 +9358,10 @@
                     "origem": "curadoria consultoria out/2026"
                 },
                 {
+                    "texto": "procuro emprego",
+                    "origem": "curadoria rodada-2 out/2026"
+                },
+                {
                     "texto": "entrevista de emprego amanha",
                     "origem": "curadoria consultoria out/2026"
                 },
@@ -9512,6 +9566,12 @@
                     "texto": "Se o dia está pesado, divide a lista comigo! Reclamar em dupla funciona melhor, hehe.",
                     "origem": "curadoria dialogo out/2026",
                     "humorMin": 7,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Isso ocupa a cabeca o dia inteiro, {nome}. Como voce tem levado?",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 4,
                     "humorMax": 10
                 }
             ],
@@ -12543,6 +12603,10 @@
                 {
                     "texto": "ela nunca tem tempo pra mim",
                     "origem": "curadoria rodada-2 out/2026"
+                },
+                {
+                    "texto": "meu marido",
+                    "origem": "curadoria rodada-2 out/2026"
                 }
             ],
             "respostas": [
@@ -12995,6 +13059,10 @@
                     "origem": "curadoria out/2026"
                 },
                 {
+                    "texto": "estou falando de musica, qual e sua preferida?",
+                    "origem": "curadoria rodada-2 out/2026"
+                },
+                {
                     "texto": "playlist de trabalho",
                     "origem": "curadoria out/2026"
                 },
@@ -13349,6 +13417,10 @@
                 {
                     "texto": "como foi o seu dia",
                     "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "seu dia",
+                    "origem": "curadoria rodada-2 out/2026"
                 },
                 {
                     "texto": "como foi seu dia hoje",
@@ -14353,7 +14425,10 @@
                     "humorMax": 10
                 }
             ],
-            "followups": null,
+            "followups": [
+                "E voce, acredita que tem vida la fora?",
+                "Qual misterio do espaco mais te pega?"
+            ],
             "acoes": []
         },
         {
@@ -14901,7 +14976,10 @@
                     "humorMax": 10
                 }
             ],
-            "followups": null,
+            "followups": [
+                "Voce desenha ou so admira?",
+                "Qual obra te marcou mais?"
+            ],
             "acoes": []
         },
         {
@@ -14971,7 +15049,10 @@
                     "humorMax": 10
                 }
             ],
-            "followups": null,
+            "followups": [
+                "Que periodo te interessa mais?",
+                "Qual fato historico te surpreendeu?"
+            ],
             "acoes": []
         },
         {
@@ -15192,7 +15273,10 @@
                     "humorMax": 10
                 }
             ],
-            "followups": null,
+            "followups": [
+                "Qual foi o ultimo que te prendeu?",
+                "Voce curte mais entrevista ou historia?"
+            ],
             "acoes": []
         },
         {
@@ -15250,7 +15334,10 @@
                     "humorMax": 10
                 }
             ],
-            "followups": null,
+            "followups": [
+                "Ainda gosta disso?",
+                "O que te fez gostar disso?"
+            ],
             "acoes": []
         },
         {
@@ -15308,7 +15395,10 @@
                     "humorMax": 10
                 }
             ],
-            "followups": null,
+            "followups": [
+                "Ainda mora la?",
+                "Como e a vida ai?"
+            ],
             "acoes": []
         },
         {
@@ -15366,7 +15456,10 @@
                     "humorMax": 10
                 }
             ],
-            "followups": null,
+            "followups": [
+                "Ainda ta nessa area?",
+                "E como ta o dia a dia no trabalho?"
+            ],
             "acoes": []
         },
         {
@@ -16033,6 +16126,12 @@
                     "texto": "bom dia querida",
                     "origem": "Tatoeba (CC BY 2.0 FR)",
                     "humorMin": 0,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Oi, {nome}! Que bom te ver por aqui.",
+                    "origem": "curadoria dialogo out/2026",
+                    "humorMin": 4,
                     "humorMax": 10
                 }
             ],
@@ -17009,6 +17108,10 @@
                 {
                     "texto": "obrigado por escutar",
                     "origem": "Tatoeba (CC BY 2.0 FR)"
+                },
+                {
+                    "texto": "obrigado por ouvir",
+                    "origem": "curadoria rodada-2 out/2026"
                 },
                 {
                     "texto": "obrigado pela fruta",
@@ -18592,5 +18695,5 @@
             "acoes": []
         }
     ],
-    "_doc": " Expansao CONSULTORIA out/2026: 33 intenções novas (conversa diária: trabalho, rotina, emoções, família, amigos, namoro, saúde, dinheiro, tecnologia, planos, fds, transporte, cozinha, café, horário, aparência, redes, idiomas, semana, sonhos, filosofia, motivação, procrastinação, notícias, apoio) + expansão das intenções existentes fracas, gerada pelo merge_intencoes_consultoria.py a partir dos patches intencoes-consultoria-*.json (origem 'curadoria consultoria out/2026' item a item; git guarda a base anterior). Leva DIALOGO out/2026 (mesma ferramenta, patches intencoes-dialogo-*.json; origem 'curadoria dialogo out/2026', com literais de match exato em origem 'autor'): 3 intenções novas de fluxo de diálogo (pergunta_kaaira, reacao_curta, casa_usuario), expansão de trabalho_usuario/atividades_usuario e pools de resposta por faixa de humor (o mínimo de 3 respostas em cada faixa das intenções de conversa diária). Expansao CONSULTORIA out/2026: 33 intenções novas (conversa diária: trabalho, rotina, emoções, família, amigos, namoro, saúde, dinheiro, tecnologia, planos, fds, transporte, cozinha, café, horário, aparência, redes, idiomas, semana, sonhos, filosofia, motivação, procrastinação, notícias, apoio) + expansão das intenções existentes fracas, gerada pelo merge_intencoes_consultoria.py a partir dos patches intencoes-consultoria-*.json (origem 'curadoria consultoria out/2026' item a item; git guarda a base anterior). Leva DIALOGO out/2026 (mesma ferramenta, patches intencoes-dialogo-*.json; origem 'curadoria dialogo out/2026', com literais de match exato em origem 'autor'): 3 intenções novas de fluxo de diálogo (pergunta_kaaira, reacao_curta, casa_usuario), expansão de trabalho_usuario/atividades_usuario e pools de resposta por faixa de humor (o mínimo de 3 respostas em cada faixa das intenções de conversa diária). Expansao CONSULTORIA out/2026: 33 intenções novas (conversa diária: trabalho, rotina, emoções, família, amigos, namoro, saúde, dinheiro, tecnologia, planos, fds, transporte, cozinha, café, horário, aparência, redes, idiomas, semana, sonhos, filosofia, motivação, procrastinação, notícias, apoio) + expansão das intenções existentes fracas, gerada pelo merge_intencoes_consultoria.py a partir dos patches intencoes-consultoria-*.json (origem 'curadoria consultoria out/2026' item a item; git guarda a base anterior). Leva DIALOGO out/2026 (mesma ferramenta, patches intencoes-dialogo-*.json; origem 'curadoria dialogo out/2026', com literais de match exato em origem 'autor'): 3 intenções novas de fluxo de diálogo (pergunta_kaaira, reacao_curta, casa_usuario), expansão de trabalho_usuario/atividades_usuario e pools de resposta por faixa de humor (o mínimo de 3 respostas em cada faixa das intenções de conversa diária). Expansao CONSULTORIA out/2026: 33 intenções novas (conversa diária: trabalho, rotina, emoções, família, amigos, namoro, saúde, dinheiro, tecnologia, planos, fds, transporte, cozinha, café, horário, aparência, redes, idiomas, semana, sonhos, filosofia, motivação, procrastinação, notícias, apoio) + expansão das intenções existentes fracas, gerada pelo merge_intencoes_consultoria.py a partir dos patches intencoes-consultoria-*.json (origem 'curadoria consultoria out/2026' item a item; git guarda a base anterior). Leva DIALOGO out/2026 (mesma ferramenta, patches intencoes-dialogo-*.json; origem 'curadoria dialogo out/2026', com literais de match exato em origem 'autor'): 3 intenções novas de fluxo de diálogo (pergunta_kaaira, reacao_curta, casa_usuario), expansão de trabalho_usuario/atividades_usuario e pools de resposta por faixa de humor (o mínimo de 3 respostas em cada faixa das intenções de conversa diária). Expansao CONSULTORIA out/2026: 33 intenções novas (conversa diária: trabalho, rotina, emoções, família, amigos, namoro, saúde, dinheiro, tecnologia, planos, fds, transporte, cozinha, café, horário, aparência, redes, idiomas, semana, sonhos, filosofia, motivação, procrastinação, notícias, apoio) + expansão das intenções existentes fracas, gerada pelo merge_intencoes_consultoria.py a partir dos patches intencoes-consultoria-*.json (origem 'curadoria consultoria out/2026' item a item; git guarda a base anterior). Leva DIALOGO out/2026 (mesma ferramenta, patches intencoes-dialogo-*.json; origem 'curadoria dialogo out/2026', com literais de match exato em origem 'autor'): 3 intenções novas de fluxo de diálogo (pergunta_kaaira, reacao_curta, casa_usuario), expansão de trabalho_usuario/atividades_usuario e pools de resposta por faixa de humor (o mínimo de 3 respostas em cada faixa das intenções de conversa diária)."
+    "_doc": "Banco de intencoes do KAIRA - gerado de intencoes_draft.json pela ferramenta GeraIntencoes (Secao 5.1, schema do Apendice A). Substitui respostas.json, que fica em KAIRA/resources/curadoria/ como backup (fora da pasta de runtime). Cada exemplo e resposta carrega 'origem' item a item (respostas.json = original do projeto; RichardSakaguchiMS/... (Apache-2.0) e Tatoeba (CC BY 2.0 FR) = datasets externos com licenca; autor = aprendizado em runtime). acoes substituem os assuntos magicos: MOSTRAR_HUMOR, MOSTRAR_VERSAO, DESLIGAR. humorMin/humorMax (0-10) preparam o filtro da Fase 3; followups alimentam a Fase 3; palavrasChave ficam para a curadoria da Secao 5.2. Expansao CONSULTORIA out/2026: 33 intenções novas (conversa diária: trabalho, rotina, emoções, família, amigos, namoro, saúde, dinheiro, tecnologia, planos, fds, transporte, cozinha, café, horário, aparência, redes, idiomas, semana, sonhos, filosofia, motivação, procrastinação, notícias, apoio) + expansão das intenções existentes fracas, gerada pelo merge_intencoes_consultoria.py a partir dos patches intencoes-consultoria-*.json (origem 'curadoria consultoria out/2026' item a item; git guarda a base anterior). Leva DIALOGO out/2026 (mesma ferramenta, patches intencoes-dialogo-*.json; origem 'curadoria dialogo out/2026', com literais de match exato em origem 'autor'): 3 intenções novas de fluxo de diálogo (pergunta_kaaira, reacao_curta, casa_usuario), expansão de trabalho_usuario/atividades_usuario e pools de resposta por faixa de humor (o mínimo de 3 respostas em cada faixa das intenções de conversa diária)."
 }

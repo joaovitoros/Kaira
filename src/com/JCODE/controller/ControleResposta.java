@@ -56,6 +56,8 @@ public class ControleResposta {
 
 	static Set<String> stopwords;
 
+	static Set<String> tokensComuns;
+
 	private static final List<String> FRASES_FALLBACK = List.of(
 			"Ainda não sei falar disso... me ensina? O que você quis dizer?",
 			"Ainda tô aprendendo isso — me conta o que você quis dizer, e me ensina?",
@@ -142,6 +144,24 @@ public class ControleResposta {
 			}
 		} catch (Exception e) {
 			stopwords = null;   // sem arquivo: sem filtro, sem explodir
+		}
+
+		// #49 - tokens comuns (issue #49): mesmas regras de leitura das stopwords
+		tokensComuns = new HashSet<>();
+		try {
+			FileInputStream fileInputStream = new FileInputStream(Caminhos.recurso("tokens_comuns.txt").toFile());
+			BufferedReader reader = new BufferedReader(new InputStreamReader(fileInputStream, StandardCharsets.UTF_8));
+
+			String linha;
+			while ((linha = reader.readLine()) != null) {
+				String t = linha.trim();
+				if (t.isEmpty() || t.startsWith("#"))
+					continue;
+
+				tokensComuns.add(Normalizador.stem(Normalizador.texto(t)));
+			}
+		} catch (Exception e) {
+			tokensComuns = null;   // sem arquivo: sem filtro, sem explodir
 		}
 
 	// #41 - genericos stemmados no MESMO pipeline dos tokens da frase.
@@ -686,9 +706,22 @@ public class ControleResposta {
 			ControleSessao.pedeContinuacao(); // #28 - o turno e dela: segura o pool
 	}
 
-	public static MatchIntencao melhorIntencaoDetalhado(Intencoes raiz, String entradaNormalizada){
+	// #49 - o gate e' regra de RESPOSTA, nao de medicao. Quem responde
+	// (buscaResposta) nao pode entregar match de 1 token; mas o porteiro do
+	// ensino (scoreDo, piso 0.1) e o ensinaEm (0.6) precisam ver o match
+	// fraco honesto - sem o gate "zork blorp quizzle" volta 0.192 e e'
+	// absorvido; com o gate volta 0.0 e o ensino morre (medido: 4 testes).
+	public static MatchIntencao melhorIntencaoDetalhado(Intencoes raiz, String entradaNormalizada) {
+		return melhorIntencaoDetalhado(raiz, entradaNormalizada, true);
+	}
+
+	public static MatchIntencao melhorIntencaoDetalhado(Intencoes raiz, String entradaNormalizada,
+														boolean comGate) {
 		ultimoMatchLog = null;
 		Set<String> palavrasEntrada = tokensDe(entradaNormalizada, true);
+
+		if (tokensComuns != null)
+			palavrasEntrada.removeIf(tokensComuns::contains);
 
 		if(palavrasEntrada.isEmpty())
 			return null;
@@ -719,13 +752,32 @@ public class ControleResposta {
 						.filter(e -> palavraFrase.stream().anyMatch(f -> ControleSinonimo.mesmaPalavra(e,f))).count();
 
 				double numerador = 0;
-				for (String e : palavrasEntrada)
-					if (palavraFrase.stream().anyMatch(f -> ControleSinonimo.mesmaPalavra(e, f)))
+				for (String e : palavrasEntrada) {
+					if (palavraFrase.contains(e)) {
+						// direto (lados dois stemmados pelo mesmo pipeline): peso cheio
 						numerador += pesos.getOrDefault(e, pesoAusente);
+					} else if (palavraFrase.stream().anyMatch(f -> ControleSinonimo.mesmaPalavra(e, f))) {
+						// #49 - flexao (genero/numero) e' o MESMO radical: peso
+						// cheio. Sinonimo de verdade fica com 0.7. Sem isso a
+						// correcao de typo congela em 0.88 ("favorita"~"favorito")
+						// e o match deixa de ser o 1.00 que o fluxo exige.
+						if (palavraFrase.stream().anyMatch(f -> ControleSinonimo.eFlexao(e, f)))
+							numerador += pesos.getOrDefault(e, pesoAusente);
+						else
+							numerador += 0.7 * pesos.getOrDefault(e, pesoAusente);
+					}
+				}
 
 				double score = denominador == 0
 						? (double) intersecao / palavrasEntrada.size()
 						: numerador / denominador;
+
+				// #49 - gate: parcial de frase COMPLEXA exige >= 2 tokens cobertos;
+				// frase curta (<= 2 tokens depois de comuns/stopwords) tem pouco
+				// conteudo - 1 coberto ja' e' a maior parte dela. Sem isso,
+				// "qual sua idade?" e "voce joga videogame?" viram fallback.
+				if (comGate && score < 1.0 && intersecao < 2 && palavrasEntrada.size() > 2)
+					continue;
 
 				if (score > melhorScore) {
 					melhorScore = score;
@@ -872,7 +924,7 @@ public class ControleResposta {
 		if (intencoesCache == null)
 			carregaCache();
 
-		MatchIntencao encaixe = melhorIntencaoDetalhado(intencoesCache, fraseNormalizada);
+		MatchIntencao encaixe = melhorIntencaoDetalhado(intencoesCache, fraseNormalizada, false);
 		return encaixe == null ? 0.0 : encaixe.getScore();
 	}
 
@@ -883,7 +935,7 @@ public class ControleResposta {
 		// classificacao roda antes do invalidaCacheIdf de proposito: com o
 		// cache invalido na frente, a 2a chamada recalcula com a base ja
 		// mutada (sem NPE de token, sem IDF desatualizado no ensino em cadeia)
-		MatchIntencao encaixe = melhorIntencaoDetalhado(raiz, frase);
+		MatchIntencao encaixe = melhorIntencaoDetalhado(raiz, frase, false);
 		Intencao intencao;
 
 		if (encaixe != null && encaixe.getScore() >= LIMIAR) {

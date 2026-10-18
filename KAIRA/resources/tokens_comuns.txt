@@ -1,0 +1,24 @@
+# Tokens comuns do MATCHER - issue #49 (gate de tokens de peso).
+# Palavras funcionais que nao carregam assunto: na ENTRADA DO MATCHER elas
+# valem peso 0 (tratadas como stopword so' la' - nao mexer nos tokensDe()
+# gerais, ver blast radius na issue). Formato igual ao stopwords.txt:
+# lowercase, sem acento, uma palavra por linha, "#" comenta; o carregamento
+# aplica texto() + stem().
+# REGRA DE OURO: nao incluir possessivos (meu, minha, seu, sua) - as
+# ancoras curtas "meu marido"/"minha mae" ficariam com 1 token de peso e
+# dependeriam so' da isencao de cobertura cheia (guardas no
+# GateTokensPesoTest).
+# Validacao: suite + avaliador 44 + replay; qualquer caso congelado que
+# cair, tire a palavra da lista.
+foi
+bem
+mesmo
+mesma
+bom
+tipo
+vezes
+mais
+ser
+ter
+la
+tal

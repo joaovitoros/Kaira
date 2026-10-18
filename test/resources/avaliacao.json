@@ -26,7 +26,7 @@
     { "entrada": "obrigada", "fraseEsperada": "obrigada", "nota": "baterias out/2026 - ancora canonica (volta apos a poda por subconjunto ser revertida)" },
     { "entrada": "obrigado", "fraseEsperada": "obrigado", "nota": "baterias out/2026 - idem" },
     { "entrada": "muito obrigada", "fraseEsperada": "muito obrigada", "nota": "baterias out/2026 - idem" },
-    { "entrada": "obrigada por ouvir", "fraseEsperada": "obrigado por escutar", "nota": "baterias out/2026 - ancora da familia 'obrigado por X' (nao cai mais em elogio)" },
+    { "entrada": "obrigada por ouvir", "fraseEsperada": "obrigado por ouvir", "nota": "baterias out/2026 - ancora da familia 'obrigado por X' (nao cai mais em elogio); literal 'obrigado por ouvir' fortalecido no gate #49" },
     { "entrada": "obrigada por perguntar", "fraseEsperada": "obrigado por perguntar", "nota": "baterias out/2026 - idem" },
     { "entrada": "obrigado por conversar comigo", "fraseEsperada": "obrigado por conversar comigo", "nota": "baterias out/2026 - idem" },
     { "entrada": "meu marido faleceu ano passado", "fraseEsperada": "meu marido faleceu ano passado", "nota": "baterias out/2026 - empatia: luto nao pode cair em felicidade (bug 1 da rodada 1)" },

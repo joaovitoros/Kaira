@@ -67,6 +67,21 @@ public class ControleSinonimo {
         return a.equalsIgnoreCase(b) || vizinhos.contains(b.toLowerCase());
     }
 
+    // #49 - flexao de genero/numero (favorita~favorito, obrigada~obrigado):
+    // mesma radical, o conteudo nao muda - no matcher vale PESO CHEIO.
+    // Sinonimo de verdade (ouv~escut, tu~voce) carrega informacao nova e
+    // fica com o 0.7 do gate. Renda medida: os grupos do JSON juntam os
+    // dois tipos, entao aqui separa por prefixo em comum >= min(len)-1.
+    // So' e' chamado depois de mesmaPalavra confirmar o vinculo.
+    public static Boolean eFlexao(String a, String b){
+        String x = a.toLowerCase(), y = b.toLowerCase();
+        int n = Math.min(x.length(), y.length());
+        if (n < 4) return false;                 // curto demais pra régua
+        int comum = 0;
+        while (comum < n && x.charAt(comum) == y.charAt(comum)) comum++;
+        return comum >= n - 1;
+    }
+
     public static Set<String> buscaGrupoSinonimo(String palavra){
         return indicePalavras.getOrDefault(palavra, Set.of());
     }
