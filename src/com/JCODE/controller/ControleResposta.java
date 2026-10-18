@@ -864,6 +864,18 @@ public class ControleResposta {
 
 	}
 
+	// #49 - o porteiro do aprendizado organico: o MESMO score do #33,
+	// devolvido pro FormulaResposta decidir absorver (>= piso) ou reter.
+	// Precisa morar aqui porque o cache de intencoes e privado.
+	public static double scoreDo(String fraseNormalizada) {
+
+		if (intencoesCache == null)
+			carregaCache();
+
+		MatchIntencao encaixe = melhorIntencaoDetalhado(intencoesCache, fraseNormalizada);
+		return encaixe == null ? 0.0 : encaixe.getScore();
+	}
+
 	public static void ensinaEm(Intencoes raiz, String frase, String resposta){
 
 		// #33 - ensino turbinado: classifica ANTES de gravar; a regua e a

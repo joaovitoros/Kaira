@@ -119,20 +119,13 @@ public class ControleFace implements ActionListener{
 	public static void MandarFrase(){
 		falaUsuario = textAreaUsuario.getText();
 		textAreaUsuario.setText("");
-		if(verificarManter){
-			verificarManter=false;
-			btnSinalizar.setForeground(Tema.NEON_APAGADO);
-			FormulaResposta.manterResposta(falaUsuario.trim());
-		}else if(verificarCriarResp){
-//			verificarCriarResp=false;
-//			btnSinalizar.setForeground(Color.BLACK);
-//			FormulaResposta.manterCriacao(falaUsuario.trim());
-		}else{
-			try {
-				FormulaResposta.decifrar(falaUsuario);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
+		// #49 - o roteamento saiu daqui (morre o sequestro do turno): o
+		// pipeline julga. A flag vira so brilho visual do botao.
+		mudarNaoVerificar();
+		try {
+			FormulaResposta.decifrar(falaUsuario);
+		} catch (Exception e1) {
+			e1.printStackTrace();
 		}
 	}
 
@@ -155,6 +148,14 @@ public class ControleFace implements ActionListener{
 	public static void mudarCriar(){
 		btnSinalizar.setForeground(Color.RED);
 		verificarCriarResp=true;
+	}
+
+	// #49 - desarma o ensino na UI (o brilho do botao acompanha o estado);
+	// o roteamento nao mora mais aqui - quem julga e o pipeline
+	public static void mudarNaoVerificar() {
+		verificarManter = false;
+		if (btnSinalizar != null)
+			btnSinalizar.setForeground(Tema.NEON_APAGADO);
 	}
 
 }
