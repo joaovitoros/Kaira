@@ -141,8 +141,15 @@ public class ControleFace implements ActionListener{
 	}
 
 	public static void mudarVerificar(){
-		btnSinalizar.setForeground(Tema.NEON);
+		// #45 - estado PRIMEIRO: verificarManter e o que muda o roteamento
+		// do MandarFrase (turno seguinte vira manterResposta em vez de
+		// decifrar). O botao e so aviso visual. A ordem antiga - botao
+		// antes - derrubava em tela nao montada e PERDIA a frase do
+		// usuario, porque enviarResposta chamava isto antes de gravar o
+		// bufferFrases. Ponto: a UI nunca pode ser pre-condicao do dado.
 		verificarManter=true;
+		if (btnSinalizar != null)
+			btnSinalizar.setForeground(Tema.NEON);
 	}
 
 	public static void mudarCriar(){
