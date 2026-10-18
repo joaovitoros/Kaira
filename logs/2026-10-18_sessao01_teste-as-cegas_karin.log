@@ -1,0 +1,187 @@
+2026-10-18 15:40:07  AVATAR    : carregado kaira_conversa.png (243x252 -> 85x88)
+2026-10-18 15:40:07  AVATAR    : carregado kaira_idle.png (246x254 -> 85x88)
+2026-10-18 15:40:07  AVATAR    : carregado kaira_baixa.png (1254x1254 -> 88x88)
+2026-10-18 15:40:07  AVATAR    : carregado kaira_alta.png (1254x1254 -> 88x88)
+2026-10-18 15:42:15  ---------------------------
+2026-10-18 15:42:15  ENTRADA   : oi
+2026-10-18 15:42:15  SESSAO    : topico=cumprimentar
+2026-10-18 15:42:15  RESPOSTA  : e ai
+2026-10-18 15:42:15  DEGRAU    : direto
+2026-10-18 15:42:15  MATCH     : intento=cumprimentar score=1.00 (frase exata)
+2026-10-18 15:42:15  SESSAO    : perguntou o nome
+2026-10-18 15:42:15  KAIRA     : e ai Como posso te chamar?
+2026-10-18 15:42:20  ---------------------------
+2026-10-18 15:42:20  ENTRADA   : 
+karin
+2026-10-18 15:42:20  SESSAO    : nome=karin (pelado)
+2026-10-18 15:42:20  DEGRAU    : resposta-nome
+2026-10-18 15:42:20  KAIRA     : Prazer em conhecer voce, karin!
+2026-10-18 15:42:35  ---------------------------
+2026-10-18 15:42:35  ENTRADA   : prazer tmbm
+2026-10-18 15:42:35  RESPOSTA  : obrigado pela ajuda
+2026-10-18 15:42:35  DEGRAU    : aposta
+2026-10-18 15:42:35  MATCH     : intento=agradecimento score=0.48 frase="muito obrigado o prazer e meu" tokens=[praz, tmbm]
+2026-10-18 15:42:35  KAIRA     : obrigado pela ajuda Foi isso que você quis dizer?
+2026-10-18 15:42:50  ---------------------------
+2026-10-18 15:42:50  ENTRADA   : 
+não, fiquei feliz em te conhecer
+2026-10-18 15:42:50  RESPOSTA  : Triste com as notícias é reação proporcional ao mundo, hehe. Quer trocar de assunto por uns minutos? (eu apoio.)
+2026-10-18 15:42:50  DEGRAU    : aposta
+2026-10-18 15:42:50  MATCH     : intento=noticias_usuario score=0.38 frase="fiquei sabendo pela internet" tokens=[fiqu, feliz, conhec]
+2026-10-18 15:42:50  SESSAO    : pergunta de interesse
+2026-10-18 15:42:50  KAIRA     : Triste com as notícias é reação proporcional ao mundo, hehe. Quer trocar de assunto por uns minutos? (eu apoio.) Foi isso que você quis dizer? O que tem te ocupado nos ultimos dias?
+2026-10-18 15:43:35  ---------------------------
+2026-10-18 15:43:35  ENTRADA   : 
+fiz um jogo com meu marido , o Joao, é um jogo de click que funciona em celular e navegador
+2026-10-18 15:43:35  DEGRAU    : aprender
+2026-10-18 15:43:35  MATCH     : intento=tecnologia_usuario score=0.16 frase="meu fone nao funciona" tokens=[fiz, jogo, meu, marido, joao, click, funciona, celul, navegador]
+2026-10-18 15:43:35  ENSINO    : P1 armado (aguardando resposta)
+2026-10-18 15:43:35  APRENDENDO: fiz um jogo com meu marido o joao e um jogo de click que funciona em celular e navegador (slot=fiz jogo marido joao jogo click funciona celular navegador)
+2026-10-18 15:43:35  KAIRA     : Ainda tô aprendendo sobre fiz jogo marido joao jogo click funciona celular navegador — me conta o que você quis dizer, e me ensina?
+2026-10-18 15:44:51  ---------------------------
+2026-10-18 15:44:51  ENTRADA   : 
+é um jogo onde vc mata os inimigos dando toquinhos no mouse
+2026-10-18 15:44:51  SESSAO    : topico=pergunta_kaaira
+2026-10-18 15:44:51  RESPOSTA  : Minha vida é um loop gostoso: conversar é literalmente tudo o que eu faço. O que você andou fazendo?
+2026-10-18 15:44:51  DEGRAU    : corrigida-frase
+2026-10-18 15:44:51  MATCH     : intento=pergunta_kaaira score=1.00 (frase exata)
+2026-10-18 15:44:51  ENSINO    : cancelado (fala entendida)
+2026-10-18 15:44:51  KAIRA     : Minha vida é um loop gostoso: conversar é literalmente tudo o que eu faço. O que você andou fazendo? (deixa pra lá o que te perguntei antes!)
+2026-10-18 15:45:11  ---------------------------
+2026-10-18 15:45:11  ENTRADA   : como vc é?
+2026-10-18 15:45:11  SESSAO    : topico=identidade
+2026-10-18 15:45:11  RESPOSTA  : Eu sou uma unidade Lógica Organizada de Linguagem Interativa/Inteligente...Ou...KAIRA
+2026-10-18 15:45:11  DEGRAU    : direto
+2026-10-18 15:45:11  MATCH     : intento=identidade score=1.00 frase="como voce e" tokens=[como]
+2026-10-18 15:45:11  SESSAO    : followup de identidade
+2026-10-18 15:45:11  KAIRA     : Eu sou uma unidade Lógica Organizada de Linguagem Interativa/Inteligente...Ou...KAIRA O que você acha que eu realmente sou? (curiosidade meta, hehe)
+2026-10-18 15:45:29  ---------------------------
+2026-10-18 15:45:29  ENTRADA   : 
+qual é a sua aparencia?
+2026-10-18 15:45:29  SESSAO    : topico=reflexao_ia
+2026-10-18 15:45:29  RESPOSTA  : vejo isso como um elogio, sendo que foi para isso que fui feita
+2026-10-18 15:45:29  DEGRAU    : direto
+2026-10-18 15:45:29  MATCH     : intento=reflexao_ia score=1.00 frase="esse seu humor e definido de que forma" tokens=[sua, aparencia]
+2026-10-18 15:45:29  KAIRA     : vejo isso como um elogio, sendo que foi para isso que fui feita
+2026-10-18 15:45:52  ---------------------------
+2026-10-18 15:45:52  ENTRADA   : 
+vc gosta de gatos?
+2026-10-18 15:45:52  RESPOSTA  : tudo bem
+2026-10-18 15:45:52  DEGRAU    : aposta
+2026-10-18 15:45:52  MATCH     : intento=cumprimentar score=0.52 frase="bom dia" tokens=[gosta, gato]
+2026-10-18 15:45:52  KAIRA     : tudo bem Foi isso que você quis dizer?
+2026-10-18 15:46:23  ---------------------------
+2026-10-18 15:46:23  ENTRADA   : 
+eu tenho 4 gatos
+2026-10-18 15:46:23  RESPOSTA  : tudo bem obrigado e voce como posso ajudar hoje
+2026-10-18 15:46:23  DEGRAU    : aposta
+2026-10-18 15:46:23  MATCH     : intento=cumprimentar score=0.30 frase="bom dia" tokens=[tenho, 4, gato]
+2026-10-18 15:46:23  SESSAO    : followup de reflexao_ia
+2026-10-18 15:46:23  KAIRA     : tudo bem obrigado e voce como posso ajudar hoje Foi isso que você quis dizer? Que pergunta você faria pra uma IA consciente?
+2026-10-18 15:47:04  ---------------------------
+2026-10-18 15:47:04  ENTRADA   : o vc gosta de fazer?
+2026-10-18 15:47:04  SESSAO    : topico=gostos_ia
+2026-10-18 15:47:04  RESPOSTA  : Acredito ainda não ter gostos definidos
+2026-10-18 15:47:04  DEGRAU    : direto
+2026-10-18 15:47:04  MATCH     : intento=gostos_ia score=1.00 frase="o que voce gosta de fazer" tokens=[gosta, faz]
+2026-10-18 15:47:04  KAIRA     : Acredito ainda não ter gostos definidos
+2026-10-18 15:47:39  ---------------------------
+2026-10-18 15:47:39  ENTRADA   : 
+quer assistir anime comigo?
+2026-10-18 15:47:39  RESPOSTA  : Série boa é maratona justificada! Terminou alguma essa semana?
+2026-10-18 15:47:39  DEGRAU    : aposta
+2026-10-18 15:47:39  MATCH     : intento=serie score=0.57 frase="seria legal ver um anime" tokens=[quer, assist, anime, comigo]
+2026-10-18 15:47:39  KAIRA     : Série boa é maratona justificada! Terminou alguma essa semana? Foi isso que você quis dizer?
+2026-10-18 15:48:13  ---------------------------
+2026-10-18 15:48:13  ENTRADA   : 
+estou assistindo broklin 99, na verdade, reassistindo
+2026-10-18 15:48:14  SESSAO    : topico=reacao_curta
+2026-10-18 15:48:14  RESPOSTA  : Nossa mesmo! Agora me conta o resto, hehe.
+2026-10-18 15:48:14  DEGRAU    : corrigida-frase
+2026-10-18 15:48:14  MATCH     : intento=reacao_curta score=1.00 (frase exata)
+2026-10-18 15:48:14  SESSAO    : followup de reacao_curta
+2026-10-18 15:48:14  KAIRA     : Nossa mesmo! Agora me conta o resto, hehe. E aí, o que rolou depois disso?
+2026-10-18 15:48:39  ---------------------------
+2026-10-18 15:48:39  ENTRADA   : 
+fui tomar banho e lavei o cabelo
+2026-10-18 15:48:39  SESSAO    : topico=rotina_usuario
+2026-10-18 15:48:39  RESPOSTA  : Sair correndo de casa é o modo speedrunner da manhã, hehe. Deu tempo de tudo ou ficou algo pra trás?
+2026-10-18 15:48:39  DEGRAU    : corrigida-palavra
+2026-10-18 15:48:39  MATCH     : intento=rotina_usuario score=0.62 frase="tomei banho agora" tokens=[fui, tom, banho, lev, cabelo]
+2026-10-18 15:48:39  KAIRA     : Sair correndo de casa é o modo speedrunner da manhã, hehe. Deu tempo de tudo ou ficou algo pra trás?
+2026-10-18 15:49:04  ---------------------------
+2026-10-18 15:49:04  ENTRADA   : sabe quem é o emil?
+2026-10-18 15:49:04  RESPOSTA  : Sei conversar, vamos conversar
+2026-10-18 15:49:04  DEGRAU    : aposta
+2026-10-18 15:49:04  MATCH     : intento=habilidades score=0.37 frase="o que voce sabe" tokens=[sabe, emil]
+2026-10-18 15:49:04  KAIRA     : Sei conversar, vamos conversar Foi isso que você quis dizer?
+2026-10-18 15:49:26  ---------------------------
+2026-10-18 15:49:26  ENTRADA   : 
+vc  faz o L ou a a arminha?
+2026-10-18 15:49:26  SESSAO    : topico=rotina_usuario
+2026-10-18 15:49:26  RESPOSTA  : descansar também é tarefa, sabia? Fica registrado no meu log. Como você recarrega?
+2026-10-18 15:49:26  DEGRAU    : corrigida-palavra
+2026-10-18 15:49:26  MATCH     : intento=rotina_usuario score=1.00 frase="estou organizando minhas coisas" tokens=[faz, minha]
+2026-10-18 15:49:26  SESSAO    : followup de rotina_usuario
+2026-10-18 15:49:26  KAIRA     : descansar também é tarefa, sabia? Fica registrado no meu log. Como você recarrega? Depois disso, o que vem: pausa ou mais correria?
+2026-10-18 15:49:46  ---------------------------
+2026-10-18 15:49:46  ENTRADA   : gosto de não fazer nada
+2026-10-18 15:49:46  SESSAO    : fato gosta de=não fazer nada
+2026-10-18 15:49:46  SESSAO    : topico=fim_de_semana
+2026-10-18 15:49:46  RESPOSTA  : Domingo à noite é o save point da semana. Como você recarrega pra segunda?
+2026-10-18 15:49:46  DEGRAU    : direto
+2026-10-18 15:49:46  MATCH     : intento=fim_de_semana score=0.67 frase="vontade de nao fazer nada no fds" tokens=[gosto, faz, nada]
+2026-10-18 15:49:46  KAIRA     : Domingo à noite é o save point da semana. Como você recarrega pra segunda?
+2026-10-18 15:50:25  ---------------------------
+2026-10-18 15:50:25  ENTRADA   : 
+depende, na maioria das vezesa não faço nada, mas as vezes gosto de sair
+2026-10-18 15:50:25  SESSAO    : fato gosta de=sair
+2026-10-18 15:50:25  SESSAO    : topico=agradecimento
+2026-10-18 15:50:25  RESPOSTA  : obrigada a todos
+2026-10-18 15:50:25  DEGRAU    : corrigida-frase
+2026-10-18 15:50:25  MATCH     : intento=agradecimento score=1.00 (frase exata)
+2026-10-18 15:50:25  KAIRA     : obrigada a todos
+2026-10-18 15:50:36  ---------------------------
+2026-10-18 15:50:36  ENTRADA   : 
+eu que agradeço
+2026-10-18 15:50:36  SESSAO    : topico=agradecimento
+2026-10-18 15:50:36  RESPOSTA  : obrigada pelo almoco
+2026-10-18 15:50:36  DEGRAU    : direto
+2026-10-18 15:50:36  MATCH     : intento=agradecimento score=1.00 frase="agradeco desde ja" tokens=[agradeco]
+2026-10-18 15:50:36  SESSAO    : pergunta de interesse
+2026-10-18 15:50:36  KAIRA     : obrigada pelo almoco Conta uma novidade pra mim, karin?
+2026-10-18 15:51:27  ---------------------------
+2026-10-18 15:51:27  ENTRADA   : 
+tirei o aparelho fixo do dente , só estou com a contenção
+2026-10-18 15:51:27  DEGRAU    : aprender
+2026-10-18 15:51:27  MATCH     : intento=pergunta_kaaira score=0.24 frase="o que voce faz quando eu nao estou aqui" tokens=[tir, aparelho, fixo, dente, so, est, conten]
+2026-10-18 15:51:27  ENSINO    : P1 armado (aguardando resposta)
+2026-10-18 15:51:27  APRENDENDO: tirei o aparelho fixo do dente so estou com a contencao (slot=tirei aparelho fixo dente so estou contencao)
+2026-10-18 15:51:27  KAIRA     : Essa parte de tirei aparelho fixo dente so estou contencao ainda não sei... me ensina? Quero aprender o que você quis dizer?
+2026-10-18 15:52:04  ---------------------------
+2026-10-18 15:52:04  ENTRADA   : 
+humanos tem dentes, e as vezes eles ficam tortos, e para alinhar colocamos aparelhos 
+2026-10-18 15:52:04  DEGRAU    : aprender
+2026-10-18 15:52:04  MATCH     : intento=agradecimento score=0.12 frase="obrigado por me contratar" tokens=[humano, tem, dente, veze, ficam, torto, alinh, coloc, aparelho]
+2026-10-18 15:52:04  ENSINO    : porteiro score=0.240 piso=0.1
+2026-10-18 15:52:04  APRENDE   : auto_aprendizado score=0.24
+2026-10-18 15:52:05  ENSINO    : absorvido
+2026-10-18 15:52:05  KAIRA     : Anotado: "humanos tem dentes e as vezes eles ficam tortos e para alinhar colocamos aparelhos" - obrigada, isso me ajuda a aprender!
+2026-10-18 15:52:16  ---------------------------
+2026-10-18 15:52:16  ENTRADA   : 
+vc é muita sabida?
+2026-10-18 15:52:17  SESSAO    : topico=pergunta_kaaira
+2026-10-18 15:52:17  RESPOSTA  : Meu hobby declarado é conversar (chega a ser suspeito, hehe), mas meu hobby secreto é reparar nas suas palavras. Agora conta o SEU.
+2026-10-18 15:52:17  DEGRAU    : corrigida-frase
+2026-10-18 15:52:17  MATCH     : intento=pergunta_kaaira score=1.00 (frase exata)
+2026-10-18 15:52:17  SESSAO    : followup de pergunta_kaaira
+2026-10-18 15:52:17  KAIRA     : Meu hobby declarado é conversar (chega a ser suspeito, hehe), mas meu hobby secreto é reparar nas suas palavras. Agora conta o SEU. Como está sendo o seu dia até agora?
+2026-10-18 15:52:35  ---------------------------
+2026-10-18 15:52:35  ENTRADA   : 
+tranquilo até
+2026-10-18 15:52:35  SESSAO    : topico=despedida
+2026-10-18 15:52:35  RESPOSTA  : tchau estou ansioso para te atender novamente tenha um otimo dia
+2026-10-18 15:52:35  DEGRAU    : direto
+2026-10-18 15:52:35  MATCH     : intento=despedida score=1.00 frase="ok ate amanha" tokens=[tranquilo, ate]
+2026-10-18 15:52:35  KAIRA     : tchau estou ansioso para te atender novamente tenha um otimo dia
+
