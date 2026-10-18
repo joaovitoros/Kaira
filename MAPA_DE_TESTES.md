@@ -1,7 +1,7 @@
 # MAPA DE TESTES — amplitude de cobertura do KAIRA
 
 > Levantamento out/2026 (a pedido, depois do bug da âncora do tópico). Objetivo: garantir que a suíte **pegue o tipo de bug que passa por costura entre camadas** — não só o que cada método faz sozinho.
-> Estado na data: **47 classes · 237 testes · avaliador 14/14**, tudo verde.
+> Estado na data: **48 classes · 239 testes · avaliador 14/14**, tudo verde.
 
 ---
 
@@ -11,16 +11,16 @@
 |---|---|---|---|
 | **Fundação / unidade pura** | `NormalizadorTest`, `NormalizadorStemTest`, `CalculosLevenshteinTest`, `CalculosDamerauTest`, `CaminhosTest`, `RegistroTest` | 33 | fixture pura |
 | **Arquitetura** | `SemCaminhoHardcodedTest` | 1 | varre `src/` |
-| **Dados / curadoria** | `CuradoriaTemasTest`, `CuradoriaConsultoriaTest`, `IntencoesCuradoNaoDegradadoTest`, `GruposSinonimosCuradoTest`, `StopwordsCuradoTest`, `ControlePalavraCorrecaoTest`, `CorrecaoOrdemArquivoTest`, `ControleSinonimoGruposTest` | 38 | **base real** (+ dicionário) |
+| **Dados / curadoria** | `CuradoriaTemasTest`, `CuradoriaConsultoriaTest`, `IntencoesCuradoNaoDegradadoTest`, `GruposSinonimosCuradoTest`, `StopwordsCuradoTest`, `ControlePalavraCorrecaoTest`, `CorrecaoOrdemArquivoTest`, `PalavrasRegeneraAoFaltarTest`, `ControleSinonimoGruposTest` | 40 | **base real** (+ dicionário) |
 | **Regressão** | `AvaliadorTest` (dataset congelado, 14 casos) | 2 | **base real** |
 | **Matcher / classificador** | `ControleRespostaMelhorIntencaoTest`, `ControleRespostaMatcherUnificadoTest`, `ControleRespostaPesosIdfTest`, `ControleRespostaStemStopwordsTest`, `ControleRespostaSinonimoGruposTest`, `ControleRespostaFaixaConfiancaTest`, `ControleRespostaFraseExataTest`, `ControleRespostaCarregaCacheTest`, `ControleRespostaCacheIdfTest`, `ControlePreAnaliseTest` | 45 | base real + fixtures |
 | **Sessão / contexto** | `ControleSessaoTest`, `ControleSessaoPersistenciaTest`, `ControleSessaoNomeTest`, `FatosNovosTest`, `AncoraTopicoTest`, `DesempateContextoTest`, `ContinuacaoTopicoTest`, `IniciativaPropriaTest`, `ApostaPendenteTest` | 59 | base real + fixtures |
 | **Resposta / comportamento** | `ControleRespostaFallbackTest`, `ControleRespostaSlotsTest`, `ControleRespostaCriarRespostaTest`, `ControleRespostaAprendizadoTest`, `EnsinoTurbinadoTest`, `AntiRepeticaoTurnoTest`, `SistemaDeHumorTest`, `LogMatchTest`, `ControleConhecimentoTest` | 46 | base real + fixtures |
 | **Fluxo fim-a-fim** | `FluxoConversaRealTest`, `EnsinoFluxoTest` | 3 | **base real** + base isolada — o primeiro transcrito do `conversas.log` de 17/10 (10 turnos + 1 variante limpa); o segundo é o loop de 3 turnos do ensino |
 | **UI** | `ControleFaceTest` | 10 | HTML interno da Face |
-| | **47 classes** | **237** | |
+| | **48 classes** | **239** | |
 
-> **Nota de rastreio:** `CuradoriaConsultoriaTest` (4 testes) roda na suíte local mas **não está commitado** — depende dos `KAIRA/resources/intencoes-consultoria-*.json` (também não commitados; leva de dados em curadoria). Ao clonar o repo limpo, a suíte tem **46 classes / 233 testes** até a leva de consultoria ser commitada. *(medido de novo na #46: `ControleRespostaCacheIdfTest` só cita "consultoria" no javadoc, não depende do dado)*
+> **Nota de rastreio:** `CuradoriaConsultoriaTest` (4 testes) roda na suíte local mas **não está commitado** — depende dos `KAIRA/resources/intencoes-consultoria-*.json` (também não commitados; leva de dados em curadoria). Ao clonar o repo limpo, a suíte tem **47 classes / 235 testes** até a leva de consultoria ser commitada. *(medido de novo na #46: `ControleRespostaCacheIdfTest` só cita "consultoria" no javadoc, não depende do dado)*
 
 > **Nota de método:** as contagens acima foram **medidas** (contagem de `@Test` por arquivo), não estimadas. A versão anterior deste inventário abreviava nomes de classe (`MatcherUnificadoTest`, `FallbackTest`, `AvaliadorTest`...) e várias somas não fechavam; se for mexer aqui, meça de novo.
 
