@@ -1,0 +1,47 @@
+{
+    "_doc": "LEVA DIALOGO out/2026 - parte 2: expansões de EXEMPLOS nas intenções existentes (P4 tecido social do trabalho/marcos de carreira em trabalho_usuario; P6 hobbies/aprendizado de adulto em atividades_usuario). Só acrescenta; nada é apagado. Mesmo formato compacto das demais.",
+    "_origem": "curadoria dialogo out/2026",
+    "intencoes": [
+        {
+            "intento": "trabalho_usuario",
+            "exemplos": [
+                "meu colega de trabalho e engracado",
+                "happy hour com a equipe hoje",
+                "fui promovido esse mes",
+                "ganhei um aumento",
+                "me demitiram",
+                "meu colega me ajudou hoje",
+                "almoco com a equipe",
+                "primeiro dia no emprego novo",
+                "aposentadoria chegando",
+                "feira de trabalho no sabado",
+                "chefe elogiou meu trabalho",
+                "equipe nova muito boa"
+            ],
+            "respostas": [
+                ["Colega de trabalho é a família que a gente não escolhe, hehe. Ele te ajuda ou te testa?", 0, 3],
+                ["Fila zero, chefe contente, colega parceiro... parece dia bom, hein? Conta como foi.", 4, 6],
+                ["PROMOVIDO?! Isso merece festa digital e café de verdade! Me conta como foi a conversa com o chefe.", 7, 10]
+            ]
+        },
+        {
+            "intento": "atividades_usuario",
+            "exemplos": [
+                "curso online de fotografia",
+                "certificacao nova esse ano",
+                "aprendendo a tocar violao",
+                "trico da vovo",
+                "danca de salao na quarta",
+                "colecionando moedas antigas",
+                "pintando um quadro novo",
+                "fotografando a rua hoje",
+                "jardinagem de domingo",
+                "tocando violao agora"
+            ],
+            "respostas": [
+                ["Curso novo é porta se abrindo, hehe. O que te chamou pra esse?", 4, 6],
+                ["Instrumento é conversa com as mãos, sério. O que você já consegue tocar?", 7, 10]
+            ]
+        }
+    ]
+}

@@ -1,0 +1,52 @@
+{
+    "_doc": "Curadoria da RODADA 2 (out/2026) - dois intentos de DESABAFO que nao tinham casa na base. `relacao_usuario` (parceiro/relacao forcada) e `familia_pressao` (expectativa/cobranca da familia). Antes: 'meu noivo quase nao ajuda' caia em humor_usuario ('espero que seja por estar falando comigo :)') e 'meu pai acha que eu desisto' em reacao_curta. Textos aprovados pelo autor (out/2026) - respostas acolhedoras, sem julgar e sem conselho apressado.",
+    "_origem": "curadoria rodada-2 out/2026",
+    "intencoes": [
+        {
+            "intento": "relacao_usuario",
+            "exemplos": [
+                "meu noivo quase nao ajuda",
+                "meu namorado nao me escuta",
+                "meu marido nao ajuda em casa",
+                "estamos brigando muito",
+                "meu casamento ta dificil",
+                "a gente terminou ontem",
+                "a gente so briga",
+                "ela nunca tem tempo pra mim"
+            ],
+            "respostas": [
+                ["Isso desgasta de um jeito silencioso, né? Quer me contar o que tem pesado mais?", 4, 10],
+                ["Não vou julgar nem dizer o que fazer. Como você tem se sentido com isso?", 0, 10],
+                ["Relação é osso quando a gente se sente sozinho nela. Tô aqui - me conta.", 0, 10],
+                ["Dá pra ouvir que isso te incomoda de verdade. Vocês já conseguiram conversar sobre isso?", 4, 10],
+                ["Você quer desabafar ou pensar junto no que fazer?", 4, 6]
+            ],
+            "followups": [
+                "Quer me contar como tem sido?",
+                "E como você está se sentindo com isso?"
+            ]
+        },
+        {
+            "intento": "familia_pressao",
+            "exemplos": [
+                "meu pai acha que eu desisto",
+                "minha familia nao acredita em mim",
+                "meus pais querem que eu faca outra coisa",
+                "minha mae fica me cobrando",
+                "eles nao aceitam meus planos",
+                "minha familia so me critica"
+            ],
+            "respostas": [
+                ["É cansativo quando quem devia torcer por você duvida, né? Me conta o que eles dizem.", 4, 10],
+                ["Não vou fingir que sei o certo pra sua vida - mas eu acredito que você pode querer o seu caminho.", 4, 10],
+                ["Cobrança de família cansa de um jeito que ninguém vê. Quer desabafar?", 0, 10],
+                ["Você não precisa ter tudo resolvido hoje. O que te daria um pouco de paz agora?", 4, 10],
+                ["Acho corajoso você defender o que quer. Eles já ouviram você de verdade?", 4, 10]
+            ],
+            "followups": [
+                "Quer me contar o que eles dizem?",
+                "O que você gostaria que eles entendessem?"
+            ]
+        }
+    ]
+}

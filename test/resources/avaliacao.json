@@ -1,5 +1,5 @@
 {
-  "_doc": "Dataset de avaliacao do KAIRA (Tarefa #3, atualizado na #5 e #7). Roda com CWD na raiz do projeto. Dois tiers: (1) fraseEsperada != null = caso de REGRESSAO, tem que casar hoje; (2) fraseEsperada = null + alvoFase1 = GAP medido, nao resolve hoje. A Tarefa #5 (classificador por cobertura de pergunta) fechou 2 gaps - 'como vc esta' e 'bom dia' - que viraram regressao asserida. A Tarefa #7 (migracao pra intencoes.json, §5.1) fechou os 2 ultimos: 'e ai beleza' resolve via intento cumprimentar (exemplo 'e ai tudo beleza') e 'qual seu jogo favorito' via intento jogo_favorito ('do Mario'). Ambos promovidos a regressao - hoje todos os casos sao regressao e nao ha gap aberto. O caso 'bom dia' mudou de alvo: o corpus Tatoeba passou a offerer 'bom dia' como exemplo exato, entao ele resolve por match exato (antes cobertura pra 'bom dia como voce esta').",
+  "_doc": "Dataset de avaliacao do KAIRA (Tarefa #3, atualizado na #5 e #7). Roda com CWD na raiz do projeto. Dois tiers: (1) fraseEsperada != null = caso de REGRESSAO, tem que casar hoje; (2) fraseEsperada = null + alvoFase1 = GAP medido, nao resolve hoje. A Tarefa #5 (classificador por cobertura de pergunta) fechou 2 gaps - 'como vc esta' e 'bom dia' - que viraram regressao asserida. A Tarefa #7 (migracao pra intencoes.json, §5.1) fechou os 2 ultimos: 'e ai beleza' resolve via intento cumprimentar (exemplo 'e ai tudo beleza') e 'qual seu jogo favorito' via intento jogo_favorito ('do Mario'). Ambos promovidos a regressao - hoje todos os casos sao regressao e nao ha gap aberto. O caso 'bom dia' mudou de alvo: o corpus Tatoeba passou a offerer 'bom dia' como exemplo exato, entao ele resolve por match exato (antes cobertura pra 'bom dia como voce esta'). Leva out/2026 (baterias de teste as cegas, 2 rodadas): +30 casos de frase REAL travados apos os fixes (kaira neutro, ancoras do obrigado, luto/crise, desabafos) - ver logs/baterias/.",
   "casos": [
     { "entrada": "oi", "fraseEsperada": "oi", "nota": "cumprimento simples" },
     { "entrada": "ola", "fraseEsperada": "ola", "nota": "cumprimento simples" },
@@ -16,6 +16,37 @@
     { "entrada": "bom dia", "fraseEsperada": "bom dia", "nota": "GAP FECHADO pela Tarefa #5; alvo REVISTO na #7 - o corpus Tatoeba passou a trazer 'bom dia' como exemplo exato do intento cumprimentar, entao casa por match exato (antes cobertura pra 'bom dia como voce esta')" },
 
     { "entrada": "e ai beleza", "fraseEsperada": "e ai tudo beleza", "nota": "GAP FECHADO pela Tarefa #7 (§5.1) - via intento cumprimentar; melhorExemplo 'e ai tudo beleza' (resto=1) vence 'e ai beleza tudo bem' (resto=2)" },
-    { "entrada": "qual seu jogo favorito", "fraseEsperada": "qual seu jogo favorito do mario", "nota": "GAP FECHADO pela Tarefa #7 (§5.1) - via intento jogo_favorito; 'do Mario' e 'do Sonic' empatam em cobertura e desempata o primeiro do arquivo" }
+    { "entrada": "qual seu jogo favorito", "fraseEsperada": "qual seu jogo favorito do mario", "nota": "GAP FECHADO pela Tarefa #7 (§5.1) - via intento jogo_favorito; 'do Mario' e 'do Sonic' empatam em cobertura e desempata o primeiro do arquivo" },
+
+    { "entrada": "tchau kaira", "fraseEsperada": "tchau", "nota": "baterias out/2026 - kaira e nome do bot, nao gatilho de piada (bug 4 da rodada 1)" },
+    { "entrada": "ate mais kaira", "fraseEsperada": "ate mais", "nota": "baterias out/2026 - idem - 'kaira' virou stopword" },
+    { "entrada": "boa noite, kaira", "fraseEsperada": "boa noite", "nota": "baterias out/2026 - idem" },
+    { "entrada": "oi kaira", "fraseEsperada": "oi", "nota": "baterias out/2026 - idem - saudacao com o nome do bot" },
+    { "entrada": "eae kaira, tudo certo?", "fraseEsperada": "eae tudo bem", "nota": "baterias out/2026 - idem" },
+    { "entrada": "obrigada", "fraseEsperada": "obrigada", "nota": "baterias out/2026 - ancora canonica (volta apos a poda por subconjunto ser revertida)" },
+    { "entrada": "obrigado", "fraseEsperada": "obrigado", "nota": "baterias out/2026 - idem" },
+    { "entrada": "muito obrigada", "fraseEsperada": "muito obrigada", "nota": "baterias out/2026 - idem" },
+    { "entrada": "obrigada por ouvir", "fraseEsperada": "obrigado por escutar", "nota": "baterias out/2026 - ancora da familia 'obrigado por X' (nao cai mais em elogio)" },
+    { "entrada": "obrigada por perguntar", "fraseEsperada": "obrigado por perguntar", "nota": "baterias out/2026 - idem" },
+    { "entrada": "obrigado por conversar comigo", "fraseEsperada": "obrigado por conversar comigo", "nota": "baterias out/2026 - idem" },
+    { "entrada": "meu marido faleceu ano passado", "fraseEsperada": "meu marido faleceu ano passado", "nota": "baterias out/2026 - empatia: luto nao pode cair em felicidade (bug 1 da rodada 1)" },
+    { "entrada": "meu pai faleceu em janeiro", "fraseEsperada": "meu pai faleceu em janeiro", "nota": "baterias out/2026 - variacao de luto colhida na rodada 2" },
+    { "entrada": "minha mae faleceu", "fraseEsperada": "minha mae faleceu", "nota": "baterias out/2026 - idem" },
+    { "entrada": "perdi um paciente hoje", "fraseEsperada": "perdi um paciente hoje", "nota": "baterias out/2026 - 'perder' nao e 'perder a paciencia'" },
+    { "entrada": "estou de luto", "fraseEsperada": "estou de luto", "nota": "baterias out/2026 - idem" },
+    { "entrada": "nao superei a perda ate hoje", "fraseEsperada": "nao superei a perda ate hoje", "nota": "baterias out/2026 - idem" },
+    { "entrada": "as vezes nao vejo a hora de acabar", "fraseEsperada": "as vezes nao vejo a hora de acabar", "nota": "baterias out/2026 - o caso GRAVE da rodada 2 (colisao 'nao vejo a hora de contar')" },
+    { "entrada": "nao vejo a hora de acabar", "fraseEsperada": "as vezes nao vejo a hora de acabar", "nota": "baterias out/2026 - idem - generaliza pelo molde" },
+    { "entrada": "as vezes penso em desistir", "fraseEsperada": "as vezes penso em desistir", "nota": "baterias out/2026 - crise (antes: religiao/fallback)" },
+    { "entrada": "nao sei se aguento mais", "fraseEsperada": "nao sei se aguento mais", "nota": "baterias out/2026 - idem" },
+    { "entrada": "nao vejo saida", "fraseEsperada": "nao vejo saida", "nota": "baterias out/2026 - idem" },
+    { "entrada": "meu noivo quase nao ajuda", "fraseEsperada": "meu noivo quase nao ajuda", "nota": "baterias out/2026 - desabafo de relacao (antes: humor_usuario)" },
+    { "entrada": "meu pai acha que eu desisto", "fraseEsperada": "meu pai acha que eu desisto", "nota": "baterias out/2026 - pressao familiar (antes: reacao_curta)" },
+    { "entrada": "minha familia nao acredita em mim", "fraseEsperada": "minha familia nao acredita em mim", "nota": "baterias out/2026 - idem" },
+    { "entrada": "as vezes choro escondido no banheiro", "fraseEsperada": "as vezes choro escondido no banheiro", "nota": "baterias out/2026 - tristeza abaixo do piso virou exemplo (rodada 2)" },
+    { "entrada": "as vezes eu surto com os fornecedores", "fraseEsperada": "as vezes eu surto com os fornecedores", "nota": "baterias out/2026 - desabafo nao e critica (rodada 2)" },
+    { "entrada": "crio meu filho sozinha", "fraseEsperada": "crio meu filho sozinha", "nota": "baterias out/2026 - a correcao de palavra sequestrava pra sonhos_dormir" },
+    { "entrada": "tenho medo disso", "fraseEsperada": "tenho medo de falar em publico", "nota": "baterias out/2026 - medo/preocupacao ja funcionava - travado" },
+    { "entrada": "as vezes me sinto sozinha", "fraseEsperada": "me sinto sozinho hoje", "nota": "baterias out/2026 - idem" }
   ]
 }

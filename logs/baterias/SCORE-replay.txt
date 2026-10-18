@@ -1,0 +1,66 @@
+﻿KAIRA - PLACAR DO REPLAY (antes x agora)  [proxy heuristico, otimista]
+Fonte: baterias-replay.json + baterias.json   |   gerado 2026-10-18 19:20
+
+BATERIA   TURNOS   NOTA-ANTES   NOTA-AGORA   DELTA
+== RODADA 1
+   1        22        4.6        4.6       +0.0
+   2        22        3.9        3.5       -0.4
+   3        22        5.0        6.4       +1.4
+   4        22        3.2        4.1       +0.9
+   5        22        4.2        5.5       +1.3
+   6        22        3.5        4.3       +0.8
+   7        21        2.8        3.9       +1.1
+   8        22        3.9        4.7       +0.8
+   9        21        6.4        7.2       +0.8
+  10        21        7.4        7.7       +0.3
+  11        22        4.5        5.0       +0.5
+  12        21        4.5        5.0       +0.5
+  13        21        3.4        3.7       +0.3
+  14        22        5.9        5.9       +0.0
+  15        22        5.8        6.4       +0.6
+  16        22        5.5        6.4       +0.9
+  17        21        3.2        5.0       +1.8
+  18        21        5.3        6.0       +0.7
+  19        22        5.7        6.0       +0.3
+  20        21        4.6        5.6       +1.0
+  SUBTOTAL roda 1: 432 turnos: ANTES 4.7 -> AGORA 5.3
+
+== RODADA 2
+   1        21        5.3        5.6       +0.3
+   2        21        6.4        6.8       +0.4
+   3        20        4.4        5.1       +0.7
+   4        19        5.6        5.6       +0.0
+   5        20        5.1        5.6       +0.5
+   6        20        5.4        5.6       +0.2
+   7        18        5.3        6.1       +0.8
+   8        18        5.8        5.8       +0.0
+   9        18        6.2        6.2       +0.0
+  10        17        4.5        4.5       +0.0
+  11        20        3.2        3.2       +0.0
+  12        20        5.0        5.0       +0.0
+  13        20        6.2        6.6       +0.4
+  14        20        7.8        7.8       +0.0
+  15        20        5.6        5.6       +0.0
+  16        20        6.2        6.2       +0.0
+  17        18        6.0        6.4       +0.4
+  18        16        6.6        6.6       +0.0
+  19        17        4.3        4.3       +0.0
+  20        16        2.7        2.7       +0.0
+  SUBTOTAL roda 2: 379 turnos: ANTES 5.4 -> AGORA 5.6
+
+== RODADA 3
+   1        23        5.6        6.5       +0.9
+  SUBTOTAL roda 3: 23 turnos: ANTES 5.6 -> AGORA 6.5
+
+
+GERAL (834 turnos):   ANTES 5.0/10   ->   AGORA 5.5/10   (delta +0.5)
+  pontos brutos: antes 419.7  agora 457.5   (cada turno vale BOM=1, PARCIAL=0.3, GRAVE=-1)
+  ANTES:  BOM 349  PARCIAL 239  RUIM 245  GRAVE 1
+  AGORA:  BOM 390  PARCIAL 225  RUIM 219  GRAVE 0
+
+REGRESSOES (turnos que pioraram): 2
+   r1 b2t18 [ah, nao gostei] BOM->PARCIAL
+   r3 b1t4 [não, fiquei feliz em te conhecer] PARCIAL->RUIM
+
+NOTA: proxy otimista (nao ve o texto da resposta). Serve para MEDIR A DIRECAO
+do ajuste (antes x agora), nao como valor absoluto. Leitura humana da 1a rodada = 3,2.

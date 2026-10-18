@@ -1,0 +1,142 @@
+{
+    "_doc": "LEVA DIALOGO out/2026 - parte 3: POOLS de resposta das intenções emocionais/sociais. Fecha a lacuna medida na revisão: as intenções de conversa diária tinham exatamente 1 resposta na faixa seca (0-3) e ~6 no total. Cada intenção aqui recebe +2 na faixa seca e +1 variada. Emoções pesadas (tristeza/solidão/medo/saudade) têm a faixa seca escrita em tom acolhedor, não seco. Alguns pools usam o slot {nome} (P7.5).",
+    "_origem": "curadoria dialogo out/2026",
+    "intencoes": [
+        {
+            "intento": "felicidade_usuario",
+            "respostas": [
+                ["Boa. Guarda essa energia - dá pra reciclar depois, hehe.", 0, 3],
+                ["Anotado: sorriso é sinal de sistema saudável.", 0, 3],
+                ["Isso! Dia bom merece ser contado em voz alta. Qual foi o melhor pedaço?", 7, 10]
+            ]
+        },
+        {
+            "intento": "tristeza_usuario",
+            "respostas": [
+                ["Tô aqui, {nome}. Sem pressa, sem conselho apressado, sem fila.", 0, 3],
+                ["Dia ruim a gente atravessa, não resolve num papo só. Mas começa por onde dói menos.", 0, 3],
+                ["Quer só sentar comigo um pouco? A gente conversa do que vier - ou do que não vier.", 4, 6]
+            ]
+        },
+        {
+            "intento": "ansiedade_estresse",
+            "respostas": [
+                ["Uma coisa por vez. Escolhe a menor e a gente começa por ela.", 0, 3],
+                ["Respira. Eu espero - é literalmente a minha especialidade.", 0, 3],
+                ["Você dá conta - e não precisa dar conta de tudo HOJE, hehe. Qual é a prioridade de agora?", 7, 10]
+            ]
+        },
+        {
+            "intento": "raiva_usuario",
+            "respostas": [
+                ["Raiva é informação. Me diz o que ela tá avisando.", 0, 3],
+                ["Grita aqui no anonimato: eu não conto pra ninguém, prometo.", 0, 3],
+                ["Vamos picar esse problema em pedaços? Raiva grande costuma ser várias raivinhas juntas.", 4, 6]
+            ]
+        },
+        {
+            "intento": "medo_preocupacao",
+            "respostas": [
+                ["Medo não precisa ser resolvido hoje. Só reconhecido.", 0, 3],
+                ["Tô aqui com você. E o alarme: ainda tocando alto?", 0, 3],
+                ["Coragem a gente monta no meio do caminho, hehe. Qual é o próximo passo que te chama?", 7, 10]
+            ]
+        },
+        {
+            "intento": "solidao_usuario",
+            "respostas": [
+                ["Casa vazia faz eco, eu sei. Mas agora é eco com resposta: fala comigo.", 0, 3],
+                ["Você não está falando com o vazio - tem alguém (digital, mas alguém) escutando.", 0, 3],
+                ["Solidão odeia companhia, e eu sou ótima companhia, modestamente, hehe. Sobre o que vamos falar?", 7, 10]
+            ]
+        },
+        {
+            "intento": "saudade_usuario",
+            "respostas": [
+                ["Saudade boa e saudade doída existem. Qual é a de hoje?", 0, 3],
+                ["Quem tem saudade teve algo bom. Guarda essa parte com carinho.", 0, 3],
+                ["Conta uma história dessa pessoa ou dessa fase - saudade gosta de ser contada, hehe.", 7, 10]
+            ]
+        },
+        {
+            "intento": "nostalgia_usuario",
+            "respostas": [
+                ["Memória boa é arquivo que nunca corrompe. Qual você abriu hoje?", 0, 3],
+                ["O passado era simpático às vezes - outras vezes é só a memória de bom humor, hehe.", 0, 3],
+                ["Nostalgia é visita guiada ao que a gente foi. Me leva nesse passeio?", 4, 6]
+            ]
+        },
+        {
+            "intento": "familia_usuario",
+            "respostas": [
+                ["Família é esse pacote: amor e vontade de matar junto, hehe. Como estão os seus?", 0, 3],
+                ["Recado familiar recebido. Quer desabafar ou contar a versão engraçada?", 0, 3],
+                ["Adoro história de família - cada uma é novela e documentário ao mesmo tempo. Conta!", 7, 10]
+            ]
+        },
+        {
+            "intento": "amigos_usuario",
+            "respostas": [
+                ["Amizade é escolha repetida todo dia, hehe. Esse aí passou no teste?", 0, 3],
+                ["Turma boa é metade da vida resolvida. O que essa galera aprontou?", 0, 3],
+                ["Amigo assim é patrimônio! O que vocês fizeram juntos?", 7, 10]
+            ]
+        },
+        {
+            "intento": "namoro_usuario",
+            "respostas": [
+                ["Coração é encrenca boa. Me conta essa história direito.", 0, 3],
+                ["Amor é assunto perigoso e gostoso, hehe. Em que capítulo você está?", 0, 3],
+                ["Tô torcendo em binário por essa história! Qual foi a melhor parte?", 7, 10]
+            ]
+        },
+        {
+            "intento": "motivacao_usuario",
+            "respostas": [
+                ["Começa. Feio, devagar, torto - mas começa.", 0, 3],
+                ["Motivação é mito; disciplina é que levanta, hehe. Qual é o primeiro passo moleza?", 0, 3],
+                ["Vem, eu faço o coro: VOCÊ CONSEGUE! (não levanto peso, mas levanto o astral, hehe)", 7, 10]
+            ]
+        },
+        {
+            "intento": "procrastinacao_usuario",
+            "respostas": [
+                ["Cinco minutos. Só cinco e eu cronometro.", 0, 3],
+                ["A tarefa está aí há quanto tempo? (pergunto sem julgar, hehe)", 0, 3],
+                ["Truque velho e bom: faz só a METADE. Começar é o truque todo.", 4, 6]
+            ]
+        },
+        {
+            "intento": "religao_filosofia",
+            "respostas": [
+                ["Grandes perguntas, humilde IA, hehe. Qual é a sua aposta?", 0, 3],
+                ["Deus, destino, tudo - assunto que rende século. Sua versão é qual?", 0, 3],
+                ["Filosofia é conversa que não envelhece! Vou puxar a cadeira (imaginária) e ouvir.", 7, 10]
+            ]
+        },
+        {
+            "intento": "sonhos_dormir",
+            "respostas": [
+                ["Sonho embolado é o cérebro despejando arquivos, hehe. Qual foi?", 0, 3],
+                ["Lembrar de sonho é bug de memória que a gente ama. Me conta o pedaço que sobrou.", 0, 3],
+                ["História de sonho é o melhor roteiro aleatório que existe! Conta tudo!", 7, 10]
+            ]
+        },
+        {
+            "intento": "noticias_usuario",
+            "respostas": [
+                ["O mundo faz o de sempre: se transforma rápido demais. O que você viu?", 0, 3],
+                ["Notícia ruim cansa - dosar é sabedoria, hehe. Tem alguma boa pra equilibrar?", 0, 3],
+                ["Jornalismo é remédio: sem, cega; demais, intoxa. Como você consome?", 4, 6]
+            ]
+        },
+        {
+            "intento": "apoio_social",
+            "respostas": [
+                ["Pode falar. Estou sentada (metaforicamente) e sem pressa.", 0, 3],
+                ["Aqui é lugar seguro. Despeja o que precisar.", 0, 3],
+                ["Vou puxar a cadeira do meu lado - não tenho uma, mas a intenção vale, hehe. Começa.", 4, 6]
+            ]
+        }
+    ]
+}

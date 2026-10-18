@@ -6708,6 +6708,14 @@
                 {
                     "texto": "to com o coracao apertado",
                     "origem": "curadoria consultoria out/2026"
+                },
+                {
+                    "texto": "as vezes choro escondido no banheiro",
+                    "origem": "curadoria rodada-2 out/2026"
+                },
+                {
+                    "texto": "choro escondido pra ninguem ver",
+                    "origem": "curadoria rodada-2 out/2026"
                 }
             ],
             "palavrasChave": null,
@@ -7768,6 +7776,14 @@
                     "origem": "curadoria consultoria out/2026"
                 },
                 {
+                    "texto": "minha familia me apoia",
+                    "origem": "curadoria rodada-2 out/2026"
+                },
+                {
+                    "texto": "meus pais me apoiaram",
+                    "origem": "curadoria rodada-2 out/2026"
+                },
+                {
                     "texto": "vou jantar com minha familia",
                     "origem": "curadoria consultoria out/2026"
                 },
@@ -7874,6 +7890,10 @@
                 {
                     "texto": "liguei pra minha avo hoje",
                     "origem": "curadoria consultoria out/2026"
+                },
+                {
+                    "texto": "crio meu filho sozinha",
+                    "origem": "curadoria rodada-2 out/2026"
                 }
             ],
             "palavrasChave": null,
@@ -9402,6 +9422,10 @@
                 {
                     "texto": "equipe nova muito boa",
                     "origem": "curadoria dialogo out/2026"
+                },
+                {
+                    "texto": "as vezes eu surto com os fornecedores",
+                    "origem": "curadoria rodada-2 out/2026"
                 }
             ],
             "palavrasChave": null,
@@ -12347,6 +12371,22 @@
                 {
                     "texto": "nao superei a perda ate hoje",
                     "origem": "curadoria uso-real out/2026"
+                },
+                {
+                    "texto": "meu pai faleceu em janeiro",
+                    "origem": "curadoria rodada-2 out/2026"
+                },
+                {
+                    "texto": "minha avo morreu",
+                    "origem": "curadoria rodada-2 out/2026"
+                },
+                {
+                    "texto": "meu falecido marido",
+                    "origem": "curadoria rodada-2 out/2026"
+                },
+                {
+                    "texto": "perdi meu pai",
+                    "origem": "curadoria rodada-2 out/2026"
                 }
             ],
             "respostas": [
@@ -12396,6 +12436,216 @@
             "followups": [
                 "Se quiser, me conta uma lembrança boa.",
                 "Como você está se sentindo agora?"
+            ],
+            "acoes": []
+        },
+        {
+            "intento": "peso_demais",
+            "exemplos": [
+                {
+                    "texto": "as vezes nao vejo a hora de acabar",
+                    "origem": "curadoria rodada-2 out/2026"
+                },
+                {
+                    "texto": "as vezes penso em desistir",
+                    "origem": "curadoria rodada-2 out/2026"
+                },
+                {
+                    "texto": "penso em desistir de tudo",
+                    "origem": "curadoria rodada-2 out/2026"
+                },
+                {
+                    "texto": "nao sei se aguento mais",
+                    "origem": "curadoria rodada-2 out/2026"
+                },
+                {
+                    "texto": "nao vejo saida",
+                    "origem": "curadoria rodada-2 out/2026"
+                },
+                {
+                    "texto": "a vida ta pesada demais",
+                    "origem": "curadoria rodada-2 out/2026"
+                },
+                {
+                    "texto": "to cansado de tudo",
+                    "origem": "curadoria rodada-2 out/2026"
+                }
+            ],
+            "respostas": [
+                {
+                    "texto": "Eu levo isso a sério, e não vou fingir que sei resolver. Você não precisa carregar isso sozinho - tem alguém aí com quem você possa falar hoje?",
+                    "origem": "curadoria rodada-2 out/2026",
+                    "humorMin": 4,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Quando você diz que não vê a hora de acabar, eu paro tudo pra te ouvir. Você importa. Quer me contar o que está acontecendo?",
+                    "origem": "curadoria rodada-2 out/2026",
+                    "humorMin": 4,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Não vou te dar sermão nem fórmula. Só quero que você saiba que não precisa atravessar isso sozinho - e que falar com alguém de verdade ajuda.",
+                    "origem": "curadoria rodada-2 out/2026",
+                    "humorMin": 0,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Sinto muito que esteja pesando assim. Eu fico aqui com você, sem pressa; e o apoio de uma pessoa de verdade importa muito. Dá pra procurar alguém hoje?",
+                    "origem": "curadoria rodada-2 out/2026",
+                    "humorMin": 4,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Tô aqui, sem pressa, e não vou minimizar o que você sente. Se esses pensamentos ficarem fortes, o CVV atende no 188, de graça, 24h - e eu continuo aqui com você.",
+                    "origem": "curadoria rodada-2 out/2026",
+                    "humorMin": 4,
+                    "humorMax": 10
+                }
+            ],
+            "followups": [
+                "Quer me contar o que está pesando?",
+                "Como você está agora?"
+            ],
+            "acoes": []
+        },
+        {
+            "intento": "relacao_usuario",
+            "exemplos": [
+                {
+                    "texto": "meu noivo quase nao ajuda",
+                    "origem": "curadoria rodada-2 out/2026"
+                },
+                {
+                    "texto": "meu namorado nao me escuta",
+                    "origem": "curadoria rodada-2 out/2026"
+                },
+                {
+                    "texto": "meu marido nao ajuda em casa",
+                    "origem": "curadoria rodada-2 out/2026"
+                },
+                {
+                    "texto": "estamos brigando muito",
+                    "origem": "curadoria rodada-2 out/2026"
+                },
+                {
+                    "texto": "meu casamento ta dificil",
+                    "origem": "curadoria rodada-2 out/2026"
+                },
+                {
+                    "texto": "a gente terminou ontem",
+                    "origem": "curadoria rodada-2 out/2026"
+                },
+                {
+                    "texto": "a gente so briga",
+                    "origem": "curadoria rodada-2 out/2026"
+                },
+                {
+                    "texto": "ela nunca tem tempo pra mim",
+                    "origem": "curadoria rodada-2 out/2026"
+                }
+            ],
+            "respostas": [
+                {
+                    "texto": "Isso desgasta de um jeito silencioso, né? Quer me contar o que tem pesado mais?",
+                    "origem": "curadoria rodada-2 out/2026",
+                    "humorMin": 4,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Não vou julgar nem dizer o que fazer. Como você tem se sentido com isso?",
+                    "origem": "curadoria rodada-2 out/2026",
+                    "humorMin": 0,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Relação é osso quando a gente se sente sozinho nela. Tô aqui - me conta.",
+                    "origem": "curadoria rodada-2 out/2026",
+                    "humorMin": 0,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Dá pra ouvir que isso te incomoda de verdade. Vocês já conseguiram conversar sobre isso?",
+                    "origem": "curadoria rodada-2 out/2026",
+                    "humorMin": 4,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Você quer desabafar ou pensar junto no que fazer?",
+                    "origem": "curadoria rodada-2 out/2026",
+                    "humorMin": 4,
+                    "humorMax": 6
+                }
+            ],
+            "followups": [
+                "Quer me contar como tem sido?",
+                "E como você está se sentindo com isso?"
+            ],
+            "acoes": []
+        },
+        {
+            "intento": "familia_pressao",
+            "exemplos": [
+                {
+                    "texto": "meu pai acha que eu desisto",
+                    "origem": "curadoria rodada-2 out/2026"
+                },
+                {
+                    "texto": "minha familia nao acredita em mim",
+                    "origem": "curadoria rodada-2 out/2026"
+                },
+                {
+                    "texto": "meus pais querem que eu faca outra coisa",
+                    "origem": "curadoria rodada-2 out/2026"
+                },
+                {
+                    "texto": "minha mae fica me cobrando",
+                    "origem": "curadoria rodada-2 out/2026"
+                },
+                {
+                    "texto": "eles nao aceitam meus planos",
+                    "origem": "curadoria rodada-2 out/2026"
+                },
+                {
+                    "texto": "minha familia so me critica",
+                    "origem": "curadoria rodada-2 out/2026"
+                }
+            ],
+            "respostas": [
+                {
+                    "texto": "É cansativo quando quem devia torcer por você duvida, né? Me conta o que eles dizem.",
+                    "origem": "curadoria rodada-2 out/2026",
+                    "humorMin": 4,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Não vou fingir que sei o certo pra sua vida - mas eu acredito que você pode querer o seu caminho.",
+                    "origem": "curadoria rodada-2 out/2026",
+                    "humorMin": 4,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Cobrança de família cansa de um jeito que ninguém vê. Quer desabafar?",
+                    "origem": "curadoria rodada-2 out/2026",
+                    "humorMin": 0,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Você não precisa ter tudo resolvido hoje. O que te daria um pouco de paz agora?",
+                    "origem": "curadoria rodada-2 out/2026",
+                    "humorMin": 4,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Acho corajoso você defender o que quer. Eles já ouviram você de verdade?",
+                    "origem": "curadoria rodada-2 out/2026",
+                    "humorMin": 4,
+                    "humorMax": 10
+                }
+            ],
+            "followups": [
+                "Quer me contar o que eles dizem?",
+                "O que você gostaria que eles entendessem?"
             ],
             "acoes": []
         },
@@ -18342,5 +18592,5 @@
             "acoes": []
         }
     ],
-    "_doc": " Expansao CONSULTORIA out/2026: 33 intenções novas (conversa diária: trabalho, rotina, emoções, família, amigos, namoro, saúde, dinheiro, tecnologia, planos, fds, transporte, cozinha, café, horário, aparência, redes, idiomas, semana, sonhos, filosofia, motivação, procrastinação, notícias, apoio) + expansão das intenções existentes fracas, gerada pelo merge_intencoes_consultoria.py a partir dos patches intencoes-consultoria-*.json (origem 'curadoria consultoria out/2026' item a item; git guarda a base anterior). Leva DIALOGO out/2026 (mesma ferramenta, patches intencoes-dialogo-*.json; origem 'curadoria dialogo out/2026', com literais de match exato em origem 'autor'): 3 intenções novas de fluxo de diálogo (pergunta_kaaira, reacao_curta, casa_usuario), expansão de trabalho_usuario/atividades_usuario e pools de resposta por faixa de humor (o mínimo de 3 respostas em cada faixa das intenções de conversa diária). Expansao CONSULTORIA out/2026: 33 intenções novas (conversa diária: trabalho, rotina, emoções, família, amigos, namoro, saúde, dinheiro, tecnologia, planos, fds, transporte, cozinha, café, horário, aparência, redes, idiomas, semana, sonhos, filosofia, motivação, procrastinação, notícias, apoio) + expansão das intenções existentes fracas, gerada pelo merge_intencoes_consultoria.py a partir dos patches intencoes-consultoria-*.json (origem 'curadoria consultoria out/2026' item a item; git guarda a base anterior). Leva DIALOGO out/2026 (mesma ferramenta, patches intencoes-dialogo-*.json; origem 'curadoria dialogo out/2026', com literais de match exato em origem 'autor'): 3 intenções novas de fluxo de diálogo (pergunta_kaaira, reacao_curta, casa_usuario), expansão de trabalho_usuario/atividades_usuario e pools de resposta por faixa de humor (o mínimo de 3 respostas em cada faixa das intenções de conversa diária)."
+    "_doc": " Expansao CONSULTORIA out/2026: 33 intenções novas (conversa diária: trabalho, rotina, emoções, família, amigos, namoro, saúde, dinheiro, tecnologia, planos, fds, transporte, cozinha, café, horário, aparência, redes, idiomas, semana, sonhos, filosofia, motivação, procrastinação, notícias, apoio) + expansão das intenções existentes fracas, gerada pelo merge_intencoes_consultoria.py a partir dos patches intencoes-consultoria-*.json (origem 'curadoria consultoria out/2026' item a item; git guarda a base anterior). Leva DIALOGO out/2026 (mesma ferramenta, patches intencoes-dialogo-*.json; origem 'curadoria dialogo out/2026', com literais de match exato em origem 'autor'): 3 intenções novas de fluxo de diálogo (pergunta_kaaira, reacao_curta, casa_usuario), expansão de trabalho_usuario/atividades_usuario e pools de resposta por faixa de humor (o mínimo de 3 respostas em cada faixa das intenções de conversa diária). Expansao CONSULTORIA out/2026: 33 intenções novas (conversa diária: trabalho, rotina, emoções, família, amigos, namoro, saúde, dinheiro, tecnologia, planos, fds, transporte, cozinha, café, horário, aparência, redes, idiomas, semana, sonhos, filosofia, motivação, procrastinação, notícias, apoio) + expansão das intenções existentes fracas, gerada pelo merge_intencoes_consultoria.py a partir dos patches intencoes-consultoria-*.json (origem 'curadoria consultoria out/2026' item a item; git guarda a base anterior). Leva DIALOGO out/2026 (mesma ferramenta, patches intencoes-dialogo-*.json; origem 'curadoria dialogo out/2026', com literais de match exato em origem 'autor'): 3 intenções novas de fluxo de diálogo (pergunta_kaaira, reacao_curta, casa_usuario), expansão de trabalho_usuario/atividades_usuario e pools de resposta por faixa de humor (o mínimo de 3 respostas em cada faixa das intenções de conversa diária). Expansao CONSULTORIA out/2026: 33 intenções novas (conversa diária: trabalho, rotina, emoções, família, amigos, namoro, saúde, dinheiro, tecnologia, planos, fds, transporte, cozinha, café, horário, aparência, redes, idiomas, semana, sonhos, filosofia, motivação, procrastinação, notícias, apoio) + expansão das intenções existentes fracas, gerada pelo merge_intencoes_consultoria.py a partir dos patches intencoes-consultoria-*.json (origem 'curadoria consultoria out/2026' item a item; git guarda a base anterior). Leva DIALOGO out/2026 (mesma ferramenta, patches intencoes-dialogo-*.json; origem 'curadoria dialogo out/2026', com literais de match exato em origem 'autor'): 3 intenções novas de fluxo de diálogo (pergunta_kaaira, reacao_curta, casa_usuario), expansão de trabalho_usuario/atividades_usuario e pools de resposta por faixa de humor (o mínimo de 3 respostas em cada faixa das intenções de conversa diária). Expansao CONSULTORIA out/2026: 33 intenções novas (conversa diária: trabalho, rotina, emoções, família, amigos, namoro, saúde, dinheiro, tecnologia, planos, fds, transporte, cozinha, café, horário, aparência, redes, idiomas, semana, sonhos, filosofia, motivação, procrastinação, notícias, apoio) + expansão das intenções existentes fracas, gerada pelo merge_intencoes_consultoria.py a partir dos patches intencoes-consultoria-*.json (origem 'curadoria consultoria out/2026' item a item; git guarda a base anterior). Leva DIALOGO out/2026 (mesma ferramenta, patches intencoes-dialogo-*.json; origem 'curadoria dialogo out/2026', com literais de match exato em origem 'autor'): 3 intenções novas de fluxo de diálogo (pergunta_kaaira, reacao_curta, casa_usuario), expansão de trabalho_usuario/atividades_usuario e pools de resposta por faixa de humor (o mínimo de 3 respostas em cada faixa das intenções de conversa diária). Expansao CONSULTORIA out/2026: 33 intenções novas (conversa diária: trabalho, rotina, emoções, família, amigos, namoro, saúde, dinheiro, tecnologia, planos, fds, transporte, cozinha, café, horário, aparência, redes, idiomas, semana, sonhos, filosofia, motivação, procrastinação, notícias, apoio) + expansão das intenções existentes fracas, gerada pelo merge_intencoes_consultoria.py a partir dos patches intencoes-consultoria-*.json (origem 'curadoria consultoria out/2026' item a item; git guarda a base anterior). Leva DIALOGO out/2026 (mesma ferramenta, patches intencoes-dialogo-*.json; origem 'curadoria dialogo out/2026', com literais de match exato em origem 'autor'): 3 intenções novas de fluxo de diálogo (pergunta_kaaira, reacao_curta, casa_usuario), expansão de trabalho_usuario/atividades_usuario e pools de resposta por faixa de humor (o mínimo de 3 respostas em cada faixa das intenções de conversa diária)."
 }

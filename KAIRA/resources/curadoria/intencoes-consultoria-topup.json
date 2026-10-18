@@ -1,0 +1,301 @@
+{
+    "_doc": "CONSULTORIA out/2026 - parte 4 (top-up): complemento para cruzar a meta do dobro de exemplos (a base original tinha 1129, a meta e 2258+). Mesmo formato compacto das partes 1-3: exemplos como strings, respostas como [texto, humorMin, humorMax], followups como strings.",
+    "intencoes": [
+        {
+            "intento": "felicidade_usuario",
+            "exemplos": ["ate que enfim deu certo", "acontecendo coisas boas hoje"]
+        },
+        {
+            "intento": "tristeza_usuario",
+            "exemplos": ["to com o coracao apertado"]
+        },
+        {
+            "intento": "ansiedade_estresse",
+            "exemplos": ["deadline me apertando", "noite sem dormir direito essa semana"]
+        },
+        {
+            "intento": "raiva_usuario",
+            "exemplos": ["revoltado com o atendimento hoje", "explodi de raiva hoje"]
+        },
+        {
+            "intento": "medo_preocupacao",
+            "exemplos": ["medo de tentar algo novo"]
+        },
+        {
+            "intento": "solidao_usuario",
+            "exemplos": ["ninguem pra jantar hoje"]
+        },
+        {
+            "intento": "saudade_usuario",
+            "exemplos": ["saudade do que deixei pra tras"]
+        },
+        {
+            "intento": "nostalgia_usuario",
+            "exemplos": ["arcade da minha epoca", "bicicleta era minha liberdade"]
+        },
+        {
+            "intento": "familia_usuario",
+            "exemplos": ["meu sobrinho chegou", "liguei pra minha avo hoje"]
+        },
+        {
+            "intento": "amigos_usuario",
+            "exemplos": ["confraternizacao da turma ontem", "pizzada com os amigos"]
+        },
+        {
+            "intento": "namoro_usuario",
+            "exemplos": ["comecei a ver alguem"]
+        },
+        {
+            "intento": "motivacao_usuario",
+            "exemplos": ["um texto de motivacao por favor"]
+        },
+        {
+            "intento": "procrastinacao_usuario",
+            "exemplos": ["deixei acumular tudo"]
+        },
+        {
+            "intento": "religao_filosofia",
+            "exemplos": ["acreditamos em algo maior"]
+        },
+        {
+            "intento": "sonhos_dormir",
+            "exemplos": ["sonhei que chegava atrasado"]
+        },
+        {
+            "intento": "noticias_usuario",
+            "exemplos": ["portal de noticias cansou"]
+        },
+        {
+            "intento": "apoio_social",
+            "exemplos": ["pode me escutar"]
+        },
+        {
+            "intento": "trabalho_usuario",
+            "exemplos": ["cheguei atrasado na reuniao", "saidinha do escritorio"]
+        },
+        {
+            "intento": "rotina_usuario",
+            "exemplos": ["acordei antes do alarme hoje"]
+        },
+        {
+            "intento": "saude_usuario",
+            "exemplos": ["garganta inflamada hoje"]
+        },
+        {
+            "intento": "compras_usuario",
+            "exemplos": ["quadro novo pra sala"]
+        },
+        {
+            "intento": "dinheiro_usuario",
+            "exemplos": ["gastando com delivery demais"]
+        },
+        {
+            "intento": "tecnologia_usuario",
+            "exemplos": ["troquei de celular hoje"]
+        },
+        {
+            "intento": "planos_futuro",
+            "exemplos": ["quero escrever um livro"]
+        },
+        {
+            "intento": "fim_de_semana",
+            "exemplos": ["fds no sofazinho hoje"]
+        },
+        {
+            "intento": "transito_transporte",
+            "exemplos": ["transito da volta foi pior"]
+        },
+        {
+            "intento": "cozinhar_usuario",
+            "exemplos": ["pedi delivery hoje"]
+        },
+        {
+            "intento": "cafe_usuario",
+            "exemplos": ["cafe da manha caprichado hoje"]
+        },
+        {
+            "intento": "horario_dia",
+            "exemplos": ["meio dia em ponto"]
+        },
+        {
+            "intento": "aparencia_usuario",
+            "exemplos": ["look casual hoje"]
+        },
+        {
+            "intento": "redes_sociais",
+            "exemplos": ["viralizei sem querer"]
+        },
+        {
+            "intento": "idiomas_usuario",
+            "exemplos": ["licao de duolingo hoje"]
+        },
+        {
+            "intento": "semana_dias",
+            "exemplos": ["quarta ta voando"]
+        },
+        {
+            "intento": "humor_usuario",
+            "exemplos": ["humor ta meio nublado hoje"]
+        },
+        {
+            "intento": "piada",
+            "exemplos": ["piada de tio conta ai"]
+        },
+        {
+            "intento": "confusao",
+            "exemplos": ["nao entendi o ponto"]
+        },
+        {
+            "intento": "sugestao",
+            "exemplos": ["me da tres opcoes"]
+        },
+        {
+            "intento": "convite_conversa",
+            "exemplos": ["bora conversar de novo"]
+        },
+        {
+            "intento": "cotidiano",
+            "exemplos": ["dia util desses"]
+        },
+        {
+            "intento": "sono",
+            "exemplos": ["soninho pos almoco"]
+        },
+        {
+            "intento": "estudos",
+            "exemplos": ["estudo em casa rende mais", "passei o dia estudando", "passei a tarde estudando"]
+        },
+        {
+            "intento": "clima",
+            "exemplos": ["calor de rachar hoje"]
+        },
+        {
+            "intento": "esporte",
+            "exemplos": ["treino de madrugada hoje"]
+        },
+        {
+            "intento": "comida",
+            "exemplos": ["escondendo doce em casa"]
+        },
+        {
+            "intento": "livro",
+            "exemplos": ["capitulo longo hoje"]
+        },
+        {
+            "intento": "viagem",
+            "exemplos": ["mochilao no feriado"]
+        },
+        {
+            "intento": "pet",
+            "exemplos": ["gato ronronando no colo"]
+        },
+        {
+            "intento": "festas",
+            "exemplos": ["festa da firma esse ano"]
+        },
+        {
+            "intento": "filme",
+            "exemplos": ["poltrona da fileira de tras"]
+        },
+        {
+            "intento": "serie",
+            "exemplos": ["episodio piloto promissor"]
+        },
+        {
+            "intento": "musica",
+            "exemplos": ["guitarra no quarto hoje"]
+        },
+        {
+            "intento": "curiosidade",
+            "exemplos": ["fato do dia chegando"]
+        },
+        {
+            "intento": "jogo_favorito",
+            "exemplos": ["cooperativo com os amigos hoje"]
+        },
+        {
+            "intento": "jogar",
+            "exemplos": ["cartas na mesa do bar"]
+        },
+        {
+            "intento": "identidade",
+            "exemplos": ["voce se parece com alguem"]
+        },
+        {
+            "intento": "habilidades",
+            "exemplos": ["voce sabe adivinhar"]
+        },
+        {
+            "intento": "gostos_ia",
+            "exemplos": ["voce gosta de animais"]
+        },
+        {
+            "intento": "limitacao_ia",
+            "exemplos": ["voce nao bebe agua"]
+        },
+        {
+            "intento": "reflexao_ia",
+            "exemplos": ["voce se arrepende de algo"]
+        },
+        {
+            "intento": "meta_conversa",
+            "exemplos": ["seguimos outro dia"]
+        },
+        {
+            "intento": "estado_fisico",
+            "exemplos": ["estou com o corpo travado"]
+        },
+        {
+            "intento": "atividades_usuario",
+            "exemplos": ["editando video hoje"]
+        },
+        {
+            "intento": "elogio",
+            "exemplos": ["voce iluminou meu dia"]
+        },
+        {
+            "intento": "critica",
+            "exemplos": ["voce repete frases demais"]
+        },
+        {
+            "intento": "mudar_assunto",
+            "exemplos": ["agora outro assunto"]
+        },
+        {
+            "intento": "retorno",
+            "exemplos": ["vim so dar um oi"]
+        },
+        {
+            "intento": "versao",
+            "exemplos": ["em que versao voce esta"]
+        },
+        {
+            "intento": "localizacao",
+            "exemplos": ["voce mora no meu computador"]
+        },
+        {
+            "intento": "info_externa",
+            "exemplos": ["alguma coisa nova por ai"]
+        },
+        {
+            "intento": "aprendizado",
+            "exemplos": ["voce aprende rapido demais"]
+        },
+        {
+            "intento": "conhecimento_geral",
+            "exemplos": ["porque o gato mia"]
+        },
+        {
+            "intento": "conhecimento_dinheiro",
+            "exemplos": ["o que e juros"]
+        },
+        {
+            "intento": "conhecimento_tecnologia",
+            "exemplos": ["o que e um bug"]
+        },
+        {
+            "intento": "conhecimento_linguistico",
+            "exemplos": ["qual a origem da palavra saudade"]
+        }
+    ]
+}

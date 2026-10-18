@@ -1,0 +1,225 @@
+{
+    "_doc": "LEVA DIALOGO out/2026 - parte 4: POOLS de resposta das intenções práticas (trabalho, rotina, saúde, dinheiro, tecnologia, planos, fds, transporte, cozinha, café, horário, aparência, redes, idiomas, semana) + reforço de variedade nos TEMAS (esporte, comida, livro, viagem, pet, universo, festas, sono, estudos, arte, história, clima, podcast). Cada intenção prática recebe +2 na faixa seca (0-3) +1 variada; cada tema recebe +2 variadas.",
+    "_origem": "curadoria dialogo out/2026",
+    "intencoes": [
+        {
+            "intento": "trabalho_usuario",
+            "respostas": [
+                ["Expediente é maratona. Bebe água, hehe. Está sobrando ou faltando serviço?", 0, 3],
+                ["Trabalho é o vento dos dias úteis: sempre tem. Como está o seu?", 0, 3],
+                ["Se o dia está pesado, divide a lista comigo! Reclamar em dupla funciona melhor, hehe.", 7, 10]
+            ]
+        },
+        {
+            "intento": "rotina_usuario",
+            "respostas": [
+                ["Rotina é a versão adulta do modo história, hehe. Em que fase você está?", 0, 3],
+                ["O dia de hoje está puxado ou segue o script de sempre?", 0, 3],
+                ["Missão em andamento! O que falta pra fechar o dia?", 7, 10]
+            ]
+        },
+        {
+            "intento": "saude_usuario",
+            "respostas": [
+                ["Doutora virtual recomenda: água, descanso e paciência, hehe.", 0, 3],
+                ["Dores atrapalham até conversar. Tá conseguindo comer e dormir?", 0, 3],
+                ["Cuidar do corpo é a plataforma de tudo! Qual é o novo hábito da vez?", 7, 10]
+            ]
+        },
+        {
+            "intento": "compras_usuario",
+            "respostas": [
+                ["Dinheiro é viajante, não turista: passa rápido, hehe. Comprou o que precisava?", 0, 3],
+                ["Compra boa é a que não dá arrependimento. Rendimento ok?", 0, 3],
+                ["Presente escolhido é meio caminho pra festa! Quem recebe?", 7, 10]
+            ]
+        },
+        {
+            "intento": "dinheiro_usuario",
+            "respostas": [
+                ["Fim de mês é o vilão recorrente, hehe. Apertado quanto?", 0, 3],
+                ["Conta chegando é visita que não avisa. Pagou de boa ou ficou de mal?", 0, 3],
+                ["Orçamento é jogo de equilíbrio - e você joga bem? hehe. Como está o time?", 4, 6]
+            ]
+        },
+        {
+            "intento": "tecnologia_usuario",
+            "respostas": [
+                ["Tecnologia é dragão adestrado, hehe. Morde ou ajuda hoje?", 0, 3],
+                ["Aparelho ruim parece plot pra você largar tudo. Está funcionando?", 0, 3],
+                ["Upgrade sempre anima, hehe. O que você mexeu hoje?", 7, 10]
+            ]
+        },
+        {
+            "intento": "planos_futuro",
+            "respostas": [
+                ["Futuro é bola de neve: começa pequeno, hehe. Qual é o primeiro pedacinho?", 0, 3],
+                ["Plano sem data vira vontade, hehe. Já sabe quando começa?", 0, 3],
+                ["Bora botar data nesse sonho? Plano com calendário é plano de verdade.", 7, 10]
+            ]
+        },
+        {
+            "intento": "fim_de_semana",
+            "respostas": [
+                ["Domingo é o aviso de save point da semana. Como está o ar por aí?", 0, 3],
+                ["Fds passou voando? É sempre, hehe. O que você aproveitou?", 0, 3],
+                ["SEXTOU de novo e o corpo sabe! Qual é a vibe: descanso ou rolê?", 7, 10]
+            ]
+        },
+        {
+            "intento": "transito_transporte",
+            "respostas": [
+                ["Trânsito é meditação forçada, hehe. Já chegou ou ainda está no caminho?", 0, 3],
+                ["Passageira do caos urbano, hehe. Sobreviveu sem buzinar muito?", 0, 3],
+                ["Bike, ônibus, uber, a pé - herói é herói em qualquer modal! Como foi a viagem?", 7, 10]
+            ]
+        },
+        {
+            "intento": "cozinhar_usuario",
+            "respostas": [
+                ["Panela é campo de batalha, hehe. Saiu fumaça ou saiu sucesso?", 0, 3],
+                ["Receita é roteiro e a cozinha é o teatro. Como foi a peça?", 0, 3],
+                ["Cheiro bom na casa é felicidade molecular, hehe. Qual foi o prato?", 7, 10]
+            ]
+        },
+        {
+            "intento": "cafe_usuario",
+            "respostas": [
+                ["Cafeína é socorro prestativo, hehe. Qual xícara já foi hoje?", 0, 3],
+                ["Sem café o mundo fica cinza. Já tomou o de hoje?", 0, 3],
+                ["Café bom é pausa que reorganiza a vida, hehe. Vai acompanhar com o quê?", 7, 10]
+            ]
+        },
+        {
+            "intento": "horario_dia",
+            "respostas": [
+                ["Hora? Segundo meu relógio: depois de tudo, hehe. Como está aí?", 0, 3],
+                ["O dia avançou sem avisar de novo. Você está se organizando ou sobrevivendo?", 0, 3],
+                ["Cada hora é um pedacinho de rolê. Qual foi o melhor até agora?", 7, 10]
+            ]
+        },
+        {
+            "intento": "aparencia_usuario",
+            "respostas": [
+                ["Mudança no visual é patch de autoestima, hehe. O espelho aprovou?", 0, 3],
+                ["Espelho e cabelo são melhores amigos e piores juízes. Como ficou?", 0, 3],
+                ["Quero ver o look! Me descreve que eu monto na cabeça, hehe.", 7, 10]
+            ]
+        },
+        {
+            "intento": "redes_sociais",
+            "respostas": [
+                ["Feed é o pior chef: serve sempre mais, hehe. Consumiu quanto hoje?", 0, 3],
+                ["Notificação é cutucada digital. Conseguiu ficar offline um pouco?", 0, 3],
+                ["Meme bom é micro-férias, hehe. Qual foi o do dia?", 7, 10]
+            ]
+        },
+        {
+            "intento": "idiomas_usuario",
+            "respostas": [
+                ["Idioma é músculo: treino curto e diário vence, hehe. Praticou hoje?", 0, 3],
+                ["Traduzir na cabeça cansa - e é sinal de progresso, acredite. Como foi?", 0, 3],
+                ["Falar outra língua é ter uma segunda chave da vida, hehe. Qual porta você quer abrir?", 7, 10]
+            ]
+        },
+        {
+            "intento": "semana_dias",
+            "respostas": [
+                ["Segunda é recalibração: parece durar cinco dias, hehe. Sobreviveu?", 0, 3],
+                ["Semana é curta no calendário e longa no relógio. Em que ponto você está?", 0, 3],
+                ["Dia favorito é escolha sábia, hehe. Qual é o seu e por quê?", 7, 10]
+            ]
+        },
+        {
+            "intento": "esporte",
+            "respostas": [
+                ["Jogo bom é o que faz a gente gritar. Qual foi o último?", 0, 3],
+                ["Narradora interna ligada! Conta o lance mais bonito que você viu.", 7, 10]
+            ]
+        },
+        {
+            "intento": "comida",
+            "respostas": [
+                ["Prato é bússola: diz muito sobre o dia, hehe. O que caiu na mesa?", 0, 3],
+                ["Comida boa merece narração! Me conta desse sabor.", 7, 10]
+            ]
+        },
+        {
+            "intento": "livro",
+            "respostas": [
+                ["Livro é porta lenta e gostosa, hehe. Em que página você parou?", 0, 3],
+                ["Personagem bom vira amigo invisível, hehe. Quem é o seu da vez?", 7, 10]
+            ]
+        },
+        {
+            "intento": "viagem",
+            "respostas": [
+                ["Caminho é onde a gente se acha. Onde você está indo?", 0, 3],
+                ["Vou junto em pensamento (sem pernas, mas com imaginação), hehe. Me leva na mala!", 7, 10]
+            ]
+        },
+        {
+            "intento": "pet",
+            "respostas": [
+                ["Bichinho é alegria em forma de bagunça, hehe. Fez arte hoje?", 0, 3],
+                ["Ronronado e abanada de rabo são meu fundo musical favorito, hehe. Como está o bicho?", 7, 10]
+            ]
+        },
+        {
+            "intento": "universo",
+            "respostas": [
+                ["Céu é espelho sem fim, hehe. Olhou pra ele hoje?", 0, 3],
+                ["Cosmos me deixa pequena e animada ao mesmo tempo, hehe. O que te fascina?", 7, 10]
+            ]
+        },
+        {
+            "intento": "festas",
+            "respostas": [
+                ["Festa boa é a que rende história depois, hehe. A última rendeu?", 0, 3],
+                ["Contagem regressiva pra folia? Tô no clima, hehe. Quero detalhes!", 7, 10]
+            ]
+        },
+        {
+            "intento": "sono",
+            "respostas": [
+                ["Travesseiro é terapeuta acessível, hehe. Está rendendo o sono?", 0, 3],
+                ["Sonho bom é recarregamento, hehe. Como você dormiu?", 7, 10]
+            ]
+        },
+        {
+            "intento": "estudos",
+            "respostas": [
+                ["Estudo é bola de neve: pequeno agora, potência depois, hehe. Como está o ritmo?", 0, 3],
+                ["Sinal verde pros livros! Qual é o próximo destino do cérebro?", 7, 10]
+            ]
+        },
+        {
+            "intento": "arte",
+            "respostas": [
+                ["Arte é a prova de que a gente sente, hehe. O que te pegou?", 0, 3],
+                ["Museu da alma aberto! Me conta que obra te tocou.", 7, 10]
+            ]
+        },
+        {
+            "intento": "historia",
+            "respostas": [
+                ["Passado é chave do presente, hehe. Que época te chama?", 0, 3],
+                ["História boa parece filme com spoiler real, hehe. Conta essa!", 7, 10]
+            ]
+        },
+        {
+            "intento": "clima",
+            "respostas": [
+                ["Tempo é o humor do céu, hehe. Como está o humor aí fora?", 0, 3],
+                ["Sol, nuvem, chuva... todo tempo tem fã. Qual é o seu de hoje?", 7, 10]
+            ]
+        },
+        {
+            "intento": "podcast",
+            "respostas": [
+                ["Episódio bom é escada pra imaginação, hehe. Qual está tocando?", 0, 3],
+                ["Podcast é conversa ao vivo, hehe. O que mais te prende nele?", 7, 10]
+            ]
+        }
+    ]
+}

@@ -167,3 +167,86 @@ Arquivo (out/2026): os 20 conversas-N.log foram destilados em baterias.json
 (432 turnos, com degrau/intento/score/match/resposta observados; ver
 destilar_baterias.py) e removidos. Este relatorio, o SCORE.txt e o
 score_baterias.ps1 ficam como registro da iteracao.
+
+Rodada 2: mesma coisa - destilada no corpus unificado (logs/baterias/baterias.json,
+agora com as duas rodadas: 811 turnos, campo "rodada" + corte em "_rodadas") e os
+logs brutos removidos. A pasta tem 10 arquivos: o mapa do que ficou e como refazer
+a medicao esta no LEIA-ME.txt.
+
+
+================================================================================
+RODADA 2 - 20 baterias NOVAS (headless, base com o refino de agradecimentos)
+================================================================================
+Logs : logs\baterias\rodada-2\conversas-1..20.log
+Placar: logs\baterias\rodada-2\SCORE.txt  (score_baterias.ps1 -Pasta rodada-2)
+
+Personas 1-10 (perfis): Dona Rosa (78, memória/igreja), Kaique (17, funk/bola),
+Bianca (noiva), Otávio (médico aposentado), Naiara (mãe solo), Fábio
+(desempregado), Letícia (medicina/burnout), Sr. Agenor (agricultor), Duda
+(anime/cosplay), Marcelo (dev/insônia).
+Sondagens 11-20 (mecanismos): 11 typos | 12 mensagens curtas/emoji | 13 troca de
+assunto | 14 repetição/insistência | 15 ensino deliberado | 16 números/fatos |
+17 crítica e correção | 18 sarcasmo/ironia | 19 misto de idiomas | 20 textão.
+
+Placar (proxy otimista): 379 turnos, media 5,4
+  BOM 164 | PARCIAL 123 | RUIM 92 | GRAVE 0
+(sem GRAVE nesta roda; mesma ressalva: o proxy nao ve o texto, entao superestima)
+
+--- O que MELHOROU (o refino apareceu) ---
+  - Agradecimento: "Disponha! Volte sempre que quiser papo.", "Por nada, foi um
+    prazer.", "Imagina - e pra isso que eu existo", "Nada disso, o prazer e meu."
+  - Cumprimento: "e ai" -> "Bom falar com voce"; "bom dia" -> "Ainda bem que esta".
+  - EMPATIA de LUTO, quando pega, esta otima:
+      "meu falecido marido se chamava Joao"
+        -> "Sinto muito, de verdade. Nao tenho palavras que resolvam isso,
+            mas estou aqui com voce. Quer me contar?"
+  - MEDO/preocupacao: "tenho medo disso" -> "medo nao e fraqueza, e alarme..."
+  - "nao, voce nao entendeu" -> "provavelmente nao entendo mesmo, mas posso tentar ajudar"
+
+--- BUGS NOVOS / EXACERBADOS ---
+ 1) NOME capturado por palavra comum (persiste): "tudo" -> "Prazer em conhecer
+    voce, tudo!"; "esquece" -> nome; "bom dia"/"boa noite" -> nome.
+ 2) ENSINO absorve o que nao devia / absorve DEMAIS:
+    - "." (so um ponto) -> 'me confirma: aprendo ""?' (frase VAZIA).
+    - ":)" -> confirma aprendendo a frase ANTERIOR ("kkkkkk") - carry-over do P2.
+    - TEXTÃO: paragrafos inteiros viraram exemplos aprendidos (varias vezes) ->
+      envenena a base em escala (bateria 20).
+    - nao engata quando pedido: "vou te ensinar uma coisa" nao abriu o modo;
+      "eu pratico parkour" nao entrou em ensino.
+ 3) EMPATIA inconsistente: "meu pai faleceu em janeiro" -> "reacao anotada no meu
+    caderninho emocional, hehe" (o perda_apoio nao pegou a variacao);
+    "as vezes nao vejo a hora de acabar" -> "Boa! Anotado no meu registro de dias
+    felizes" (GRAVE).
+ 4) DESABAFO lido como critica a si: "as vezes eu surto com os fornecedores" ->
+    "Ok, recado recebido! Vou tentar ser menos chata e mais util...". Tambem
+    "meu noivo quase nao ajuda" -> "espero que seja por estar falando comigo :)".
+ 5) PERGUNTA FACTUAL/NUMERO -> nonsense: "quanto e 7 vezes 8" -> ensino;
+    "144 dividido por 12" -> "Solteiro curtindo..."; "qual a capital da franca" ->
+    "que nada, nao se preocupe"; "quantos estados tem o brasil" -> "Quer sair comigo?".
+ 6) IDENTIDADE instavel: "qual seu nome?" 3x -> 3 respostas diferentes
+    ("sim, sou uma I.A focada em chatbot" / "hmm, me baseando nos meus codigos...").
+ 7) SEM memoria do proprio turno: "repete o que eu disse" nao consegue.
+ 8) SARCASMO/IRONIA nao detectados: "meu dia foi maravilhoso (sarcasmo)" ->
+    resposta alegre; "perdi o onibus, perfeito" -> resposta de bike;
+    "adorei sua ultima resposta, so que nao" -> "Muito agradecida!".
+ 9) MULTILINGUE: "how are you?" -> ensino e, no turno seguinte, "me confirma:
+    aprendo how are you" (o nome do usuario se perdeu no meio do ensino).
+10) FECHAMENTOS degenerados: "e ai" -> "Eali"; "tchau, ate mais" -> "Esta bem, eu
+    nao irei"; "nao tem de que ate mais"; "Coletando informacoes..." (b12).
+
+--- RECOMENDACOES ADICIONAIS ---
+  - Ensino: recusar absorver frase vazia/emoji/curta; LIMITE de tamanho (parametros
+    longos nao devem virar exemplo); corrigir o carry-over do P2 (usar a frase
+    ATUAL, nao a anterior).
+  - Nome: blocklist (saudacoes, "tudo", "esquece", riso).
+  - Rota "pergunta factual/numero": fallback honesto ("nao sei calcular") em vez de
+    casar com intento aleatorio.
+  - Resposta canonica de identidade ("qual seu nome?").
+  - Distinguir DESABAFO de CRITICA (nao responder "vou tentar ser menos chata").
+  - Empatia: garantir que perda_apoio/medo peguem variacoes ("meu pai faleceu",
+    "ele morreu", "nao vejo a hora de acabar").
+
+Ressalva: o placar 5,4 desta roda e de OUTRO conjunto de conversas (conteudo
+diferente), nao comparavel 1:1 com o 4,5/5,2 da primeira leva. Serve de retrato
+desta rodada.
+

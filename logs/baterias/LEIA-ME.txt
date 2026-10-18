@@ -1,0 +1,59 @@
+KAIRA - BATERIAS DE TESTE AS CEGAS (out/2026)
+================================================================================
+
+O que tem aqui (e para que serve)
+--------------------------------------------------------------------------------
+RELATORIO.txt          Leitura HUMANA das duas rodadas (bugs, notas, recomendacoes).
+                       E o documento principal desta pasta.
+
+baterias.json          O CORPUS unificado: 834 falas - rodada 1 (432) + rodada 2 (379) +
+                       rodada 3 (23, a sessao REAL da Karin, logs/2026-10-18_sessao01...karin.log).
+                       Cada turno tem o campo "rodada"; o cabecalho "_rodadas" diz
+                       quantos turnos tem cada rodada e ONDE ela comeca/termina no
+                       array (indices), alem da distribuicao de degraus de cada uma.
+baterias-replay.json   O mesmo corpus re-rodado na base atual (o "agora" de cada turno).
+
+SCORE.txt              Placar do proxy sobre os LOGS BRUTOS (rodada 1 e rodada 2,
+                       com o corte marcado em ####).
+SCORE-replay.txt       Placar do replay: ANTES x AGORA, por rodada e no total.
+
+destilar_baterias.py   Destila conversas-N.log -> baterias.json de UMA rodada.
+combinar_rodadas.py    Junta os corpora das rodadas num unico baterias.json (marca o corte).
+score_baterias.ps1     Placar do proxy a partir dos LOGS brutos (rodada nova).
+score_replay.ps1       Placar do replay (le baterias.json + baterias-replay.json).
+
+
+Como refazer (rodada nova, ou a base mudou)
+--------------------------------------------------------------------------------
+1. Destilar a rodada nova (se ainda houver logs brutos):
+     python logs/baterias/destilar_baterias.py <pasta-da-rodada>
+2. ANEXAR a rodada ao corpus unificado (o combinador le o baterias.json parcial):
+     python logs/baterias/combinar_rodadas.py --saida logs/baterias/baterias.json ^
+            --base logs/baterias/baterias.json --rotulo "rodada N: ..." <parcial-rodada-N.json>
+   (sem --base ele monta um corpus unificado novo do zero, a partir dos parciais)
+3. Re-rodar contra a base atual:
+     java -cp "out\build-test;externallibs\*" com.JCODE.tools.ReplayBaterias ^
+          logs\baterias\baterias.json "%CD%" logs\baterias\baterias-replay.json
+   (a base isolada e restaurada a cada troca de rodada - o aprendizado de uma
+    rodada nao contamina a medida da seguinte)
+4. Placar:
+     powershell -NoProfile -ExecutionPolicy Bypass -File logs\baterias\score_replay.ps1
+
+
+Numeros de referencia (proxy; a leitura humana da rodada 1 foi 3,2/10)
+--------------------------------------------------------------------------------
+                 ANTES               AGORA (base pos-fixes out/2026)
+rodada 1   4,7/10  40,0% aposta      5,3/10  37,0% aposta   direto 34,0% -> 36,8%
+rodada 2   5,4/10  30,6% aposta      5,6/10  28,8% aposta   direto 40,9% -> 43,5%
+rodada 3   5,6/10  26,1% aposta      6,5/10  13,0% aposta   direto 30,4% -> 47,8%   (sessao real da Karin)
+TOTAL      5,0/10  35,4% aposta      5,5/10  32,6% aposta   direto 37,1% -> 40,2%
+
+(rodada 3 tambem tem o placar dos LOGS BRUTOS, as-is: 5/10 - proxy completa do
+ score_baterias.ps1, que le mais sinais que o placar do replay)
+
+
+Nota de arquivo
+--------------------------------------------------------------------------------
+Os conversas-N.log de cada rodada foram destilados no corpus (entrada, degrau,
+intento, score, match e resposta - tudo o que a analise usa) e os brutos foram
+removidos. O corpus vive no baterias.json; a leitura humana vive no RELATORIO.txt.

@@ -1,3 +1,6 @@
+################################################################################
+RODADA 1 - 20 baterias (out/2026): 1-10 pelo .jar (base antiga), 11-20 pelo fonte (refino)
+################################################################################
 ﻿BATERIA  TURNOS  BOM  PARC  RUIM  GRAVE  NOTA   PRINCIPAIS SINAIS
 conversas-1     22    7     7     8      0     4   thanks-fake=1, ensino=5, match-fraco=2, fora-do-assunto=2
 conversas-2     22    7     6     9      0     4   thanks-fake=4, ensino=3, match-fraco=4, fora-do-assunto=2, fragmento=1
@@ -24,3 +27,44 @@ GERAL: 20 baterias | 432 turnos | media 4,5/10
        BOM 151  PARCIAL 158  RUIM 122  GRAVE 1
        media 1-10 : 4,3
        media 11-20: 4,7
+
+################################################################################
+RODADA 2 - 20 baterias (out/2026): headless, personas 1-10 + sondagens de mecanismo 11-20
+################################################################################
+﻿KAIRA - PLACAR AUTOMATICO DAS BATERIAS (proxy heuristico, nota 0-10)
+Le: conversas-*.log da pasta. Sinais: obrigado-sem-agrader, piada-fora-de-hora,
+nome-suspeito, ensino (nao entendeu), fragmento, slot-cru, match-fraco (1-2 tokens),
+fora-do-assunto (dominio), empatia-falha (grave).
+
+BATERIA  TURNOS  BOM  PARC  RUIM  GRAVE  NOTA   PRINCIPAIS SINAIS
+conversas-1     21    8     7     6      0     5   ensino=3, match-fraco=3, fragmento=1
+conversas-2     21   10     7     4      0     6   ensino=1, match-fraco=2, fora-do-assunto=3, fragmento=1
+conversas-3     20    8     9     3      0     5   ensino=2, match-fraco=1, fora-do-assunto=1
+conversas-4     19    6     8     5      0     4   ensino=3, match-fraco=3, fragmento=1
+conversas-5     20    7     7     6      0     5   ensino=3, match-fraco=5, fora-do-assunto=2
+conversas-6     20   10     7     3      0     6   nome-suspeito=1, ensino=1, match-fraco=3
+conversas-7     18    7     6     5      0     5   match-fraco=3, fora-do-assunto=3, fragmento=1
+conversas-8     18    9     8     1      0     6   match-fraco=1, fora-do-assunto=1
+conversas-9     18   11     5     2      0     7   ensino=1, match-fraco=1
+conversas-10     17    8     4     5      0     5   piada-fora=1, ensino=3, fora-do-assunto=3
+conversas-11     20    5     7     8      0     4   thanks-fake=1, ensino=3, match-fraco=2, fora-do-assunto=1, fragmento=1
+conversas-12     20    9     2     9      0     5   thanks-fake=2, ensino=6, fragmento=1
+conversas-13     20   10     6     4      0     6   thanks-fake=1, match-fraco=2, fora-do-assunto=2, fragmento=1
+conversas-14     20   13     4     3      0     7   piada-fora=1, ensino=1, match-fraco=3
+conversas-15     20    9     7     4      0     6   thanks-fake=1, ensino=2, match-fraco=3, fragmento=1
+conversas-16     20    9     7     4      0     6   ensino=3, match-fraco=5
+conversas-17     18    6     9     3      0     5   ensino=2, match-fraco=6
+conversas-18     16    6     5     5      0     5   thanks-fake=1, ensino=2, match-fraco=4, fragmento=2
+conversas-19     17    9     2     6      0     6   ensino=5, match-fraco=1, fora-do-assunto=1
+conversas-20     16    4     6     6      0     4   ensino=6, fora-do-assunto=1
+
+GERAL: 20 baterias | 379 turnos | media 5,4/10
+       BOM 164  PARCIAL 123  RUIM 92  GRAVE 0
+       media 1-10 : 5,4
+       media 11-20: 5,4
+
+NOTA: e um proxy heuristico, nao substitui a leitura humana. Ele e OTIMISTA
+(respostas fluentes porem fora do assunto passam batido). Use para comparar
+iteracoes (antes x depois de um fix), nao como valor absoluto.
+Referencia desta 1a rodada: leitura humana = 3,2/10.
+

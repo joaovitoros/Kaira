@@ -2,6 +2,7 @@
 
 > Levantamento out/2026 (a pedido, depois do bug da âncora do tópico). Objetivo: garantir que a suíte **pegue o tipo de bug que passa por costura entre camadas** — não só o que cada método faz sozinho.
 > Estado na data: **50 classes · 248 testes · avaliador 14/14**, tudo verde.
+> **Atualização out/2026 (leva das baterias — §5):** **51 classes · 251 testes · avaliador 44/44** — 30 casos de **frase real** colhidos das 2 rodadas de bateria + `SensibilidadeTest`.
 
 ---
 
@@ -12,15 +13,16 @@
 | **Fundação / unidade pura** | `NormalizadorTest`, `NormalizadorStemTest`, `CalculosLevenshteinTest`, `CalculosDamerauTest`, `CaminhosTest`, `RegistroTest` | 33 | fixture pura |
 | **Arquitetura** | `SemCaminhoHardcodedTest` | 1 | varre `src/` |
 | **Dados / curadoria** | `CuradoriaTemasTest`, `CuradoriaConsultoriaTest`, `IntencoesCuradoNaoDegradadoTest`, `GruposSinonimosCuradoTest`, `StopwordsCuradoTest`, `ControlePalavraCorrecaoTest`, `CorrecaoOrdemArquivoTest`, `PalavrasRegeneraAoFaltarTest`, `ControleSinonimoGruposTest` | 40 | **base real** (+ dicionário) |
-| **Regressão** | `AvaliadorTest` (dataset congelado, 14 casos) | 2 | **base real** |
+| **Regressão** | `AvaliadorTest` (dataset congelado, **44 casos** — 14 de brinquedo + 30 de frase real das baterias) | 2 | **base real** |
+| **Empatia / segurança** | `SensibilidadeTest` (tema sensível nunca cai em intento alegre; luto/crise/desabafo no intento de acolhimento; pool mínimo) | 3 | **base real** |
 | **Matcher / classificador** | `ControleRespostaMelhorIntencaoTest`, `ControleRespostaMatcherUnificadoTest`, `ControleRespostaPesosIdfTest`, `ControleRespostaStemStopwordsTest`, `ControleRespostaSinonimoGruposTest`, `ControleRespostaFaixaConfiancaTest`, `ControleRespostaFraseExataTest`, `ControleRespostaCarregaCacheTest`, `ControleRespostaCacheIdfTest`, `ControlePreAnaliseTest` | 45 | base real + fixtures |
 | **Sessão / contexto** | `ControleSessaoTest`, `ControleSessaoPersistenciaTest`, `ControleSessaoNomeTest`, `FatosNovosTest`, `AncoraTopicoTest`, `DesempateContextoTest`, `ContinuacaoTopicoTest`, `IniciativaPropriaTest`, `ApostaPendenteTest` | 59 | base real + fixtures |
 | **Resposta / comportamento** | `ControleRespostaFallbackTest`, `ControleRespostaSlotsTest`, `ControleRespostaCriarRespostaTest`, `ControleRespostaAprendizadoTest`, `EnsinoTurbinadoTest`, `AntiRepeticaoTurnoTest`, `SistemaDeHumorTest`, `LogMatchTest`, `ControleConhecimentoTest` | 46 | base real + fixtures |
 | **Fluxo fim-a-fim** | `FluxoConversaRealTest`, `EnsinoFluxoTest`, `EnsinoOrganicoTest`, `FluxoConversaReal18Test` | 11 | **base real** + base isolada — o primeiro transcrito do `conversas.log` de 17/10 (10 turnos + 1 variante limpa); o segundo é o loop de 3 turnos do ensino; o terceiro e o `EnsinoOrganicoTest` (#48), o ciclo N->N+1 do aprendizado organico; o quarto e o `FluxoConversaReal18Test`, o uso real de 18/10 transcrito do `conversas.log` |
 | **UI** | `ControleFaceTest` | 10 | HTML interno da Face |
-| | **50 classes** | **248** | |
+| | **51 classes** | **251** | |
 
-> **Nota de rastreio:** `CuradoriaConsultoriaTest` (4 testes) roda na suíte local mas **não está commitado** — depende dos `KAIRA/resources/intencoes-consultoria-*.json` (também não commitados; leva de dados em curadoria). Ao clonar o repo limpo, a suíte tem **49 classes / 244 testes** até a leva de consultoria ser commitada. *(medido de novo na #46: `ControleRespostaCacheIdfTest` só cita "consultoria" no javadoc, não depende do dado)*
+> **Nota de rastreio:** o `CuradoriaConsultoriaTest` **não lê os patches de curadoria** — ele filtra a base carregada pelos rótulos de `origem`, ou seja, depende do `intencoes.json` **versionado** conter as levas. Os patches vivem em **`KAIRA/resources/curadoria/`** (material de passagem; entrada do `merge_intencoes_consultoria.py`; nada em `src/`, `test/` ou no app os lê). *(a nota anterior dizia que o teste dependia dos `intencoes-consultoria-*.json`: impreciso — medido out/2026 ao arquivar os patches)*
 
 > **Nota de método:** as contagens acima foram **medidas** (contagem de `@Test` por arquivo), não estimadas. A versão anterior deste inventário abreviava nomes de classe (`MatcherUnificadoTest`, `FallbackTest`, `AvaliadorTest`...) e várias somas não fechavam; se for mexer aqui, meça de novo.
 
@@ -56,6 +58,7 @@ O bug da âncora do tópico (frase **exata** não gravava o tópico → "qual se
 | Ensino (`!`) | ✅ | ✅ (fixture) | ✅ `EnsinoFluxoTest` (fallback → armo → absorvo → frase volta a casar) |
 | Slots / resposta composta | ✅ | ✅ | — |
 | UI (Face) | ✅ | — | ❌ (não há teste do `decifrar` entregando na Face) |
+| **Empatia / segurança** | — | ✅ `SensibilidadeTest` (#5) | — |
 
 ---
 
@@ -101,3 +104,23 @@ Fixtures são rápidas e isoladas — manter. Porém os **empates reais** (IDF +
 2. Fecha no fluxo de sempre: **issue → spec vermelho → receita → verde**.
 3. O `RESUMO_FUNCIONAMENTO.md` §12 ganha a **R2** como convenção (spec de comportamento vai na porta).
 4. A matriz da §2 é viva: cada bug novo marca um ❌ onde a suíte não olhava.
+
+---
+
+## 5. Leva out/2026 — as baterias viraram guarda
+
+As duas rodadas de bateria às cegas (`logs/baterias/`, 811 falas) foram medidas e convertidas em teste onde valia. O mapa dos artefatos está em `logs/baterias/LEIA-ME.txt`.
+
+| Entrou | O que é | Por quê |
+|---|---|---|
+| **avaliador 14 → 44 casos** | 30 frases **reais** travadas em `test/resources/avaliacao.json`, colhidas por sonda e conferidas **a frio** | o dataset só tinha frase de brinquedo; agora cobre a classe `kaira` ("tchau kaira" → despedida), as âncoras do `obrigado`, luto/crise ("nao vejo a hora de acabar" → `peso_demais`) e os desabafos |
+| **`SensibilidadeTest`** (3 testes) | a regra do relatório virou asserção: tema sensível **nunca** cai em `felicidade_usuario`/`comercacao`/`festas`/`piada`/`humor_usuario`; luto/crise/desabafo caem no intento de acolhimento; os pools de acolhimento têm mínimo (4 respostas, 6 exemplos, followups) | empatia/segurança foi a **pior dimensão** (2,5/10) e a regra existia só no placar heurístico (`score_replay.ps1`) |
+
+**Dois achados de harness — a leva pagou por si:**
+
+1. **O avaliador media sem os caches.** `Avaliador.avaliar()` chamava `ControleResposta.resolver` sem `ControlePalavra`/`ControleSinonimo.carregaCache()` — **a mesma classe** do achado de infra do R1 (a regra "carregar os três caches" estava escrita, mas valia só para quem dirigia o `buscaResposta`). Sintoma medido: `"obrigada por ouvir"` resolvia para `"ouvindo musica agora"`; **com** os caches, para `"obrigado por escutar"`. **Corrigido**: o harness carrega os três.
+2. **O dataset dependia da ORDEM.** Os casos rodavam em sequência compartilhando a sessão — o tópico do caso anterior vazava no desempate. `"as vezes me sinto sozinha"` resolvia a frio e virava `null` no meio da fila. **Corrigido**: `ControleSessao.reset()` por caso (o javadoc do harness já prometia "consulta pura").
+
+**O que NÃO virou teste (de propósito):** o corpus inteiro. Rodar 811 falas, medir `aposta`/`direto` e contar GRAVE é **ferramenta** (`com.JCODE.tools.ReplayBaterias` + `score_replay.ps1`): mede **deriva agregada**, precisa de base isolada e não deve acoplar a suíte ao `logs/`. Vale o R2: spec afirma comportamento pontual; o benchmark mede o conjunto.
+
+**Como repetir a colheita:** a sonda `ProbeCasos` (TEMP) imprime `entrada → intento → exemplo-resposta`; o caso só entra no dataset se o intento bater com o desejado **e** a frase resolver a frio (com os três caches). Próxima rodada de bateria: destilar → medir → colher os casos novos.

@@ -1,0 +1,37 @@
+{
+    "_doc": "Curadoria da RODADA 2 de uso real (out/2026): variacoes de frase que as 20 baterias novas mostraram passando batido. Somente EXEMPLOS - nenhuma resposta nova, porque o texto sensivel do perda_apoio ja foi aprovado. Medido com o benchmark (test/com/JCODE/tools/ReplayBaterias): rodada-2 aposta 30,6%->29,6%, direto 40,9%->42,2%; rodada-1 direto 34,0%->36,1% sem regressao de tema.",
+    "_origem": "curadoria rodada-2 out/2026",
+    "intencoes": [
+        {
+            "intento": "perda_apoio",
+            "exemplos": [
+                "meu pai faleceu em janeiro",
+                "meu pai morreu",
+                "minha avo morreu",
+                "meu falecido marido",
+                "perdi meu pai"
+            ]
+        },
+        {
+            "intento": "tristeza_usuario",
+            "exemplos": [
+                "as vezes choro escondido no banheiro",
+                "choro escondido pra ninguem ver"
+            ]
+        },
+        {
+            "intento": "trabalho_usuario",
+            "exemplos": [
+                "as vezes eu surto com os fornecedores"
+            ]
+        },
+        {
+            "intento": "familia_usuario",
+            "exemplos": [
+                "crio meu filho sozinha",
+                "minha familia me apoia",
+                "meus pais me apoiaram"
+            ]
+        }
+    ]
+}

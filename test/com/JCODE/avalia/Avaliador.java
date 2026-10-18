@@ -1,6 +1,9 @@
 package com.JCODE.avalia;
 
+import com.JCODE.controller.ControlePalavra;
 import com.JCODE.controller.ControleResposta;
+import com.JCODE.controller.ControleSessao;
+import com.JCODE.controller.ControleSinonimo;
 import com.JCODE.util.Normalizador;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -68,6 +71,15 @@ public class Avaliador {
 	public static Resultado avaliar(String caminhoDataset) {
 		Resultado r = new Resultado();
 
+		// a regua tem que medir o MESMO motor do app: o app carrega os tres caches
+		// na largada (sinonimos/palavras mudam o desempate da cobertura). Achado
+		// out/2026, ao travar frases reais das baterias: sem isto, "obrigada por
+		// ouvir" resolvia pra "ouvindo musica agora" (a frio, mas com cache certo,
+		// resolve pro "obrigado por escutar").
+		ControleResposta.carregaCache();
+		ControleSinonimo.carregaCache();
+		ControlePalavra.carregaCache();
+
 		Dataset dataset;
 		try (InputStreamReader reader = new InputStreamReader(
 				new FileInputStream(new File(caminhoDataset)), StandardCharsets.UTF_8)) {
@@ -78,6 +90,12 @@ public class Avaliador {
 		}
 
 		for (Caso c : dataset.casos) {
+			// cada caso e avaliado A FRIO: sem isso o contexto/topico do caso anterior
+			// vaza no desempate e o dataset deixa de ser reprodutivel por caso (o
+			// doc aqui em cima promete "consulta pura"). Achado out/2026, ao travar
+			// frases reais das baterias: "obrigada por ouvir" resolvia a frio e
+			// falhava na sequencia.
+			ControleSessao.reset();
 			// quem normaliza e o avaliador (no app, quem normaliza e o decifrar).
 			// resolver recebe a entrada JA normalizada e faz exato -> classificador.
 			String resolvida = ControleResposta.resolver(Normalizador.texto(c.entrada));

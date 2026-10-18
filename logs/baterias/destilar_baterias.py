@@ -23,9 +23,32 @@ import re
 import sys
 
 BASE = os.path.dirname(os.path.abspath(__file__))
+if len(sys.argv) > 1:
+    BASE = os.path.abspath(sys.argv[1])
 SEPARADOR = re.compile(r"^\d{4}-\d\d-\d\d [\d:]{8}\s+-{5,}\s*$", re.M)
 
 RE_ENTRADA = re.compile(r"ENTRADA\s+:\s?(.*)$", re.M)
+RE_CARIMBO = re.compile(r"^\d{4}-\d\d-\d\d [\d:]{8}\s")
+
+
+def valor_multilinha(bloco: str, rotulo: str):
+    """Valor de um campo do log, juntando as continuacoes SEM carimbo.
+
+    A UI ja gravou fala com "\\n" residual ("ENTRADA   : " + quebra + o texto),
+    entao o campo pode ocupar mais de uma linha - o valor termina no proximo
+    carimbo de tempo.
+    """
+    linhas = bloco.splitlines()
+    for i, linha in enumerate(linhas):
+        m = re.match(r"^\d{4}-\d\d-\d\d [\d:]{8}\s+%s\s+:\s?(.*)$" % rotulo, linha)
+        if m:
+            partes = [m.group(1)]
+            for cont in linhas[i + 1:]:
+                if RE_CARIMBO.match(cont):
+                    break
+                partes.append(cont)
+            return " ".join(" ".join(partes).split())
+    return None
 RE_DEGRAU = re.compile(r"DEGRAU\s+:\s*(\S+)", re.M)
 RE_MATCH = re.compile(r"MATCH\s+:\s*intento=(\S+?)\s+score=([\d.,]+)(.*)$", re.M)
 RE_FRASE = re.compile(r'frase="([^"]*)"')
@@ -51,10 +74,11 @@ def resposta_do_bloco(bloco: str) -> str:
 def turnos_da_bateria(caminho: str):
     texto = open(caminho, encoding="utf-8", errors="replace").read()
     blocos = SEPARADOR.split(texto)[1:]
-    numero = int(re.search(r"conversas-(\d+)", caminho).group(1))
+    encontrado = re.search(r"conversas-(\d+)", os.path.basename(caminho))
+    numero = int(encontrado.group(1)) if encontrado else 1
     for i, bloco in enumerate(blocos, start=1):
-        entrada = RE_ENTRADA.search(bloco)
-        if not entrada:
+        entrada = valor_multilinha(bloco, "ENTRADA")
+        if entrada is None:
             continue
         degrau = RE_DEGRAU.search(bloco)
         match = RE_MATCH.search(bloco)
@@ -65,7 +89,7 @@ def turnos_da_bateria(caminho: str):
             "bateria": numero,
             "bloco": "jar" if numero <= 10 else "fonte",
             "turno": i,
-            "entrada": entrada.group(1).strip(),
+            "entrada": entrada.strip(),
             "degrau": degrau.group(1) if degrau else None,
             "intento": match.group(1) if match else None,
             "score": float(match.group(2).replace(",", ".")) if match else None,
@@ -92,20 +116,19 @@ def main():
 
     saida = {
         "_doc": (
-            "Corpus de aceitacao destilado das 20 baterias de teste as cegas (out/2026). "
+            "Corpus de aceitacao destilado das baterias de teste as cegas (out/2026). "
             "Use as 'entrada' para re-rodar o classificador e comparar a distribuicao de "
             "degrau com _linha_de_base. O resultado gravado aqui e o OBSERVADO na epoca "
-            "(inclusive os erros), nao o esperado. Baterias 1-10 rodaram pelo .jar (base "
-            "antiga); 11-20 pelo codigo-fonte (refino)."
+            "(inclusive os erros), nao o esperado. Use: python destilar_baterias.py [pasta] "
+            "(sem pasta, destila a propria pasta do script)."
         ),
-        "_fonte": "logs/baterias/conversas-1..20.log",
+        "_fonte": os.path.basename(BASE) + "/conversas-*.log",
         "_linha_de_base": {
             "turnos": len(turnos),
             "degraus": dict(sorted(degraus.items(), key=lambda kv: -kv[1])),
             "aposta_pct": round(100.0 * degraus.get("aposta", 0) / len(turnos), 1),
             "direto_pct": round(100.0 * degraus.get("direto", 0) / len(turnos), 1),
             "aprender_pct": round(100.0 * degraus.get("aprender", 0) / len(turnos), 1),
-            "nota_media": 3.2,
         },
         "turnos": turnos,
     }

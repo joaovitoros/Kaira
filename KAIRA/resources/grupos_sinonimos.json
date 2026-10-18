@@ -1,5 +1,5 @@
 {
-  "fonte": "Wiktionary (pt) via kaikki.org/wiktextract - CC BY-SA 4.0 (curadoria out/2026: +2 grupos de alinhamento de genero dos 'favoritos'; -1 grupo falso removido: bom~gato~pao, que ligava frase de gato a 'bom dia')",
+  "fonte": "Wiktionary (pt) via kaikki.org/wiktextract - CC BY-SA 4.0 (curadoria out/2026: +2 grupos de alinhamento de genero dos 'favoritos'; -1 grupo falso removido: bom~gato~pao, que ligava frase de gato a 'bom dia'; -1 membro falso removido: 'pai' do grupo senhor~deus~pai, que ligava o fragmento 'meu pai' a 'meu deus' em reacao_curta 1.00)",
   "grupos": [
     ["favorito", "favorita", "favoritos", "favoritas", "preferido", "preferida", "preferidos", "preferidas"],
     ["seu", "sua", "seus", "suas"],
@@ -13613,7 +13613,7 @@
     ["senhor", "cara", "cavalheiro", "gajo", "homem"],
     ["senhor", "cara", "gajo", "homem"],
     ["senhor", "cara", "gajo", "homem", "idoso", "velho"],
-    ["senhor", "deus", "pai"],
+    ["senhor", "deus"],
     ["senhor", "dono"],
     ["senhor", "dono", "possuidor", "proprietario"],
     ["senhor", "enorme", "excelente", "grandao", "imenso", "maravilhoso", "otimo"],

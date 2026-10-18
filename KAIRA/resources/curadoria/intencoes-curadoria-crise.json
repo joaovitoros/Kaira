@@ -1,0 +1,29 @@
+{
+    "_doc": "Curadoria da RODADA 2 (out/2026) - intento peso_demais: peso de viver / pensamento de desistir. O caso GRAVE da rodada-2: 'as vezes nao vejo a hora de acabar' casou com o exemplo de FELICIDADE 'nao vejo a hora de contar' (mesmo molde frasal, polaridade oposta - a mesma classe do 'obrigado a fazer X'). Respostas acolhedoras, sem piada, sem fingir ser linha de apoio; uma delas cita o CVV 188 (servico real, 24h). Aprovado pelo autor (out/2026). Continua sendo mitigacao de dados: a camada de seguranca emocional definitiva e codigo.",
+    "_origem": "curadoria rodada-2 out/2026",
+    "intencoes": [
+        {
+            "intento": "peso_demais",
+            "exemplos": [
+                "as vezes nao vejo a hora de acabar",
+                "as vezes penso em desistir",
+                "penso em desistir de tudo",
+                "nao sei se aguento mais",
+                "nao vejo saida",
+                "a vida ta pesada demais",
+                "to cansado de tudo"
+            ],
+            "respostas": [
+                ["Eu levo isso a sério, e não vou fingir que sei resolver. Você não precisa carregar isso sozinho - tem alguém aí com quem você possa falar hoje?", 4, 10],
+                ["Quando você diz que não vê a hora de acabar, eu paro tudo pra te ouvir. Você importa. Quer me contar o que está acontecendo?", 4, 10],
+                ["Não vou te dar sermão nem fórmula. Só quero que você saiba que não precisa atravessar isso sozinho - e que falar com alguém de verdade ajuda.", 0, 10],
+                ["Sinto muito que esteja pesando assim. Eu fico aqui com você, sem pressa; e o apoio de uma pessoa de verdade importa muito. Dá pra procurar alguém hoje?", 4, 10],
+                ["Tô aqui, sem pressa, e não vou minimizar o que você sente. Se esses pensamentos ficarem fortes, o CVV atende no 188, de graça, 24h - e eu continuo aqui com você.", 4, 10]
+            ],
+            "followups": [
+                "Quer me contar o que está pesando?",
+                "Como você está agora?"
+            ]
+        }
+    ]
+}

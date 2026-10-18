@@ -21,6 +21,12 @@
                 "tenho dois gatos",
                 "meu gato tem 4 anos"
             ]
+        },
+        {
+            "intento": "saude_usuario",
+            "exemplos": [
+                "tirei o aparelho fixo do dente so estou com a contencao"
+            ]
         }
     ]
 }
