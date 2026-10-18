@@ -651,6 +651,11 @@ Hoje o modo ensino (#33) "para" a conversa: o próximo turno vira resposta sem a
 - **As três são da mesma família (estado/contexto) e precisam da MESMA peça ausente** — a máquina de multi-turno que o **#41 vai provar**. Feitas em paralelo = 3 máquinas; feitas depois do #41 = **1 máquina, 3 usos**. É o argumento mais forte para não furar a fila — a ordem do plano está certa.
 - **Ajuste de expectativa:** a base acabou de resolver **variedade com dados**; essas ideias atacam **coerência/estado**. Eixo diferente, complementar — nenhuma "conserta" o que a base cobre; todas *dependem* de a base estar boa (agora está). O ganho delas é sobre **parecer alguém**, não sobre **entender mais**.
 
+**Adiamentos (out/2026 — decisão do autor, o foco é a Ideia 3 acima):**
+
+- **Desempate por intent/topo — adiado** (era o candidato **#48**). Ideia do autor: no empate da correção, decidir pelo intent/topo dono da palavra usando o ranking do **1º degrau**, que **já rodou antes da correção** (estado zero novo — reuso puro, sem mexer no matcher). Dado na mesa (medido na #46, dicionário de 2115): empate em **6,4%** dos erros de 1 edição e, lá, a ordem só acerta **44%**. É **refino de algo que meio que já funciona**; a melhoria importante é o aprendizado. Se voltar: **re-medir o `ProbeEmpates` no dicionário de 20673** (o 6,4% é do arquivo antigo, sem os 18660 sinônimos).
+- **Uniformização de docs — adiada:** a célula de **UI** do MAPA (❌ — "não há teste do `decifrar` entregando na Face"), a cláusula **"não polui o tópico"** do ensino que a spec #45 **não** asserta (MAPA R1.3 — o teste isola a base justamente pra não vazar), e o **item stale** do §5.1 (o "Em correção pela casa" da âncora no match exato — o caminho do app já cobre, o texto não foi atualizado).
+
 ---
 
 ## Apêndice A — Esquema JSON proposto
