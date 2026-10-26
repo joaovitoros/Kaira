@@ -379,6 +379,8 @@ ENTREGUES na #52 (spec TriagemVariacoesTest, 15 testes) - chave em qualquer
 posicao com fillers/plural, espelho no miss dela ("qual seu time?" responde
 "...mas o seu time eu guardei: Gremio!"), honesto na porta do usuario ("Voce
 ainda nao me contou sua cor favorita!") e "minha X favorita e Y" gravando.
-O bug de integridade do BUG CRITICO foi corrigido antes, na #51. Falta so a
-blocklist de segredo no ensino (#53).
+O bug de integridade do BUG CRITICO foi corrigido antes, na #51. A blocklist
+de segredo no ensino saiu na #53 (spec EnsinoSegredoTest, 5 testes): senha/
+cartao/cpf/chave pix nao entram em kaira.json nem em intencoes.json, com
+recusa curada ("Essa eu prefiro nao anotar..."). A leva do T02 esta completa.
 

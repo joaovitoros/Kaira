@@ -39,6 +39,10 @@ public class FormulaResposta {
             java.util.List.of("nao", "isso nao", "nao e isso", "nao eh isso",
                     "nah", "deixa isso");
 
+    // #53 - recusa curada do ensino quando o par tem cara de segredo
+    private static final String TEXTO_SEGREDO =
+            "Essa eu prefiro nao anotar - segredo e segredo, viu? Fica so com voce.";
+
     // #49 - anti-repeticao do ack, no padrao ultimoFallback
     private static String ultimoAbsorvido = null;
 
@@ -67,9 +71,15 @@ public class FormulaResposta {
     }
 
     // #49 - absorve o par (pergunta, resposta) e fecha o ensino com ack
+    // #53 - par com cara de segredo nao e absorvido (P1 direto e P2 confirmado)
     private static void absorve(String resposta) {
         String pergunta = bufferFrases;
         limpaEnsino();
+        if (ControleKaira.ehSegredo(pergunta) || ControleKaira.ehSegredo(resposta)) {
+            Registro.linha("ENSINO    : par descartado (segredo)");
+            bolha(TEXTO_SEGREDO);
+            return;
+        }
         ControleResposta.chamadaFrase(pergunta, resposta);
         Registro.linha("ENSINO    : absorvido");
         bolha(ackAbsorvido(resposta));
@@ -122,10 +132,16 @@ public class FormulaResposta {
         if (ensinoPendente() && respostaEnsino == null) {
             String[] fato = ControleKaira.extraiFatoDela(falaUsuario);
             if (fato != null) {
-                Registro.linha("TRIAGEM   : fato dela gravado chave=" + fato[0]);
-                ControleKaira.gravaFato(fato[0], fato[1]);
-                limpaEnsino();
-                bolha(ackAbsorvido(falaUsuario));   // o mesmo curado do #48 ("Anotado...")
+                if (ControleKaira.ehSegredo(falaUsuario)
+                        || !ControleKaira.gravaFato(fato[0], fato[1])) {
+                    Registro.linha("TRIAGEM   : fato dela recusado (segredo)");
+                    limpaEnsino();
+                    bolha(TEXTO_SEGREDO);
+                } else {
+                    Registro.linha("TRIAGEM   : fato dela gravado chave=" + fato[0]);
+                    limpaEnsino();
+                    bolha(ackAbsorvido(falaUsuario));   // o mesmo curado do #48 ("Anotado...")
+                }
                 return;
             }
         }
