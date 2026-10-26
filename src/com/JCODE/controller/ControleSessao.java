@@ -46,6 +46,9 @@ public class ControleSessao {
             {"nasceu em",    "(?i).*\\bnasci\\s+em\\s+([\\p{L}\\s]+?)(?:[.!?]|$)"},
             {"meu X favorito e Y",
              "(?i).*\\bmeu\\s+([\\p{L}\\s]+?)\\s+favorit[oa]\\s+(?:é|eh|e)\\s+([\\p{L}\\s]+?)(?:[.!?]|$)"},
+            // #52 - o espelho feminino do padrao generico
+            {"minha X favorita e Y",
+                    "(?i).*\\bminha\\s+([\\p{L}\\s]+?)\\s+favorit[oa]\\s+(?:é|eh|e)\\s+([\\p{L}]+?)(?:[.!?]|$)"},
             // #32 - P7.4: fatos novos; artigo cortado no padrao (PADROES_NOME)
             {"time",            "(?i).*\\bmeu time (?:favorit[oa]\\s+)?(?:é|eh|e)\\s+(?:o\\s+|a\\s+)?([\\p{L}\\s]+?)(?:[.!?]|$)"},
             {"time",            "(?i).*\\btor[çc]o\\s+(?:pro|pra|para\\s+o|para\\s+a)\\s+([\\p{L}\\s]+?)(?:[.!?]|$)"},
@@ -252,7 +255,9 @@ public class ControleSessao {
                 continue;
             if (m.groupCount() >= 2) {
                 // "meu jogo favorito e minecraft" -> chave "jogo favorito"
-                guardaFato(m.group(1).trim() + " favorito", m.group(2).trim());
+                // #52: "minha comida favorita e lasanha" -> "comida favorita"
+                String sufixo = regra[0].startsWith("minha") ? " favorita" : " favorito";
+                guardaFato(m.group(1).trim() + sufixo, m.group(2).trim());
             } else {
                 guardaFato(regra[0], m.group(1).trim());
             }

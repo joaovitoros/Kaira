@@ -85,57 +85,105 @@ public class ControleResposta {
 	private static Map<Exemplo, Set<String>> cacheTokensExemplos = null;
 	private static double cacheTotalExemplos = 0;
 
-	// #50 - triagem de pergunta: ONDE mora a resposta. Nao e' cerca:
-	// cada porta so' abre quando a memoria TEM a chave; miss = pipeline.
-	private static final Pattern INICIO_PERGUNTA = Pattern.compile(
-			"^(?:qual|quais|o que|que|como|quando|onde|quem|por que|porque)\\b");
-	private static final Pattern CHAVE_DELA = Pattern.compile(
-			"\\b(?:sua|seu|suas|seus)\\s+([\\p{L}]+)(?:\\s+(?:preferid[oa]|favorit[oa]))?\\s*$");
-	private static final Pattern POSSESSIVO_USUARIO =
-			Pattern.compile("\\b(?:meu|minha|meus|minhas)\\b");
+	// #52 - triagem v2: interrogativo em QUALQUER posicao, possessivo em
+	// qualquer posicao, plural simples e fillers ("de verdade", "hein",
+	// "mesmo", "e qual?") nao matam mais.
+	private static final Pattern INTERROGATIVO = Pattern.compile(
+			"(?i).*\\b(?:qual|quais|quem|quando|onde|como|quanto|quantos|quantas)\\b.*");
+	private static final Pattern POSSE_DELA = Pattern.compile(
+			"(?i)\\b(sua|seu|suas|seus)\\s+([\\p{L}]+)(?:\\s+(favorit[oa]|preferid[oa]))?");
+	private static final Pattern POSSE_USUARIO = Pattern.compile(
+			"(?i)\\b(meu|minha|meus|minhas)\\s+([\\p{L}]+)(?:\\s+(favorit[oa]|preferid[oa]))?");
 	private static final String MOLDURA_USUARIO =
 			"pelo que voce me contou, o seu %s e %s!";
+
+	// #52 - pergunta de verdade: "?" ou interrogativo que ABRE a frase ou
+	// lead imperativo ("me conta qual..."); "qual/quais/quem" valem em
+	// qualquer posicao. "quando/onde/como" soltos no meio de uma declaracao
+	// ("meu sonho e viajar quando ele crescer") NAO fazem pergunta.
+	private static final Pattern ABRE_PERGUNTA = Pattern.compile(
+			"(?i)^(?:qual|quais|quem|quando|onde|como|quanto|quantos|quantas"
+					+ "|me\\s+conta|me\\s+diz|diz|fala|quero\\s+saber)\\b");
+	private static final Pattern QUALQUER_POSICAO = Pattern.compile(
+			"(?i)\\b(?:qual|quais|quem)\\b");
 
 	public static List<String> frasesFallback() {
 		return FRASES_FALLBACK;
 	}
 
-	public static String respostaPorTriagem(String falaNormalizada) {
-		if (falaNormalizada == null
-				|| !INICIO_PERGUNTA.matcher(falaNormalizada).find())
+	public static String respostaPorTriagem(String fala) {
+		if (fala == null || !ehPergunta(fala))
 			return null;
 
-		Matcher dela = CHAVE_DELA.matcher(falaNormalizada);
+		// PORTA DELA: a memoria pessoal dela
+		Matcher dela = POSSE_DELA.matcher(fala);
 		if (dela.find()) {
-			String chave = dela.group(1);
-			String valor = ControleKaira.buscaFato(chave);
-			if (valor != null) {
+			for (String chave : candidatosDe(dela.group(2), dela.group(3))) {
+				String valor = ControleKaira.buscaFato(chave);
+				if (valor == null)
+					continue;
 				String moldura = ControleKaira.molduraDe(chave);
 				Registro.linha("TRIAGEM   : memoria dela chave=" + chave);
 				return moldura != null ? moldura.replace("{v}", valor) : valor;
 			}
+			// MISS dela: se o USUARIO contou o mesmo fato, responde espelho -
+			// o pipeline nunca le o "seu" como sendo do usuario (#52/B1)
+			Map<String, String> fatos = ControleSessao.get().getFatos();
+			for (String chave : candidatosDe(dela.group(2), dela.group(3))) {
+				if (fatos == null || !fatos.containsKey(chave))
+					continue;
+				String poss = dela.group(1).toLowerCase(java.util.Locale.ROOT).startsWith("sua")
+						? "a sua" : "o seu";
+				Registro.linha("TRIAGEM   : miss dela, espelho usuario chave=" + chave);
+				return "Essa eu ainda nao sei - mas " + poss + " " + chave
+						+ " eu guardei: " + fatos.get(chave) + "!";
+			}
+			return null;
 		}
 
-		if (POSSESSIVO_USUARIO.matcher(falaNormalizada).find()) {
+		// PORTA USUARIO: os fatos que ele contou
+		Matcher usu = POSSE_USUARIO.matcher(fala);
+		if (usu.find()) {
 			Map<String, String> fatos = ControleSessao.get().getFatos();
-			if (fatos != null) {
-				for (String chave : fatos.keySet()) {
-					if (falaContem(falaNormalizada, chave)) {
-						Registro.linha("TRIAGEM   : fato usuario chave=" + chave);
-						return String.format(MOLDURA_USUARIO, chave, fatos.get(chave));
-					}
-				}
+			for (String chave : candidatosDe(usu.group(2), usu.group(3))) {
+				if (fatos == null || !fatos.containsKey(chave))
+					continue;
+				Registro.linha("TRIAGEM   : fato usuario chave=" + chave);
+				return String.format(MOLDURA_USUARIO, chave, fatos.get(chave));
 			}
+			// MISS da porta USUARIO: resposta honesta, nunca inventa
+			String seu = usu.group(1).toLowerCase(java.util.Locale.ROOT).startsWith("minha")
+					? "sua" : "seu";
+			String pedaco = usu.group(3) != null
+					? usu.group(2) + " " + usu.group(3) : usu.group(2);
+			Registro.linha("TRIAGEM   : miss usuario chave=" + pedaco);
+			return "Voce ainda nao me contou " + seu + " " + pedaco + "!";
 		}
 		return null;
 	}
 
-	/** #50 - todas as palavras da chave presentes na pergunta ("jogo favorito"). */
-	private static boolean falaContem(String fala, String chave) {
-		for (String palavra : chave.split(" "))
-			if (!(" " + fala + " ").contains(" " + palavra + " "))
-				return false;
-		return true;
+	private static boolean ehPergunta(String fala) {
+		return fala.indexOf('?') >= 0
+				|| ABRE_PERGUNTA.matcher(fala).find()
+				|| QUALQUER_POSICAO.matcher(fala).find();
+	}
+
+	/** #52 - candidatos de chave na ordem de tentativa ("jogo favorito", "jogo"...). */
+	private static List<String> candidatosDe(String base, String sufixo) {
+		List<String> fora = new java.util.ArrayList<>();
+		String b = base.toLowerCase(java.util.Locale.ROOT);
+		if (b.endsWith("es") && b.length() > 4)
+			fora.add(b.substring(0, b.length() - 2));
+		if (b.endsWith("s") && b.length() > 3)
+			fora.add(b.substring(0, b.length() - 1));
+		fora.add(b);
+		List<String> completos = new java.util.ArrayList<>();
+		for (String c : fora) {
+			if (sufixo != null)
+				completos.add(c + " " + sufixo.toLowerCase(java.util.Locale.ROOT));
+			completos.add(c);
+		}
+		return completos;
 	}
 
 	public static String lerResposta(String falaUsuario) {

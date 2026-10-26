@@ -374,3 +374,11 @@ RECOMENDACOES:
   - "o que voce gosta de X?" deveria cair na memoria dela (gostos), nao em
     "Gosto de conversar".
 
+STATUS (26/10): variantes da chave, misses honestos e o PADROES_FATO feminino
+ENTREGUES na #52 (spec TriagemVariacoesTest, 15 testes) - chave em qualquer
+posicao com fillers/plural, espelho no miss dela ("qual seu time?" responde
+"...mas o seu time eu guardei: Gremio!"), honesto na porta do usuario ("Voce
+ainda nao me contou sua cor favorita!") e "minha X favorita e Y" gravando.
+O bug de integridade do BUG CRITICO foi corrigido antes, na #51. Falta so a
+blocklist de segredo no ensino (#53).
+
