@@ -46,6 +46,10 @@ public class FormulaResposta {
     // #49 - anti-repeticao do ack, no padrao ultimoFallback
     private static String ultimoAbsorvido = null;
 
+    // #41 - confianca do #33 (0.6): acima disso a resposta ao followup vai
+    // pro intento do match; abaixo (>= piso), pra familia que perguntou
+    private static final double LIMIAR_CONFIANCA = 0.6;
+
     // #49 - limpa o estado do ensino (P1/P2) e desarma o brilho do botao
     private static void limpaEnsino() {
         bufferFrases = null;
@@ -173,6 +177,40 @@ public class FormulaResposta {
             return;
         }
 
+        // #41 - pergunta pendente dela: a fala seguinte e' a resposta do
+        // followup. Fala que o pipeline ENTENDE (ou pergunta de outro
+        // assunto) cancela e flui (o ack sai no enviarResposta). A maquina
+        // absorve so' o que o pipeline nao sabe responder (aposta e abaixo).
+        if (ControleSessao.getPerguntaPendente() != null
+                && !ControleComandos.validaComandos(falaUsuario)) {
+            double score = ControleResposta.scoreDo(falaUsuario);
+            boolean entendida = ControleResposta.ehPergunta(falaUsuario)
+                    || score >= LIMIAR_CONFIANCA;
+            if (entendida) {
+                Registro.linha("PENDENTE : cancelamento (fala entendida)");
+            } else {
+                String pergunta = ControleSessao.getPerguntaPendente();
+                String familia = ControleSessao.getFamiliaPergunta();
+                ControleSessao.limpaPerguntaPendente();
+                String fmt = String.format(java.util.Locale.ROOT, "%.3f", score);
+                if (score >= PISO) {
+                    ControleResposta.absorveNoIntento(
+                            familia != null ? familia : "auto_aprendizado",
+                            falaUsuario, pergunta);
+                    Registro.linha("USUARIO   : resposta ao followup familia=" + familia
+                            + " score=" + fmt);
+                    bolha(ackAbsorvido(falaUsuario));
+                } else {
+                    // P2 do #48: retem o par - nada grava sem "sim"
+                    bufferFrases = falaUsuario;
+                    respostaEnsino = pergunta;
+                    Registro.linha("PENDENTE : retido (score=" + fmt + ")");
+                    bolha(TEXTO_CONFIRMACAO.replace("{fala}", falaUsuario));
+                }
+                return;
+            }
+        }
+
         if(!ControleComandos.validaComandos(falaUsuario)){
 
             String degrau = "aprender";
@@ -285,6 +323,14 @@ public class FormulaResposta {
                 Registro.linha("ENSINO    : cancelado (fala entendida)");
             }
             limpaEnsino();
+
+            // #41 - a pergunta pendente dela: fala entendida cancela com ack
+            if (ControleSessao.getPerguntaPendente() != null) {
+                texto = texto + " " + TEXTO_CANCELADO;
+                Registro.linha("PENDENTE : cancelada (fala entendida)");
+                ControleSessao.limpaPerguntaPendente();
+            }
+
             // §7.2 - iniciativa propria: a cada N turnos, uma pergunta de interesse
             if (resposta != null) {
                 String interesse = ControleSessao.perguntaInteresse();

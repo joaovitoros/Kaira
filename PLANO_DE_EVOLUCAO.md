@@ -655,7 +655,7 @@ Pra dar resposta curta e fresca sobre preferência dela, usar respostas **parame
 **Ideia 3 — Aprendizado orgânico (sem "parar" a conversa).**
 Hoje o modo ensino (#33) "para" a conversa: o próximo turno vira resposta sem aviso. Inverter: quando ela não entende um tópico, **ela pergunta**, e a resposta do usuário é absorvida pelo contexto (tópico + tipo da pergunta) direto pro intent certo — sem entrar em "modo". Mesma tese do desempate por contexto (#41) do outro lado: lá o contexto decide **qual intent responder**, aqui decide **onde guardar** o que o usuário disse. Por isso **#41 vem antes**.
 
-**Ordem natural:** fechar #39–#41 → trilho #42–#45 (perguntas, fatos dela, Fase 4-piloto, aprendizado orgânico). A validar o ganho real do Markov e do piloto do dicionário (C3) antes de escalar qualquer um — o C3 já ganhou a fatia **"explica melhor" na #54** (o `texto` do dicionário sai quando o turno pede profundidade; "conta mais" segue no resumo).
+**Ordem natural:** fechar #39–#41 → trilho #42–#45 (perguntas, fatos dela, Fase 4-piloto, aprendizado orgânico). **#41 ENTREGUE (26/10)** — a máquina da pergunta pendente dela (o simétrico do #48): o followup arma família+texto, a fala seguinte é julgada pelo pipeline (entendida cancela com ack; 0,10–0,60 absorve na família; abaixo vai pro P2) — spec `MaquinaContextoTest`, replay GERAL 5,3 / GRAVE 0. A validar o ganho real do Markov e do piloto do dicionário (C3) antes de escalar qualquer um — o C3 já ganhou a fatia **"explica melhor" na #54** (o `texto` do dicionário sai quando o turno pede profundidade; "conta mais" segue no resumo).
 
 **Ganho real das 3 ideias (análise out/2026, base em 98 intenções / 2.420 exemplos / 1.291 respostas):**
 
@@ -739,7 +739,7 @@ Hoje o modo ensino (#33) "para" a conversa: o próximo turno vira resposta sem a
 | 2º | Fatos dela / consistência | Alto (personalidade; escopo menor do que parece) | mesma máquina de contexto |
 | 3º | Respostas compostas | Médio e localizado (famílias de fato; Markov ver §8.2) | #35 pra medir |
 
-- **As três são da mesma família (estado/contexto) e precisam da MESMA peça ausente** — a máquina de multi-turno que o **#41 vai provar**. Feitas em paralelo = 3 máquinas; feitas depois do #41 = **1 máquina, 3 usos**. É o argumento mais forte para não furar a fila — a ordem do plano está certa.
+- **As três são da mesma família (estado/contexto) e precisam da MESMA peça ausente** — a máquina de multi-turno que o **#41 entregou** (a pergunta pendente dela, 26/10). Feitas em paralelo = 3 máquinas; feitas depois do #41 = **1 máquina, 3 usos**. É o argumento mais forte para não furar a fila — a ordem do plano estava certa.
 - **Ajuste de expectativa:** a base acabou de resolver **variedade com dados**; essas ideias atacam **coerência/estado**. Eixo diferente, complementar — nenhuma "conserta" o que a base cobre; todas *dependem* de a base estar boa (agora está). O ganho delas é sobre **parecer alguém**, não sobre **entender mais**.
 
 **Adiamentos (out/2026 — decisão do autor, o foco é a Ideia 3 acima):**

@@ -22,6 +22,10 @@ public class ControleSessao {
     private static boolean perguntouNome = false;
     private static boolean nomeCapturado = false;
 
+    // #41 - pergunta pendente dela: a fala seguinte e' a resposta do followup
+    private static String familiaPergunta = null;
+    private static String perguntaPendente = null;
+
     private static final String ARQUIVO_SESSAO = "sessao.json";
 
     private static int turnosDesdePergunta = 0;
@@ -91,6 +95,28 @@ public class ControleSessao {
         return sessao;
     }
 
+
+    /** #41 - arma a pergunta que ela acabou de fazer (familia + texto). */
+    public static String armaPergunta(String familia, String texto) {
+        familiaPergunta = familia;
+        perguntaPendente = texto;
+        Registro.linha("PENDENTE : familia=" + familia);
+        return texto;
+    }
+
+    public static String getFamiliaPergunta() {
+        return familiaPergunta;
+    }
+
+    public static String getPerguntaPendente() {
+        return perguntaPendente;
+    }
+
+    public static void limpaPerguntaPendente() {
+        familiaPergunta = null;
+        perguntaPendente = null;
+    }
+
     public static void reset() {
         sessao = new Sessao();
         perguntouNome = false;
@@ -100,6 +126,7 @@ public class ControleSessao {
         turnoDeExplicacao = false;
         ultimoInteresse = null;
         apostaPendente = null;
+        limpaPerguntaPendente();
     }
 
     public static void processa(String falaUsuario) {
@@ -354,7 +381,7 @@ public class ControleSessao {
                 if (topico.equals(i.getIntento()) && i.getFollowups() != null
                         && !i.getFollowups().isEmpty()) {
                     Registro.linha("SESSAO    : followup de " + topico);
-                    return sorteia(i.getFollowups());
+                    return armaPergunta(topico, sorteia(i.getFollowups()));
                 }
             }
         }
@@ -368,7 +395,7 @@ public class ControleSessao {
 
         // fonte 2 - pool generico
         Registro.linha("SESSAO    : pergunta de interesse");
-        return sorteia(PERGUNTAS_INTERESSE);
+        return armaPergunta(null, sorteia(PERGUNTAS_INTERESSE));
     }
 
     /** Anti-repeticao no estilo do ultimoFallback (issue #17). */

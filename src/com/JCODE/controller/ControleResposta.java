@@ -170,7 +170,7 @@ public class ControleResposta {
 		return null;
 	}
 
-	private static boolean ehPergunta(String fala) {
+	public static boolean ehPergunta(String fala) {
 		return fala.indexOf('?') >= 0
 				|| ABRE_PERGUNTA.matcher(fala).find()
 				|| QUALQUER_POSICAO.matcher(fala).find();
@@ -1046,6 +1046,32 @@ public class ControleResposta {
 
 		MatchIntencao encaixe = melhorIntencaoDetalhado(intencoesCache, fraseNormalizada, false);
 		return encaixe == null ? 0.0 : encaixe.getScore();
+	}
+
+	/** #41 - absorve o par (exemplo = a resposta do usuario, resposta = o
+	 *  followup dela) no intento informado; sem intento, o gate do #33 decide. */
+	public static void absorveNoIntento(String intento, String frase, String resposta) {
+		if (intencoesCache == null)
+			carregaCache();
+		Intencao alvo = intencoesCache.getIntencoes().stream()
+				.filter(i -> i.getIntento().equalsIgnoreCase(intento == null ? "" : intento))
+				.findFirst().orElse(null);
+		if (alvo == null) {
+			chamadaFrase(frase, resposta);
+			return;
+		}
+		if (objectMapper == null)
+			objectMapper = new ObjectMapper();
+		Registro.linha("APRENDE   : intento=" + alvo.getIntento() + " (familia da pergunta)");
+		alvo.getExemplos().add(new Exemplo(frase, "autor"));
+		alvo.getRespostas().add(new RespostaIntencao(resposta, "autor", 0, 10));
+		invalidaCacheIdf();
+		try (FileWriter fileWriter = new FileWriter(
+				Caminhos.recurso("intencoes.json").toFile(), StandardCharsets.UTF_8)) {
+			fileWriter.write(objectMapper.writeValueAsString(intencoesCache));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void ensinaEm(Intencoes raiz, String frase, String resposta){
