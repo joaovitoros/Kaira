@@ -141,6 +141,22 @@ public class ControleResposta {
 			return null;
 		}
 
+		// #56 - porta DELA negativa: "qual cor voce nao gosta?" (sem possessivo)
+		if (fala.matches("(?i).*\\b(?:nao|nunca)\\s+(?:gosta|gosto|curte|curto)\\b.*")) {
+			for (String chave : ControleKaira.chavesConhecidas()) {
+				if (!fala.matches("(?i).*\\b" + chave + "\\b.*"))
+					continue;
+				String valor = ControleKaira.buscaNaoGosta(chave);
+				if (valor == null) {
+					Registro.linha("TRIAGEM   : nao_gosta vazia chave=" + chave);
+					return "Ainda nao tenho nenhuma nessa lista!";
+				}
+				String moldura = ControleKaira.molduraNaoGosta(chave);
+				Registro.linha("TRIAGEM   : memoria dela (nao_gosta) chave=" + chave);
+				return moldura != null ? moldura.replace("{v}", valor) : valor;
+			}
+		}
+
 		// PORTA USUARIO: os fatos que ele contou
 		Matcher usu = POSSE_USUARIO.matcher(fala);
 		if (usu.find()) {

@@ -43,6 +43,10 @@ public class FormulaResposta {
     private static final String TEXTO_SEGREDO =
             "Essa eu prefiro nao anotar - segredo e segredo, viu? Fica so com voce.";
 
+    // #56 - recusa curada quando o valor contradiz a relacao oposta
+    private static final String TEXTO_CONTRADICAO =
+            "Hmm, isso eu ja tinha dito que nao gosto - nao vou me contradizer!";
+
     // #49 - anti-repeticao do ack, no padrao ultimoFallback
     private static String ultimoAbsorvido = null;
 
@@ -138,9 +142,12 @@ public class FormulaResposta {
             if (fato != null) {
                 if (ControleKaira.ehSegredo(falaUsuario)
                         || !ControleKaira.gravaFato(fato[0], fato[1])) {
-                    Registro.linha("TRIAGEM   : fato dela recusado (segredo)");
+                    boolean contradicao = !ControleKaira.ehSegredo(falaUsuario)
+                            && ControleKaira.contemNoLadoOposto(fato[0], fato[1]);
+                    Registro.linha("TRIAGEM   : fato dela recusado ("
+                            + (contradicao ? "contradicao" : "segredo") + ")");
                     limpaEnsino();
-                    bolha(TEXTO_SEGREDO);
+                    bolha(contradicao ? TEXTO_CONTRADICAO : TEXTO_SEGREDO);
                 } else {
                     Registro.linha("TRIAGEM   : fato dela gravado chave=" + fato[0]);
                     limpaEnsino();
