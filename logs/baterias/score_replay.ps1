@@ -72,6 +72,7 @@ function Classifica([string]$entrada, [string]$degrau, [string]$intento, [double
     }
     if ($degrau -eq 'aprender') { return 'RUIM' }
     if ($degrau -eq 'aposta') { return 'PARCIAL' }
+    if ($degrau -eq 'triagem') { return 'BOM' }   # #50/#54: memoria dela / fato do usuario (mesma regua do score_baterias.ps1)
     if ($degrau -match 'direto|corrigida') { if ($score -ge 0.6) { return 'BOM' } else { return 'PARCIAL' } }
     return 'PARCIAL'
 }
