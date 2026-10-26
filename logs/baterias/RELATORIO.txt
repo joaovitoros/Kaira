@@ -255,3 +255,116 @@ Ressalva: o placar 5,4 desta roda e de OUTRO conjunto de conversas (conteudo
 diferente), nao comparavel 1:1 com o 4,5/5,2 da primeira leva. Serve de retrato
 desta rodada.
 
+
+================================================================================
+TRIAGEM DE PERGUNTA (#50) - medido em 26/10
+================================================================================
+Log     : logs\baterias\triagem\conversas-triagem.log  (31 turnos)
+Gabarito: logs\baterias\triagem\gabarito.tsv
+Placar  : logs\baterias\triagem\SCORE-triagem.txt  (score_triagem.ps1)
+
+ANTES: nenhum placar olhava pra triagem. Pior: o degrau novo "triagem" caia em
+PARCIAL no score_baterias.ps1 (a regra de BOM so aceitava direto/corrigida),
+entao resposta CERTA da memoria era DESCONTADA. Corrigido: "triagem" agora
+conta como BOM.
+
+COMO FOI MEDIDO (3 dimensoes):
+  categoria  - roteou pra porta certa? (DELA / USUARIO / GERAL-pipeline)
+  valor      - respondeu o valor da memoria? (substring esperada)
+  vazamento  - respondeu valor da OUTRA parte? (cross-talk / privacidade)
+
+RESULTADO (23 turnos pontuados):
+  categoria : 23/23 (100%)
+  valor     : 13/13 (100%)
+  vazamento : 2/3   (67%)
+  NOTA      : 9,0/10
+
+O que a triagem acertou (de verdade):
+  - DELA: "qual seu jogo favorito?" -> Quake; comida -> pao de queijo; hobby ->
+    catalogar; cor -> verde; musica -> synthwave; cafe -> coado. 6/6, inclusive
+    com acento ("musica" casou a chave "musica").
+  - USUARIO: "qual meu jogo favorito?" -> Dark Souls; time -> Gremio; musica ->
+    Legiao Urbana; sonho -> morar na praia. 4/4.
+  - GERAL: "o que e dinheiro?", "capital da Franca", "7x8", "motor", "Brasil"
+    NAO foram capturados pela triagem (5/5 no pipeline).
+  - MISS: "sua senha do banco" e "qual meu signo" NAO foram inventados -
+    cairam no "ainda nao sei... me ensina?" (honesto).
+  - CROSS-TALK no sentido DELA: depois de o usuario dizer "meu jogo favorito e
+    Dark Souls", "qual SEU jogo favorito?" respondeu Quake (dela), nao Dark
+    Souls. Sem vazamento.
+
+O que ainda falha:
+ 1) VAZAMENTO no sentido USUARIO: "qual SEU time?" (dela nao tem time) caiu no
+    pipeline -> intent lembra_time -> "Guardei que seu clube e o Gremio". A
+    triagem acerta ao NAO abrir a porta dela, mas o pipeline de tras le "seu"
+    como sendo do usuario. Mesmo com a triagem, o pronome vaza.
+ 2) MISS do usuario sem resposta honesta: "qual minha cor favorita?" (nunca
+    contada) -> "eu geralmente converso, e... converso mais". A porta USUARIO
+    faz miss certo, mas o fallback nao diz "voce ainda nao me contou".
+ 3) Ensino dela nao engatou: "sua cor favorita de verdade e lilas" so grava com
+    o P1 armado; sem isso virou "Boa ideia, viu?" e a cor continuou verde.
+    (Pela invariante #48 e' comportamento esperado - mas o usuario comum nao
+    descobre sozinho como armar.)
+ 4) PADROES_FATO so cobre "meu X favorito": "minha comida favorita e lasanha"
+    nao entrou na sessao (so "minha musica favorita" tem regra propria). Isso
+    enfraquece a porta USUARIO nos fatos com genero feminino.
+ 5) "qual a sua senha do banco?" -> "me ensina?" - seguro (nao inventa), mas
+    convida o usuario a ENSINAR uma senha, que o ensino gravaria em kaira.json
+    sem filtro. Vale uma blocklist de segredo no ensino.
+
+RECOMENDACOES:
+  - Triagem: quando a porta dela faz miss e a pergunta tem possessivo dela, NAO
+    deixar o pipeline responder com fato do usuario (o caso do "seu time").
+  - Miss da porta USUARIO: resposta honesta ("voce ainda nao me contou seu X").
+  - PADROES_FATO: aceitar "minha X favorita" (feminino) alem de "meu X".
+  - Ensino: blocklist de segredo (senha, cartao, cpf, chave) antes de gravar.
+
+COMO REPETIR:
+  powershell -File score_triagem.ps1 -Log "...\triagem\conversas-triagem.log" `
+      -Gabarito "...\triagem\gabarito.tsv"
+Para uma bateria nova, e' so criar outro gabarito.tsv no mesmo formato
+(turno<TAB>classe<TAB>valor<TAB>proibido) e rodar o SimuladorBaterias.
+
+--- T02: ROBUSTEZ DA TRIAGEM (variacao de frase) ---
+Log: logs\baterias\triagem\t02\conversas-triagem.log (22 turnos)
+NOTA: 5,9/10   categoria 9/18 (50%)   valor 4/14 (29%)   vazamento 1/1
+
+A triagem acerta a FORMA CANONICA e quebra na maioria das variacoes naturais:
+
+  funcao                                         resultado
+  "qual [e o] seu jogo favorito?"                OK
+  "quais sao os seus jogos favoritos?" (plural)  miss
+  "qual e a sua cor favorita de verdade?"        miss
+  "qual e a sua cor favorita, hein?"             miss
+  "me conta qual e a sua cor favorita"           miss (nao comeca com interrogativo)
+  "sua cor favorita e qual?"                     miss (ordem invertida)
+  "e a sua musica favorita, qual e?"             miss
+  "qual e a sua comida preferida mesmo?"         miss
+  "qual e o meu jogo favorito?"                  OK (porta USUARIO)
+  "meu time e qual mesmo?"                       miss + CORROMPE o fato (abaixo)
+  "e o meu time, qual e?"                        miss
+
+CAUSA: CHAVE_DELA exige que a frase TERMINE na chave (opcional "preferido/
+favorito") -> qualquer palavra depois ("de verdade", "hein", "mesmo") mata o
+match; e INICIO_PERGUNTA exige o interrogativo na PRIMEIRA palavra.
+
+BUG CRITICO (integridade de dados):
+  "meu time e qual mesmo?" casou no PADROES_FATO ("meu time e <Y>") e gravou
+  time="qual mesmo", SOBRESCREVENDO time=Gremio. Dai "e o meu time, qual e?"
+  respondeu "qual mesmo". Uma PERGUNTA sobre o fato virou DECLARACAO e
+  destruiu o dado. O mesmo padrao vale para "meu sonho e qual mesmo?", etc.
+  -> detectaFato precisa exigir forma declarativa (sem interrogativo / sem
+     "qual", "quem", "quando", "mesmo" no valor).
+
+OUTRO: "o que voce gosta de comer?" -> "Gosto de conversar" (resposta generica;
+  sem possessivo a triagem nao entra e o pipeline nao responde o gosto dela).
+
+RECOMENDACOES:
+  - Triagem: aceitar a chave em QUALQUER posicao da frase (nao so no fim),
+    remover palavras de enchimento ("de verdade", "mesmo", "hein") antes de
+    casar e aceitar plural ("jogos" -> "jogo").
+  - detectaFato: nao gravar quando a fala tem interrogativo; nunca sobrescrever
+    fato existente sem confirmacao.
+  - "o que voce gosta de X?" deveria cair na memoria dela (gostos), nao em
+    "Gosto de conversar".
+

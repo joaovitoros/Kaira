@@ -71,6 +71,8 @@ $linhas = New-Object System.Collections.ArrayList
 [void]$linhas.Add("Le: conversas-*.log da pasta. Sinais: obrigado-sem-agrader, piada-fora-de-hora,")
 [void]$linhas.Add("nome-suspeito, ensino (nao entendeu), fragmento, slot-cru, match-fraco (1-2 tokens),")
 [void]$linhas.Add("fora-do-assunto (dominio), empatia-falha (grave).")
+[void]$linhas.Add("Degrau 'triagem' (#50) conta como BOM: roteamento/memoria tem placar proprio")
+[void]$linhas.Add("no score_triagem.ps1 (categoria, valor e vazamento).")
 [void]$linhas.Add("")
 [void]$linhas.Add(("BATERIA  TURNOS  BOM  PARC  RUIM  GRAVE  NOTA   PRINCIPAIS SINAIS"))
 $todos = @()
@@ -167,6 +169,7 @@ foreach ($f in $arquivos) {
         elseif ($weak -and $socialIntent) { $cls = 'RUIM' }
         elseif ($weak) { $cls = 'PARCIAL' }
         elseif ($guess) { $cls = 'PARCIAL' }
+        elseif ($degrau -eq 'triagem') { $cls = 'BOM' }   # #50: resposta da memoria dela / fatos do usuario
         elseif ($degrau -eq 'resposta-nome') { $cls = 'BOM' }
         elseif ($sc -ge 0.6 -and $degrau -match 'direto|corrigida') { $cls = 'BOM' }
         elseif ($degrau -eq 'direto') { $cls = 'PARCIAL' }

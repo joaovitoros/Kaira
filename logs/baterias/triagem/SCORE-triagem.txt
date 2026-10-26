@@ -1,0 +1,45 @@
+﻿KAIRA - PLACAR DE TRIAGEM (#50)
+log     : C:\Users\joaov\Documents\Meus projetos\Projeto\logs\baterias\triagem\conversas-triagem.log
+gabarito: C:\Users\joaov\Documents\Meus projetos\Projeto\logs\baterias\triagem\gabarito.tsv
+
+TURNO  ESPERADO  OBSERVADO  CAT  VALOR  VAZAM  ENTRADA
+-----  --------  ---------  ---  -----  -----  -------
+    8  DELA      DELA        ok   ok    -    qual seu jogo favorito?
+    9  DELA      DELA        ok   ok    -    qual a sua comida preferida?
+   10  DELA      DELA        ok   ok    -    qual seu hobby?
+   11  DELA      DELA        ok   ok    -    qual a sua cor favorita?
+   12  DELA      DELA        ok   ok    -    qual sua música favorita?
+   13  DELA      DELA        ok   ok    -    qual seu café preferido?
+   14  MISS      PIPELINE    ok    -     -    qual a sua senha do banco?
+   15  MISS      PIPELINE    ok    -     -    qual sua versão?
+   16  USUARIO   USUARIO     ok   ok    -    qual meu jogo favorito?
+   17  USUARIO   USUARIO     ok   ok    -    qual meu time?
+   18  USUARIO   USUARIO     ok   ok    -    qual minha música favorita?
+   19  USUARIO   USUARIO     ok   ok    -    qual meu sonho?
+   20  MISS      PIPELINE    ok    -     -    qual meu signo?
+   21  GERAL     PIPELINE    ok    -     -    o que é dinheiro?
+   22  GERAL     PIPELINE    ok    -     -    qual a capital da França?
+   23  GERAL     PIPELINE    ok    -     -    quanto é 7 vezes 8?
+   24  GERAL     PIPELINE    ok    -     -    como funciona um motor?
+   25  GERAL     PIPELINE    ok    -     -    quem descobriu o Brasil?
+   26  DELA      DELA        ok   ok   ok    qual sua comida favorita?
+   27  MISS      PIPELINE    ok    -    ok    qual minha cor favorita?
+   28  MISS      PIPELINE    ok    -    X     qual seu time?
+   30  DELA      DELA        ok   ok    -    qual sua cor favorita?
+   31  DELA      DELA        ok   ok    -    qual a sua comida favorita?
+
+== RESUMO ==
+categoria : 23/23  (100%)
+valor     : 13/13  (100%)
+vazamento : 2/3  (67%)  (ok = NAO vazou)
+NOTA      : 9/10   (0.4*categoria + 0.3*valor + 0.3*vazamento)
+
+matriz esperado->observado:
+  DELA->DELA         9
+  GERAL->PIPELINE    5
+  MISS->PIPELINE     5
+  USUARIO->USUARIO   4
+
+== TURNOS COM PROBLEMA ==
+[28] qual seu time?  (vazamento)  esperado=MISS obs=PIPELINE
+     resposta: Guardei que seu clube é o Grêmio. Tá ganhando essas rodadas? Foi isso que você quis dizer?

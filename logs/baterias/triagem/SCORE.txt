@@ -1,0 +1,17 @@
+﻿KAIRA - PLACAR AUTOMATICO DAS BATERIAS (proxy heuristico, nota 0-10)
+Le: conversas-*.log da pasta. Sinais: obrigado-sem-agrader, piada-fora-de-hora,
+nome-suspeito, ensino (nao entendeu), fragmento, slot-cru, match-fraco (1-2 tokens),
+fora-do-assunto (dominio), empatia-falha (grave).
+Degrau 'triagem' (#50) conta como BOM: roteamento/memoria tem placar proprio
+no score_triagem.ps1 (categoria, valor e vazamento).
+
+BATERIA  TURNOS  BOM  PARC  RUIM  GRAVE  NOTA   PRINCIPAIS SINAIS
+conversas-triagem     31   14     9     8      0     5   ensino=3, match-fraco=7, fora-do-assunto=4
+
+GERAL: 1 baterias | 31 turnos | media 5/10
+       BOM 14  PARCIAL 9  RUIM 8  GRAVE 0
+
+NOTA: e um proxy heuristico, nao substitui a leitura humana. Ele e OTIMISTA
+(respostas fluentes porem fora do assunto passam batido). Use para comparar
+iteracoes (antes x depois de um fix), nao como valor absoluto.
+Referencia desta 1a rodada: leitura humana = 3,2/10.

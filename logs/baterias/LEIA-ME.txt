@@ -21,6 +21,12 @@ destilar_baterias.py   Destila conversas-N.log -> baterias.json de UMA rodada.
 combinar_rodadas.py    Junta os corpora das rodadas num unico baterias.json (marca o corte).
 score_baterias.ps1     Placar do proxy a partir dos LOGS brutos (rodada nova).
 score_replay.ps1       Placar do replay (le baterias.json + baterias-replay.json).
+score_triagem.ps1      Placar da TRIAGEM (#50): categoria (DELA/USUARIO/GERAL),
+                       valor da memoria e vazamento (cross-talk). Le um gabarito.
+triagem\               Bateria de triagem: conversas-triagem.log (31 turnos),
+                       gabarito.tsv e SCORE-triagem.txt. Nota atual: 9,0/10.
+triagem\t02\           Robustez (variacoes de frase). Nota: 5,9/10 - a forma
+                       canonica passa, as variacoes naturais nao.
 
 
 Como refazer (rodada nova, ou a base mudou)

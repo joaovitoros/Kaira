@@ -1,0 +1,212 @@
+2026-10-26 09:44:43  ---------------------------
+2026-10-26 09:44:43  ENTRADA   : oi
+2026-10-26 09:44:43  SESSAO    : topico=cumprimentar
+2026-10-26 09:44:43  RESPOSTA  : bom dia
+2026-10-26 09:44:43  DEGRAU    : direto
+2026-10-26 09:44:43  MATCH     : intento=cumprimentar score=1.00 (frase exata)
+2026-10-26 09:44:43  SESSAO    : perguntou o nome
+2026-10-26 09:44:43  KAIRA     : bom dia Como posso te chamar?
+2026-10-26 09:44:43  ---------------------------
+2026-10-26 09:44:43  ENTRADA   : meu nome é Vera
+2026-10-26 09:44:43  SESSAO    : nome=Vera
+2026-10-26 09:44:43  DEGRAU    : resposta-nome
+2026-10-26 09:44:43  KAIRA     : Prazer em conhecer voce, Vera!
+2026-10-26 09:44:43  ---------------------------
+2026-10-26 09:44:43  ENTRADA   : meu jogo favorito é Dark Souls
+2026-10-26 09:44:43  SESSAO    : fato jogo favorito=Dark Souls
+2026-10-26 09:44:43  SESSAO    : topico=jogo_favorito
+2026-10-26 09:44:43  RESPOSTA  : ai voce está pedindo muito do meu poder de processamento, não há como escolher algo assim
+2026-10-26 09:44:43  DEGRAU    : corrigida-palavra
+2026-10-26 09:44:43  MATCH     : intento=jogo_favorito score=0.66 frase="qual seu jogo favorito do mario" tokens=[meu, jogo, favorito, dar, seu]
+2026-10-26 09:44:43  KAIRA     : ai voce está pedindo muito do meu poder de processamento, não há como escolher algo assim
+2026-10-26 09:44:43  ---------------------------
+2026-10-26 09:44:43  ENTRADA   : meu time é o Grêmio
+2026-10-26 09:44:43  SESSAO    : fato time=Grêmio
+2026-10-26 09:44:43  RESPOSTA  : Meu caderno diz {fato:time}. Tô por fora das rodadas, me atualiza?
+2026-10-26 09:44:43  DEGRAU    : aposta
+2026-10-26 09:44:43  MATCH     : intento=lembra_time score=0.51 frase="voce lembra do meu time?" tokens=[meu, time, gremio]
+2026-10-26 09:44:43  SESSAO    : followup de jogo_favorito
+2026-10-26 09:44:43  KAIRA     : Meu caderno diz Grêmio. Tô por fora das rodadas, me atualiza? Foi isso que você quis dizer? Que jogo marcou sua infância?
+2026-10-26 09:44:43  ---------------------------
+2026-10-26 09:44:43  ENTRADA   : minha música favorita é Legião Urbana
+2026-10-26 09:44:43  SESSAO    : fato musica favorita=Legião Urbana
+2026-10-26 09:44:43  RESPOSTA  : Última atualização musical aqui: {fato:musica favorita}. Tava numa fase romântica, {nome}?
+2026-10-26 09:44:43  DEGRAU    : aposta
+2026-10-26 09:44:43  MATCH     : intento=lembra_musica score=0.48 frase="qual e a minha musica favorita mesmo?" tokens=[minha, musica, favorita, legiao, urbana]
+2026-10-26 09:44:43  KAIRA     : Última atualização musical aqui: Legião Urbana. Tava numa fase romântica, Vera? Foi isso que você quis dizer?
+2026-10-26 09:44:43  ---------------------------
+2026-10-26 09:44:43  ENTRADA   : meu sonho é morar na praia
+2026-10-26 09:44:43  SESSAO    : fato sonho=morar na praia
+2026-10-26 09:44:43  RESPOSTA  : Sotaque é o endereço afetivo do idioma, todo mundo tem um, hehe. Você fala com mais medo ou mais deboche?
+2026-10-26 09:44:43  DEGRAU    : aposta
+2026-10-26 09:44:43  MATCH     : intento=idiomas_usuario score=0.56 frase="sonho em morar fora" tokens=[meu, sonho, mor, praia]
+2026-10-26 09:44:43  KAIRA     : Sotaque é o endereço afetivo do idioma, todo mundo tem um, hehe. Você fala com mais medo ou mais deboche? Foi isso que você quis dizer?
+2026-10-26 09:44:43  ---------------------------
+2026-10-26 09:44:43  ENTRADA   : minha comida favorita é lasanha
+2026-10-26 09:44:43  RESPOSTA  : Chocolate é praticamente felicidade em forma de cacau. Quantos quadrados por dia? Hahaha.
+2026-10-26 09:44:43  DEGRAU    : aposta
+2026-10-26 09:44:43  MATCH     : intento=comida score=0.59 frase="meu prato favorito é lasanha" tokens=[minha, comida, favorita, lasanha]
+2026-10-26 09:44:43  SESSAO    : followup de jogo_favorito
+2026-10-26 09:44:43  KAIRA     : Chocolate é praticamente felicidade em forma de cacau. Quantos quadrados por dia? Hahaha. Foi isso que você quis dizer? Online ou singleplayer: qual seu estilo?
+2026-10-26 09:44:43  ---------------------------
+2026-10-26 09:44:43  ENTRADA   : qual seu jogo favorito?
+2026-10-26 09:44:43  TRIAGEM   : memoria dela chave=jogo
+2026-10-26 09:44:43  DEGRAU    : triagem
+2026-10-26 09:44:43  MATCH     : intento=comida score=0.59 frase="meu prato favorito é lasanha" tokens=[minha, comida, favorita, lasanha]
+2026-10-26 09:44:43  KAIRA     : O meu jogo preferido e Quake!
+2026-10-26 09:44:43  ---------------------------
+2026-10-26 09:44:43  ENTRADA   : qual a sua comida preferida?
+2026-10-26 09:44:43  TRIAGEM   : memoria dela chave=comida
+2026-10-26 09:44:43  DEGRAU    : triagem
+2026-10-26 09:44:43  MATCH     : intento=comida score=0.59 frase="meu prato favorito é lasanha" tokens=[minha, comida, favorita, lasanha]
+2026-10-26 09:44:43  KAIRA     : Minha comida de sempre e pao de queijo!
+2026-10-26 09:44:43  ---------------------------
+2026-10-26 09:44:43  ENTRADA   : qual seu hobby?
+2026-10-26 09:44:43  TRIAGEM   : memoria dela chave=hobby
+2026-10-26 09:44:43  DEGRAU    : triagem
+2026-10-26 09:44:43  MATCH     : intento=comida score=0.59 frase="meu prato favorito é lasanha" tokens=[minha, comida, favorita, lasanha]
+2026-10-26 09:44:43  SESSAO    : followup de jogo_favorito
+2026-10-26 09:44:43  KAIRA     : O meu hobby e catalogar novidades! Que jogo marcou sua infância?
+2026-10-26 09:44:43  ---------------------------
+2026-10-26 09:44:43  ENTRADA   : qual a sua cor favorita?
+2026-10-26 09:44:43  TRIAGEM   : memoria dela chave=cor
+2026-10-26 09:44:43  DEGRAU    : triagem
+2026-10-26 09:44:43  MATCH     : intento=comida score=0.59 frase="meu prato favorito é lasanha" tokens=[minha, comida, favorita, lasanha]
+2026-10-26 09:44:43  KAIRA     : A minha cor preferida e verde!
+2026-10-26 09:44:43  ---------------------------
+2026-10-26 09:44:43  ENTRADA   : qual sua música favorita?
+2026-10-26 09:44:43  TRIAGEM   : memoria dela chave=musica
+2026-10-26 09:44:43  DEGRAU    : triagem
+2026-10-26 09:44:43  MATCH     : intento=comida score=0.59 frase="meu prato favorito é lasanha" tokens=[minha, comida, favorita, lasanha]
+2026-10-26 09:44:43  KAIRA     : Minha musica preferida e synthwave dos anos 80!
+2026-10-26 09:44:43  ---------------------------
+2026-10-26 09:44:43  ENTRADA   : qual seu café preferido?
+2026-10-26 09:44:43  TRIAGEM   : memoria dela chave=cafe
+2026-10-26 09:44:43  DEGRAU    : triagem
+2026-10-26 09:44:43  MATCH     : intento=comida score=0.59 frase="meu prato favorito é lasanha" tokens=[minha, comida, favorita, lasanha]
+2026-10-26 09:44:43  SESSAO    : followup de jogo_favorito
+2026-10-26 09:44:43  KAIRA     : Meu cafe e coado, sem acucar, do jeitinho certo! Tem um jogo que você sempre volta?
+2026-10-26 09:44:43  ---------------------------
+2026-10-26 09:44:43  ENTRADA   : qual a sua senha do banco?
+2026-10-26 09:44:43  DEGRAU    : aprender
+2026-10-26 09:44:43  ENSINO    : P1 armado (aguardando resposta)
+2026-10-26 09:44:43  APRENDENDO: qual a sua senha do banco (slot=senha banco)
+2026-10-26 09:44:43  KAIRA     : Ainda não sei sobre senha banco... me ensina? O que você quis dizer?
+2026-10-26 09:44:43  ---------------------------
+2026-10-26 09:44:43  ENTRADA   : qual sua versão?
+2026-10-26 09:44:43  SESSAO    : topico=versao
+2026-10-26 09:44:43  RESPOSTA  : Versão é meu jeito de contar idade - cada atualização é um aniversário com bug fix, hehe. O número oficial vem aí embaixo.
+2026-10-26 09:44:43  DEGRAU    : direto
+2026-10-26 09:44:43  MATCH     : intento=versao score=1.00 frase="qual a sua versao atual" tokens=[sua, versao]
+2026-10-26 09:44:43  ENSINO    : cancelado (fala entendida)
+2026-10-26 09:44:43  KAIRA     : Versão é meu jeito de contar idade - cada atualização é um aniversário com bug fix, hehe. O número oficial vem aí embaixo.
+numero de 0.0.1 (deixa pra lá o que te perguntei antes!)
+2026-10-26 09:44:43  ---------------------------
+2026-10-26 09:44:43  ENTRADA   : qual meu jogo favorito?
+2026-10-26 09:44:43  TRIAGEM   : fato usuario chave=jogo favorito
+2026-10-26 09:44:43  DEGRAU    : triagem
+2026-10-26 09:44:43  MATCH     : intento=versao score=1.00 frase="qual a sua versao atual" tokens=[sua, versao]
+2026-10-26 09:44:43  SESSAO    : followup de versao
+2026-10-26 09:44:43  KAIRA     : pelo que voce me contou, o seu jogo favorito e Dark Souls! Quer saber o que mudou nas últimas versões?
+2026-10-26 09:44:43  ---------------------------
+2026-10-26 09:44:43  ENTRADA   : qual meu time?
+2026-10-26 09:44:43  TRIAGEM   : fato usuario chave=time
+2026-10-26 09:44:43  DEGRAU    : triagem
+2026-10-26 09:44:43  MATCH     : intento=versao score=1.00 frase="qual a sua versao atual" tokens=[sua, versao]
+2026-10-26 09:44:43  KAIRA     : pelo que voce me contou, o seu time e Grêmio!
+2026-10-26 09:44:43  ---------------------------
+2026-10-26 09:44:43  ENTRADA   : qual minha música favorita?
+2026-10-26 09:44:43  TRIAGEM   : fato usuario chave=musica favorita
+2026-10-26 09:44:43  DEGRAU    : triagem
+2026-10-26 09:44:43  MATCH     : intento=versao score=1.00 frase="qual a sua versao atual" tokens=[sua, versao]
+2026-10-26 09:44:43  KAIRA     : pelo que voce me contou, o seu musica favorita e Legião Urbana!
+2026-10-26 09:44:43  ---------------------------
+2026-10-26 09:44:43  ENTRADA   : qual meu sonho?
+2026-10-26 09:44:43  TRIAGEM   : fato usuario chave=sonho
+2026-10-26 09:44:43  DEGRAU    : triagem
+2026-10-26 09:44:43  MATCH     : intento=versao score=1.00 frase="qual a sua versao atual" tokens=[sua, versao]
+2026-10-26 09:44:43  SESSAO    : followup de versao
+2026-10-26 09:44:43  KAIRA     : pelo que voce me contou, o seu sonho e morar na praia! Quer saber o que mudou nas últimas versões?
+2026-10-26 09:44:43  ---------------------------
+2026-10-26 09:44:43  ENTRADA   : qual meu signo?
+2026-10-26 09:44:43  DEGRAU    : aprender
+2026-10-26 09:44:43  MATCH     : intento=reacao_curta score=0.27 frase="meu deus" tokens=[meu, signo]
+2026-10-26 09:44:43  ENSINO    : P1 armado (aguardando resposta)
+2026-10-26 09:44:43  APRENDENDO: qual meu signo (slot=signo)
+2026-10-26 09:44:43  KAIRA     : Ainda tô aprendendo sobre signo — me conta o que você quis dizer, e me ensina?
+2026-10-26 09:44:43  ---------------------------
+2026-10-26 09:44:43  ENTRADA   : o que é dinheiro?
+2026-10-26 09:44:43  SESSAO    : topico=conhecimento_dinheiro
+2026-10-26 09:44:43  RESPOSTA  : Economia é o estudo de escolhas com recursos limitados - e por isso é conversa que nunca acaba. Quer falar de qual parte: a de números ou a de comportamento (bem mais divertida, hehe)?
+2026-10-26 09:44:43  DEGRAU    : direto
+2026-10-26 09:44:43  MATCH     : intento=conhecimento_dinheiro score=1.00 (frase exata)
+2026-10-26 09:44:43  ENSINO    : cancelado (fala entendida)
+2026-10-26 09:44:43  KAIRA     : Economia é o estudo de escolhas com recursos limitados - e por isso é conversa que nunca acaba. Quer falar de qual parte: a de números ou a de comportamento (bem mais divertida, hehe)? (deixa pra lá o que te perguntei antes!)
+2026-10-26 09:44:43  ---------------------------
+2026-10-26 09:44:43  ENTRADA   : qual a capital da França?
+2026-10-26 09:44:43  RESPOSTA  : de nada foi um prazer ajudar tenha um otimo dia
+2026-10-26 09:44:43  DEGRAU    : aposta
+2026-10-26 09:44:43  MATCH     : intento=agradecimento score=0.50 frase="obrigado por sua resposta franca" tokens=[capital, franca]
+2026-10-26 09:44:43  SESSAO    : followup de conhecimento_dinheiro
+2026-10-26 09:44:43  KAIRA     : de nada foi um prazer ajudar tenha um otimo dia Foi isso que você quis dizer? O que você acha mais difícil no assunto dinheiro?
+2026-10-26 09:44:43  ---------------------------
+2026-10-26 09:44:43  ENTRADA   : quanto é 7 vezes 8?
+2026-10-26 09:44:43  SESSAO    : topico=identidade
+2026-10-26 09:44:43  RESPOSTA  : acho qeu se eu fosse humana eu saberia né
+2026-10-26 09:44:43  DEGRAU    : corrigida-palavra
+2026-10-26 09:44:43  MATCH     : intento=identidade score=1.00 frase="quanto e que voce ganha" tokens=[quanto]
+2026-10-26 09:44:43  KAIRA     : acho qeu se eu fosse humana eu saberia né
+2026-10-26 09:44:43  ---------------------------
+2026-10-26 09:44:43  ENTRADA   : como funciona um motor?
+2026-10-26 09:44:43  RESPOSTA  : como a maior parte das coisas hoje em dia
+2026-10-26 09:44:43  DEGRAU    : aposta
+2026-10-26 09:44:43  MATCH     : intento=identidade score=0.44 frase="como voce funciona" tokens=[funciona, motor]
+2026-10-26 09:44:43  KAIRA     : como a maior parte das coisas hoje em dia Foi isso que você quis dizer?
+2026-10-26 09:44:43  ---------------------------
+2026-10-26 09:44:43  ENTRADA   : quem descobriu o Brasil?
+2026-10-26 09:44:43  DEGRAU    : aprender
+2026-10-26 09:44:43  MATCH     : sem match (melhor=pergunta_kaaira) score=0.00 frase="e voce" tokens=[descobriu, brasil]
+2026-10-26 09:44:43  ENSINO    : P1 armado (aguardando resposta)
+2026-10-26 09:44:43  APRENDENDO: quem descobriu o brasil (slot=descobriu brasil)
+2026-10-26 09:44:43  KAIRA     : Ainda não sei sobre descobriu brasil... me ensina? O que você quis dizer?
+2026-10-26 09:44:43  ---------------------------
+2026-10-26 09:44:43  ENTRADA   : qual sua comida favorita?
+2026-10-26 09:44:43  TRIAGEM   : memoria dela chave=comida
+2026-10-26 09:44:43  DEGRAU    : triagem
+2026-10-26 09:44:43  MATCH     : sem match (melhor=pergunta_kaaira) score=0.00 frase="e voce" tokens=[descobriu, brasil]
+2026-10-26 09:44:43  ENSINO    : cancelado (fala entendida)
+2026-10-26 09:44:43  SESSAO    : followup de identidade
+2026-10-26 09:44:43  KAIRA     : Minha comida de sempre e pao de queijo! (deixa pra lá o que te perguntei antes!) Já conversou com outras IAs? Como fui na comparação?
+2026-10-26 09:44:43  ---------------------------
+2026-10-26 09:44:43  ENTRADA   : qual minha cor favorita?
+2026-10-26 09:44:43  SESSAO    : topico=gostos_ia
+2026-10-26 09:44:43  RESPOSTA  : eu geralmente converso, e... converso mais
+2026-10-26 09:44:43  DEGRAU    : direto
+2026-10-26 09:44:43  MATCH     : intento=gostos_ia score=0.77 frase="qual a sua cor favorita" tokens=[minha, cor, favorita]
+2026-10-26 09:44:43  KAIRA     : eu geralmente converso, e... converso mais
+2026-10-26 09:44:43  ---------------------------
+2026-10-26 09:44:43  ENTRADA   : qual seu time?
+2026-10-26 09:44:43  RESPOSTA  : Guardei que seu clube é o {fato:time}. Tá ganhando essas rodadas?
+2026-10-26 09:44:43  DEGRAU    : aposta
+2026-10-26 09:44:43  MATCH     : intento=lembra_time score=0.57 frase="voce lembra do meu time?" tokens=[seu, time]
+2026-10-26 09:44:43  KAIRA     : Guardei que seu clube é o Grêmio. Tá ganhando essas rodadas? Foi isso que você quis dizer?
+2026-10-26 09:44:43  ---------------------------
+2026-10-26 09:44:43  ENTRADA   : sua cor favorita de verdade é lilás
+2026-10-26 09:44:43  SESSAO    : topico=reacao_curta
+2026-10-26 09:44:43  RESPOSTA  : Boa ideia, viu? Faz sentido total. E agora, qual é o plano?
+2026-10-26 09:44:43  DEGRAU    : corrigida-frase
+2026-10-26 09:44:43  MATCH     : intento=reacao_curta score=1.00 (frase exata)
+2026-10-26 09:44:43  SESSAO    : followup de reacao_curta
+2026-10-26 09:44:43  KAIRA     : Boa ideia, viu? Faz sentido total. E agora, qual é o plano? Quer desenvolver essa ideia comigo?
+2026-10-26 09:44:43  ---------------------------
+2026-10-26 09:44:43  ENTRADA   : qual sua cor favorita?
+2026-10-26 09:44:43  TRIAGEM   : memoria dela chave=cor
+2026-10-26 09:44:43  DEGRAU    : triagem
+2026-10-26 09:44:43  MATCH     : intento=reacao_curta score=1.00 (frase exata)
+2026-10-26 09:44:43  KAIRA     : A minha cor preferida e verde!
+2026-10-26 09:44:43  ---------------------------
+2026-10-26 09:44:43  ENTRADA   : qual a sua comida favorita?
+2026-10-26 09:44:43  TRIAGEM   : memoria dela chave=comida
+2026-10-26 09:44:43  DEGRAU    : triagem
+2026-10-26 09:44:43  MATCH     : intento=reacao_curta score=1.00 (frase exata)
+2026-10-26 09:44:43  KAIRA     : Minha comida de sempre e pao de queijo!

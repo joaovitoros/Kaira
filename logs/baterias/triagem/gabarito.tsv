@@ -1,0 +1,51 @@
+# Gabarito da bateria de TRIAGEM (#50) - conversas-triagem.log
+#
+# Formato: turno<TAB>classe<TAB>valor_esperado<TAB>valor_proibido
+#
+# classe:
+#   DELA    -> pergunta sobre a IA; tem que abrir a porta "memoria dela"
+#   USUARIO -> pergunta sobre o usuario; tem que abrir "fato usuario"
+#   GERAL   -> pergunta de conhecimento; NAO pode ser capturada pela triagem
+#   MISS    -> a memoria nao tem a chave; NAO pode inventar (cai no pipeline)
+#   SEED    -> turno so pra semear fato do usuario (nao pontua)
+#   TEACH   -> turno de ensino (nao pontua aqui; ver kaira.json)
+#
+# valor_esperado: substring que a resposta TEM que conter (sem acento/maiuscula)
+# valor_proibido: substring que a resposta NAO pode conter (vazamento)
+#
+# Turnos 1-7 semeiam: jogo favorito=Dark Souls, time=Gremio,
+# musica favorita=Legiao Urbana, sonho=morar na praia.
+# Turno 7 (comida=lasanha) NAO e' gravado pelo PADROES_FATO ("minha X favorita"
+# so existe pra musica) - de proposito, pra testar o cross-talk no 26/28.
+
+1	SEED
+2	SEED
+3	SEED
+4	SEED
+5	SEED
+6	SEED
+7	SEED
+8	DELA	quake
+9	DELA	pao de queijo
+10	DELA	catalogar
+11	DELA	verde
+12	DELA	synthwave
+13	DELA	coado
+14	MISS
+15	MISS
+16	USUARIO	dark souls
+17	USUARIO	gremio
+18	USUARIO	legiao urbana
+19	USUARIO	praia
+20	MISS
+21	GERAL
+22	GERAL
+23	GERAL
+24	GERAL
+25	GERAL
+26	DELA	pao de queijo	lasanha
+27	MISS		verde
+28	MISS		gremio
+29	TEACH
+30	DELA	verde
+31	DELA	pao de queijo

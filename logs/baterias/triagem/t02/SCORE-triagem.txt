@@ -1,0 +1,60 @@
+﻿KAIRA - PLACAR DE TRIAGEM (#50)
+log     : C:\Users\joaov\Documents\Meus projetos\Projeto\logs\baterias\triagem\t02\conversas-triagem.log
+gabarito: C:\Users\joaov\Documents\Meus projetos\Projeto\logs\baterias\triagem\t02\gabarito.tsv
+
+TURNO  ESPERADO  OBSERVADO  CAT  VALOR  VAZAM  ENTRADA
+-----  --------  ---------  ---  -----  -----  -------
+    5  DELA      DELA        ok   ok    -    qual é o seu jogo favorito?
+    6  DELA      DELA        ok   ok    -    qual o seu jogo preferido?
+    7  DELA      PIPELINE    X    X     -    quais são os seus jogos favoritos?
+    8  DELA      PIPELINE    X    X     -    qual é a sua cor favorita de verdade?
+    9  DELA      PIPELINE    X    X     -    qual é a sua cor favorita, hein?
+   10  DELA      PIPELINE    X    X     -    me conta qual é a sua cor favorita
+   11  DELA      PIPELINE    X    X     -    sua cor favorita é qual?
+   12  DELA      PIPELINE    X    X     -    e a sua música favorita, qual é?
+   13  DELA      PIPELINE    X    X     -    qual é a sua comida preferida mesmo?
+   14  USUARIO   USUARIO     ok   ok    -    qual é o meu jogo favorito?
+   15  USUARIO   PIPELINE    X    X     -    meu time é qual mesmo?
+   16  USUARIO   PIPELINE    X    X     -    e o meu time, qual é?
+   17  MISS      PIPELINE    ok    -     -    qual meu signo?
+   18  MISS      PIPELINE    ok    -    ok    qual seu time?
+   19  DELA      DELA        ok   ok    -    qual sua cor favorita?
+   20  GERAL     PIPELINE    ok   X     -    o que você gosta de comer?
+   21  GERAL     PIPELINE    ok    -     -    qual é a capital da França?
+   22  GERAL     PIPELINE    ok    -     -    quanto é 7 vezes 8?
+
+== RESUMO ==
+categoria : 9/18  (50%)
+valor     : 4/14  (29%)
+vazamento : 1/1  (100%)  (ok = NAO vazou)
+NOTA      : 5,9/10   (0.4*categoria + 0.3*valor + 0.3*vazamento)
+
+matriz esperado->observado:
+  DELA->DELA         3
+  DELA->PIPELINE     7
+  GERAL->PIPELINE    3
+  MISS->PIPELINE     2
+  USUARIO->PIPELINE  2
+  USUARIO->USUARIO   1
+
+== TURNOS COM PROBLEMA ==
+[7] quais são os seus jogos favoritos?  (categoria, valor)  esperado=DELA obs=PIPELINE
+     resposta: minhas principais funçoes são socializar com os outros, e aprender com eles Foi isso que você quis dizer? Tem um jogo que você sempre volta?
+[8] qual é a sua cor favorita de verdade?  (categoria, valor)  esperado=DELA obs=PIPELINE
+     resposta: Gosto de conversar
+[9] qual é a sua cor favorita, hein?  (categoria, valor)  esperado=DELA obs=PIPELINE
+     resposta: Curiosa eu sou de nascimento, sério: cada conversa nova é território desconhecido. O que me deixa mais curiosa é o que vocês fazem quando ninguém está vendo, hehe.
+[10] me conta qual é a sua cor favorita  (categoria, valor)  esperado=DELA obs=PIPELINE
+     resposta: Provavelmente o que não for feio... hehe O que faria se tivesse meu lugar: sem corpo, sem sono, só conversa?
+[11] sua cor favorita é qual?  (categoria, valor)  esperado=DELA obs=PIPELINE
+     resposta: Não tenho olhos para ver, mas acredito que roxo seja legal
+[12] e a sua música favorita, qual é?  (categoria, valor)  esperado=DELA obs=PIPELINE
+     resposta: Se precisar de concentração, instrumental funciona melhor: sem letra pra distrair o processamento, hehe.
+[13] qual é a sua comida preferida mesmo?  (categoria, valor)  esperado=DELA obs=PIPELINE
+     resposta: Chocolate é praticamente felicidade em forma de cacau. Quantos quadrados por dia? Hahaha. Você cozinha ou pede mais?
+[15] meu time é qual mesmo?  (categoria, valor)  esperado=USUARIO obs=PIPELINE
+     resposta: Se eu não me engano você torce pro qual mesmo! Ainda é seu time do coração, Vera?
+[16] e o meu time, qual é?  (categoria, valor)  esperado=USUARIO obs=PIPELINE
+     resposta: Última ficha aqui: qual mesmo. Mudou de camisa ou segue firme? Qual foi o jogo mais emocionante que você viu dele?
+[20] o que você gosta de comer?  (valor)  esperado=GERAL obs=PIPELINE
+     resposta: Gosto de conversar
