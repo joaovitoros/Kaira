@@ -115,6 +115,21 @@ public class FormulaResposta {
 
         System.out.println("texto recebido pós replaces "+falaUsuario);
 
+        // #50 - ensino dela (posicao do P2, ANTES da cascata): com o P1 armado,
+        // frase na forma "sua CHAVE ... e VALOR" grava na memoria pessoal - o
+        // score NAO decide. Invariante da #48: sem P1 armado, NADA grava (a
+        // frase solta no ar segue o pipeline de sempre).
+        if (ensinoPendente() && respostaEnsino == null) {
+            String[] fato = ControleKaira.extraiFatoDela(falaUsuario);
+            if (fato != null) {
+                Registro.linha("TRIAGEM   : fato dela gravado chave=" + fato[0]);
+                ControleKaira.gravaFato(fato[0], fato[1]);
+                limpaEnsino();
+                bolha(ackAbsorvido(falaUsuario));   // o mesmo curado do #48 ("Anotado...")
+                return;
+            }
+        }
+
         // #49 - P2 (resposta retida pelo porteiro): so um SIM explicito grava
         // o par; um NAO explicito descarta. Roda ANTES do classificador
         // porque "nao" casa como resposta pronta (medido: DEGRAU direto).
@@ -143,11 +158,27 @@ public class FormulaResposta {
         }
 
         if(!ControleComandos.validaComandos(falaUsuario)){
-            String degrau = "aprender";
-            respostaVariavel = ControleResposta.lerResposta(falaUsuario);
 
-            if(respostaVariavel!=null)
-                degrau = "direto";
+            String degrau = "aprender";
+
+            // #50(v2) - o campo respostaVariavel e' STATIC: sem reset por
+            // turno ele vira maleta - a primeira resposta vence pra sempre
+            // (matcher, correcoes e aposta nunca mais correm; medido no
+            // replay: "aprender" 94%, GERAL 0.1)
+            respostaVariavel = null;
+
+            // #50 - triagem: porta DELA (memoria pessoal) + porta USUARIO
+            // (fatos do contexto); null = miss, o pipeline segue inteiro.
+            String triada = ControleResposta.respostaPorTriagem(falaUsuario);
+            if (triada != null) {
+                respostaVariavel = triada;
+                degrau = "triagem";
+            }
+            if(respostaVariavel==null){
+                respostaVariavel = ControleResposta.lerResposta(falaUsuario);
+                if(respostaVariavel!=null)
+                    degrau = "direto";
+            }
 
             if(respostaVariavel==null){
                 respostaVariavel = ControleCorrecao.corrigirPalavras(falaUsuario);

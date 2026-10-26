@@ -85,8 +85,57 @@ public class ControleResposta {
 	private static Map<Exemplo, Set<String>> cacheTokensExemplos = null;
 	private static double cacheTotalExemplos = 0;
 
+	// #50 - triagem de pergunta: ONDE mora a resposta. Nao e' cerca:
+	// cada porta so' abre quando a memoria TEM a chave; miss = pipeline.
+	private static final Pattern INICIO_PERGUNTA = Pattern.compile(
+			"^(?:qual|quais|o que|que|como|quando|onde|quem|por que|porque)\\b");
+	private static final Pattern CHAVE_DELA = Pattern.compile(
+			"\\b(?:sua|seu|suas|seus)\\s+([\\p{L}]+)(?:\\s+(?:preferid[oa]|favorit[oa]))?\\s*$");
+	private static final Pattern POSSESSIVO_USUARIO =
+			Pattern.compile("\\b(?:meu|minha|meus|minhas)\\b");
+	private static final String MOLDURA_USUARIO =
+			"pelo que voce me contou, o seu %s e %s!";
+
 	public static List<String> frasesFallback() {
 		return FRASES_FALLBACK;
+	}
+
+	public static String respostaPorTriagem(String falaNormalizada) {
+		if (falaNormalizada == null
+				|| !INICIO_PERGUNTA.matcher(falaNormalizada).find())
+			return null;
+
+		Matcher dela = CHAVE_DELA.matcher(falaNormalizada);
+		if (dela.find()) {
+			String chave = dela.group(1);
+			String valor = ControleKaira.buscaFato(chave);
+			if (valor != null) {
+				String moldura = ControleKaira.molduraDe(chave);
+				Registro.linha("TRIAGEM   : memoria dela chave=" + chave);
+				return moldura != null ? moldura.replace("{v}", valor) : valor;
+			}
+		}
+
+		if (POSSESSIVO_USUARIO.matcher(falaNormalizada).find()) {
+			Map<String, String> fatos = ControleSessao.get().getFatos();
+			if (fatos != null) {
+				for (String chave : fatos.keySet()) {
+					if (falaContem(falaNormalizada, chave)) {
+						Registro.linha("TRIAGEM   : fato usuario chave=" + chave);
+						return String.format(MOLDURA_USUARIO, chave, fatos.get(chave));
+					}
+				}
+			}
+		}
+		return null;
+	}
+
+	/** #50 - todas as palavras da chave presentes na pergunta ("jogo favorito"). */
+	private static boolean falaContem(String fala, String chave) {
+		for (String palavra : chave.split(" "))
+			if (!(" " + fala + " ").contains(" " + palavra + " "))
+				return false;
+		return true;
 	}
 
 	public static String lerResposta(String falaUsuario) {

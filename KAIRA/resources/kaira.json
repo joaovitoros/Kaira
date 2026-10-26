@@ -1,1 +1,20 @@
-{"nome":"K.A.I.R.A","versao":"0.0.1"}
+{
+    "nome": "K.A.I.R.A",
+    "versao": "0.0.1",
+    "fatos": {
+        "cor": "verde",
+        "musica": "synthwave dos anos 80",
+        "cafe": "coado, sem acucar",
+        "jogo": "Quake",
+        "comida": "pao de queijo",
+        "hobby": "catalogar novidades"
+    },
+    "molduras": {
+        "cor": "A minha cor preferida e {v}!",
+        "musica": "Minha musica preferida e {v}!",
+        "cafe": "Meu cafe e {v}, do jeitinho certo!",
+        "jogo": "O meu jogo preferido e {v}!",
+        "comida": "Minha comida de sempre e {v}!",
+        "hobby": "O meu hobby e {v}!"
+    }
+}
