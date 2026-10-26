@@ -173,6 +173,11 @@ agora com as duas rodadas: 811 turnos, campo "rodada" + corte em "_rodadas") e o
 logs brutos removidos. A pasta tem 10 arquivos: o mapa do que ficou e como refazer
 a medicao esta no LEIA-ME.txt.
 
+Rodada 3 (out/2026): a sessao REAL da Karin
+(logs/2026-10-18_sessao01_teste-as-cegas_karin.log, 23 turnos) entrou no mesmo
+corpus unificado - placar dos logs brutos 5/10, e com a base nova 5,6 -> 6,5.
+O log original ficou onde estava.
+
 
 ================================================================================
 RODADA 2 - 20 baterias NOVAS (headless, base com o refino de agradecimentos)

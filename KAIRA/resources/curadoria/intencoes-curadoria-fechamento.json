@@ -1,0 +1,106 @@
+{
+    "_doc": "Fechamento da leva DIALOGO out/2026 - os itens que ficaram parciais: (1) P7.5, slots {nome}/{topico} em mais respostas; (2) criterio de aceite 3 da §4, as frases do diagnostico que ainda nao roteavam certo; (3) regra 7, followups dos intentos tematicos que nasceram sem; (4) pool de continuacao_topico - as 4 respostas antigas eram de humor 0 apenas, entao com o humor padrao (5) o filtro esvaziava e caia no comportamento antigo. TRES frases do criterio 3 NAO entram por limite de dado (ficam aceitas e documentadas): 'nao acredito' JA e exemplo de reacao_diversa (reacao correta, so nao a especificada); 'faz sentido' tem o MESMO token-set de 'isso nao faz sentido' (confusao) - colapso de polaridade; e 'serio isso' e frase SO-GENERICA ({serio, isso}), entao o #41 cede ao contexto: na suite (topico herdado de outro teste) ela vira reacao_diversa e a matriz capota - medido: passa isolada e falha na suite. Os tres tentaram entrar e foram revertidos.",
+    "_origem": "curadoria dialogo out/2026",
+    "intencoes": [
+        {
+            "intento": "atividades_usuario",
+            "exemplos": [
+                "minha planta floresceu"
+            ]
+        },
+        {
+            "intento": "continuacao_topico",
+            "respostas": [
+                ["Sobre {topico}: eu paro tudo pra continuar essa conversa, {nome}. Quer que eu puxe um fio?", 4, 6],
+                ["{topico} ainda tem pano pra manga. Me diz por onde eu sigo.", 4, 6],
+                ["Boa, {nome}: {topico} e assunto que rende. Continuei pensando aqui - quer ouvir?", 4, 6]
+            ]
+        },
+        {
+            "intento": "cumprimentar",
+            "respostas": [
+                ["Oi, {nome}! Que bom te ver por aqui.", 4, 10]
+            ]
+        },
+        {
+            "intento": "despedida",
+            "respostas": [
+                ["Ate mais, {nome}! Volta quando quiser.", 4, 10]
+            ]
+        },
+        {
+            "intento": "trabalho_usuario",
+            "respostas": [
+                ["Isso ocupa a cabeca o dia inteiro, {nome}. Como voce tem levado?", 4, 10]
+            ]
+        },
+        {
+            "intento": "familia_usuario",
+            "respostas": [
+                ["Familia mexe com a gente, {nome}. Quer me contar como foi?", 4, 10]
+            ]
+        },
+        {
+            "intento": "amigos_usuario",
+            "respostas": [
+                ["Amizade boa e isso, {nome}. O que voces fizeram?", 4, 10]
+            ]
+        },
+        {
+            "intento": "universo",
+            "followups": [
+                "E voce, acredita que tem vida la fora?",
+                "Qual misterio do espaco mais te pega?"
+            ]
+        },
+        {
+            "intento": "arte",
+            "followups": [
+                "Voce desenha ou so admira?",
+                "Qual obra te marcou mais?"
+            ]
+        },
+        {
+            "intento": "historia",
+            "followups": [
+                "Que periodo te interessa mais?",
+                "Qual fato historico te surpreendeu?"
+            ]
+        },
+        {
+            "intento": "podcast",
+            "followups": [
+                "Qual foi o ultimo que te prendeu?",
+                "Voce curte mais entrevista ou historia?"
+            ]
+        },
+        {
+            "intento": "gostos_usuario",
+            "followups": [
+                "O que mais te agrada nisso?",
+                "Ha quanto tempo voce gosta disso?"
+            ]
+        },
+        {
+            "intento": "apoio",
+            "followups": [
+                "Quer me contar como voce esta agora?",
+                "Posso ajudar em algo mais?"
+            ]
+        },
+        {
+            "intento": "lembra_gosta",
+            "followups": [
+                "Ainda gosta disso?",
+                "O que te fez gostar disso?"
+            ]
+        },
+        {
+            "intento": "lembra_mora",
+            "followups": [
+                "Ainda mora la?",
+                "Como e a vida ai?"
+            ]
+        }
+    ]
+}

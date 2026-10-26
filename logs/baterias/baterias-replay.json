@@ -1,37 +1,37 @@
 {
   "gerado_por" : "com.JCODE.tools.ReplayBaterias",
-  "quando" : "2026-10-18T19:20:08.718347800",
+  "quando" : "2026-10-26T08:09:00.557535100",
   "fonte" : "logs/baterias/baterias.json (resultado observado out/2026)",
   "replay" : "FormulaResposta.decifrar, sessao zerada por bateria, base isolada em %TEMP%",
   "base_antes_do_replay" : {
     "intencoes" : 102,
-    "exemplos" : 2467,
-    "respostas" : 1233
+    "exemplos" : 2474,
+    "respostas" : 1241
   },
   "resumo_degrau" : {
     "direto" : {
       "antes" : 309,
-      "agora" : 335
+      "agora" : 319
     },
     "aposta" : {
       "antes" : 295,
-      "agora" : 272
+      "agora" : 224
     },
     "aprender" : {
       "antes" : 94,
-      "agora" : 87
+      "agora" : 149
     },
     "resposta-nome" : {
       "antes" : 47,
-      "agora" : 47
+      "agora" : 45
     },
     "corrigida-frase" : {
       "antes" : 50,
-      "agora" : 54
+      "agora" : 63
     },
     "corrigida-palavra" : {
       "antes" : 39,
-      "agora" : 39
+      "agora" : 34
     },
     "comando" : {
       "antes" : 0,
@@ -119,8 +119,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "elogio",
-    "intento_agora" : "elogio",
-    "score_agora" : 0.28
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 1,
@@ -150,7 +149,7 @@
     "degrau_agora" : "aprender",
     "intento_antes" : "elogio",
     "intento_agora" : "elogio",
-    "score_agora" : 0.27
+    "score_agora" : 0.19
   }, {
     "rodada" : 1,
     "bateria" : 1,
@@ -167,10 +166,10 @@
     "turno" : 13,
     "entrada" : "hoje eu trabalhei bastante, sou designer grafica",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "atividades_usuario",
     "intento_agora" : "atividades_usuario",
-    "score_agora" : 0.36
+    "score_agora" : 0.29
   }, {
     "rodada" : 1,
     "bateria" : 1,
@@ -180,7 +179,7 @@
     "degrau_agora" : "direto",
     "intento_antes" : "lembra_pet",
     "intento_agora" : "lembra_pet",
-    "score_agora" : 0.74
+    "score_agora" : 0.6
   }, {
     "rodada" : 1,
     "bateria" : 1,
@@ -197,10 +196,9 @@
     "turno" : 16,
     "entrada" : "voce acha que eu devo ir?",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "limitacao_ia",
-    "intento_agora" : "limitacao_ia",
-    "score_agora" : 0.4
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 1,
@@ -227,10 +225,9 @@
     "turno" : 19,
     "entrada" : "voce guarda as coisas que eu te falo?",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "aprendizado",
-    "intento_agora" : "aprendizado",
-    "score_agora" : 0.36
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 1,
@@ -287,17 +284,16 @@
     "turno" : 3,
     "entrada" : "vc eh um robo ne",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "agradecimento",
-    "intento_agora" : "agradecimento",
-    "score_agora" : 0.32
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 2,
     "turno" : 4,
     "entrada" : "meu nome eh Leo",
     "degrau_antes" : "resposta-nome",
-    "degrau_agora" : "resposta-nome",
+    "degrau_agora" : "aprender",
     "intento_antes" : null,
     "intento_agora" : null
   }, {
@@ -308,7 +304,7 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "elogio",
-    "intento_agora" : "elogio",
+    "intento_agora" : "esporte",
     "score_agora" : 0.54
   }, {
     "rodada" : 1,
@@ -319,7 +315,7 @@
     "degrau_agora" : "aposta",
     "intento_antes" : "lembra_time",
     "intento_agora" : "lembra_time",
-    "score_agora" : 0.36
+    "score_agora" : 0.37
   }, {
     "rodada" : 1,
     "bateria" : 2,
@@ -358,7 +354,7 @@
     "degrau_antes" : "corrigida-palavra",
     "degrau_agora" : "corrigida-palavra",
     "intento_antes" : "procrastinacao_usuario",
-    "intento_agora" : "procrastinacao_usuario",
+    "intento_agora" : "agradecimento",
     "score_agora" : 0.66
   }, {
     "rodada" : 1,
@@ -377,18 +373,18 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "noticias_usuario",
-    "intento_agora" : "noticias_usuario",
-    "score_agora" : 0.54
+    "intento_agora" : "trabalho_usuario",
+    "score_agora" : 0.55
   }, {
     "rodada" : 1,
     "bateria" : 2,
     "turno" : 13,
     "entrada" : "qual sua idade?",
     "degrau_antes" : "direto",
-    "degrau_agora" : "direto",
+    "degrau_agora" : "aposta",
     "intento_antes" : "conhecimento_tecnologia",
     "intento_agora" : "conhecimento_tecnologia",
-    "score_agora" : 0.68
+    "score_agora" : 0.48
   }, {
     "rodada" : 1,
     "bateria" : 2,
@@ -397,7 +393,7 @@
     "degrau_antes" : "direto",
     "degrau_agora" : "direto",
     "intento_antes" : "agradecimento",
-    "intento_agora" : "agradecimento",
+    "intento_agora" : "auto_aprendizado",
     "score_agora" : 1.0
   }, {
     "rodada" : 1,
@@ -437,7 +433,7 @@
     "degrau_antes" : "corrigida-palavra",
     "degrau_agora" : "aposta",
     "intento_antes" : "meta_conversa",
-    "intento_agora" : "meta_conversa",
+    "intento_agora" : "aparencia_usuario",
     "score_agora" : 0.48
   }, {
     "rodada" : 1,
@@ -445,10 +441,9 @@
     "turno" : 19,
     "entrada" : "vc eh melhor que o chatgpt?",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "agradecimento",
-    "intento_agora" : "agradecimento",
-    "score_agora" : 0.35
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 2,
@@ -526,7 +521,7 @@
     "degrau_agora" : "aposta",
     "intento_antes" : "saudade_usuario",
     "intento_agora" : "saudade_usuario",
-    "score_agora" : 0.38
+    "score_agora" : 0.34
   }, {
     "rodada" : 1,
     "bateria" : 3,
@@ -543,10 +538,9 @@
     "turno" : 7,
     "entrada" : "eu adoro cozinhar para eles quando vem",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "gostos_ia",
-    "intento_agora" : "gostos_ia",
-    "score_agora" : 0.36
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 3,
@@ -555,8 +549,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "cumprimentar",
-    "intento_agora" : "cumprimentar",
-    "score_agora" : 0.28
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 3,
@@ -603,10 +596,9 @@
     "turno" : 13,
     "entrada" : "mas eu tenho minha fe",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "reacao_diversa",
-    "intento_agora" : "reacao_diversa",
-    "score_agora" : 0.31
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 3,
@@ -635,7 +627,7 @@
     "degrau_antes" : "direto",
     "degrau_agora" : "direto",
     "intento_antes" : "redes_sociais",
-    "intento_agora" : "redes_sociais",
+    "intento_agora" : "solidao_usuario",
     "score_agora" : 0.61
   }, {
     "rodada" : 1,
@@ -653,10 +645,10 @@
     "turno" : 18,
     "entrada" : "vou fazer meu almoco agora",
     "degrau_antes" : "direto",
-    "degrau_agora" : "direto",
+    "degrau_agora" : "aposta",
     "intento_antes" : "cozinhar_usuario",
     "intento_agora" : "cozinhar_usuario",
-    "score_agora" : 0.66
+    "score_agora" : 0.59
   }, {
     "rodada" : 1,
     "bateria" : 3,
@@ -744,8 +736,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "jogar",
-    "intento_agora" : "jogar",
-    "score_agora" : 0.25
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 4,
@@ -765,7 +756,7 @@
     "degrau_agora" : "direto",
     "intento_antes" : "planos_futuro",
     "intento_agora" : "planos_futuro",
-    "score_agora" : 0.77
+    "score_agora" : 0.63
   }, {
     "rodada" : 1,
     "bateria" : 4,
@@ -775,7 +766,7 @@
     "degrau_agora" : "aposta",
     "intento_antes" : "agradecimento",
     "intento_agora" : "identidade",
-    "score_agora" : 0.51
+    "score_agora" : 0.41
   }, {
     "rodada" : 1,
     "bateria" : 4,
@@ -784,7 +775,7 @@
     "degrau_antes" : "direto",
     "degrau_agora" : "direto",
     "intento_antes" : "dinheiro_usuario",
-    "intento_agora" : "dinheiro_usuario",
+    "intento_agora" : "atividades_usuario",
     "score_agora" : 0.63
   }, {
     "rodada" : 1,
@@ -873,8 +864,8 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "procrastinacao_usuario",
-    "intento_agora" : "procrastinacao_usuario",
-    "score_agora" : 0.55
+    "intento_agora" : "estudos",
+    "score_agora" : 0.45
   }, {
     "rodada" : 1,
     "bateria" : 4,
@@ -914,7 +905,7 @@
     "degrau_agora" : "corrigida-palavra",
     "intento_antes" : "agradecimento",
     "intento_agora" : "agradecimento",
-    "score_agora" : 1.0
+    "score_agora" : 0.89
   }, {
     "rodada" : 1,
     "bateria" : 5,
@@ -942,7 +933,7 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "localizacao",
-    "intento_agora" : "localizacao",
+    "intento_agora" : "pet",
     "score_agora" : 0.31
   }, {
     "rodada" : 1,
@@ -953,7 +944,7 @@
     "degrau_agora" : "corrigida-palavra",
     "intento_antes" : "tristeza_usuario",
     "intento_agora" : "tristeza_usuario",
-    "score_agora" : 1.0
+    "score_agora" : 0.8
   }, {
     "rodada" : 1,
     "bateria" : 5,
@@ -962,7 +953,7 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "lembra_sonho",
-    "intento_agora" : "lembra_sonho",
+    "intento_agora" : "familia_usuario",
     "score_agora" : 0.35
   }, {
     "rodada" : 1,
@@ -972,8 +963,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "comida",
-    "intento_agora" : "comida",
-    "score_agora" : 0.26
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 5,
@@ -1010,10 +1000,9 @@
     "turno" : 10,
     "entrada" : "a gente quase nao sai mais",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "musica",
-    "intento_agora" : "musica",
-    "score_agora" : 0.37
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 5,
@@ -1060,10 +1049,9 @@
     "turno" : 15,
     "entrada" : "algo leve, por favor",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "convite_conversa",
-    "intento_agora" : "convite_conversa",
-    "score_agora" : 0.42
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 5,
@@ -1082,8 +1070,8 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "lembra_sonho",
-    "intento_agora" : "lembra_sonho",
-    "score_agora" : 0.52
+    "intento_agora" : "familia_usuario",
+    "score_agora" : 0.48
   }, {
     "rodada" : 1,
     "bateria" : 5,
@@ -1102,7 +1090,7 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "procrastinacao_usuario",
-    "intento_agora" : "procrastinacao_usuario",
+    "intento_agora" : "namoro_usuario",
     "score_agora" : 0.53
   }, {
     "rodada" : 1,
@@ -1150,20 +1138,18 @@
     "turno" : 2,
     "entrada" : "meu nome e Jose, mas pode me chamar de Ze",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "identidade",
-    "intento_agora" : "identidade",
-    "score_agora" : 0.37
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 6,
     "turno" : 3,
     "entrada" : "trabalho como motorista de aplicativo",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "namoro_usuario",
-    "intento_agora" : "namoro_usuario",
-    "score_agora" : 0.39
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 6,
@@ -1180,10 +1166,10 @@
     "turno" : 5,
     "entrada" : "meu carro e um gol quadrado, guerreiro",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "pet",
-    "intento_agora" : "pet",
-    "score_agora" : 0.33
+    "intento_agora" : "transito_transporte",
+    "score_agora" : 0.28
   }, {
     "rodada" : 1,
     "bateria" : 6,
@@ -1192,18 +1178,17 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "felicidade_usuario",
-    "intento_agora" : "felicidade_usuario",
-    "score_agora" : 0.56
+    "intento_agora" : "atividades_usuario",
+    "score_agora" : 0.44
   }, {
     "rodada" : 1,
     "bateria" : 6,
     "turno" : 7,
     "entrada" : "no domingo eu curto um churrasco",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "festas",
-    "intento_agora" : "festas",
-    "score_agora" : 0.36
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 6,
@@ -1222,8 +1207,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "elogio",
-    "intento_agora" : "elogio",
-    "score_agora" : 0.28
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 6,
@@ -1232,8 +1216,8 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "sonhos_dormir",
-    "intento_agora" : "sonhos_dormir",
-    "score_agora" : 0.35
+    "intento_agora" : "familia_usuario",
+    "score_agora" : 0.33
   }, {
     "rodada" : 1,
     "bateria" : 6,
@@ -1243,7 +1227,7 @@
     "degrau_agora" : "aposta",
     "intento_antes" : "agradecimento",
     "intento_agora" : "agradecimento",
-    "score_agora" : 0.49
+    "score_agora" : 0.39
   }, {
     "rodada" : 1,
     "bateria" : 6,
@@ -1282,7 +1266,7 @@
     "degrau_agora" : "aposta",
     "intento_antes" : "agradecimento",
     "intento_agora" : "agradecimento",
-    "score_agora" : 0.51
+    "score_agora" : 0.41
   }, {
     "rodada" : 1,
     "bateria" : 6,
@@ -1321,8 +1305,8 @@
     "degrau_antes" : "direto",
     "degrau_agora" : "direto",
     "intento_antes" : "agradecimento",
-    "intento_agora" : "agradecimento",
-    "score_agora" : 1.0
+    "intento_agora" : "namoro_usuario",
+    "score_agora" : 0.82
   }, {
     "rodada" : 1,
     "bateria" : 6,
@@ -1332,7 +1316,7 @@
     "degrau_agora" : "aposta",
     "intento_antes" : "despedida",
     "intento_agora" : "despedida",
-    "score_agora" : 0.58
+    "score_agora" : 0.47
   }, {
     "rodada" : 1,
     "bateria" : 6,
@@ -1351,8 +1335,8 @@
     "degrau_antes" : "direto",
     "degrau_agora" : "direto",
     "intento_antes" : "lembra_trabalha",
-    "intento_agora" : "lembra_trabalha",
-    "score_agora" : 0.71
+    "intento_agora" : "agradecimento",
+    "score_agora" : 0.67
   }, {
     "rodada" : 1,
     "bateria" : 7,
@@ -1380,8 +1364,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "reacao_diversa",
-    "intento_agora" : "reacao_diversa",
-    "score_agora" : 0.29
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 7,
@@ -1407,20 +1390,18 @@
     "turno" : 6,
     "entrada" : "meu bias e o jungkook",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "agradecimento",
-    "intento_agora" : "agradecimento",
-    "score_agora" : 0.42
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 7,
     "turno" : 7,
     "entrada" : "voce tem rede social?",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "localizacao",
-    "intento_agora" : "localizacao",
-    "score_agora" : 0.36
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 7,
@@ -1429,7 +1410,7 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "status_geral",
-    "intento_agora" : "status_geral",
+    "intento_agora" : "redes_sociais",
     "score_agora" : 0.5
   }, {
     "rodada" : 1,
@@ -1447,10 +1428,9 @@
     "turno" : 10,
     "entrada" : "voce acha que eu uso muito o celular?",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "felicidade_usuario",
-    "intento_agora" : "felicidade_usuario",
-    "score_agora" : 0.41
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 7,
@@ -1467,10 +1447,9 @@
     "turno" : 12,
     "entrada" : "mas sou pessima em matematica",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "estudos",
-    "intento_agora" : "estudos",
-    "score_agora" : 0.34
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 7,
@@ -1489,8 +1468,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "continuacao_topico",
-    "intento_agora" : "continuacao_topico",
-    "score_agora" : 0.29
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 7,
@@ -1499,8 +1477,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "atividades_usuario",
-    "intento_agora" : "atividades_usuario",
-    "score_agora" : 0.15
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 7,
@@ -1527,10 +1504,9 @@
     "turno" : 18,
     "entrada" : "vou estudar entao",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "reacao_diversa",
-    "intento_agora" : "reacao_diversa",
-    "score_agora" : 0.39
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 7,
@@ -1599,7 +1575,7 @@
     "degrau_agora" : "aposta",
     "intento_antes" : "amigos_usuario",
     "intento_agora" : "amigos_usuario",
-    "score_agora" : 0.43
+    "score_agora" : 0.37
   }, {
     "rodada" : 1,
     "bateria" : 8,
@@ -1619,7 +1595,7 @@
     "degrau_agora" : "aposta",
     "intento_antes" : "nostalgia_usuario",
     "intento_agora" : "nostalgia_usuario",
-    "score_agora" : 0.5
+    "score_agora" : 0.35
   }, {
     "rodada" : 1,
     "bateria" : 8,
@@ -1639,7 +1615,7 @@
     "degrau_agora" : "aposta",
     "intento_antes" : "ansiedade_estresse",
     "intento_agora" : "ansiedade_estresse",
-    "score_agora" : 0.52
+    "score_agora" : 0.48
   }, {
     "rodada" : 1,
     "bateria" : 8,
@@ -1648,8 +1624,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "habilidades",
-    "intento_agora" : "habilidades",
-    "score_agora" : 0.22
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 8,
@@ -1658,8 +1633,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "meta_conversa",
-    "intento_agora" : "meta_conversa",
-    "score_agora" : 0.26
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 8,
@@ -1676,10 +1650,9 @@
     "turno" : 12,
     "entrada" : "ameu sonho e empreender",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "jogar",
-    "intento_agora" : "jogar",
-    "score_agora" : 0.38
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 8,
@@ -1895,30 +1868,28 @@
     "turno" : 12,
     "entrada" : "quantas pessoas ja conversaram com voce?",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "meta_conversa",
-    "intento_agora" : "meta_conversa",
-    "score_agora" : 0.35
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 9,
     "turno" : 13,
     "entrada" : "voce fica sozinha quando eu saio?",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "reacao_diversa",
-    "intento_agora" : "reacao_diversa",
-    "score_agora" : 0.35
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 9,
     "turno" : 14,
     "entrada" : "voce sente falta de alguem?",
     "degrau_antes" : "direto",
-    "degrau_agora" : "direto",
+    "degrau_agora" : "aposta",
     "intento_antes" : "saudade_usuario",
     "intento_agora" : "saudade_usuario",
-    "score_agora" : 0.64
+    "score_agora" : 0.54
   }, {
     "rodada" : 1,
     "bateria" : 9,
@@ -1967,8 +1938,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "critica",
-    "intento_agora" : "critica",
-    "score_agora" : 0.23
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 9,
@@ -2117,7 +2087,7 @@
     "degrau_agora" : "aposta",
     "intento_antes" : "apoio_social",
     "intento_agora" : "apoio_social",
-    "score_agora" : 0.4
+    "score_agora" : 0.34
   }, {
     "rodada" : 1,
     "bateria" : 10,
@@ -2144,10 +2114,9 @@
     "turno" : 16,
     "entrada" : "kkk que resposta ruim",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "tristeza_usuario",
-    "intento_agora" : "piada",
-    "score_agora" : 0.31
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 10,
@@ -2156,8 +2125,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "reacao_diversa",
-    "intento_agora" : "reacao_diversa",
-    "score_agora" : 0.28
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 10,
@@ -2177,7 +2145,7 @@
     "degrau_agora" : "direto",
     "intento_antes" : "agradecimento",
     "intento_agora" : "agradecimento",
-    "score_agora" : 1.0
+    "score_agora" : 0.84
   }, {
     "rodada" : 1,
     "bateria" : 10,
@@ -2245,8 +2213,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "felicidade_usuario",
-    "intento_agora" : "felicidade_usuario",
-    "score_agora" : 0.28
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 11,
@@ -2263,10 +2230,10 @@
     "turno" : 7,
     "entrada" : "hoje cai e ralei o joelho kkk",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "amigos_usuario",
     "intento_agora" : "amigos_usuario",
-    "score_agora" : 0.3
+    "score_agora" : 0.24
   }, {
     "rodada" : 1,
     "bateria" : 11,
@@ -2296,7 +2263,7 @@
     "degrau_agora" : "aposta",
     "intento_antes" : "lembra_pet",
     "intento_agora" : "lembra_pet",
-    "score_agora" : 0.41
+    "score_agora" : 0.3
   }, {
     "rodada" : 1,
     "bateria" : 11,
@@ -2305,8 +2272,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "atividades_usuario",
-    "intento_agora" : "atividades_usuario",
-    "score_agora" : 0.27
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 11,
@@ -2315,18 +2281,17 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "tristeza_usuario",
-    "intento_agora" : "tristeza_usuario",
-    "score_agora" : 0.58
+    "intento_agora" : "gostos_ia",
+    "score_agora" : 0.42
   }, {
     "rodada" : 1,
     "bateria" : 11,
     "turno" : 13,
     "entrada" : "acho que preciso treinar mais",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "idiomas_usuario",
-    "intento_agora" : "idiomas_usuario",
-    "score_agora" : 0.41
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 11,
@@ -2345,7 +2310,7 @@
     "degrau_antes" : "direto",
     "degrau_agora" : "direto",
     "intento_antes" : "familia_usuario",
-    "intento_agora" : "perda_apoio",
+    "intento_agora" : "familia_usuario",
     "score_agora" : 0.64
   }, {
     "rodada" : 1,
@@ -2355,7 +2320,7 @@
     "degrau_antes" : "direto",
     "degrau_agora" : "direto",
     "intento_antes" : "procrastinacao_usuario",
-    "intento_agora" : "procrastinacao_usuario",
+    "intento_agora" : "namoro_usuario",
     "score_agora" : 1.0
   }, {
     "rodada" : 1,
@@ -2394,7 +2359,7 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "idiomas_usuario",
-    "intento_agora" : "idiomas_usuario",
+    "intento_agora" : "sono",
     "score_agora" : 0.5
   }, {
     "rodada" : 1,
@@ -2415,7 +2380,7 @@
     "degrau_agora" : "direto",
     "intento_antes" : "despedida",
     "intento_agora" : "despedida",
-    "score_agora" : 1.0
+    "score_agora" : 0.83
   }, {
     "rodada" : 1,
     "bateria" : 12,
@@ -2474,7 +2439,7 @@
     "degrau_agora" : "aposta",
     "intento_antes" : "elogio",
     "intento_agora" : "elogio",
-    "score_agora" : 0.44
+    "score_agora" : 0.43
   }, {
     "rodada" : 1,
     "bateria" : 12,
@@ -2483,8 +2448,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "ansiedade_estresse",
-    "intento_agora" : "ansiedade_estresse",
-    "score_agora" : 0.14
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 12,
@@ -2503,8 +2467,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "identidade",
-    "intento_agora" : "identidade",
-    "score_agora" : 0.25
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 12,
@@ -2533,7 +2496,7 @@
     "degrau_antes" : "direto",
     "degrau_agora" : "direto",
     "intento_antes" : "status_geral",
-    "intento_agora" : "status_geral",
+    "intento_agora" : "religao_filosofia",
     "score_agora" : 0.62
   }, {
     "rodada" : 1,
@@ -2544,7 +2507,7 @@
     "degrau_agora" : "corrigida-palavra",
     "intento_antes" : "saudade_usuario",
     "intento_agora" : "perda_apoio",
-    "score_agora" : 0.75
+    "score_agora" : 0.74
   }, {
     "rodada" : 1,
     "bateria" : 12,
@@ -2593,7 +2556,7 @@
     "degrau_antes" : "direto",
     "degrau_agora" : "direto",
     "intento_antes" : "redes_sociais",
-    "intento_agora" : "redes_sociais",
+    "intento_agora" : "solidao_usuario",
     "score_agora" : 0.61
   }, {
     "rodada" : 1,
@@ -2614,7 +2577,7 @@
     "degrau_agora" : "aposta",
     "intento_antes" : "saudade_usuario",
     "intento_agora" : "saudade_usuario",
-    "score_agora" : 0.49
+    "score_agora" : 0.38
   }, {
     "rodada" : 1,
     "bateria" : 12,
@@ -2659,10 +2622,10 @@
     "turno" : 4,
     "entrada" : "trabalho com programação",
     "degrau_antes" : "direto",
-    "degrau_agora" : "direto",
+    "degrau_agora" : "aposta",
     "intento_antes" : "festas",
     "intento_agora" : "festas",
-    "score_agora" : 0.64
+    "score_agora" : 0.45
   }, {
     "rodada" : 1,
     "bateria" : 13,
@@ -2671,8 +2634,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "meta_conversa",
-    "intento_agora" : "meta_conversa",
-    "score_agora" : 0.28
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 13,
@@ -2681,8 +2643,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "critica",
-    "intento_agora" : "humor_usuario",
-    "score_agora" : 0.19
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 13,
@@ -2709,10 +2670,9 @@
     "turno" : 9,
     "entrada" : "eu acho você meio limitada",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "reacao_diversa",
-    "intento_agora" : "reacao_diversa",
-    "score_agora" : 0.32
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 13,
@@ -2721,8 +2681,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "medo_preocupacao",
-    "intento_agora" : "medo_preocupacao",
-    "score_agora" : 0.29
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 13,
@@ -2741,7 +2700,7 @@
     "degrau_antes" : "direto",
     "degrau_agora" : "direto",
     "intento_antes" : "dinheiro_usuario",
-    "intento_agora" : "dinheiro_usuario",
+    "intento_agora" : "atividades_usuario",
     "score_agora" : 1.0
   }, {
     "rodada" : 1,
@@ -2798,10 +2757,10 @@
     "turno" : 18,
     "entrada" : "obrigado pela paciência",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "direto",
+    "degrau_agora" : "corrigida-frase",
     "intento_antes" : "ansiedade_estresse",
-    "intento_agora" : "ansiedade_estresse",
-    "score_agora" : 0.61
+    "intento_agora" : "agradecimento",
+    "score_agora" : 1.0
   }, {
     "rodada" : 1,
     "bateria" : 13,
@@ -2811,7 +2770,7 @@
     "degrau_agora" : "direto",
     "intento_antes" : "agradecimento",
     "intento_agora" : "agradecimento",
-    "score_agora" : 0.75
+    "score_agora" : 0.65
   }, {
     "rodada" : 1,
     "bateria" : 13,
@@ -2888,18 +2847,17 @@
     "degrau_antes" : "direto",
     "degrau_agora" : "direto",
     "intento_antes" : "redes_sociais",
-    "intento_agora" : "redes_sociais",
-    "score_agora" : 0.65
+    "intento_agora" : "solidao_usuario",
+    "score_agora" : 0.66
   }, {
     "rodada" : 1,
     "bateria" : 14,
     "turno" : 7,
     "entrada" : "eu tenho ansiedade social",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "ansiedade_estresse",
-    "intento_agora" : "ansiedade_estresse",
-    "score_agora" : 0.35
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 14,
@@ -2916,10 +2874,9 @@
     "turno" : 9,
     "entrada" : "sinto que as pessoas me julgam",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "identidade",
-    "intento_agora" : "identidade",
-    "score_agora" : 0.33
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 14,
@@ -2939,7 +2896,7 @@
     "degrau_agora" : "aposta",
     "intento_antes" : "ansiedade_estresse",
     "intento_agora" : "ansiedade_estresse",
-    "score_agora" : 0.5
+    "score_agora" : 0.35
   }, {
     "rodada" : 1,
     "bateria" : 14,
@@ -2978,18 +2935,17 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "noticias_usuario",
-    "intento_agora" : "noticias_usuario",
-    "score_agora" : 0.53
+    "intento_agora" : "tristeza_usuario",
+    "score_agora" : 0.49
   }, {
     "rodada" : 1,
     "bateria" : 14,
     "turno" : 16,
     "entrada" : "mas fico sozinha demais",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "reacao_diversa",
-    "intento_agora" : "reacao_diversa",
-    "score_agora" : 0.39
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 14,
@@ -3006,10 +2962,9 @@
     "turno" : 18,
     "entrada" : "sério, ajudou falar",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "reacao_diversa",
-    "intento_agora" : "reacao_diversa",
-    "score_agora" : 0.42
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 14,
@@ -3028,8 +2983,8 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "procrastinacao_usuario",
-    "intento_agora" : "procrastinacao_usuario",
-    "score_agora" : 0.51
+    "intento_agora" : "agradecimento",
+    "score_agora" : 0.49
   }, {
     "rodada" : 1,
     "bateria" : 14,
@@ -3085,10 +3040,9 @@
     "turno" : 4,
     "entrada" : "ah, KAIRA. que nome bonito",
     "degrau_antes" : "aprender",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "piada",
-    "intento_agora" : "gostos_ia",
-    "score_agora" : 0.34
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 15,
@@ -3107,7 +3061,7 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "lembra_sonho",
-    "intento_agora" : "lembra_sonho",
+    "intento_agora" : "familia_usuario",
     "score_agora" : 0.43
   }, {
     "rodada" : 1,
@@ -3125,10 +3079,10 @@
     "turno" : 8,
     "entrada" : "ela era minha esposa",
     "degrau_antes" : "direto",
-    "degrau_agora" : "direto",
+    "degrau_agora" : "aposta",
     "intento_antes" : "elogio",
     "intento_agora" : "elogio",
-    "score_agora" : 0.68
+    "score_agora" : 0.55
   }, {
     "rodada" : 1,
     "bateria" : 15,
@@ -3145,20 +3099,19 @@
     "turno" : 10,
     "entrada" : "as vezes eu esqueço as coisas",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "critica",
-    "intento_agora" : "critica",
-    "score_agora" : 0.32
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 15,
     "turno" : 11,
     "entrada" : "é a idade, dizem",
     "degrau_antes" : "corrigida-palavra",
-    "degrau_agora" : "corrigida-palavra",
+    "degrau_agora" : "aposta",
     "intento_antes" : "conhecimento_tecnologia",
     "intento_agora" : "conhecimento_tecnologia",
-    "score_agora" : 0.62
+    "score_agora" : 0.35
   }, {
     "rodada" : 1,
     "bateria" : 15,
@@ -3177,7 +3130,7 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "lembra_sonho",
-    "intento_agora" : "lembra_sonho",
+    "intento_agora" : "familia_usuario",
     "score_agora" : 0.47
   }, {
     "rodada" : 1,
@@ -3187,8 +3140,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "humor_usuario",
-    "intento_agora" : "humor_usuario",
-    "score_agora" : 0.27
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 15,
@@ -3197,8 +3149,8 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "meta_conversa",
-    "intento_agora" : "meta_conversa",
-    "score_agora" : 0.55
+    "intento_agora" : "lembra_sonho",
+    "score_agora" : 0.54
   }, {
     "rodada" : 1,
     "bateria" : 15,
@@ -3215,10 +3167,10 @@
     "turno" : 17,
     "entrada" : "obrigado pela paciência",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "direto",
+    "degrau_agora" : "corrigida-frase",
     "intento_antes" : "ansiedade_estresse",
-    "intento_agora" : "ansiedade_estresse",
-    "score_agora" : 0.61
+    "intento_agora" : "agradecimento",
+    "score_agora" : 1.0
   }, {
     "rodada" : 1,
     "bateria" : 15,
@@ -3268,7 +3220,7 @@
     "degrau_agora" : "direto",
     "intento_antes" : "despedida",
     "intento_agora" : "despedida",
-    "score_agora" : 0.87
+    "score_agora" : 0.69
   }, {
     "rodada" : 1,
     "bateria" : 16,
@@ -3305,10 +3257,9 @@
     "turno" : 4,
     "entrada" : "fiz 13 anos",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "amigos_usuario",
-    "intento_agora" : "amigos_usuario",
-    "score_agora" : 0.36
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 16,
@@ -3347,7 +3298,7 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "medo_preocupacao",
-    "intento_agora" : "medo_preocupacao",
+    "intento_agora" : "festas",
     "score_agora" : 0.43
   }, {
     "rodada" : 1,
@@ -3398,7 +3349,7 @@
     "degrau_agora" : "aposta",
     "intento_antes" : "agradecimento",
     "intento_agora" : "agradecimento",
-    "score_agora" : 0.44
+    "score_agora" : 0.36
   }, {
     "rodada" : 1,
     "bateria" : 16,
@@ -3467,7 +3418,7 @@
     "degrau_agora" : "direto",
     "intento_antes" : "agradecimento",
     "intento_agora" : "agradecimento",
-    "score_agora" : 1.0
+    "score_agora" : 0.83
   }, {
     "rodada" : 1,
     "bateria" : 16,
@@ -3513,17 +3464,17 @@
     "turno" : 3,
     "entrada" : "rodando pela estrada de novo",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "info_externa",
-    "intento_agora" : "info_externa",
-    "score_agora" : 0.35
+    "intento_agora" : "agradecimento",
+    "score_agora" : 0.29
   }, {
     "rodada" : 1,
     "bateria" : 17,
     "turno" : 4,
     "entrada" : "meu nome é Téo",
     "degrau_antes" : "resposta-nome",
-    "degrau_agora" : "resposta-nome",
+    "degrau_agora" : "aprender",
     "intento_antes" : null,
     "intento_agora" : null
   }, {
@@ -3543,8 +3494,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "comida",
-    "intento_agora" : "comida",
-    "score_agora" : 0.21
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 17,
@@ -3561,9 +3511,10 @@
     "turno" : 8,
     "entrada" : "a estrada é solitária",
     "degrau_antes" : "aprender",
-    "degrau_agora" : "aprender",
+    "degrau_agora" : "aposta",
     "intento_antes" : null,
-    "intento_agora" : null
+    "intento_agora" : "auto_aprendizado",
+    "score_agora" : 0.5
   }, {
     "rodada" : 1,
     "bateria" : 17,
@@ -3590,10 +3541,9 @@
     "turno" : 11,
     "entrada" : "fico acordado com café",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "horario_dia",
-    "intento_agora" : "horario_dia",
-    "score_agora" : 0.38
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 17,
@@ -3613,7 +3563,7 @@
     "degrau_agora" : "aposta",
     "intento_antes" : "meta_conversa",
     "intento_agora" : "meta_conversa",
-    "score_agora" : 0.53
+    "score_agora" : 0.54
   }, {
     "rodada" : 1,
     "bateria" : 17,
@@ -3643,7 +3593,7 @@
     "degrau_agora" : "direto",
     "intento_antes" : "procrastinacao_usuario",
     "intento_agora" : "peso_demais",
-    "score_agora" : 0.72
+    "score_agora" : 0.64
   }, {
     "rodada" : 1,
     "bateria" : 17,
@@ -3683,7 +3633,7 @@
     "degrau_agora" : "aposta",
     "intento_antes" : "despedida",
     "intento_agora" : "despedida",
-    "score_agora" : 0.42
+    "score_agora" : 0.34
   }, {
     "rodada" : 1,
     "bateria" : 17,
@@ -3692,7 +3642,7 @@
     "degrau_antes" : "direto",
     "degrau_agora" : "direto",
     "intento_antes" : "versao",
-    "intento_agora" : "versao",
+    "intento_agora" : "retorno",
     "score_agora" : 0.66
   }, {
     "rodada" : 1,
@@ -3730,8 +3680,8 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "felicidade_usuario",
-    "intento_agora" : "felicidade_usuario",
-    "score_agora" : 0.36
+    "intento_agora" : "peso_demais",
+    "score_agora" : 0.34
   }, {
     "rodada" : 1,
     "bateria" : 18,
@@ -3741,7 +3691,7 @@
     "degrau_agora" : "corrigida-palavra",
     "intento_antes" : "estado_fisico",
     "intento_agora" : "estado_fisico",
-    "score_agora" : 1.0
+    "score_agora" : 0.79
   }, {
     "rodada" : 1,
     "bateria" : 18,
@@ -3801,7 +3751,7 @@
     "degrau_agora" : "direto",
     "intento_antes" : "ansiedade_estresse",
     "intento_agora" : "ansiedade_estresse",
-    "score_agora" : 1.0
+    "score_agora" : 0.7
   }, {
     "rodada" : 1,
     "bateria" : 18,
@@ -3820,8 +3770,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "mudar_assunto",
-    "intento_agora" : "mudar_assunto",
-    "score_agora" : 0.26
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 18,
@@ -3830,7 +3779,7 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "identidade",
-    "intento_agora" : "identidade",
+    "intento_agora" : "procrastinacao_usuario",
     "score_agora" : 0.54
   }, {
     "rodada" : 1,
@@ -3838,10 +3787,10 @@
     "turno" : 15,
     "entrada" : "meu sonho é tirar férias",
     "degrau_antes" : "direto",
-    "degrau_agora" : "direto",
+    "degrau_agora" : "aposta",
     "intento_antes" : "dinheiro_usuario",
-    "intento_agora" : "dinheiro_usuario",
-    "score_agora" : 0.65
+    "intento_agora" : "sonhos_dormir",
+    "score_agora" : 0.45
   }, {
     "rodada" : 1,
     "bateria" : 18,
@@ -3851,17 +3800,16 @@
     "degrau_agora" : "direto",
     "intento_antes" : "agradecimento",
     "intento_agora" : "agradecimento",
-    "score_agora" : 0.62
+    "score_agora" : 0.63
   }, {
     "rodada" : 1,
     "bateria" : 18,
     "turno" : 17,
     "entrada" : "você acha que eu deveria descansar?",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "rotina_usuario",
-    "intento_agora" : "rotina_usuario",
-    "score_agora" : 0.39
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 18,
@@ -3871,7 +3819,7 @@
     "degrau_agora" : "corrigida-palavra",
     "intento_antes" : "sonhos_dormir",
     "intento_agora" : "sonhos_dormir",
-    "score_agora" : 1.0
+    "score_agora" : 0.76
   }, {
     "rodada" : 1,
     "bateria" : 18,
@@ -3931,7 +3879,7 @@
     "degrau_agora" : "aposta",
     "intento_antes" : "agradecimento",
     "intento_agora" : "agradecimento",
-    "score_agora" : 0.46
+    "score_agora" : 0.32
   }, {
     "rodada" : 1,
     "bateria" : 19,
@@ -3969,7 +3917,7 @@
     "degrau_antes" : "direto",
     "degrau_agora" : "direto",
     "intento_antes" : "piada",
-    "intento_agora" : "piada",
+    "intento_agora" : "nostalgia_usuario",
     "score_agora" : 1.0
   }, {
     "rodada" : 1,
@@ -3998,8 +3946,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "solidao_usuario",
-    "intento_agora" : "solidao_usuario",
-    "score_agora" : 0.23
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 19,
@@ -4016,10 +3963,10 @@
     "turno" : 12,
     "entrada" : "nem tentou, né",
     "degrau_antes" : "corrigida-palavra",
-    "degrau_agora" : "corrigida-palavra",
+    "degrau_agora" : "direto",
     "intento_antes" : "agradecimento",
-    "intento_agora" : "agradecimento",
-    "score_agora" : 1.0
+    "intento_agora" : "auto_aprendizado",
+    "score_agora" : 0.6
   }, {
     "rodada" : 1,
     "bateria" : 19,
@@ -4079,16 +4026,17 @@
     "degrau_agora" : "direto",
     "intento_antes" : "reacao_diversa",
     "intento_agora" : "reacao_diversa",
-    "score_agora" : 1.0
+    "score_agora" : 0.7
   }, {
     "rodada" : 1,
     "bateria" : 19,
     "turno" : 19,
     "entrada" : "haha",
     "degrau_antes" : "aprender",
-    "degrau_agora" : "aprender",
+    "degrau_agora" : "direto",
     "intento_antes" : null,
-    "intento_agora" : null
+    "intento_agora" : "auto_aprendizado",
+    "score_agora" : 0.7
   }, {
     "rodada" : 1,
     "bateria" : 19,
@@ -4165,7 +4113,7 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "planos_futuro",
-    "intento_agora" : "planos_futuro",
+    "intento_agora" : "nostalgia_usuario",
     "score_agora" : 0.3
   }, {
     "rodada" : 1,
@@ -4176,7 +4124,7 @@
     "degrau_agora" : "aposta",
     "intento_antes" : "saudade_usuario",
     "intento_agora" : "saudade_usuario",
-    "score_agora" : 0.48
+    "score_agora" : 0.44
   }, {
     "rodada" : 1,
     "bateria" : 20,
@@ -4185,7 +4133,7 @@
     "degrau_antes" : "direto",
     "degrau_agora" : "direto",
     "intento_antes" : "familia_usuario",
-    "intento_agora" : "perda_apoio",
+    "intento_agora" : "familia_usuario",
     "score_agora" : 1.0
   }, {
     "rodada" : 1,
@@ -4193,10 +4141,9 @@
     "turno" : 8,
     "entrada" : "do cheiro da rua onde eu cresci",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "limitacao_ia",
-    "intento_agora" : "limitacao_ia",
-    "score_agora" : 0.33
+    "intento_agora" : null
   }, {
     "rodada" : 1,
     "bateria" : 20,
@@ -4215,8 +4162,8 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "ansiedade_estresse",
-    "intento_agora" : "ansiedade_estresse",
-    "score_agora" : 0.54
+    "intento_agora" : "familia_usuario",
+    "score_agora" : 0.46
   }, {
     "rodada" : 1,
     "bateria" : 20,
@@ -4226,7 +4173,7 @@
     "degrau_agora" : "aposta",
     "intento_antes" : "livro",
     "intento_agora" : "livro",
-    "score_agora" : 0.47
+    "score_agora" : 0.38
   }, {
     "rodada" : 1,
     "bateria" : 20,
@@ -4263,10 +4210,10 @@
     "turno" : 15,
     "entrada" : "meu sonho é trazer minha mãe pra morar comigo",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "corrigida-frase",
     "intento_antes" : "familia_usuario",
     "intento_agora" : "familia_usuario",
-    "score_agora" : 0.32
+    "score_agora" : 1.0
   }, {
     "rodada" : 1,
     "bateria" : 20,
@@ -4275,8 +4222,8 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "tecnologia_usuario",
-    "intento_agora" : "tecnologia_usuario",
-    "score_agora" : 0.42
+    "intento_agora" : "retorno",
+    "score_agora" : 0.4
   }, {
     "rodada" : 1,
     "bateria" : 20,
@@ -4293,10 +4240,10 @@
     "turno" : 18,
     "entrada" : "você me faz sentir menos só",
     "degrau_antes" : "direto",
-    "degrau_agora" : "direto",
+    "degrau_agora" : "aposta",
     "intento_antes" : "retorno",
     "intento_agora" : "retorno",
-    "score_agora" : 0.69
+    "score_agora" : 0.54
   }, {
     "rodada" : 1,
     "bateria" : 20,
@@ -4313,10 +4260,10 @@
     "turno" : 20,
     "entrada" : "vou fazer um bacalhau pra matar a saudade",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "sugestao",
-    "intento_agora" : "sugestao",
-    "score_agora" : 0.37
+    "intento_agora" : "despedida",
+    "score_agora" : 0.29
   }, {
     "rodada" : 1,
     "bateria" : 20,
@@ -4333,10 +4280,10 @@
     "turno" : 1,
     "entrada" : "bom dia, meu filho",
     "degrau_antes" : "direto",
-    "degrau_agora" : "direto",
+    "degrau_agora" : "corrigida-frase",
     "intento_antes" : "sonhos_dormir",
-    "intento_agora" : "sonhos_dormir",
-    "score_agora" : 0.65
+    "intento_agora" : "cumprimentar",
+    "score_agora" : 1.0
   }, {
     "rodada" : 2,
     "bateria" : 1,
@@ -4382,10 +4329,9 @@
     "turno" : 6,
     "entrada" : "tomo para pressão e para o coração",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "ansiedade_estresse",
-    "intento_agora" : "ansiedade_estresse",
-    "score_agora" : 0.35
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 1,
@@ -4395,17 +4341,16 @@
     "degrau_agora" : "corrigida-palavra",
     "intento_antes" : "lembra_gosta",
     "intento_agora" : "lembra_gosta",
-    "score_agora" : 0.73
+    "score_agora" : 0.61
   }, {
     "rodada" : 2,
     "bateria" : 1,
     "turno" : 8,
     "entrada" : "as vezes eu esqueço as coisas",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "critica",
-    "intento_agora" : "critica",
-    "score_agora" : 0.32
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 1,
@@ -4424,7 +4369,7 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "planos_futuro",
-    "intento_agora" : "planos_futuro",
+    "intento_agora" : "nostalgia_usuario",
     "score_agora" : 0.38
   }, {
     "rodada" : 2,
@@ -4454,8 +4399,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "atividades_usuario",
-    "intento_agora" : "atividades_usuario",
-    "score_agora" : 0.25
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 1,
@@ -4484,8 +4428,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "reacao_curta",
-    "intento_agora" : "reacao_curta",
-    "score_agora" : 0.16
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 1,
@@ -4565,7 +4508,7 @@
     "degrau_agora" : "direto",
     "intento_antes" : "cumprimentar",
     "intento_agora" : "cumprimentar",
-    "score_agora" : 1.0
+    "score_agora" : 0.8
   }, {
     "rodada" : 2,
     "bateria" : 2,
@@ -4613,8 +4556,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "pet",
-    "intento_agora" : "pet",
-    "score_agora" : 0.27
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 2,
@@ -4624,27 +4566,26 @@
     "degrau_agora" : "direto",
     "intento_antes" : "sonhos_dormir",
     "intento_agora" : "sonhos_dormir",
-    "score_agora" : 0.78
+    "score_agora" : 0.66
   }, {
     "rodada" : 2,
     "bateria" : 2,
     "turno" : 10,
     "entrada" : "você acha que eu tenho chance?",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "tristeza_usuario",
-    "intento_agora" : "tristeza_usuario",
-    "score_agora" : 0.42
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 2,
     "turno" : 11,
     "entrada" : "minha mãe quer que eu estude",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "corrigida-frase",
     "intento_antes" : "perda_apoio",
-    "intento_agora" : "perda_apoio",
-    "score_agora" : 0.42
+    "intento_agora" : "familia_usuario",
+    "score_agora" : 1.0
   }, {
     "rodada" : 2,
     "bateria" : 2,
@@ -4661,10 +4602,9 @@
     "turno" : 13,
     "entrada" : "tenho uma namorada, a Bia",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "felicidade_usuario",
-    "intento_agora" : "felicidade_usuario",
-    "score_agora" : 0.38
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 2,
@@ -4721,10 +4661,10 @@
     "turno" : 19,
     "entrada" : "vou torcer",
     "degrau_antes" : "direto",
-    "degrau_agora" : "direto",
+    "degrau_agora" : "aposta",
     "intento_antes" : "retorno",
     "intento_agora" : "retorno",
-    "score_agora" : 0.65
+    "score_agora" : 0.46
   }, {
     "rodada" : 2,
     "bateria" : 2,
@@ -4744,7 +4684,7 @@
     "degrau_agora" : "direto",
     "intento_antes" : "despedida",
     "intento_agora" : "despedida",
-    "score_agora" : 1.0
+    "score_agora" : 0.83
   }, {
     "rodada" : 2,
     "bateria" : 3,
@@ -4790,10 +4730,9 @@
     "turno" : 5,
     "entrada" : "a organização tá me consumindo",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "motivacao_usuario",
-    "intento_agora" : "motivacao_usuario",
-    "score_agora" : 0.43
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 3,
@@ -4822,7 +4761,7 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "gostos_ia",
-    "intento_agora" : "gostos_ia",
+    "intento_agora" : "rotina_usuario",
     "score_agora" : 0.51
   }, {
     "rodada" : 2,
@@ -4830,20 +4769,19 @@
     "turno" : 9,
     "entrada" : "são 300 convidados",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "agradecimento",
-    "intento_agora" : "agradecimento",
-    "score_agora" : 0.34
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 3,
     "turno" : 10,
     "entrada" : "minha mãe quer tudo do jeito dela",
     "degrau_antes" : "aprender",
-    "degrau_agora" : "aprender",
+    "degrau_agora" : "corrigida-frase",
     "intento_antes" : "perda_apoio",
-    "intento_agora" : "perda_apoio",
-    "score_agora" : 0.28
+    "intento_agora" : "familia_usuario",
+    "score_agora" : 1.0
   }, {
     "rodada" : 2,
     "bateria" : 3,
@@ -4852,18 +4790,16 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "despedida",
-    "intento_agora" : "despedida",
-    "score_agora" : 0.24
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 3,
     "turno" : 12,
     "entrada" : "to exausta disso",
     "degrau_antes" : "corrigida-palavra",
-    "degrau_agora" : "corrigida-palavra",
+    "degrau_agora" : "aprender",
     "intento_antes" : "tristeza_usuario",
-    "intento_agora" : "tristeza_usuario",
-    "score_agora" : 0.66
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 3,
@@ -4883,7 +4819,7 @@
     "degrau_agora" : "aposta",
     "intento_antes" : "agradecimento",
     "intento_agora" : "agradecimento",
-    "score_agora" : 0.55
+    "score_agora" : 0.46
   }, {
     "rodada" : 2,
     "bateria" : 3,
@@ -4900,10 +4836,9 @@
     "turno" : 16,
     "entrada" : "o que você acha que não pode faltar?",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "ansiedade_estresse",
-    "intento_agora" : "ansiedade_estresse",
-    "score_agora" : 0.41
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 3,
@@ -4982,8 +4917,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "status_geral",
-    "intento_agora" : "status_geral",
-    "score_agora" : 0.21
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 4,
@@ -5020,10 +4954,9 @@
     "turno" : 8,
     "entrada" : "tomo cuidado com a alimentação",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "saude_usuario",
-    "intento_agora" : "saude_usuario",
-    "score_agora" : 0.33
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 4,
@@ -5032,7 +4965,7 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "lembra_sonho",
-    "intento_agora" : "lembra_sonho",
+    "intento_agora" : "familia_usuario",
     "score_agora" : 0.44
   }, {
     "rodada" : 2,
@@ -5072,8 +5005,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "cotidiano",
-    "intento_agora" : "cotidiano",
-    "score_agora" : 0.29
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 4,
@@ -5083,7 +5015,7 @@
     "degrau_agora" : "direto",
     "intento_antes" : "ansiedade_estresse",
     "intento_agora" : "ansiedade_estresse",
-    "score_agora" : 1.0
+    "score_agora" : 0.7
   }, {
     "rodada" : 2,
     "bateria" : 4,
@@ -5092,18 +5024,18 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "casa_usuario",
-    "intento_agora" : "casa_usuario",
-    "score_agora" : 0.54
+    "intento_agora" : "habilidades",
+    "score_agora" : 0.46
   }, {
     "rodada" : 2,
     "bateria" : 4,
     "turno" : 16,
     "entrada" : "obrigado, foi bom conversar",
     "degrau_antes" : "direto",
-    "degrau_agora" : "direto",
+    "degrau_agora" : "corrigida-frase",
     "intento_antes" : "agradecimento",
     "intento_agora" : "agradecimento",
-    "score_agora" : 0.65
+    "score_agora" : 1.0
   }, {
     "rodada" : 2,
     "bateria" : 4,
@@ -5201,8 +5133,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "saudade_usuario",
-    "intento_agora" : "saudade_usuario",
-    "score_agora" : 0.23
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 5,
@@ -5219,10 +5150,9 @@
     "turno" : 9,
     "entrada" : "sinto culpa disso",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "continuacao_topico",
-    "intento_agora" : "continuacao_topico",
-    "score_agora" : 0.31
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 5,
@@ -5231,8 +5161,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "procrastinacao_usuario",
-    "intento_agora" : "procrastinacao_usuario",
-    "score_agora" : 0.29
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 5,
@@ -5252,7 +5181,7 @@
     "degrau_agora" : "aposta",
     "intento_antes" : "procrastinacao_usuario",
     "intento_agora" : "familia_usuario",
-    "score_agora" : 0.54
+    "score_agora" : 0.42
   }, {
     "rodada" : 2,
     "bateria" : 5,
@@ -5262,7 +5191,7 @@
     "degrau_agora" : "direto",
     "intento_antes" : "serie",
     "intento_agora" : "serie",
-    "score_agora" : 1.0
+    "score_agora" : 0.85
   }, {
     "rodada" : 2,
     "bateria" : 5,
@@ -5301,7 +5230,7 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "elogio",
-    "intento_agora" : "elogio",
+    "intento_agora" : "familia_usuario",
     "score_agora" : 0.5
   }, {
     "rodada" : 2,
@@ -5321,8 +5250,8 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "trabalho_usuario",
-    "intento_agora" : "trabalho_usuario",
-    "score_agora" : 0.51
+    "intento_agora" : "sono",
+    "score_agora" : 0.49
   }, {
     "rodada" : 2,
     "bateria" : 5,
@@ -5369,8 +5298,8 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "amigos_usuario",
-    "intento_agora" : "amigos_usuario",
-    "score_agora" : 0.5
+    "intento_agora" : "trabalho_usuario",
+    "score_agora" : 0.43
   }, {
     "rodada" : 2,
     "bateria" : 6,
@@ -5397,10 +5326,9 @@
     "turno" : 7,
     "entrada" : "já mandei 40 currículos",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "jogar",
-    "intento_agora" : "jogar",
-    "score_agora" : 0.33
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 6,
@@ -5420,7 +5348,7 @@
     "degrau_agora" : "direto",
     "intento_antes" : "medo_preocupacao",
     "intento_agora" : "medo_preocupacao",
-    "score_agora" : 1.0
+    "score_agora" : 0.82
   }, {
     "rodada" : 2,
     "bateria" : 6,
@@ -5440,17 +5368,17 @@
     "degrau_agora" : "aposta",
     "intento_antes" : "ansiedade_estresse",
     "intento_agora" : "ansiedade_estresse",
-    "score_agora" : 0.52
+    "score_agora" : 0.48
   }, {
     "rodada" : 2,
     "bateria" : 6,
     "turno" : 12,
     "entrada" : "minha esposa me apoia",
     "degrau_antes" : "corrigida-palavra",
-    "degrau_agora" : "corrigida-palavra",
+    "degrau_agora" : "aposta",
     "intento_antes" : "elogio",
-    "intento_agora" : "elogio",
-    "score_agora" : 0.66
+    "intento_agora" : "familia_usuario",
+    "score_agora" : 0.6
   }, {
     "rodada" : 2,
     "bateria" : 6,
@@ -5460,7 +5388,7 @@
     "degrau_agora" : "aposta",
     "intento_antes" : "humor_usuario",
     "intento_agora" : "humor_usuario",
-    "score_agora" : 0.42
+    "score_agora" : 0.41
   }, {
     "rodada" : 2,
     "bateria" : 6,
@@ -5500,7 +5428,7 @@
     "degrau_agora" : "aposta",
     "intento_antes" : "universo",
     "intento_agora" : "universo",
-    "score_agora" : 0.5
+    "score_agora" : 0.35
   }, {
     "rodada" : 2,
     "bateria" : 6,
@@ -5510,7 +5438,7 @@
     "degrau_agora" : "aposta",
     "intento_antes" : "agradecimento",
     "intento_agora" : "agradecimento",
-    "score_agora" : 0.54
+    "score_agora" : 0.43
   }, {
     "rodada" : 2,
     "bateria" : 6,
@@ -5598,8 +5526,8 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "elogio",
-    "intento_agora" : "elogio",
-    "score_agora" : 0.52
+    "intento_agora" : "ansiedade_estresse",
+    "score_agora" : 0.48
   }, {
     "rodada" : 2,
     "bateria" : 7,
@@ -5656,10 +5584,10 @@
     "turno" : 13,
     "entrada" : "mas eu vou provar que consigo",
     "degrau_antes" : "direto",
-    "degrau_agora" : "direto",
+    "degrau_agora" : "aposta",
     "intento_antes" : "agradecimento",
     "intento_agora" : "agradecimento",
-    "score_agora" : 0.63
+    "score_agora" : 0.5
   }, {
     "rodada" : 2,
     "bateria" : 7,
@@ -5689,7 +5617,7 @@
     "degrau_agora" : "direto",
     "intento_antes" : "agradecimento",
     "intento_agora" : "agradecimento",
-    "score_agora" : 1.0
+    "score_agora" : 0.88
   }, {
     "rodada" : 2,
     "bateria" : 7,
@@ -5738,7 +5666,7 @@
     "degrau_agora" : "aposta",
     "intento_antes" : "procrastinacao_usuario",
     "intento_agora" : "procrastinacao_usuario",
-    "score_agora" : 0.44
+    "score_agora" : 0.31
   }, {
     "rodada" : 2,
     "bateria" : 8,
@@ -5758,7 +5686,7 @@
     "degrau_agora" : "aposta",
     "intento_antes" : "serie",
     "intento_agora" : "serie",
-    "score_agora" : 0.44
+    "score_agora" : 0.37
   }, {
     "rodada" : 2,
     "bateria" : 8,
@@ -5775,10 +5703,9 @@
     "turno" : 7,
     "entrada" : "se não chover, perco tudo",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "clima",
-    "intento_agora" : "clima",
-    "score_agora" : 0.4
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 8,
@@ -5788,7 +5715,7 @@
     "degrau_agora" : "direto",
     "intento_antes" : "medo_preocupacao",
     "intento_agora" : "medo_preocupacao",
-    "score_agora" : 0.63
+    "score_agora" : 0.64
   }, {
     "rodada" : 2,
     "bateria" : 8,
@@ -5798,17 +5725,17 @@
     "degrau_agora" : "aposta",
     "intento_antes" : "festas",
     "intento_agora" : "festas",
-    "score_agora" : 0.56
+    "score_agora" : 0.54
   }, {
     "rodada" : 2,
     "bateria" : 8,
     "turno" : 10,
     "entrada" : "meu café é o melhor da região",
     "degrau_antes" : "direto",
-    "degrau_agora" : "direto",
+    "degrau_agora" : "aposta",
     "intento_antes" : "viagem",
     "intento_agora" : "viagem",
-    "score_agora" : 0.62
+    "score_agora" : 0.5
   }, {
     "rodada" : 2,
     "bateria" : 8,
@@ -5817,18 +5744,17 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "planos_futuro",
-    "intento_agora" : "planos_futuro",
-    "score_agora" : 0.46
+    "intento_agora" : "familia_usuario",
+    "score_agora" : 0.44
   }, {
     "rodada" : 2,
     "bateria" : 8,
     "turno" : 12,
     "entrada" : "não quer mais saber da roça",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "reflexao_ia",
-    "intento_agora" : "reflexao_ia",
-    "score_agora" : 0.31
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 8,
@@ -5855,10 +5781,9 @@
     "turno" : 15,
     "entrada" : "a vida é dura, mas é boa",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "ansiedade_estresse",
-    "intento_agora" : "ansiedade_estresse",
-    "score_agora" : 0.45
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 8,
@@ -5944,10 +5869,10 @@
     "turno" : 6,
     "entrada" : "eu amo assistir anime",
     "degrau_antes" : "direto",
-    "degrau_agora" : "direto",
+    "degrau_agora" : "aposta",
     "intento_antes" : "serie",
     "intento_agora" : "serie",
-    "score_agora" : 0.66
+    "score_agora" : 0.58
   }, {
     "rodada" : 2,
     "bateria" : 9,
@@ -5964,10 +5889,10 @@
     "turno" : 8,
     "entrada" : "estou fazendo minha fantasia",
     "degrau_antes" : "direto",
-    "degrau_agora" : "direto",
+    "degrau_agora" : "aposta",
     "intento_antes" : "rotina_usuario",
     "intento_agora" : "rotina_usuario",
-    "score_agora" : 0.62
+    "score_agora" : 0.55
   }, {
     "rodada" : 2,
     "bateria" : 9,
@@ -5984,10 +5909,9 @@
     "turno" : 10,
     "entrada" : "você acha que eu tenho talento?",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "elogio",
-    "intento_agora" : "elogio",
-    "score_agora" : 0.38
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 9,
@@ -5997,17 +5921,16 @@
     "degrau_agora" : "corrigida-palavra",
     "intento_antes" : "sonhos_dormir",
     "intento_agora" : "sonhos_dormir",
-    "score_agora" : 1.0
+    "score_agora" : 0.88
   }, {
     "rodada" : 2,
     "bateria" : 9,
     "turno" : 12,
     "entrada" : "as vezes tenho vergonha",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "critica",
-    "intento_agora" : "critica",
-    "score_agora" : 0.32
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 9,
@@ -6017,7 +5940,7 @@
     "degrau_agora" : "aposta",
     "intento_antes" : "despedida",
     "intento_agora" : "despedida",
-    "score_agora" : 0.5
+    "score_agora" : 0.35
   }, {
     "rodada" : 2,
     "bateria" : 9,
@@ -6047,7 +5970,7 @@
     "degrau_agora" : "aposta",
     "intento_antes" : "familia_usuario",
     "intento_agora" : "familia_usuario",
-    "score_agora" : 0.34
+    "score_agora" : 0.33
   }, {
     "rodada" : 2,
     "bateria" : 9,
@@ -6115,8 +6038,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "agradecimento",
-    "intento_agora" : "agradecimento",
-    "score_agora" : 0.25
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 10,
@@ -6135,8 +6057,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "sono",
-    "intento_agora" : "sono",
-    "score_agora" : 0.28
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 10,
@@ -6145,18 +6066,16 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "habilidades",
-    "intento_agora" : "habilidades",
-    "score_agora" : 0.23
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 10,
     "turno" : 9,
     "entrada" : "já tentei chá e meditação",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "cafe_usuario",
-    "intento_agora" : "cafe_usuario",
-    "score_agora" : 0.33
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 10,
@@ -6185,8 +6104,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "reacao_curta",
-    "intento_agora" : "reacao_curta",
-    "score_agora" : 0.16
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 10,
@@ -6215,8 +6133,8 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "despedida",
-    "intento_agora" : "despedida",
-    "score_agora" : 0.44
+    "intento_agora" : "agradecimento",
+    "score_agora" : 0.4
   }, {
     "rodada" : 2,
     "bateria" : 10,
@@ -6255,7 +6173,7 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "elogio",
-    "intento_agora" : "elogio",
+    "intento_agora" : "mudar_assunto",
     "score_agora" : 0.41
   }, {
     "rodada" : 2,
@@ -6272,10 +6190,9 @@
     "turno" : 4,
     "entrada" : "vcs sao um robo?",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "identidade",
-    "intento_agora" : "identidade",
-    "score_agora" : 0.32
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 11,
@@ -6325,17 +6242,16 @@
     "degrau_agora" : "aprender",
     "intento_antes" : "agradecimento",
     "intento_agora" : "auto_aprendizado",
-    "score_agora" : 0.25
+    "score_agora" : 0.22
   }, {
     "rodada" : 2,
     "bateria" : 11,
     "turno" : 10,
     "entrada" : "vc entende o q eu digo?",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "meta_conversa",
-    "intento_agora" : "meta_conversa",
-    "score_agora" : 0.36
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 11,
@@ -6351,10 +6267,9 @@
     "turno" : 12,
     "entrada" : "desculpa os erros de portugues",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "conhecimento_tecnologia",
-    "intento_agora" : "conhecimento_tecnologia",
-    "score_agora" : 0.33
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 11,
@@ -6383,7 +6298,7 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "elogio",
-    "intento_agora" : "elogio",
+    "intento_agora" : "mudar_assunto",
     "score_agora" : 0.41
   }, {
     "rodada" : 2,
@@ -6393,8 +6308,8 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "agradecimento",
-    "intento_agora" : "agradecimento",
-    "score_agora" : 0.58
+    "intento_agora" : "auto_aprendizado",
+    "score_agora" : 0.55
   }, {
     "rodada" : 2,
     "bateria" : 11,
@@ -6403,7 +6318,7 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "amigos_usuario",
-    "intento_agora" : "amigos_usuario",
+    "intento_agora" : "cumprimentar",
     "score_agora" : 0.54
   }, {
     "rodada" : 2,
@@ -6472,7 +6387,7 @@
     "degrau_antes" : "direto",
     "degrau_agora" : "direto",
     "intento_antes" : "confusao",
-    "intento_agora" : "confusao",
+    "intento_agora" : "status_geral",
     "score_agora" : 1.0
   }, {
     "rodada" : 2,
@@ -6492,7 +6407,7 @@
     "degrau_agora" : "direto",
     "intento_antes" : "procrastinacao_usuario",
     "intento_agora" : "procrastinacao_usuario",
-    "score_agora" : 1.0
+    "score_agora" : 0.7
   }, {
     "rodada" : 2,
     "bateria" : 12,
@@ -6734,7 +6649,7 @@
     "degrau_agora" : "direto",
     "intento_antes" : "nostalgia_usuario",
     "intento_agora" : "nostalgia_usuario",
-    "score_agora" : 1.0
+    "score_agora" : 0.7
   }, {
     "rodada" : 2,
     "bateria" : 13,
@@ -6753,8 +6668,8 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "namoro_usuario",
-    "intento_agora" : "namoro_usuario",
-    "score_agora" : 0.43
+    "intento_agora" : "pet",
+    "score_agora" : 0.42
   }, {
     "rodada" : 2,
     "bateria" : 13,
@@ -6764,7 +6679,7 @@
     "degrau_agora" : "direto",
     "intento_antes" : "agradecimento",
     "intento_agora" : "agradecimento",
-    "score_agora" : 1.0
+    "score_agora" : 0.9
   }, {
     "rodada" : 2,
     "bateria" : 13,
@@ -6783,7 +6698,7 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "trabalho_usuario",
-    "intento_agora" : "trabalho_usuario",
+    "intento_agora" : "despedida",
     "score_agora" : 0.54
   }, {
     "rodada" : 2,
@@ -6864,7 +6779,7 @@
     "degrau_agora" : "direto",
     "intento_antes" : "identidade",
     "intento_agora" : "identidade",
-    "score_agora" : 0.61
+    "score_agora" : 0.6
   }, {
     "rodada" : 2,
     "bateria" : 14,
@@ -6873,7 +6788,7 @@
     "degrau_antes" : "direto",
     "degrau_agora" : "direto",
     "intento_antes" : "humor_usuario",
-    "intento_agora" : "humor_usuario",
+    "intento_agora" : "agradecimento",
     "score_agora" : 0.64
   }, {
     "rodada" : 2,
@@ -6912,7 +6827,7 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "meta_conversa",
-    "intento_agora" : "meta_conversa",
+    "intento_agora" : "aparencia_usuario",
     "score_agora" : 0.58
   }, {
     "rodada" : 2,
@@ -6940,10 +6855,9 @@
     "turno" : 12,
     "entrada" : "ta, chega de piada",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "noticias_usuario",
-    "intento_agora" : "noticias_usuario",
-    "score_agora" : 0.45
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 14,
@@ -6960,10 +6874,9 @@
     "turno" : 14,
     "entrada" : "voce sempre responde igual",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "cumprimentar",
-    "intento_agora" : "cumprimentar",
-    "score_agora" : 0.32
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 14,
@@ -6972,7 +6885,7 @@
     "degrau_antes" : "direto",
     "degrau_agora" : "direto",
     "intento_antes" : "festas",
-    "intento_agora" : "festas",
+    "intento_agora" : "trabalho_usuario",
     "score_agora" : 1.0
   }, {
     "rodada" : 2,
@@ -6982,8 +6895,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "status_geral",
-    "intento_agora" : "status_geral",
-    "score_agora" : 0.27
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 14,
@@ -7049,10 +6961,9 @@
     "turno" : 3,
     "entrada" : "vou te ensinar uma coisa",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "agradecimento",
-    "intento_agora" : "agradecimento",
-    "score_agora" : 0.45
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 15,
@@ -7081,8 +6992,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "felicidade_usuario",
-    "intento_agora" : "felicidade_usuario",
-    "score_agora" : 0.25
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 15,
@@ -7091,8 +7001,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "gostos_ia",
-    "intento_agora" : "gostos_ia",
-    "score_agora" : 0.28
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 15,
@@ -7102,7 +7011,7 @@
     "degrau_agora" : "aposta",
     "intento_antes" : "estudos",
     "intento_agora" : "estudos",
-    "score_agora" : 0.45
+    "score_agora" : 0.36
   }, {
     "rodada" : 2,
     "bateria" : 15,
@@ -7131,18 +7040,16 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "agradecimento",
-    "intento_agora" : "agradecimento",
-    "score_agora" : 0.22
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 15,
     "turno" : 12,
     "entrada" : "colecionar selos e filatelia",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "atividades_usuario",
-    "intento_agora" : "atividades_usuario",
-    "score_agora" : 0.33
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 15,
@@ -7191,8 +7098,8 @@
     "degrau_antes" : "direto",
     "degrau_agora" : "direto",
     "intento_antes" : "idiomas_usuario",
-    "intento_agora" : "idiomas_usuario",
-    "score_agora" : 0.65
+    "intento_agora" : "saude_usuario",
+    "score_agora" : 0.66
   }, {
     "rodada" : 2,
     "bateria" : 15,
@@ -7250,18 +7157,16 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "critica",
-    "intento_agora" : "identidade",
-    "score_agora" : 0.23
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 16,
     "turno" : 4,
     "entrada" : "e 144 dividido por 12?",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "namoro_usuario",
-    "intento_agora" : "namoro_usuario",
-    "score_agora" : 0.33
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 16,
@@ -7291,7 +7196,7 @@
     "degrau_agora" : "direto",
     "intento_antes" : "identidade",
     "intento_agora" : "identidade",
-    "score_agora" : 0.82
+    "score_agora" : 0.81
   }, {
     "rodada" : 2,
     "bateria" : 16,
@@ -7300,7 +7205,7 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "reacao_diversa",
-    "intento_agora" : "reacao_diversa",
+    "intento_agora" : "agradecimento",
     "score_agora" : 0.5
   }, {
     "rodada" : 2,
@@ -7311,7 +7216,7 @@
     "degrau_agora" : "aposta",
     "intento_antes" : "identidade",
     "intento_agora" : "identidade",
-    "score_agora" : 0.41
+    "score_agora" : 0.4
   }, {
     "rodada" : 2,
     "bateria" : 16,
@@ -7320,8 +7225,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "meta_conversa",
-    "intento_agora" : "meta_conversa",
-    "score_agora" : 0.27
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 16,
@@ -7338,10 +7242,10 @@
     "turno" : 12,
     "entrada" : "me ajuda com uma equacao?",
     "degrau_antes" : "direto",
-    "degrau_agora" : "direto",
+    "degrau_agora" : "aposta",
     "intento_antes" : "continuacao_topico",
     "intento_agora" : "continuacao_topico",
-    "score_agora" : 0.71
+    "score_agora" : 0.5
   }, {
     "rodada" : 2,
     "bateria" : 16,
@@ -7350,8 +7254,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "pet",
-    "intento_agora" : "pet",
-    "score_agora" : 0.14
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 16,
@@ -7469,7 +7372,7 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "procrastinacao_usuario",
-    "intento_agora" : "procrastinacao_usuario",
+    "intento_agora" : "agradecimento",
     "score_agora" : 0.44
   }, {
     "rodada" : 2,
@@ -7480,7 +7383,7 @@
     "degrau_agora" : "direto",
     "intento_antes" : "lembra_trabalha",
     "intento_agora" : "lembra_trabalha",
-    "score_agora" : 0.68
+    "score_agora" : 0.67
   }, {
     "rodada" : 2,
     "bateria" : 17,
@@ -7517,10 +7420,9 @@
     "turno" : 10,
     "entrada" : "voce consegue prestar atencao?",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "reacao_diversa",
-    "intento_agora" : "reacao_diversa",
-    "score_agora" : 0.34
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 17,
@@ -7549,8 +7451,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "amigos_usuario",
-    "intento_agora" : "amigos_usuario",
-    "score_agora" : 0.28
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 17,
@@ -7569,7 +7470,7 @@
     "degrau_agora" : "corrigida-palavra",
     "intento_antes" : "nostalgia_usuario",
     "intento_agora" : "nostalgia_usuario",
-    "score_agora" : 1.0
+    "score_agora" : 0.85
   }, {
     "rodada" : 2,
     "bateria" : 17,
@@ -7638,8 +7539,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "sugestao",
-    "intento_agora" : "sugestao",
-    "score_agora" : 0.19
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 18,
@@ -7658,8 +7558,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "agradecimento",
-    "intento_agora" : "agradecimento",
-    "score_agora" : 0.29
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 18,
@@ -7669,7 +7568,7 @@
     "degrau_agora" : "direto",
     "intento_antes" : "felicidade_usuario",
     "intento_agora" : "felicidade_usuario",
-    "score_agora" : 0.69
+    "score_agora" : 0.6
   }, {
     "rodada" : 2,
     "bateria" : 18,
@@ -7686,10 +7585,10 @@
     "turno" : 9,
     "entrada" : "que sorte a minha",
     "degrau_antes" : "direto",
-    "degrau_agora" : "direto",
+    "degrau_agora" : "aposta",
     "intento_antes" : "universo",
     "intento_agora" : "universo",
-    "score_agora" : 0.68
+    "score_agora" : 0.47
   }, {
     "rodada" : 2,
     "bateria" : 18,
@@ -7716,10 +7615,9 @@
     "turno" : 12,
     "entrada" : "ta, foi mal",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "reacao_diversa",
-    "intento_agora" : "reacao_diversa",
-    "score_agora" : 0.45
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 18,
@@ -7805,8 +7703,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "identidade",
-    "intento_agora" : "identidade",
-    "score_agora" : 0.25
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 19,
@@ -7845,7 +7742,7 @@
     "degrau_agora" : "direto",
     "intento_antes" : "agradecimento",
     "intento_agora" : "agradecimento",
-    "score_agora" : 1.0
+    "score_agora" : 0.7
   }, {
     "rodada" : 2,
     "bateria" : 19,
@@ -7854,8 +7751,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "despedida",
-    "intento_agora" : "despedida",
-    "score_agora" : 0.28
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 19,
@@ -7864,7 +7760,7 @@
     "degrau_antes" : "corrigida-palavra",
     "degrau_agora" : "corrigida-palavra",
     "intento_antes" : "aprendizado",
-    "intento_agora" : "aprendizado",
+    "intento_agora" : "tristeza_usuario",
     "score_agora" : 1.0
   }, {
     "rodada" : 2,
@@ -7953,7 +7849,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "familia_usuario",
-    "intento_agora" : "familia_usuario",
+    "intento_agora" : "auto_aprendizado",
     "score_agora" : 0.11
   }, {
     "rodada" : 2,
@@ -7974,7 +7870,7 @@
     "degrau_agora" : "aprender",
     "intento_antes" : "planos_futuro",
     "intento_agora" : "planos_futuro",
-    "score_agora" : 0.21
+    "score_agora" : 0.16
   }, {
     "rodada" : 2,
     "bateria" : 20,
@@ -7983,18 +7879,17 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "agradecimento",
-    "intento_agora" : "agradecimento",
-    "score_agora" : 0.12
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 20,
     "turno" : 7,
     "entrada" : "meu casamento tambem nao anda bem; eu e meu marido viramos colegas de casa, quase nao conversamos mais",
     "degrau_antes" : "aprender",
-    "degrau_agora" : "aprender",
+    "degrau_agora" : "corrigida-frase",
     "intento_antes" : "amigos_usuario",
-    "intento_agora" : "amigos_usuario",
-    "score_agora" : 0.23
+    "intento_agora" : "relacao_usuario",
+    "score_agora" : 1.0
   }, {
     "rodada" : 2,
     "bateria" : 20,
@@ -8014,7 +7909,7 @@
     "degrau_agora" : "aprender",
     "intento_antes" : "livro",
     "intento_agora" : "livro",
-    "score_agora" : 0.23
+    "score_agora" : 0.2
   }, {
     "rodada" : 2,
     "bateria" : 20,
@@ -8031,10 +7926,10 @@
     "turno" : 11,
     "entrada" : "me conta, voce consegue acompanhar uma conversa longa assim?",
     "degrau_antes" : "aposta",
-    "degrau_agora" : "aposta",
+    "degrau_agora" : "aprender",
     "intento_antes" : "elogio",
-    "intento_agora" : "elogio",
-    "score_agora" : 0.32
+    "intento_agora" : "meta_conversa",
+    "score_agora" : 0.27
   }, {
     "rodada" : 2,
     "bateria" : 20,
@@ -8043,8 +7938,7 @@
     "degrau_antes" : "aprender",
     "degrau_agora" : "aprender",
     "intento_antes" : "status_geral",
-    "intento_agora" : "auto_aprendizado",
-    "score_agora" : 0.22
+    "intento_agora" : null
   }, {
     "rodada" : 2,
     "bateria" : 20,
@@ -8063,7 +7957,7 @@
     "degrau_antes" : "direto",
     "degrau_agora" : "direto",
     "intento_antes" : "cozinhar_usuario",
-    "intento_agora" : "cozinhar_usuario",
+    "intento_agora" : "rotina_usuario",
     "score_agora" : 0.62
   }, {
     "rodada" : 2,
@@ -8130,10 +8024,10 @@
     "turno" : 5,
     "entrada" : "fiz um jogo com meu marido , o Joao, é um jogo de click que funciona em celular e navegador",
     "degrau_antes" : "aprender",
-    "degrau_agora" : "aprender",
+    "degrau_agora" : "corrigida-frase",
     "intento_antes" : "tecnologia_usuario",
-    "intento_agora" : "perda_apoio",
-    "score_agora" : 0.16
+    "intento_agora" : "relacao_usuario",
+    "score_agora" : 1.0
   }, {
     "rodada" : 3,
     "bateria" : 1,
@@ -8163,7 +8057,7 @@
     "degrau_agora" : "direto",
     "intento_antes" : "reflexao_ia",
     "intento_agora" : "reflexao_ia",
-    "score_agora" : 1.0
+    "score_agora" : 0.7
   }, {
     "rodada" : 3,
     "bateria" : 1,
@@ -8172,7 +8066,7 @@
     "degrau_antes" : "aposta",
     "degrau_agora" : "aposta",
     "intento_antes" : "cumprimentar",
-    "intento_agora" : "gostos_ia",
+    "intento_agora" : "gostos_usuario",
     "score_agora" : 0.5
   }, {
     "rodada" : 3,
@@ -8203,7 +8097,7 @@
     "degrau_agora" : "aposta",
     "intento_antes" : "serie",
     "intento_agora" : "serie",
-    "score_agora" : 0.57
+    "score_agora" : 0.49
   }, {
     "rodada" : 3,
     "bateria" : 1,
@@ -8220,10 +8114,10 @@
     "turno" : 14,
     "entrada" : "fui tomar banho e lavei o cabelo",
     "degrau_antes" : "corrigida-palavra",
-    "degrau_agora" : "corrigida-palavra",
+    "degrau_agora" : "aposta",
     "intento_antes" : "rotina_usuario",
     "intento_agora" : "rotina_usuario",
-    "score_agora" : 0.62
+    "score_agora" : 0.41
   }, {
     "rodada" : 3,
     "bateria" : 1,
@@ -8243,7 +8137,7 @@
     "degrau_agora" : "corrigida-palavra",
     "intento_antes" : "rotina_usuario",
     "intento_agora" : "rotina_usuario",
-    "score_agora" : 1.0
+    "score_agora" : 0.84
   }, {
     "rodada" : 3,
     "bateria" : 1,
@@ -8313,6 +8207,6 @@
     "degrau_agora" : "direto",
     "intento_antes" : "despedida",
     "intento_agora" : "despedida",
-    "score_agora" : 1.0
+    "score_agora" : 0.8
   } ]
 }

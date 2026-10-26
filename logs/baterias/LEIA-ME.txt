@@ -43,10 +43,10 @@ Como refazer (rodada nova, ou a base mudou)
 Numeros de referencia (proxy; a leitura humana da rodada 1 foi 3,2/10)
 --------------------------------------------------------------------------------
                  ANTES               AGORA (base pos-fixes out/2026)
-rodada 1   4,7/10  40,0% aposta      5,3/10  37,0% aposta   direto 34,0% -> 36,8%
-rodada 2   5,4/10  30,6% aposta      5,6/10  28,8% aposta   direto 40,9% -> 43,5%
+rodada 1   4,7/10  40,0% aposta      5,4/10  36,8% aposta   direto 34,0% -> 36,8%
+rodada 2   5,4/10  30,6% aposta      5,6/10  28,5% aposta   direto 40,9% -> 43,5%
 rodada 3   5,6/10  26,1% aposta      6,5/10  13,0% aposta   direto 30,4% -> 47,8%   (sessao real da Karin)
-TOTAL      5,0/10  35,4% aposta      5,5/10  32,6% aposta   direto 37,1% -> 40,2%
+TOTAL      5,0/10  35,4% aposta      5,5/10  32,4% aposta   direto 37,1% -> 40,2%
 
 (rodada 3 tambem tem o placar dos LOGS BRUTOS, as-is: 5/10 - proxy completa do
  score_baterias.ps1, que le mais sinais que o placar do replay)
