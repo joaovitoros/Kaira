@@ -2,7 +2,9 @@
 
 > Consulta rápida pra não esquecer os mecanismos do projeto. Tudo abaixo foi
 > conferido no código (não é de memória). Última revisão: out/2026, head
-> `283fc17` — suíte 199 testes + avaliador 14/14. *(estado atual: 228 testes + avaliador 14/14 — issues #39–#43; inclui o `FluxoConversaRealTest`, 10 turnos transcritos do `conversas.log` de 17/10)*
+> `e4b199e` — suíte **60 classes verde**, avaliador **44/44**, replay do corpus
+> **5,3 / GRAVE 0**. As inteligências da leva #50–#56 e da #41 reaberta estão
+> aqui (as seções marcadas com ⭐ são as desta leva).
 >
 > Pra detalhes de planejamento/decisões: `PLANO_DE_EVOLUCAO.md` e
 > `BRIEFING_EXPANSAO_DIALOGO.md`. Pra rodar: `run_tests.ps1` (fim do arquivo).
@@ -18,54 +20,69 @@
 | `controller/ControleFace.java` | Ponte da UI: HTML do chat (balões), estados do `!`, manda pro `decifrar`. |
 | `controller/FormulaResposta.java` | **Orquestra o turno**: `decifrar` (cascata de degraus) → `enviarResposta` (monta a fala final). |
 | `controller/ControleResposta.java` | **O cérebro**: classificador (IDF/stem/stopwords), pools de resposta, slots, fallback, `ensinaEm`. |
-| `controller/ControleSessao.java` | **Memória do turno**: nome, fatos, humor, tópico, contadores, followups, padrões regex. |
+| `controller/ControleSessao.java` | **Memória do turno**: nome, fatos do usuário, humor, tópico, contadores, followups, **a pergunta pendente dela** (#41: `familiaPergunta`/`perguntaPendente`) e padrões regex. |
+| `controller/ControleKaira.java` | **⭐ A memória dela (#50/#56)**: lê/salva o `kaira.json` (relações `gosta`/`nao_gosta`), migra o formato plano no load e guarda segredo (#53) e não-contradição (#56). |
 | `controller/ControleCorrecao.java` | Degrau de correção (palavra errada / frase conhecida com erro). |
 | `controller/ControlePreAnalise.java` | Pré-análise: frame + slot da mensagem (alimenta fallback com `{slot}`). |
 | `controller/ControleSinonimo.java` | Grupos de sinônimos (desempate do matcher + `CriarResposta`). |
-| `domain/` | `Intencoes`, `Intencao`, `Exemplo`, `RespostaIntencao`, `Sessao`, `MatchIntencao`… |
+| `domain/` | `Intencoes`, `Intencao`, `Exemplo`, `RespostaIntencao`, `Sessao`, `MatchIntencao`, **`FatoKaira`/`MolduraKaira`** (#56), `Conhecimento(s)` (#37)… |
 | `util/Tema.java` | Paleta única preto/verde (#31) — única fonte de cor da UI. |
 | `util/Caminhos.java` | `recurso(nome)` → `KAIRA/resources/`. **Nunca escreva o caminho literal** (teste `SemCaminhoHardcodedTest` flagra, inclusive em comentário). |
 | `util/Registro.java` | `linha(evento)` → `Registro.arquivo()` (gitignored). **#36 (higiene):** `-Dkaira.log.destino` redireciona — a suíte grava em arquivo de teste e o `conversas.log` fica **só com uso real** (insumo de curadoria: fallback, aposta, temas repetidos). À prova de falha: log nunca derruba o fluxo. |
 | `KAIRA/resources/intencoes.json` | **O banco** (UTF-8 sem BOM): 98 intents com exemplos/respostas/followups/acoes. |
 | `KAIRA/resources/conhecimentos.json` | **#37 (C3 piloto):** dicionário — termo (= nome de intent) → `resumo` (falado em "conta mais") / `texto` (reserva "explica melhor"), `origem` com fonte+licença por item (Wikipédia PT CC BY-SA, adaptado). Lookup `ControleConhecimento.resumo()` — null-seguro. |
+| `KAIRA/resources/kaira.json` | **⭐ #56 (modelo v2):** os fatos da persona com **relações** — `"cor": {"gosta": ["verde"], "nao_gosta": ["cinza"]}` — e moldura por relação (`{v}`). Arquivo plano antigo (v0.0.1) **migra no load**; o primeiro `gravaFato` salva em v2 (0.0.2). |
 | `KAIRA/resources/avatar/` | `kaira_conversa`, `kaira_idle`, `kaira_baixa`, `kaira_alta` (+ `avatar_01..09` arquivadas). |
-| `sessao.json` | Persistência da sessão (nome, humor, tópico, turnos). |
+| `sessao.json` | Persistência da sessão (nome, humor, tópico, turnos, fatos do usuário — ainda no formato plano; o **v2 da sessão** é fila). |
 
 ---
 
 ## 2. O turno, passo a passo (`FormulaResposta.decifrar`)
 
 1. Log `ENTRADA   :` → `ControleSessao.processa(fala)` que **a cada mensagem**:
-   incrementa `turnosDesdePergunta`, roda `detectaNome` + `detectaFato` + `detectaHumor`, anota o turno.
+   incrementa `turnosDesdePergunta`, zera a flag de explicacao (#54), roda
+   `detectaNome` + `detectaFato` (**#51: fala-pergunta não grava fato**) +
+   `detectaHumor` (#51: valor-pergunta também não grava) e anota o turno.
 2. **Resposta ao nome** (`respostaDeNome`): se a mensagem só capturou o nome
-   ("meu nome é X") → responde "Prazer em conhecer…" e **acaba o turno**
-   (DEGRAU `resposta-nome`), sem classificador.
-3. `tiraNome` (remove o trecho do nome da fala) → `Normalizador.texto`.
-4. **Comando** (`ControleComandos`): "Executar <programa>" roda direto e pula
+   → responde "Prazer em conhecer…" e acaba o turno (DEGRAU `resposta-nome`).
+3. `tiraNome` → `Normalizador.texto` (a fala vira minúscula/sem pontuação).
+4. **⭐ Ensino dela (#50)** — com o P1 armado: a forma `(sua|seu) CHAVE … e
+   VALOR` grava na memória dela (o score da frase **não** decide). Recusas com
+   ack próprio: **segredo** (#53: senha/cartão/cpf/chave pix) e **contradição**
+   (#56: valor já está na relação oposta). Sem P1 armado, nada grava.
+5. **P2 do ensino (#49)** — resposta retida pelo porteiro: só um **SIM**
+   explícito absorve; um NÃO explícito descarta com ack.
+6. **Aposta pendente (#39)** — "isso" entrega o candidato proposto na hora.
+7. **⭐ Máquina da pergunta pendente (#41)** — se ela perguntou um followup no
+   turno anterior: fala **entendida** (pergunta de outro assunto ou score
+   ≥ 0,6) cancela com ack transparente; **resposta vaga** (0,10–0,60, a banda
+   da aposta) **absorve na família que perguntou**; **lixo** (score < 0,10) vai
+   pro P2 do #48. Comando também cancela (o pipeline responde).
+8. **Comando** (`ControleComandos`): "Executar <programa>" roda direto e pula
    tudo (DEGRAU `comando`). Legado — o `if (false)` do TODO está ali.
-5. **Cascata de degraus** (o primeiro que achar resposta vence):
+9. **Cascata de degraus** (o primeiro que achar resposta vence):
 
-   | DEGRAU | O que roda | Limiar |
+   | DEGRAU | O que roda | Regra |
    |---|---|---|
+   | `triagem` | **⭐ `respostaPorTriagem`** — porta DELA (memória `kaira.json`) + porta USUÁRIO (fatos) + negativa (#56) | possessivo/relação, antes do classificador |
    | `direto` | `lerResposta` — classificador exato/fuzzy | score **≥ 0.6** (`LIMIAR`) |
    | `corrigida-palavra` | `ControleCorrecao.corrigirPalavras` (digitação errada) | — |
    | `corrigida-frase` | `ControleCorrecao.corrigirFrases` (frase conhecida com erro) | — |
    | `aposta` | `respostaAposta` — responde e pergunta "Foi isso que você quis dizer?" | **0.3 ≤ score < 0.6** |
-   | `aprender` | resposta = null → fallback + **arma o modo ensino** | abaixo de 0.3 |
+   | `aprender` | resposta = null → fallback; **⭐ quem julga é o porteiro (#49)**: score do buffer ≥ piso 0,10 → absorve; senão P2 (retém + confirma) | abaixo de 0.3 |
 
-6. Logs `DEGRAU    :` e `MATCH     :` (intento, score, frase-exemplo, tokens — #29).
-7. `criacaoLeituraRespostas`: sorteia 1–4 e em ≥2 (75%) chama
-   `CriarResposta` (troca palavras por sinônimos) — **mas hoje o retorno é
-   descartado** (não atribui em nada): é legado, efeito visível só no
-   `System.out`. Depois manda pra `enviarResposta`.
-8. **`enviarResposta`** monta a fala final:
-   - resposta = null → `ativarAprendizado()` (acende o `!`), guarda a frase em
-     `bufferFrases`, responde fallback com `{slot}` da pré-análise
-     (log `APRENDENDO:`);
-   - resposta OK → **anexa a pergunta de interesse** se couber (ver §5);
-   - `preencheSlots` (`{nome}` `{topico}` `{hora_do_dia}` `{fato:CHAVE}`);
-   - anexa "Como posso te chamar?" se ainda não sabe o nome;
-   - log `KAIRA     :` e entrega pro chat.
+10. Logs `DEGRAU    :`/`MATCH     :` (#29) e o `criacaoLeituraRespostas` (legado
+    do `CriarResposta`, retorno descartado) → `enviarResposta`.
+11. **`enviarResposta`** monta a fala final:
+    - resposta = null → **P1** (#48): `bufferFrases` = a frase, acende o `!`,
+      responde o fallback com `{slot}` (log `APRENDENDO:`);
+    - resposta OK → **cancela o ensino pendente** com ack (#48) e **cancela a
+      pergunta pendente** com ack (#41), se houver;
+    - **⭐ anexa a pergunta de interesse** se couber (§5) — e **arma a nova
+      pergunta pendente** (#41);
+    - `preencheSlots` (`{nome}` `{topico}` `{hora_do_dia}` `{fato:CHAVE}`);
+    - anexa "Como posso te chamar?" se ainda não sabe o nome;
+    - log `KAIRA     :` e entrega pro chat.
 
 ---
 
@@ -81,6 +98,25 @@
   menos tokens "sobrando", e aí o frame da pré-análise.
 - `melhorIntencaoDetalhado` **também** seta `topicoAtual` (menos pro intento
   `continuacao_topico`) e escreve o `ultimoMatchLog`.
+- **⭐ #49 (gate de resposta, não de medição):** quem responde não pode
+  entregar match de 1 token; o porteiro do ensino (`scoreDo`) e o `ensinaEm`
+  veem o match fraco honesto.
+- **⭐ #41 (frase genérica):** frase só de token genérico ("e qual seu
+  preferido?") segue o `topicoAtual` (`melhorDoTopico`) em vez de decidir por
+  token solto.
+- **⭐ A triagem roda ANTES do classificador** (§7.5): as portas dela/do usuário
+  interceptam quando a memória tem a chave; o classificador fica para o geral.
+- **#42/#43 (desempate):** empate de score resolvido por **grupo de sinônimo e
+  flexão de gênero** (favorito/favorita, preferido/preferida), e o log `MATCH`
+  **diz o caminho** do desempate.
+- **#44:** frase genérica **sem "favorito"** no tópico não apaga mais o tópico
+  (a borda do `melhorDoTopico`).
+- **#46 (correção):** o desempate da correção **não segue mais a ordem do
+  `palavras.json`** — o score decide.
+- **#47:** o `palavras.json` **regenera sozinho** quando o arquivo falta.
+- **#49 (gate de tokens de peso):** o gate da resposta aplica três réguas —
+  tokens **comuns na entrada**, **grupo parcial** de sinônimo e **flexão
+  cheia** — quem responde não entrega match de um token só.
 
 ---
 
@@ -104,6 +140,15 @@
 | **Ações do JSON** | `acoes` na resposta: `MOSTRAR_HUMOR` (anexa "nivel de humor em X de 10"), `MOSTRAR_VERSAO`, `DESLIGAR` (fecha o app!) | `comandosResposta` |
 | **"Conta mais / e depois?"** | literais → intento `continuacao_topico`; o hook **não** troca o `topicoAtual` por ele; no turno dela o pool de interesse fica de fora | `melhorIntencaoDetalhado` + `pedeContinuacao` |
 | **Comando de SO** | mensagem começa com "Executar" → roda o programa, pula o classificador | `ControleComandos` |
+| **⭐ Pergunta sobre ela** | fala-pergunta + possessivo dela ("qual sua cor favorita?") → responde da **memória dela** (`kaira.json`, relações `gosta`/`nao_gosta`) com a moldura | `respostaPorTriagem` (porta DELA) |
+| **⭐ Pergunta sobre o usuário** | pergunta + `meu/minha` + o fato existe na sessão → "pelo que você me contou, o/a seu/sua CHAVE é VALOR!" (artigo pelo gênero da chave, #55) | porta USUÁRIO |
+| **⭐ "O que ela NÃO gosta?"** | "qual cor você não gosta?" → lê `nao_gosta` (#56); lista vazia → "Ainda não tenho nenhuma nessa lista!" | porta DELA negativa |
+| **⭐ Miss honesto / espelho** | pergunta dela sem memória → honesto ("me ensina?"); se o **usuário** tem o mesmo fato → espelho ("mas o seu time eu guardei: Gremio!") | #52 |
+| **⭐ Ensino dela** | P1 armado + "sua CHAVE … e VALOR" → grava na memória dela; **segredo** (#53) e **contradição** (#56) recusam com ack próprio | #50/#53/#56 |
+| **⭐ Followup pendente** | ela perguntou um followup no turno anterior → a próxima fala é a resposta (cancela/absorve/P2) | #41 |
+| **⭐ Explica melhor** | fala com `explica/detalh/aprofund` e o tópico tem `texto` no dicionário → fala o TEXTO (o "conta mais" segue no resumo) | #54 |
+| **⭐ "Qual meu nome?"** | nome conhecido → "Seu nome é X!" (nunca o honesto falso) | #55 |
+| **⭐ Gênero da moldura** | chave com sufixo `favorita`/`preferida` → "a sua"; demais → "o seu" | #55 |
 
 ---
 
@@ -136,6 +181,26 @@ robô com timer**. Mecanismo real:
 > pergunta sai dos followups do assunto que vocês estão falando, ou de um
 > pool genérico; se você acabou de pedir 'conta mais', o pool fica de fora."*
 
+### ⭐ O followup agora LEMBRA — a pergunta pendente (#41)
+
+- Quando a resposta sai **com followup**, o estado arma `familiaPergunta`
+  (quem perguntou; `null` = pool genérico) + `perguntaPendente` (o texto) e
+  loga `PENDENTE : familia=…`.
+- Na fala seguinte:
+  - **entendida** (pergunta de outro assunto ou score ≥ 0,6) → o pipeline
+    responde e a pendente **cancela com ack transparente** ("deixa pra lá o
+    que te perguntei antes!");
+  - **vaga** (0,10–0,60 — a banda onde a aposta adivinhava) → **absorve na
+    família** (exemplo = a resposta do usuário, resposta = o followup; o gate
+    do #33: ≥0,6 no intento do match, senão a família/`auto_aprendizado`) +
+    ack "Anotado…";
+  - **lixo** (< 0,10, ex. "kkk") → **P2** (retém o par, pede confirmação;
+    nada grava sem "sim") — e o ensino **não** é armado (o sequestro morreu).
+- Comando/aposta confirmada respondem normal e cancelam a pendente.
+- Spec `MaquinaContextoTest`. Lição medida: o 1º desenho absorvia também a
+  faixa confiante e o replay acusou (GERAL 4,8, conversa engolida); a regra
+  "entendida cancela" devolveu o placar (5,3).
+
 ---
 
 ## 6. Humor (#23, §7.1)
@@ -157,29 +222,77 @@ robô com timer**. Mecanismo real:
   Captura → `tiraNome` remove da fala → turno vira só o agradecimento.
 - **Fatos**: `PADROES_FATO` — `gosta de`, `mora em`, `trabalha com`,
   `nasceu em`, `meu X favorito é Y` (genérico: grava `"X favorito"`),
-  e os fixos do #32: **`time`** (2 variantes), **`musica favorita`**,
-  **`pet`**, **`sonho`** — sempre com **artigo cortado** ("o São Paulo" →
-  "São Paulo") e chave ASCII.
+  os fixos do #32: **`time`** (2 variantes), **`musica favorita`**,
+  **`pet`**, **`sonho`** — e o **feminino do #52** (`"minha X favorita e Y"` →
+  chave com o sufixo do gênero) — sempre com **artigo cortado** ("o São Paulo"
+  → "São Paulo") e chave ASCII.
+- **Guardas do #51**: fala-pergunta **não grava** (interrogativos na fala ou no
+  valor), fato existente **não é sobrescrito** por valor diferente (log
+  `fato X preservado`) e mesmo valor com outra caixa preserva o canônico.
+  Os fatos do usuário ainda são **planos** (`Map<String,String>`); o **modelo
+  v2 da sessão** (relações `gosta`/`nao_gosta`, como o dela) está na fila.
 - Uso nas respostas: slot **`{fato:CHAVE}`**; resposta cujo fato está
   pendente sai do pool (#21); perguntar de volta é a intenção `lembra_*`
   (ex.: `lembra_time` — 6 exemplos, 4 respostas, todas ancoradas no slot).
 
 ---
 
-## 8. Aprendizado (`!`) — #8 e #33
+## 7.5 ⭐ A memória dela (`kaira.json`) — a triagem (#50–#56)
 
-1. Ela não achou resposta → fallback **arma** o `!` (estado "manter", NEON;
-   desarmado é `NEON_APAGADO`; o estado vermelho "criar" existe na UI mas o
-   caminho `manterCriacao` está comentado no `ControleFace` — legado).
-2. Você digita a resposta certa → `manterResposta(resposta)`:
-   - `chamadaFrase(bufferFrases, resposta)` → **`ensinaEm` (#33: antes de
-     gravar, classifica a frase ensinada; score ≥ 0.6 → o par cai DENTRO do
-     intento vencedor; dúvida/nulo → `auto_aprendizado`)**;
-   - grava `intencoes.json`, `ControlePalavra.gravaPalavra` e
-     `invalidaCacheIdf()` (próxima classificação recalcula);
-   - devolve a resposta na tela.
-3. Linha no log: `APRENDE   : intento=esporte score=0,91` ou
-   `APRENDE   : auto_aprendizado score=0,24`.
+O que ela sabe **sobre si** — relações com listas, não valores soltos:
+
+- **Schema v2 (#56):** `"cor": {"gosta": ["verde"], "nao_gosta": ["cinza"]}`
+  + **moldura por relação** com `{v}`. Arquivo plano antigo (v0.0.1) **migra
+  no load**; o primeiro `gravaFato` salva v0.0.2.
+- **Porta DELA (#50/#52):** pergunta + possessivo dela + chave na memória →
+  responde o valor com a moldura. Muito tolerante: chave em qualquer posição,
+  plural ("jogos"→"jogo"), fillers ("de verdade", "hein", "mesmo") e
+  interrogativo não-inicial ("me conta qual…"). **MISS honesto**: sem memória
+  → "me ensina?"; se o **usuário** tem o mesmo fato → **espelho** ("mas o seu
+  time eu guardei: Gremio!").
+- **Porta DELA negativa (#56):** "qual cor você **não** gosta?" (sem possessivo)
+  → lê `nao_gosta` com a moldura da relação; lista vazia → "Ainda não tenho
+  nenhuma nessa lista!".
+- **Porta USUÁRIO (#50/#52/#55):** pergunta + `meu/minha` + fato da sessão →
+  "pelo que você me contou, **a sua/o seu** CHAVE é VALOR!" (artigo pelo gênero
+  da chave). **Miss honesto:** "Você ainda não me contou sua cor favorita!";
+  "qual meu nome?" com nome conhecido → **"Seu nome é X!"**.
+- **Ensino dela (#50):** com o P1 armado, "sua CHAVE … e VALOR" grava em
+  `gosta` com o ack "Anotado…" — o score da frase **não** decide.
+- **Não-contradição (#56):** um valor nunca está nos dois lados — escrita
+  contrária é recusada com ack próprio ("não vou me contradizer"), e dado sujo
+  no load é deduplicado (positivo vence); comparação normalizada.
+- **Segredo (#53):** senha/cartão/cpf/chave pix **não entram** (nem no
+  `kaira.json` nem no `intencoes.json`) — recusa curada ("prefiro não anotar").
+- Specs: `TriagemPerguntaTest` (7), `IntegridadeFatoTest` (9),
+  `TriagemVariacoesTest` (15), `EnsinoSegredoTest` (5),
+  `PortaUsuarioPolimentoTest` (6), `FatosModeloV2Test` (7).
+
+---
+
+## 8. Aprendizado — o ensino com porteiro (#33, #45, #48, #49) e a memória dela (#50)
+
+1. Ela não achou resposta → o fallback **arma o P1** (`bufferFrases` = a frase;
+   o `!` acende em NEON) e loga `ENSINO : P1 armado`. **#45: o estado mora no
+   `decifrar`, não na UI** — `MandarFrase` sempre chama o `decifrar` (o
+   `verificarManter` é só brilho visual; `manterResposta` virou legado).
+2. A próxima fala passa pelo **pipeline (#48)** — o sequestro de turno morreu:
+   - **entendida** (comando, nome, aposta, match ≥ 0,6) → responde normal e
+     **cancela o ensino com ack transparente** ("deixa pra lá…") — nada grava;
+   - **não entendida** → **o porteiro (#49)**: `scoreDo(buffer)` ≥ **piso
+     0,10** → absorve; < piso → **P2** (retém a resposta e pede confirmação:
+     só um "sim" grava; "não" descarta com ack).
+3. Absorção: `chamadaFrase(buffer, resposta)` → **`ensinaEm` (#33: classifica
+   ANTES de gravar; score ≥ 0,6 → o par cai no intento vencedor; senão
+   `auto_aprendizado`)** → grava `intencoes.json` + `invalidaCacheIdf()`.
+   Logs: `APRENDE : intento=…`/`auto_aprendizado` e `ENSINO : absorvido/
+   retido/descartado score=…`.
+4. **Guardas na gravação:** **segredo (#53)** e **contradição de relação
+   (#56)** recusam com ack próprio — no ensino orgânico **e** no ensino dela
+   (#50, que grava em `kaira.json` com o ack "Anotado…").
+5. Invariante: **nada grava sem confirmação explícita ou porteiro aprovando**;
+   fala entendida nunca vira dado silencioso (specs `EnsinoOrganicoTest`,
+   `MaquinaContextoTest`, `EnsinoSegredoTest`).
 - A ordem importa: classificar **antes** do `invalidaCacheIdf` (senão NPE de
   token no ensino em cadeia).
 
@@ -193,6 +306,11 @@ robô com timer**. Mecanismo real:
 - "fala mais disso / conta mais / e depois?" → intento `continuacao_topico`
   (os literais estão no banco); nesse turno `pedeContinuacao()` segura o pool
   genérico de perguntas.
+- ⭐ **A substância do tópico (#37/#54):** quando o tópico tem entrada no
+  dicionário (`conhecimentos.json`), o "conta mais" fala o `resumo`; o
+  **"explica melhor" (#54: fala com `explica/detalh/aprofund`)** fala o
+  `texto` (flag per-turn `pedeExplicacao`); sem entrada ou sem texto, cai no
+  resumo e depois no banco ("fallback nunca piora").
 
 ---
 
@@ -209,8 +327,12 @@ robô com timer**. Mecanismo real:
 ## 11. Logs (prefixo = 10 colunas até os `:`)
 
 `ENTRADA` · `DEGRAU` · `MATCH` · `RESPOSTA` (template antes dos slots) ·
-`KAIRA` (fala final) · `SESSAO` (tópico/nome/humor/followup) · `APRENDE`
-(#33) · `APRENDENDO` (fallback armando o ensino) · `AVATAR` (#30/#34).
+`KAIRA` (fala final) · `SESSAO` (tópico/nome/humor/followup/fato preservado) ·
+`APRENDE` (#33) · `APRENDENDO` (fallback armando o ensino) · `ENSINO` (#48:
+P1/P2, porteiro, absorvido/retido/descartado) · **`TRIAGEM`** (#50/#52/#56:
+portas, memória, miss) · **`CONHECE`** (#37/#54: dicionário resumo/texto) ·
+**`PENDENTE`/`USUARIO`** (#41: pergunta pendente armada/cancelada/absorvida) ·
+`AVATAR` (#30/#34).
 Tudo em `conversas.log` (gitignored) + tela ao vivo no botão **Log** (#29).
 
 ---
@@ -219,13 +341,27 @@ Tudo em `conversas.log` (gitignored) + tela ao vivo no botão **Log** (#29).
 
 - `powershell -NoProfile -ExecutionPolicy Bypass -File run_tests.ps1`
   → compila `src` + `test`, roda a suíte headless (JUnitCore, auto-descoberta das
-  classes `*Test`) e o **avaliador 14/14** (conjunto congelado de 14 frases —
-  regressão nunca pode cair). Flag `-SkipBuild` reusa o build anterior. O log
-  da suíte vai pra `%TEMP%\kaira_suites_conversas.log` (#36) — o `conversas.log`
-  nunca é tocado por teste.
-- Specs por issue vivem em `test/com/JCODE/...` (`FatosNovosTest`,
-  `EnsinoTurbinadoTest`, `CuradoriaTemasTest`, `IniciativaPropriaTest`, …).
-- Fluxo da casa: issue → spec vermelho → receita → verde → `Fixes #N` → docs.
+  classes `*Test`) e o **avaliador 44/44** (conjunto congelado — regressão
+  nunca pode cair). Flag `-SkipBuild` reusa o build anterior. O log da suíte vai
+  pra `%TEMP%\kaira_suites_conversas.log` (#36) — o `conversas.log` nunca é
+  tocado por teste.
+- **⭐ O aceite completo (ciclo da casa) tem 4 portas:** spec da issue → suíte
+  inteira (**60 classes verde**) → avaliador **44/44** → **replay do corpus**
+  (`ReplayBaterias` + `score_replay.ps1`) com o alvo **GERAL ≥ 5,2 / GRAVE = 0**,
+  comparando antes×agora turno a turno. Os scripts de validação vivem em
+  `%TEMP%\validate_*.ps1`.
+- Specs por issue vivem em `test/com/JCODE/...` — as da leva #50–#56:
+  `TriagemPerguntaTest`, `IntegridadeFatoTest`, `TriagemVariacoesTest`,
+  `EnsinoSegredoTest`, `ExplicaMelhorTest`, `PortaUsuarioPolimentoTest`,
+  `MaquinaContextoTest`, `FatosModeloV2Test` (+ anteriores: `FatosNovosTest`,
+  `EnsinoTurbinadoTest`, `EnsinoOrganicoTest`, `DesempateContextoTest`,
+  `AncoraTopicoTest`, `ContinuacaoTopicoTest`, …).
+- Fluxo da casa: issue → **sonda (medir antes)** → spec vermelho → receita em
+  código real → verde → `closes #N` → docs (PLANO §12.3 / RELATORIO).
+- **⭐ O instrumento do replay:** `score_replay.ps1` mede antes×agora com a
+  régua BOM=1 / PARCIAL=0,3 / RUIM=0 / GRAVE=−1; o degrau `triagem` conta
+  **BOM** (mesma régua do `score_baterias.ps1`); o proxy **não vê o texto** da
+  resposta — serve pra medir **direção**, não valor absoluto.
 
 ---
 
@@ -240,7 +376,14 @@ Tudo em `conversas.log` (gitignored) + tela ao vivo no botão **Log** (#29).
 | Frase de fallback/pool | `FRASES_FALLBACK` / `PERGUNTAS_INTERESSE` em `ControleResposta`/`ControleSessao` |
 | Faixas do avatar | `Face.avatarPorHumor` (0–3 / 4–6 / 7–10) + PNGs em `KAIRA/resources/avatar/` |
 | Cor da UI | **só** `util/Tema.java` |
-| Novo tipo de score/limiar | constantes `LIMIAR` (0.6) e `LIMIAR_MEDIA` (0.3) em `ControleResposta` |
+| Novo tipo de score/limiar | constantes `LIMIAR` (0.6) e `LIMIAR_MEDIA` (0.3) em `ControleResposta`; `PISO` (0.10) e `LIMIAR_CONFIANCA` (0.6) em `FormulaResposta` |
+| **⭐ Fato/moldura dela** | `KAIRA/resources/kaira.json` (relações `gosta`/`nao_gosta` + moldura por relação com `{v}`); toda escrita passa por `ControleKaira.gravaFato` (guardas de segredo/contradição) |
+| **⭐ Segredo novo na blocklist** | `SEGREDOS` em `ControleKaira` (termos + heurístico de 9+ dígitos) |
+| **⭐ Porta de triagem** | `ControleResposta.respostaPorTriagem` (possessivos/relações + `ehPergunta`) |
+| **⭐ Entrada nova no dicionário C3** | `conhecimentos.json` (termo = intent real, `resumo` falado e `texto` do "explica melhor", origem com fonte+licença) |
+| **⭐ Máquina da pergunta pendente** | `ControleSessao.armaPergunta` + o bloco #41 no `decifrar` (limiar 0,6 / piso 0,10) |
+| **⭐ Modelo de fato novo (relação)** | `FatoKaira`/`MolduraKaira` + migração em `ControleKaira.carregaCacheKAIRA` |
+| Degrau novo de resposta | `decifrar` (cascata) + `Classifica` do `score_replay.ps1`/`score_baterias.ps1` (nota própria) |
 
 ---
 
@@ -251,31 +394,27 @@ Tudo em `conversas.log` (gitignored) + tela ao vivo no botão **Log** (#29).
   pools de resposta por faixa ✅ (+156 respostas; faixa seca das intenções diárias de 1 → ≥3),
   P7.5 parcial ✅ (`{nome}` em pools), P7.3 parcial (3 empates dissolvidos; 5 aceitos/documentados).
   **Pendente: P7.1 (podar `agradecimento` de 619 → ~250).**
-- **#35 (anti-repetição de resposta, C1 do briefing §6): CONCLUÍDA** — fila por
-  intento (`ultimasRespostas`, últimas 2 frases fora do sorteio) em
-  `ControleResposta.comandosResposta`; spec `AntiRepeticaoTurnoTest` verde
-  (sorteio determinístico via o gancho `semeador`).
-- **C2 (higiene do log, briefing §6): CONCLUÍDA — issue #36** — suíte roda com
-  `-Dkaira.log.destino` (arquivo em `%TEMP%`) e o `conversas.log` fica só com
-  uso real. **Legado: o log atual (6,3 MB) é mistura teste+real — minerar só o
-  segmento novo (pós-#36) ou filtrar os ~31 reais.**
-- **C3 (dicionário de conhecimentos, §12.1): PILOTO ENTREGUE — issue #37** —
-  15 entradas em `conhecimentos.json` (Wikipédia PT CC BY-SA, texto adaptado,
-  origem por item), `ControleConhecimento` (null-seguro) e encaixe no
-  `continuacao_topico`: pedir "conta mais" sobre trabalho/esporte/música...
-  agora fala a substância do tópico. **"Explica melhor" entregue na #54**
-  (o `texto` sai quando o turno pede profundidade; "conta mais" segue no
-  resumo). **Próximas fatias:** extrator automático de resumo (stopwords/IDF),
-  escala da base + OpenWordnet-PT (CC BY 4.0).
-- §7.3 restante: degrau médio com `{palavrasChave}` + followup (issue #16 parcial);
-  frame reconhecido/slot novo (§5.7).
-- **#38 (âncora de tópico): CONCLUÍDA** — `topicoAtual` só ancora com
-  `melhorScore >= LIMIAR`; frase sem match (score 0.00) e aposta não
-  confirmada não trocam mais o assunto (bug do log 16/10: "filme" virou
-  "identidade" no argmax de zeros). Spec `AncoraTopicoTest`.
-- Classificador: **negação é cega** ("não" é stopword) — causa raiz dos empates `{gosto}/{entende}`;
-  fix de código, não de dados. **Fila:** colisão `fala/fale` ("fale mais sobre isso" →
-  `convite_conversa` por token-set `[fale, sobre]` — vaza do `continuacao_topico`).
+- **#35/#36/#37/#38 — CONCLUÍDAS** (anti-repetição, higiene do log, C3 piloto, âncora de
+  tópico). **C3: piloto (#37) + "explica melhor" (#54)** entregues — próximas fatias:
+  extrator automático de resumo (stopwords/IDF) e escala + OpenWordnet-PT (CC BY 4.0).
+- **Leva #50–#56 + #41 ENTREGUE (26/10)** — triagem + memória dela (modelo v2 com
+  relações), integridade do fato, triagem v2, segredo no ensino, explica melhor,
+  polimento da porta e a máquina da pergunta pendente. Estado: suíte 60 classes,
+  avaliador 44/44, replay **5,3 / GRAVE 0**.
+- **Fila da Ideia 1:** (1) **fluxo de opções** da memória dela (miss → convite →
+  lista → sorteio → grava em `gosta`, com a invariante de não-contradição);
+  (2) **fatos da sessão v2** (relações `gosta`/`nao_gosta` no `sessao.json` +
+  captura negativa "não gosto de X"); (3) captura negativa do ensino dela.
+- Classificador: **negação é cega** ("não" é stopword) — causa raiz dos empates
+  `{gosto}/{entende}`; fix de código, não de dados. **Fila:** colisão `fala/fale`
+  ("fale mais sobre isso" → `convite_conversa` por token-set `[fale, sobre]` —
+  vaza do `continuacao_topico`).
+- §7.3 restante: degrau médio com `{palavrasChave}` + followup (issue #16
+  parcial); frame reconhecido/slot novo (§5.7).
+- **O que o replay ainda mede como RUIM (245→207):** o fallback honesto ("me
+  ensina") é RUIM na régua; a direção do trabalho é reduzir o fallback **sem
+  engolir conversa** — o `aposta→aprender` de 63 turnos é herança do gate #49
+  (medida e aceita).
 - Opcional: theming dos `JOptionPane` (saem no estilo do sistema);
   decaimento do humor por dia sem interação (§7.1 opcional);
   `CriarResposta` — retorno descartado (decidir: usar ou remover).
