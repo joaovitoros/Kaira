@@ -263,8 +263,9 @@ Tudo em `conversas.log` (gitignored) + tela ao vivo no botão **Log** (#29).
   15 entradas em `conhecimentos.json` (Wikipédia PT CC BY-SA, texto adaptado,
   origem por item), `ControleConhecimento` (null-seguro) e encaixe no
   `continuacao_topico`: pedir "conta mais" sobre trabalho/esporte/música...
-  agora fala a substância do tópico. **Próximas fatias:** "explica melhor"
-  (campo `texto` já existe), extrator automático de resumo (stopwords/IDF),
+  agora fala a substância do tópico. **"Explica melhor" entregue na #54**
+  (o `texto` sai quando o turno pede profundidade; "conta mais" segue no
+  resumo). **Próximas fatias:** extrator automático de resumo (stopwords/IDF),
   escala da base + OpenWordnet-PT (CC BY 4.0).
 - §7.3 restante: degrau médio com `{palavrasChave}` + followup (issue #16 parcial);
   frame reconhecido/slot novo (§5.7).

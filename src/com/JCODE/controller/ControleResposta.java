@@ -571,10 +571,19 @@ public class ControleResposta {
 					: ControleSessao.get().getTopicoAtual();
 			if (pendente != null)
 				ControleSessao.topico(pendente);
-			String resumo = ControleConhecimento.resumo(topico);
-			if (resumo != null) {
-				Registro.linha("CONHECE  : termo=" + topico);
-				String falado = preencheSlots(resumo);
+
+			// #54 - "explica melhor" fala o TEXTO do dicionario; "conta mais"
+			// segue no resumo. Sem texto, o resumo ainda da a substancia.
+			String via = "texto";
+			String substancia = ControleSessao.explicacaoPedida()
+					? ControleConhecimento.texto(topico) : null;
+			if (substancia == null) {
+				substancia = ControleConhecimento.resumo(topico);
+				via = "resumo";
+			}
+			if (substancia != null) {
+				Registro.linha("CONHECE  : termo=" + topico + " (" + via + ")");
+				String falado = preencheSlots(substancia);
 				Registro.linha("RESPOSTA  : " + falado);
 				return falado;
 			}
@@ -677,6 +686,12 @@ public class ControleResposta {
 	}
 
 	public static Intencao buscaResposta(Intencoes raiz, String entradaNormalizada){
+
+		// #54 - "explica/detalha/aprofunda" marcam o turno: o dicionario
+		// responde o TEXTO em vez do resumo (flag vive so o turno, #28)
+		if (entradaNormalizada != null
+				&& entradaNormalizada.matches("(?i).*(?:explica\\p{L}*|detalh\\p{L}*|aprofund\\p{L}*|mais fundo).*"))
+			ControleSessao.pedeExplicacao();
 
 		if(raiz==null) {
 			if(intencoesCache==null)

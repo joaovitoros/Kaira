@@ -179,7 +179,7 @@ P1 (maior ganho percebido, só dados) → P3 (só dados, alivia misroutes irrita
 - **Fato que motiva:** o P2 (continuação, #27/#28) já funciona — "conta mais" cai em `continuacao_topico` e a resposta usa `{topico}`. Mas **não há conteúdo atrás do tópico**: por isso a resposta é genérica.
 - **Receita:** o recorte de bases livres já levantadas no plano (OpenWordnet-PT CC BY 4.0 + lead da Wikipédia PT) → `KAIRA/resources/conhecimentos.json` no padrão do projeto (origem por item, como sempre). A intenção de continuação passa a montar a resposta do verbete do tópico atual em vez da frase genérica.
 - **Dependência:** vem depois de C1/C2 e do fechamento da leva de dados — é o item que separa "classificador bom" de "conversa de verdade".
-- **Resultado (piloto, issue #37):** `conhecimentos.json` com 15 entradas-curadoria (Wikipédia PT CC BY-SA 3.0, texto adaptado, origem por item), `ControleConhecimento` (null-seguro) e encaixe no `continuacao_topico` - pedir "conta mais" sobre trabalho/esporte/música... agora fala a substância do tópico. Próximas fatias: "explica melhor" (campo `texto` já existe no dicionário), extrator automático de resumo (stopwords/IDF), escala da base + OpenWordnet-PT.
+- **Resultado (piloto, issue #37):** `conhecimentos.json` com 15 entradas-curadoria (Wikipédia PT CC BY-SA 3.0, texto adaptado, origem por item), `ControleConhecimento` (null-seguro) e encaixe no `continuacao_topico` - pedir "conta mais" sobre trabalho/esporte/música... agora fala a substância do tópico. Próximas fatias: **"explica melhor" ENTREGUE na #54** (o `texto` sai quando o turno pede profundidade — flag per-turn no padrão do #28; `conta mais` segue no resumo), extrator automático de resumo (stopwords/IDF), escala da base + OpenWordnet-PT.
 
 ---
 

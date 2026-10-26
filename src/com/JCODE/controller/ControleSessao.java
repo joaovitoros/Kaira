@@ -28,6 +28,9 @@ public class ControleSessao {
     // #28 - turno em que o usuario pediu continuacao: o pool generico
     // do §7.2 fica de fora (o followup do topico passa)
     private static boolean turnoDeContinuacao = false;
+
+    // #54 - o turno pediu profundidade ("explica melhor"): o dicionario fala o texto
+    private static boolean turnoDeExplicacao = false;
     private static String ultimoInteresse = null;
 
     private static final int TURNOS_SEM_PERGUNTA = 3;
@@ -94,6 +97,7 @@ public class ControleSessao {
         nomeCapturado = false;
         turnosDesdePergunta = 0;
         turnoDeContinuacao = false;
+        turnoDeExplicacao = false;
         ultimoInteresse = null;
         apostaPendente = null;
     }
@@ -105,6 +109,7 @@ public class ControleSessao {
         nomeCapturado = false;
         // #28 - a flag do pedido vive so o turno atual
         turnoDeContinuacao = false;
+        turnoDeExplicacao = false;   // #54 - a explicacao tambem vive so o turno
         turnosDesdePergunta++;
         detectaNome(falaUsuario);
         detectaFato(falaUsuario);
@@ -124,6 +129,15 @@ public class ControleSessao {
     /** #28 - o usuario pediu pra ela falar; perguntaInteresse segura o pool. */
     public static void pedeContinuacao() {
         turnoDeContinuacao = true;
+    }
+
+    /** #54 - o turno pediu profundidade; o dicionario responde o texto. */
+    public static void pedeExplicacao() {
+        turnoDeExplicacao = true;
+    }
+
+    public static boolean explicacaoPedida() {
+        return turnoDeExplicacao;
     }
 
     // #39 - aposta pendente: o candidato que a aposta propôs fica guardado no

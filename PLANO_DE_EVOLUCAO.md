@@ -655,7 +655,7 @@ Pra dar resposta curta e fresca sobre preferência dela, usar respostas **parame
 **Ideia 3 — Aprendizado orgânico (sem "parar" a conversa).**
 Hoje o modo ensino (#33) "para" a conversa: o próximo turno vira resposta sem aviso. Inverter: quando ela não entende um tópico, **ela pergunta**, e a resposta do usuário é absorvida pelo contexto (tópico + tipo da pergunta) direto pro intent certo — sem entrar em "modo". Mesma tese do desempate por contexto (#41) do outro lado: lá o contexto decide **qual intent responder**, aqui decide **onde guardar** o que o usuário disse. Por isso **#41 vem antes**.
 
-**Ordem natural:** fechar #39–#41 → trilho #42–#45 (perguntas, fatos dela, Fase 4-piloto, aprendizado orgânico). A validar o ganho real do Markov e do piloto do dicionário (C3) antes de escalar qualquer um.
+**Ordem natural:** fechar #39–#41 → trilho #42–#45 (perguntas, fatos dela, Fase 4-piloto, aprendizado orgânico). A validar o ganho real do Markov e do piloto do dicionário (C3) antes de escalar qualquer um — o C3 já ganhou a fatia **"explica melhor" na #54** (o `texto` do dicionário sai quando o turno pede profundidade; "conta mais" segue no resumo).
 
 **Ganho real das 3 ideias (análise out/2026, base em 98 intenções / 2.420 exemplos / 1.291 respostas):**
 
