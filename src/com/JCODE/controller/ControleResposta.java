@@ -149,15 +149,23 @@ public class ControleResposta {
 				if (fatos == null || !fatos.containsKey(chave))
 					continue;
 				Registro.linha("TRIAGEM   : fato usuario chave=" + chave);
-				return String.format(MOLDURA_USUARIO, chave, fatos.get(chave));
+				// #55 - o artigo sai do genero da chave ("favorita"/"preferida" -> a sua)
+				String artigo = chave.toLowerCase(java.util.Locale.ROOT).endsWith("favorita")
+						|| chave.toLowerCase(java.util.Locale.ROOT).endsWith("preferida")
+						? "a sua" : "o seu";
+				return "pelo que voce me contou, " + artigo + " " + chave + " e "
+						+ fatos.get(chave) + "!";
 			}
-			// MISS da porta USUARIO: resposta honesta, nunca inventa
-			String seu = usu.group(1).toLowerCase(java.util.Locale.ROOT).startsWith("minha")
-					? "sua" : "seu";
 			String pedaco = usu.group(3) != null
 					? usu.group(2) + " " + usu.group(3) : usu.group(2);
+			// #55 - "qual meu nome?" com o nome ja conhecido: ela SABE - nunca o honesto falso
+			if ("nome".equals(pedaco) || "nome completo".equals(pedaco)) {
+				String nome = ControleSessao.get().getNomeUsuario();
+				if (nome != null && !nome.isBlank())
+					return "Seu nome e " + nome + "!";
+			}
 			Registro.linha("TRIAGEM   : miss usuario chave=" + pedaco);
-			return "Voce ainda nao me contou " + seu + " " + pedaco + "!";
+			return "Voce ainda nao me contou " + "seu" + " " + pedaco + "!";
 		}
 		return null;
 	}
