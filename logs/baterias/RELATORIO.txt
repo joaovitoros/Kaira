@@ -355,6 +355,12 @@ BUG CRITICO (integridade de dados):
   destruiu o dado. O mesmo padrao vale para "meu sonho e qual mesmo?", etc.
   -> detectaFato precisa exigir forma declarativa (sem interrogativo / sem
      "qual", "quem", "quando", "mesmo" no valor).
+  CORRIGIDO na #51 (26/10): guards de pergunta (na fala E no valor capturado)
+  + guardaFato central (nunca sobrescreve fato existente com valor diferente;
+  mesmo valor com outra caixa preserva o canonico) + log
+  "SESSAO : fato X preservado". Spec IntegridadeFatoTest (9 E2E, base isolada)
+  verde; replay 834 turnos identico ao aceite do #50 (GERAL 5,2 / GRAVE 0) -
+  guarda pura, sem mudanca de comportamento medido.
 
 OUTRO: "o que voce gosta de comer?" -> "Gosto de conversar" (resposta generica;
   sem possessivo a triagem nao entra e o pipeline nao responde o gosto dela).

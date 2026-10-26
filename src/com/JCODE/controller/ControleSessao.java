@@ -77,6 +77,10 @@ public class ControleSessao {
             "Conta uma novidade pra mim, {nome}?",
             "Tem algo que voce queria ter feito e nao fez ainda?");
 
+    // #51 - pergunta disfarcada de declaracao: nao vira fato
+    private static final Pattern PERGUNTA_DISFARCADA = Pattern.compile(
+            "(?i).*(?:\\?|\\b(?:qual|quais|quem|quando|onde|como|quanto|quantos|mesmo)\\b).*");
+
     public static Sessao get() {
         return sessao;
     }
@@ -239,19 +243,40 @@ public class ControleSessao {
     }
 
     private static void detectaFato(String fala) {
+        // #51 - integridade: pergunta vestida de declaracao nao grava nada
+        if (PERGUNTA_DISFARCADA.matcher(fala.trim()).matches())
+            return;
         for (String[] regra : PADROES_FATO) {
             Matcher m = Pattern.compile(regra[1]).matcher(fala.trim());
             if (!m.find())
                 continue;
             if (m.groupCount() >= 2) {
                 // "meu jogo favorito e minecraft" -> chave "jogo favorito"
-                sessao.getFatos().put(m.group(1).trim() + " favorito", m.group(2).trim());
-                Registro.linha("SESSAO    : fato " + m.group(1).trim() + " favorito=" + m.group(2).trim());
+                guardaFato(m.group(1).trim() + " favorito", m.group(2).trim());
             } else {
-                sessao.getFatos().put(regra[0], m.group(1).trim());
-                Registro.linha("SESSAO    : fato " + regra[0] + "=" + m.group(1).trim());
+                guardaFato(regra[0], m.group(1).trim());
             }
         }
+    }
+
+    /** #51 - escrita central do fato: valor-pergunta nao grava e fato
+     *  existente nao e sobrescrito por valor diferente (log de preservacao).
+     *  Mesmo valor (caixa ignorada) = no-op com o canonico preservado. */
+    private static void guardaFato(String chave, String valor) {
+        if (chave == null || chave.isBlank() || valor == null || valor.isBlank())
+            return;
+        if (PERGUNTA_DISFARCADA.matcher(valor).matches())
+            return;
+        String atual = sessao.getFatos().get(chave);
+        if (atual != null) {
+            if (atual.equalsIgnoreCase(valor))
+                return;
+            Registro.linha("SESSAO    : fato " + chave + " preservado (atual=" + atual
+                    + "; ignorado=" + valor + ")");
+            return;
+        }
+        sessao.getFatos().put(chave, valor);
+        Registro.linha("SESSAO    : fato " + chave + "=" + valor);
     }
 
     /** §7.1 - modificadores: elogio sobe, grosseria baixa (clamp no setter). */
