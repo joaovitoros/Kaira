@@ -184,18 +184,22 @@ public class FormulaResposta {
         if (ensinoPendente() && respostaEnsino == null) {
             String[] fato = ControleKaira.extraiFatoDela(falaUsuario);
             if (fato != null) {
-                if (ControleKaira.ehSegredo(falaUsuario)
-                        || !ControleKaira.gravaFato(fato[0], fato[1])) {
-                    boolean contradicao = !ControleKaira.ehSegredo(falaUsuario)
-                            && ControleKaira.contemNoLadoOposto(fato[0], fato[1]);
+                boolean gosta = fato.length < 3 || !"nao_gosta".equals(fato[2]);
+                boolean segredo = ControleKaira.ehSegredo(falaUsuario);
+                boolean gravou = !segredo
+                        && ControleKaira.gravaFato(fato[0], fato[1], gosta);
+                if (segredo || !gravou) {
+                    boolean contradicao = !segredo
+                            && ControleKaira.contemNoLadoOposto(fato[0], fato[1], gosta);
                     Registro.linha("TRIAGEM   : fato dela recusado ("
                             + (contradicao ? "contradicao" : "segredo") + ")");
                     limpaEnsino();
                     bolha(contradicao ? TEXTO_CONTRADICAO : TEXTO_SEGREDO);
                 } else {
-                    Registro.linha("TRIAGEM   : fato dela gravado chave=" + fato[0]);
+                    Registro.linha("TRIAGEM   : fato dela gravado chave=" + fato[0]
+                            + " relacao=" + (gosta ? "gosta" : "nao_gosta"));
                     limpaEnsino();
-                    bolha(ackAbsorvido(falaUsuario));   // o mesmo curado do #48 ("Anotado...")
+                    bolha(ackAbsorvido(falaUsuario));
                 }
                 return;
             }

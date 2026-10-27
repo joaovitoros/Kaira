@@ -198,16 +198,17 @@ public class ControleKaira {
         return m == null ? null : m.getNaoGosta();
     }
 
-    /** #50 - grava o fato dela (cache + arquivo, mesma tatica do ensinaEm).
-     *  #53 - devolve false quando o par tem cara de segredo (nada e gravado). */
-    public static boolean gravaFato(String chave, String valor) {
+    /** #50/#59 - grava o fato dela na relacao indicada: substitui a lista
+     *  daquela relacao, preserva a outra, com as guardas de segredo e de
+     *  nao-contradicao. */
+    public static boolean gravaFato(String chave, String valor, boolean gosta) {
         if (chave == null || chave.isBlank() || valor == null || valor.isBlank())
             return false;
         if (ehSegredo(chave + " " + valor)) {
             Registro.linha("SESSAO    : fato " + chave + " ignorado (segredo)");
             return false;
         }
-        if (contemNoLadoOposto(chave, valor)) {
+        if (contemNoLadoOposto(chave, valor, gosta)) {
             Registro.linha("SESSAO    : fato " + chave + " recusado (contradicao)");
             return false;
         }
@@ -218,19 +219,16 @@ public class ControleKaira {
             fato = new FatoKaira();
             cacheFatos.put(chave, fato);
         }
-        // #56 - o ensino substitui a relacao GOSTA e preserva a nao_gosta
-        List<String> gosta = new ArrayList<>();
-        gosta.add(valor);
-        fato.setGosta(gosta);
+        List<String> alvo = gosta ? fato.getGosta() : fato.getNaoGosta();
+        alvo.clear();
+        alvo.add(valor);
 
         kairaCache.setFatos(cacheFatos);
         kairaCache.setVersao("0.0.2");
 
         try (FileWriter fileWriter = new FileWriter(
                 Caminhos.recurso("kaira.json").toFile(), StandardCharsets.UTF_8)) {
-
             String json = objectMapper.writeValueAsString(kairaCache);
-
             fileWriter.write(json);
         } catch (IOException e) {
             e.printStackTrace();
@@ -238,30 +236,57 @@ public class ControleKaira {
         return true;
     }
 
-    /** #50 - a forma de ensino dela: "sua CHAVE (preferida|favorito) ... e VALOR". */
+    /** #50 - compat: escreve na relacao positiva. */
+    public static boolean gravaFato(String chave, String valor) {
+        return gravaFato(chave, valor, true);
+    }
+
+    /** #59 - compat: escreve na relacao negativa. */
+    public static boolean gravaNaoGosta(String chave, String valor) {
+        return gravaFato(chave, valor, false);
+    }
+
+
+    /** #50/#59 - a forma de ensino dela: "sua CHAVE ... (nao) e VALOR".
+     *  Devolve {chave, valor, relacao} com relacao "gosta"/"nao_gosta". */
     public static String[] extraiFatoDela(String falaNormalizada) {
         if (falaNormalizada == null)
             return null;
+        // #59 - a NEGATIVA vem primeiro (o padrao positivo engole o "nao")
+        Matcher negativo = Pattern.compile(
+                        "\\b(?:sua|seu)\\s+([\\p{L}]+)\\s*(?:preferid[oa]|favorit[oa])?[\\p{L}\\s]*?"
+                                + "\\b(?:nao|nunca)\\s+(?:é|eh|e)\\s+([\\p{L}][\\p{L}\\s]*)\\s*$")
+                .matcher(falaNormalizada);
+        if (negativo.find())
+            return new String[] { negativo.group(1).trim(), negativo.group(2).trim(), "nao_gosta" };
         Matcher m = Pattern.compile(
-                        "\\b(?:sua|seu)\\s+([\\p{L}]+)\\s*(?:preferid[oa]|favorit[oa])?[\\p{L}\\s]*?\\b(?:e|eh)\\s+([\\p{L}][\\p{L}\\s]*)\\s*$")
+                        "\\b(?:sua|seu)\\s+([\\p{L}]+)\\s*(?:preferid[oa]|favorit[oa])?[\\p{L}\\s]*?"
+                                + "\\b(?:e|eh)\\s+([\\p{L}][\\p{L}\\s]*)\\s*$")
                 .matcher(falaNormalizada);
         if (!m.find())
             return null;
-        return new String[] { m.group(1).trim(), m.group(2).trim() };
+        return new String[] { m.group(1).trim(), m.group(2).trim(), "gosta" };
     }
 
     /** #56 - o valor ja esta na relacao OPOSTA? (ela nao se contradiz) */
     public static boolean contemNoLadoOposto(String chave, String valor) {
+        return contemNoLadoOposto(chave, valor, true);
+    }
+
+    /** #59 - o valor esta na relacao OPOSTA a que se quer escrever? */
+    public static boolean contemNoLadoOposto(String chave, String valor, boolean gosta) {
         if (cacheFatos == null)
             carregaFatos();
         FatoKaira fato = chave == null ? null : cacheFatos.get(chave);
         if (fato == null || valor == null)
             return false;
+        List<String> oposta = gosta ? fato.getNaoGosta() : fato.getGosta();
+        if (oposta == null)
+            return false;
         String alvo = compara(valor);
-        if (fato.getNaoGosta() != null)
-            for (String v : fato.getNaoGosta())
-                if (alvo.equals(compara(v)))
-                    return true;
+        for (String v : oposta)
+            if (alvo.equals(compara(v)))
+                return true;
         return false;
     }
 

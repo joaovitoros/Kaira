@@ -2,8 +2,8 @@
 
 > Consulta rápida pra não esquecer os mecanismos do projeto. Tudo abaixo foi
 > conferido no código (não é de memória). Última revisão: out/2026, head
-> `e4b199e` — suíte **62 classes verde**, avaliador **44/44**, replay do corpus
-> **5,3 / GRAVE 0**. As inteligências da leva #50–#58 e da #41 reaberta estão
+> `e4b199e` — suíte **63 classes verde**, avaliador **44/44**, replay do corpus
+> **5,3 / GRAVE 0**. As inteligências da leva #50–#59 e da #41 reaberta estão
 > aqui (as seções marcadas com ⭐ são as desta leva).
 >
 > Pra detalhes de planejamento/decisões: `PLANO_DE_EVOLUCAO.md` e
@@ -279,10 +279,16 @@ O que ela sabe **sobre si** — relações com listas, não valores soltos:
   ("Então a minha é X! Anotei."); não-lista rejeita e mantém; 2ª falha cancela;
   fala entendida fora da forma de lista cancela e o pipeline responde;
   palavra genérica ("preferida") **não** convida (é do tópico).
+- **⭐ Captura negativa dela (#59):** "sua cor **não** é roxo" grava em
+  `nao_gosta` — a extração detecta a negação **antes** do padrão positivo (que
+  engolia o "não"); a escrita é o `gravaFato(chave, valor, relação)` unificado
+  (delegados de 2 args para compat), a não-contradição é **simétrica** (dizer
+  que não gosta de um valor que está em `gosta` é recusado com o ack próprio)
+  e o segredo é checado **antes** da escrita.
 - Specs: `TriagemPerguntaTest` (7), `IntegridadeFatoTest` (9),
   `TriagemVariacoesTest` (15), `EnsinoSegredoTest` (5),
   `PortaUsuarioPolimentoTest` (6), `FatosModeloV2Test` (7),
-  `OpcoesMemoriaTest` (8).
+  `OpcoesMemoriaTest` (8), `EnsinoNegativoTest` (6).
 
 ---
 
@@ -362,17 +368,17 @@ Tudo em `conversas.log` (gitignored) + tela ao vivo no botão **Log** (#29).
   pra `%TEMP%\kaira_suites_conversas.log` (#36) — o `conversas.log` nunca é
   tocado por teste.
 - **⭐ O aceite completo (ciclo da casa) tem 4 portas:** spec da issue → suíte
-  inteira (**62 classes verde**) → avaliador **44/44** → **replay do corpus**
+  inteira (**63 classes verde**) → avaliador **44/44** → **replay do corpus**
   (`ReplayBaterias` + `score_replay.ps1`) com o alvo **GERAL ≥ 5,2 / GRAVE = 0**,
   comparando antes×agora turno a turno. Os scripts de validação vivem em
   `%TEMP%\validate_*.ps1`.
-- Specs por issue vivem em `test/com/JCODE/...` — as da leva #50–#58:
+- Specs por issue vivem em `test/com/JCODE/...` — as da leva #50–#59:
   `TriagemPerguntaTest`, `IntegridadeFatoTest`, `TriagemVariacoesTest`,
   `EnsinoSegredoTest`, `ExplicaMelhorTest`, `PortaUsuarioPolimentoTest`,
   `MaquinaContextoTest`, `FatosModeloV2Test`, `OpcoesMemoriaTest`,
-  `FatosSessaoV2Test` (+ anteriores: `FatosNovosTest`, `EnsinoTurbinadoTest`,
-  `EnsinoOrganicoTest`, `DesempateContextoTest`, `AncoraTopicoTest`,
-  `ContinuacaoTopicoTest`, …).
+  `FatosSessaoV2Test`, `EnsinoNegativoTest` (+ anteriores: `FatosNovosTest`,
+  `EnsinoTurbinadoTest`, `EnsinoOrganicoTest`, `DesempateContextoTest`,
+  `AncoraTopicoTest`, `ContinuacaoTopicoTest`, …).
 - Fluxo da casa: issue → **sonda (medir antes)** → spec vermelho → receita em
   código real → verde → `closes #N` → docs (PLANO §12.3 / RELATORIO).
 - **⭐ O instrumento do replay:** `score_replay.ps1` mede antes×agora com a
@@ -418,10 +424,10 @@ Tudo em `conversas.log` (gitignored) + tela ao vivo no botão **Log** (#29).
   relações), integridade do fato, triagem v2, segredo no ensino, explica melhor,
   polimento da porta e a máquina da pergunta pendente. Estado: suíte 60 classes,
   avaliador 44/44, replay **5,3 / GRAVE 0**.
-- **Fila da Ideia 1:** (1) ~~fluxo de opções~~ **entregue na #57**;
-  (2) ~~fatos da sessão v2~~ **entregue na #58** (relações `gosta`/`nao_gosta`,
-  captura negativa, porta negativa do usuário e migração do `sessao.json`);
-  (3) captura negativa do ensino dela ("sua cor não é X").
+- **Ideia 1 COMPLETA (26–27/10):** triagem/memória com portas (#50/#52), integridade
+  (#51), segredo (#53), modelo v2 dos **dois lados** (#56/#58), fluxo de opções
+  (#57) e a captura negativa do ensino dela (#59). **Fila:** Ideia 2 (molduras
+  sorteadas + slot), C3 escala, G6 (`Executar`) e P7.1 (podar `agradecimento`).
 - Classificador: **negação é cega** ("não" é stopword) — causa raiz dos empates
   `{gosto}/{entende}`; fix de código, não de dados. **Fila:** colisão `fala/fale`
   ("fale mais sobre isso" → `convite_conversa` por token-set `[fale, sobre]` —
