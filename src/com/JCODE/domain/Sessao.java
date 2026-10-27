@@ -1,9 +1,9 @@
 package com.JCODE.domain;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.*;
 
 public class Sessao {
 
@@ -14,7 +14,8 @@ public class Sessao {
     private int turnos;
     private int humor = 5;
     private List<Turno> historico = new ArrayList<>();
-    private Map<String, String> fatos = new LinkedHashMap<>();
+    @JsonProperty("fatos")
+    private Map<String, FatoSessao> fatos = new LinkedHashMap<>();
 
     public String getNomeUsuario() {
         return nomeUsuario;
@@ -56,7 +57,62 @@ public class Sessao {
         return historico;
     }
 
+    /** #58 - a visao plana (compat): get = gosta[0], put = seta gosta. */
+    @JsonIgnore
     public Map<String, String> getFatos() {
+        return new AbstractMap<>() {
+            @Override
+            public Set<Entry<String, String>> entrySet() {
+                Map<String, String> plano = new LinkedHashMap<>();
+                for (Entry<String, FatoSessao> e : fatos.entrySet()) {
+                    FatoSessao f = e.getValue();
+                    if (f.getGosta() != null && !f.getGosta().isEmpty())
+                        plano.put(e.getKey(), f.getGosta().get(0));
+                }
+                return plano.entrySet();
+            }
+
+            @Override
+            public String get(Object chave) {
+                FatoSessao f = fatos.get(chave);
+                return (f == null || f.getGosta() == null || f.getGosta().isEmpty())
+                        ? null : f.getGosta().get(0);
+            }
+
+            @Override
+            public boolean containsKey(Object chave) {
+                return fatos.containsKey(chave);
+            }
+
+            @Override
+            public String put(String chave, String valor) {
+                FatoSessao f = fatos.get(chave);
+                if (f == null) {
+                    f = new FatoSessao();
+                    fatos.put(chave, f);
+                }
+                String antes = get(chave);
+                List<String> gosta = new ArrayList<>();
+                gosta.add(valor);
+                f.setGosta(gosta);
+                return antes;
+            }
+
+            @Override
+            public boolean isEmpty() {
+                return fatos.isEmpty();
+            }
+
+            @Override
+            public int size() {
+                return fatos.size();
+            }
+        };
+    }
+
+    /** #58 - o mapa com as relacoes (as rotas novas usam este). */
+    @JsonIgnore
+    public Map<String, FatoSessao> getFatosV2() {
         return fatos;
     }
 

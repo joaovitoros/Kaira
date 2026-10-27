@@ -7,7 +7,9 @@ import com.JCODE.util.Caminhos;
 import com.JCODE.util.Registro;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -90,6 +92,23 @@ public class ControleSessao {
     // #51 - pergunta disfarcada de declaracao: nao vira fato
     private static final Pattern PERGUNTA_DISFARCADA = Pattern.compile(
             "(?i).*(?:\\?|\\b(?:qual|quais|quem|quando|onde|como|quanto|quantos|mesmo)\\b).*");
+
+    // #58 - negativos de gosto (o negativo NAO pode cair no positivo)
+    private static final Pattern NEGATIVA_FATO = Pattern.compile(
+            "(?i).*(?:\\b(?:nao|nunca)\\s+(?:gosto|curto)\\b|\\b(?:odeio|detesto)\\b"
+                    + "|favorit[oa]\\s+(?:nao|nunca)\\s+(?:é|eh|e)\\b).*");
+
+    private static final String[][] PADROES_NAO_GOSTA = {
+            {"gosta de", "(?i).*\\b(?:nao|nunca)\\s+gosto de\\s+([\\p{L}][\\p{L}\\s]*?)(?:[.!?]|$)"},
+            {"gosta de", "(?i).*\\b(?:nao|nunca)\\s+curto\\s+(?:o\\s+|a\\s+)?([\\p{L}][\\p{L}\\s]*?)(?:[.!?]|$)"},
+            {"gosta de", "(?i).*\\b(?:odeio|detesto)\\s+(?:o\\s+|a\\s+)?([\\p{L}][\\p{L}\\s]*?)(?:[.!?]|$)"},
+            {"meu X favorito NAO e Y",
+                    "(?i).*\\bmeu\\s+([\\p{L}\\s]+?)\\s+favorit[oa]\\s+"
+                            + "(?:nao|nunca)\\s+(?:é|eh|e)\\s+([\\p{L}][\\p{L}\\s]*?)(?:[.!?]|$)"},
+            {"minha X favorita NAO e Y",
+                    "(?i).*\\bminha\\s+([\\p{L}\\s]+?)\\s+favorit[oa]\\s+"
+                            + "(?:nao|nunca)\\s+(?:é|eh|e)\\s+([\\p{L}][\\p{L}\\s]*?)(?:[.!?]|$)"},
+    };
 
     // #57 - fluxo de opcoes: a chave esperando a lista
     private static String chaveOpcoes = null;
@@ -267,7 +286,25 @@ public class ControleSessao {
         try {
             ObjectMapper mapper = new ObjectMapper();
             mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-            Sessao restaurada = mapper.readValue(arquivo.toFile(), Sessao.class);
+
+            // #58 - migracao no load: o formato plano vira relacoes em memoria
+            JsonNode raiz = mapper.readTree(arquivo.toFile());
+            ObjectNode fatos =
+                    (ObjectNode) raiz.get("fatos");
+            if (fatos != null) {
+                java.util.List<String> planas = new java.util.ArrayList<>();
+                fatos.fieldNames().forEachRemaining(n -> {
+                    if (fatos.get(n).isTextual())
+                        planas.add(n);
+                });
+                for (String n : planas) {
+                    ObjectNode f = mapper.createObjectNode();
+                    f.putArray("gosta").add(fatos.get(n).asText());
+                    fatos.set(n, f);
+                }
+            }
+
+            Sessao restaurada = mapper.treeToValue(raiz, Sessao.class);
             if (restaurada == null)
                 return false;
             sessao = restaurada;
@@ -314,17 +351,32 @@ public class ControleSessao {
         // #51 - integridade: pergunta vestida de declaracao nao grava nada
         if (PERGUNTA_DISFARCADA.matcher(fala.trim()).matches())
             return;
+        // #58 - negativo tem caminho proprio (nao cai no positivo)
+        if (NEGATIVA_FATO.matcher(fala.trim()).matches()) {
+            for (String[] regra : PADROES_NAO_GOSTA) {
+                Matcher m = Pattern.compile(regra[1]).matcher(fala.trim());
+                if (!m.find())
+                    continue;
+                if (m.groupCount() >= 2) {
+                    String sufixo = regra[0].startsWith("minha") ? " favorita" : " favorito";
+                    guardaFato(m.group(1).trim() + sufixo, m.group(2).trim(), false);
+                } else {
+                    guardaFato(regra[0], m.group(1).trim(), false);
+                }
+            }
+            return;
+        }
         for (String[] regra : PADROES_FATO) {
             Matcher m = Pattern.compile(regra[1]).matcher(fala.trim());
             if (!m.find())
                 continue;
             if (m.groupCount() >= 2) {
-                // "meu jogo favorito e minecraft" -> chave "jogo favorito"
+                // "meu jogo favorito e minecraft" -> "jogo favorito"
                 // #52: "minha comida favorita e lasanha" -> "comida favorita"
                 String sufixo = regra[0].startsWith("minha") ? " favorita" : " favorito";
-                guardaFato(m.group(1).trim() + sufixo, m.group(2).trim());
+                guardaFato(m.group(1).trim() + sufixo, m.group(2).trim(), true);
             } else {
-                guardaFato(regra[0], m.group(1).trim());
+                guardaFato(regra[0], m.group(1).trim(), true);
             }
         }
     }
@@ -332,21 +384,44 @@ public class ControleSessao {
     /** #51 - escrita central do fato: valor-pergunta nao grava e fato
      *  existente nao e sobrescrito por valor diferente (log de preservacao).
      *  Mesmo valor (caixa ignorada) = no-op com o canonico preservado. */
-    private static void guardaFato(String chave, String valor) {
+    /** #58 - escrita central: relacao, segredo e nao-contradicao. */
+    private static void guardaFato(String chave, String valor, boolean gosta) {
         if (chave == null || chave.isBlank() || valor == null || valor.isBlank())
             return;
         if (PERGUNTA_DISFARCADA.matcher(valor).matches())
             return;
-        String atual = sessao.getFatos().get(chave);
-        if (atual != null) {
-            if (atual.equalsIgnoreCase(valor))
-                return;
-            Registro.linha("SESSAO    : fato " + chave + " preservado (atual=" + atual
-                    + "; ignorado=" + valor + ")");
+        if (ControleKaira.ehSegredo(chave + " " + valor)) {
+            Registro.linha("SESSAO    : fato " + chave + " ignorado (segredo)");
             return;
         }
-        sessao.getFatos().put(chave, valor);
-        Registro.linha("SESSAO    : fato " + chave + "=" + valor);
+        com.JCODE.domain.FatoSessao fato = sessao.getFatosV2().get(chave);
+        if (fato == null) {
+            fato = new com.JCODE.domain.FatoSessao();
+            sessao.getFatosV2().put(chave, fato);
+        }
+        java.util.List<String> alvo = gosta ? fato.getGosta() : fato.getNaoGosta();
+        java.util.List<String> oposta = gosta ? fato.getNaoGosta() : fato.getGosta();
+        String norm = compara(valor);
+        for (String v : oposta)
+            if (compara(v).equals(norm)) {
+                Registro.linha("SESSAO    : fato " + chave + " recusado (contradicao)");
+                return;
+            }
+        if (!alvo.isEmpty()) {
+            for (String v : alvo)
+                if (compara(v).equals(norm))
+                    return;
+            Registro.linha("SESSAO    : fato " + chave + " preservado (ja tem "
+                    + alvo.get(0) + "; ignorado=" + valor + ")");
+            return;
+        }
+        alvo.add(valor);
+        Registro.linha("SESSAO    : fato " + chave + (gosta ? "=" : " nao_gosta=") + valor);
+    }
+
+    private static String compara(String s) {
+        return java.text.Normalizer.normalize(s, java.text.Normalizer.Form.NFD)
+                .replaceAll("\\p{M}", "").trim().toLowerCase(java.util.Locale.ROOT);
     }
 
     /** §7.1 - modificadores: elogio sobe, grosseria baixa (clamp no setter). */

@@ -154,7 +154,7 @@ public class ControleResposta {
 		}
 
 		// #56 - porta DELA negativa: "qual cor voce nao gosta?" (sem possessivo)
-		if (fala.matches("(?i).*\\b(?:nao|nunca)\\s+(?:gosta|gosto|curte|curto)\\b.*")) {
+		if (fala.matches("(?i).*\\b(?:nao|nunca)\\s+(?:gosta|curte)\\b.*")) {
 			for (String chave : ControleKaira.chavesConhecidas()) {
 				if (!fala.matches("(?i).*\\b" + chave + "\\b.*"))
 					continue;
@@ -194,6 +194,25 @@ public class ControleResposta {
 			}
 			Registro.linha("TRIAGEM   : miss usuario chave=" + pedaco);
 			return "Voce ainda nao me contou " + "seu" + " " + pedaco + "!";
+		}
+
+		// #58 - porta USUARIO negativa (1a pessoa): "qual cor eu nao gosto?"
+		if (fala.matches("(?i).*\\b(?:nao|nunca)\\s+(?:gosto|curto)\\b.*")
+				|| fala.matches("(?i).*\\b(?:odeio|detesto)\\b.*")) {
+			for (Map.Entry<String, FatoSessao> e
+					: ControleSessao.get().getFatosV2().entrySet()) {
+				String dimensao = e.getKey().split(" ")[0];
+				if (!fala.matches("(?i).*\\b" + Pattern.quote(dimensao) + "\\b.*"))
+					continue;
+				FatoSessao fato = e.getValue();
+				if (fato.getNaoGosta() != null && !fato.getNaoGosta().isEmpty()) {
+					Registro.linha("TRIAGEM   : fato usuario (nao_gosta) chave=" + e.getKey());
+					return "Pelo que voce me contou, " + fato.getNaoGosta().get(0)
+							+ " nao e muito a sua praia!";
+				}
+				Registro.linha("TRIAGEM   : miss usuario (nao_gosta vazia) chave=" + e.getKey());
+				return "Voce ainda nao me contou do que voce nao gosta nisso!";
+			}
 		}
 		return null;
 	}
