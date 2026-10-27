@@ -2,8 +2,8 @@
 
 > Consulta rápida pra não esquecer os mecanismos do projeto. Tudo abaixo foi
 > conferido no código (não é de memória). Última revisão: out/2026, head
-> `e4b199e` — suíte **60 classes verde**, avaliador **44/44**, replay do corpus
-> **5,3 / GRAVE 0**. As inteligências da leva #50–#56 e da #41 reaberta estão
+> `e4b199e` — suíte **61 classes verde**, avaliador **44/44**, replay do corpus
+> **5,3 / GRAVE 0**. As inteligências da leva #50–#57 e da #41 reaberta estão
 > aqui (as seções marcadas com ⭐ são as desta leva).
 >
 > Pra detalhes de planejamento/decisões: `PLANO_DE_EVOLUCAO.md` e
@@ -149,6 +149,7 @@
 | **⭐ Explica melhor** | fala com `explica/detalh/aprofund` e o tópico tem `texto` no dicionário → fala o TEXTO (o "conta mais" segue no resumo) | #54 |
 | **⭐ "Qual meu nome?"** | nome conhecido → "Seu nome é X!" (nunca o honesto falso) | #55 |
 | **⭐ Gênero da moldura** | chave com sufixo `favorita`/`preferida` → "a sua"; demais → "o seu" | #55 |
+| **⭐ Fluxo de opções** | pergunta dela sem memória → convite + estado `chaveOpcoes`; a lista seguinte (2+ itens) sorteia e grava em `gosta` | #57 |
 
 ---
 
@@ -264,9 +265,18 @@ O que ela sabe **sobre si** — relações com listas, não valores soltos:
   no load é deduplicado (positivo vence); comparação normalizada.
 - **Segredo (#53):** senha/cartão/cpf/chave pix **não entram** (nem no
   `kaira.json` nem no `intencoes.json`) — recusa curada ("prefiro não anotar").
+- **⭐ Fluxo de opções (#57):** pergunta dela sem memória → **convite** ("Ainda
+  não tenho essa definida! Me diz quais são as opções?") + estado
+  `chaveOpcoes`; a fala seguinte é a **LISTA** (2+ itens curtos com
+  vírgula/`e`/`ou`, lida na fala **crua** — as vírgulas importam) → sorteia um
+  (item da relação oposta sai do pool, #56), grava em `gosta` e confirma
+  ("Então a minha é X! Anotei."); não-lista rejeita e mantém; 2ª falha cancela;
+  fala entendida fora da forma de lista cancela e o pipeline responde;
+  palavra genérica ("preferida") **não** convida (é do tópico).
 - Specs: `TriagemPerguntaTest` (7), `IntegridadeFatoTest` (9),
   `TriagemVariacoesTest` (15), `EnsinoSegredoTest` (5),
-  `PortaUsuarioPolimentoTest` (6), `FatosModeloV2Test` (7).
+  `PortaUsuarioPolimentoTest` (6), `FatosModeloV2Test` (7),
+  `OpcoesMemoriaTest` (8).
 
 ---
 
@@ -346,16 +356,16 @@ Tudo em `conversas.log` (gitignored) + tela ao vivo no botão **Log** (#29).
   pra `%TEMP%\kaira_suites_conversas.log` (#36) — o `conversas.log` nunca é
   tocado por teste.
 - **⭐ O aceite completo (ciclo da casa) tem 4 portas:** spec da issue → suíte
-  inteira (**60 classes verde**) → avaliador **44/44** → **replay do corpus**
+  inteira (**61 classes verde**) → avaliador **44/44** → **replay do corpus**
   (`ReplayBaterias` + `score_replay.ps1`) com o alvo **GERAL ≥ 5,2 / GRAVE = 0**,
   comparando antes×agora turno a turno. Os scripts de validação vivem em
   `%TEMP%\validate_*.ps1`.
-- Specs por issue vivem em `test/com/JCODE/...` — as da leva #50–#56:
+- Specs por issue vivem em `test/com/JCODE/...` — as da leva #50–#57:
   `TriagemPerguntaTest`, `IntegridadeFatoTest`, `TriagemVariacoesTest`,
   `EnsinoSegredoTest`, `ExplicaMelhorTest`, `PortaUsuarioPolimentoTest`,
-  `MaquinaContextoTest`, `FatosModeloV2Test` (+ anteriores: `FatosNovosTest`,
-  `EnsinoTurbinadoTest`, `EnsinoOrganicoTest`, `DesempateContextoTest`,
-  `AncoraTopicoTest`, `ContinuacaoTopicoTest`, …).
+  `MaquinaContextoTest`, `FatosModeloV2Test`, `OpcoesMemoriaTest` (+ anteriores:
+  `FatosNovosTest`, `EnsinoTurbinadoTest`, `EnsinoOrganicoTest`,
+  `DesempateContextoTest`, `AncoraTopicoTest`, `ContinuacaoTopicoTest`, …).
 - Fluxo da casa: issue → **sonda (medir antes)** → spec vermelho → receita em
   código real → verde → `closes #N` → docs (PLANO §12.3 / RELATORIO).
 - **⭐ O instrumento do replay:** `score_replay.ps1` mede antes×agora com a
@@ -401,8 +411,7 @@ Tudo em `conversas.log` (gitignored) + tela ao vivo no botão **Log** (#29).
   relações), integridade do fato, triagem v2, segredo no ensino, explica melhor,
   polimento da porta e a máquina da pergunta pendente. Estado: suíte 60 classes,
   avaliador 44/44, replay **5,3 / GRAVE 0**.
-- **Fila da Ideia 1:** (1) **fluxo de opções** da memória dela (miss → convite →
-  lista → sorteio → grava em `gosta`, com a invariante de não-contradição);
+- **Fila da Ideia 1:** (1) ~~fluxo de opções~~ **entregue na #57**;
   (2) **fatos da sessão v2** (relações `gosta`/`nao_gosta` no `sessao.json` +
   captura negativa "não gosto de X"); (3) captura negativa do ensino dela.
 - Classificador: **negação é cega** ("não" é stopword) — causa raiz dos empates

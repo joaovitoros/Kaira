@@ -54,6 +54,10 @@ public class FormulaResposta {
     // pro intento do match; abaixo (>= piso), pra familia que perguntou
     private static final double LIMIAR_CONFIANCA = 0.6;
 
+    // #57 - textos curados do fluxo de opcoes
+    private static final String TEXTO_OPCOES_REJEITA =
+            "Isso nao me parece uma lista de opcoes - me diz tipo 'verde, azul, vermelho'?";
+
     // #49 - limpa o estado do ensino (P1/P2) e desarma o brilho do botao
     private static void limpaEnsino() {
         bufferFrases = null;
@@ -129,9 +133,49 @@ public class FormulaResposta {
             }
         }
         falaUsuario = ControleSessao.tiraNome(falaUsuario);
+
+        // #57 - fluxo de opcoes: a fala seguinte e' a LISTA - lida na fala CRUA
+        // (o Normalizador ainda nao rodou; as virgulas importam). Fala entendida
+        // (comando, pergunta ou match >= 0.6) cancela e o pipeline responde.
+        if (ControleSessao.getChaveOpcoes() != null) {
+            String chave = ControleSessao.getChaveOpcoes();
+
+            // #57 - a LISTA primeiro: se a fala parece lista, ela E' a resposta
+            java.util.List<String> itens = itensDaLista(falaUsuario, chave);
+            if (itens != null && !itens.isEmpty()) {
+                String escolha = itens.get(new java.util.Random().nextInt(itens.size()));
+                ControleKaira.gravaFato(chave, escolha);
+                ControleSessao.limpaOpcoes();
+                ControleSessao.limpaPerguntaPendente();
+                Registro.linha("OPCOES    : escolha=" + escolha + " chave=" + chave);
+                bolha("Entao a minha e " + escolha + "! Anotei.");
+                return;
+            }
+
+            // fora da lista: fala entendida cancela e o pipeline responde
+            String normalizada = Normalizador.texto(falaUsuario);
+            boolean entendida = ControleComandos.validaComandos(falaUsuario)
+                    || ControleResposta.ehPergunta(normalizada)
+                    || ControleResposta.scoreDo(normalizada) >= LIMIAR_CONFIANCA;
+            if (entendida) {
+                ControleSessao.limpaOpcoes();
+                Registro.linha("OPCOES    : cancelado (fala entendida)");
+            } else if (ControleSessao.contaFalhaOpcoes() >= 2) {
+                ControleSessao.limpaOpcoes();
+                ControleSessao.limpaPerguntaPendente();
+                bolha(TEXTO_OPCOES_REJEITA + " " + TEXTO_CANCELADO);
+                return;
+            } else {
+                bolha(TEXTO_OPCOES_REJEITA);
+                return;
+            }
+        }
+
         falaUsuario = Normalizador.texto(falaUsuario);
 
         System.out.println("texto recebido pós replaces "+falaUsuario);
+
+
 
         // #50 - ensino dela (posicao do P2, ANTES da cascata): com o P1 armado,
         // frase na forma "sua CHAVE ... e VALOR" grava na memoria pessoal - o
@@ -296,6 +340,28 @@ public class FormulaResposta {
 
     }
 
+    // #57 - a LISTA de opcoes: separadores na fala CRUA; cada item e' normalizado
+    // antes de virar valor; item da relacao oposta (#56) sai do pool.
+    private static java.util.List<String> itensDaLista(String falaCrua, String chave) {
+        String[] partes = falaCrua.split("(?i)\\s*(?:,|;|\\bou\\b|\\be\\b)\\s*");
+        java.util.List<String> brutos = new java.util.ArrayList<>();
+        for (String p : partes) {
+            String item = Normalizador.texto(p.trim());
+            if (item.isEmpty())
+                continue;
+            if (!item.matches("[\\p{L}]+(?:\\s+[\\p{L}]+){0,2}"))
+                return null;
+            brutos.add(item);
+        }
+        if (brutos.size() < 2)
+            return null;
+        java.util.List<String> validos = new java.util.ArrayList<>();
+        for (String item : brutos)
+            if (!ControleKaira.contemNoLadoOposto(chave, item))
+                validos.add(item);
+        return validos;
+    }
+
     public static void criacaoLeituraRespostas(String falaUsuario){
         int decisao = (int) (Math.random()* (4))+1;
         System.out.println("Fator geração resposta nova "+ decisao);
@@ -339,7 +405,8 @@ public class FormulaResposta {
             }
 
             // §7.2 - iniciativa propria: a cada N turnos, uma pergunta de interesse
-            if (resposta != null) {
+            if (resposta != null && ControleSessao.getChaveOpcoes() == null) {
+                // #57 - o convite de opcoes ja E' a pergunta do turno
                 String interesse = ControleSessao.perguntaInteresse();
                 if (interesse != null)
                     texto = texto + " " + interesse;

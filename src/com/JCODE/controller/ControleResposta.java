@@ -138,6 +138,18 @@ public class ControleResposta {
 				return "Essa eu ainda nao sei - mas " + poss + " " + chave
 						+ " eu guardei: " + fatos.get(chave) + "!";
 			}
+
+			// #57 - miss dela: convida as opcoes (nunca para segredo, e nunca
+			// para palavra generica: "qual e sua preferida?" e' do TOPICO)
+			String chaveBase = dela.group(2).toLowerCase(java.util.Locale.ROOT);
+			boolean generica = chaveBase.matches(
+					"(?i)(?:preferid[oa]s?|favorit[oa]s?|coisa|coisas|assunto|tipo"
+							+ "|parte|lado|um|uma|isso|aquilo)");
+			if (!generica && !ControleKaira.ehSegredo(fala)) {
+				ControleSessao.armaOpcoes(chaveBase);
+				Registro.linha("TRIAGEM   : miss dela, convite de opcoes chave=" + chaveBase);
+				return "Ainda nao tenho essa definida! Me diz quais sao as opcoes?";
+			}
 			return null;
 		}
 

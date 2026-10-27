@@ -91,6 +91,29 @@ public class ControleSessao {
     private static final Pattern PERGUNTA_DISFARCADA = Pattern.compile(
             "(?i).*(?:\\?|\\b(?:qual|quais|quem|quando|onde|como|quanto|quantos|mesmo)\\b).*");
 
+    // #57 - fluxo de opcoes: a chave esperando a lista
+    private static String chaveOpcoes = null;
+    private static int falhasOpcoes = 0;
+
+    public static void armaOpcoes(String chave) {
+        chaveOpcoes = chave;
+        falhasOpcoes = 0;
+    }
+
+    public static String getChaveOpcoes() {
+        return chaveOpcoes;
+    }
+
+    public static void limpaOpcoes() {
+        chaveOpcoes = null;
+        falhasOpcoes = 0;
+    }
+
+    /** #57 - conta mais uma falha de lista; a 2a cancela o fluxo. */
+    public static int contaFalhaOpcoes() {
+        return ++falhasOpcoes;
+    }
+
     public static Sessao get() {
         return sessao;
     }
@@ -127,6 +150,7 @@ public class ControleSessao {
         ultimoInteresse = null;
         apostaPendente = null;
         limpaPerguntaPendente();
+        limpaOpcoes();
     }
 
     public static void processa(String falaUsuario) {
