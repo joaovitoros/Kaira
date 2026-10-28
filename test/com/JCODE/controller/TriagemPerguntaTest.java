@@ -149,8 +149,8 @@ public class TriagemPerguntaTest {
 		String segunda = ControleFace.resposta;
 
 		assertNotNull("a pergunta dela tem que ter resposta", primeira);
-		assertEquals("mesma pergunta, mesma resposta - a memoria destrava a roleta",
-				primeira, segunda);
+		assertTrue("o VALOR e' consistente (a moldura pode variar, o fato nao)",
+				primeira.contains("catalogar") && segunda.contains("catalogar"));
 		assertTrue("a resposta sai da memoria (o valor semeado, que a base nao sabe)",
 				primeira.contains("catalogar"));
 	}
@@ -226,8 +226,9 @@ public class TriagemPerguntaTest {
 		assertNotNull("a pergunta do usuario tem resposta", ControleFace.resposta);
 		assertTrue("a resposta traz o valor real do fato",
 				ControleFace.resposta.contains("minecraft"));
-		assertTrue("pela moldura honesta (declara a fonte)",
-				ControleFace.resposta.contains("pelo que voce me contou"));
+		assertTrue("pela moldura honesta (prefixo do pool)",
+				ControleResposta.moldurasUsuario().stream()
+						.anyMatch(ControleFace.resposta::contains));
 	}
 
 	/**

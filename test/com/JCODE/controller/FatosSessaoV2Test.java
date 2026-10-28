@@ -154,7 +154,9 @@ public class FatosSessaoV2Test {
 		String resposta = responde("qual cor voce nao gosta?");
 
 		assertNotNull(resposta);
-		assertTrue("a moldura dela", resposta.contains("nao curto"));
+		assertTrue("a resposta e' uma das molduras dela",
+				ControleKaira.moldurasNaoGosta("cor").stream()
+						.anyMatch(m -> resposta.contains(m.replace("{v}", "cinza"))));
 		assertTrue("o valor dela", resposta.contains("cinza"));
 	}
 

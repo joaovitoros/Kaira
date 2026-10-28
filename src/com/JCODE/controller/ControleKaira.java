@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.IntUnaryOperator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,6 +34,55 @@ public class ControleKaira {
     private static final String SEGREDOS = "(?i).*\\b(?:senha|password|cartao|cartão|cpf|cnpj"
             + "|cvv|token|pix|pin|agencia|agência|conta\\s+bancaria|conta\\s+bancária"
             + "|conta\\s+corrente|codigo\\s+de\\s+seguranca|código\\s+de\\s+segurança)\\b.*";
+
+    // #60 - sorteio das molduras com anti-repeticao (padrao #35)
+    static IntUnaryOperator semeadorMolduras = n -> (int) (Math.random() * n);
+    private static final Map<String, String> ultimaMoldura = new HashMap<>();
+
+    private static String sorteiaMoldura(String chave, List<String> opcoes) {
+        List<String> livres = new ArrayList<>(opcoes);
+        String ultima = ultimaMoldura.get(chave);
+        if (ultima != null && livres.size() > 1)
+            livres.remove(ultima);
+        if (livres.isEmpty())
+            livres = new ArrayList<>(opcoes);
+        String escolhida = livres.get(semeadorMolduras.applyAsInt(livres.size()));
+        ultimaMoldura.put(chave, escolhida);
+        return escolhida;
+    }
+
+    public static String molduraDe(String chave) {
+        if (cacheMolduras == null)
+            carregaFatos();
+        MolduraKaira m = chave == null ? null : cacheMolduras.get(chave);
+        if (m == null || m.getGosta() == null || m.getGosta().isEmpty())
+            return null;
+        return sorteiaMoldura(chave + ":gosta", m.getGosta());
+    }
+
+    public static String molduraNaoGosta(String chave) {
+        if (cacheMolduras == null)
+            carregaFatos();
+        MolduraKaira m = chave == null ? null : cacheMolduras.get(chave);
+        if (m == null || m.getNaoGosta() == null || m.getNaoGosta().isEmpty())
+            return null;
+        return sorteiaMoldura(chave + ":nao_gosta", m.getNaoGosta());
+    }
+
+    /** #60 - as listas (o spec confere contrato e pertencimento). */
+    public static List<String> moldurasDe(String chave) {
+        if (cacheMolduras == null)
+            carregaFatos();
+        MolduraKaira m = chave == null ? null : cacheMolduras.get(chave);
+        return m == null || m.getGosta() == null ? List.of() : m.getGosta();
+    }
+
+    public static List<String> moldurasNaoGosta(String chave) {
+        if (cacheMolduras == null)
+            carregaFatos();
+        MolduraKaira m = chave == null ? null : cacheMolduras.get(chave);
+        return m == null || m.getNaoGosta() == null ? List.of() : m.getNaoGosta();
+    }
 
     public static boolean ehSegredo(String texto) {
         if (texto == null)
@@ -78,6 +128,26 @@ public class ControleKaira {
                 ObjectNode m = objectMapper.createObjectNode();
                 m.put("gosta", molduras.get(n).asText());
                 molduras.set(n, m);
+            }
+        }
+
+        // #60 - v0.0.2 ({"gosta": "texto"}) -> v0.0.3 ({"gosta": ["texto"]})
+        List<String> emTransicao = new ArrayList<>();
+        molduras.fieldNames().forEachRemaining(n -> {
+            ObjectNode m = (ObjectNode) molduras.get(n);
+            if ((m.has("gosta") && m.get("gosta").isTextual())
+                    || (m.has("nao_gosta") && m.get("nao_gosta").isTextual()))
+                emTransicao.add(n);
+        });
+        for (String n : emTransicao) {
+            ObjectNode m = (ObjectNode) molduras.get(n);
+            if (m.has("gosta") && m.get("gosta").isTextual()) {
+                String t = m.get("gosta").asText();
+                m.putArray("gosta").add(t);
+            }
+            if (m.has("nao_gosta") && m.get("nao_gosta").isTextual()) {
+                String t = m.get("nao_gosta").asText();
+                m.putArray("nao_gosta").add(t);
             }
         }
 
@@ -182,20 +252,6 @@ public class ControleKaira {
         if (cacheFatos == null)
             carregaFatos();
         return cacheFatos.keySet();
-    }
-
-    public static String molduraDe(String chave) {
-        if (cacheMolduras == null)
-            carregaFatos();
-        MolduraKaira m = chave == null ? null : cacheMolduras.get(chave);
-        return m == null ? null : m.getGosta();
-    }
-
-    public static String molduraNaoGosta(String chave) {
-        if (cacheMolduras == null)
-            carregaFatos();
-        MolduraKaira m = chave == null ? null : cacheMolduras.get(chave);
-        return m == null ? null : m.getNaoGosta();
     }
 
     /** #50/#59 - grava o fato dela na relacao indicada: substitui a lista

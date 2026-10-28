@@ -1,6 +1,6 @@
 {
     "nome": "K.A.I.R.A",
-    "versao": "0.0.2",
+    "versao": "0.0.3",
     "fatos": {
         "cor": {
             "gosta": ["verde"],
@@ -29,28 +29,76 @@
     },
     "molduras": {
         "cor": {
-            "gosta": "A minha cor preferida e {v}!",
-            "nao_gosta": "Uma cor que eu nao curto e {v}. Nao me pergunte por que!"
+            "gosta": [
+                "A minha cor preferida e {v}!",
+                "Minha cor de sempre: {v}.",
+                "Se me perguntassem de novo, eu diria {v}."
+            ],
+            "nao_gosta": [
+                "Uma cor que eu nao curto e {v}. Nao me pergunte por que!",
+                "Passo longe de {v}.",
+                "{v} nao me cai bem, sinceramente."
+            ]
         },
         "musica": {
-            "gosta": "Minha musica preferida e {v}!",
-            "nao_gosta": "Nao curto muito {v} nao."
+            "gosta": [
+                "Minha musica preferida e {v}!",
+                "O som que me pega e {v}.",
+                "{v} no repeat, sem culpa."
+            ],
+            "nao_gosta": [
+                "Nao curto muito {v} nao.",
+                "{v} eu pulo no player.",
+                "Musica que nao me desce: {v}."
+            ]
         },
         "cafe": {
-            "gosta": "Meu cafe e {v}, do jeitinho certo!",
-            "nao_gosta": "Cafe assim eu passo: {v}."
+            "gosta": [
+                "Meu cafe e {v}, do jeitinho certo!",
+                "Cafe? {v}, por favor.",
+                "{v} - e a vida fica melhor."
+            ],
+            "nao_gosta": [
+                "Cafe assim eu passo: {v}.",
+                "{v} no meu cafe? Nao, obrigada.",
+                "Dispenso {v}."
+            ]
         },
         "jogo": {
-            "gosta": "O meu jogo preferido e {v}!",
-            "nao_gosta": "Jogo que eu nao curto: {v}."
+            "gosta": [
+                "O meu jogo preferido e {v}!",
+                "{v} e o que eu jogo de olhos fechados.",
+                "Meu vicio declarado: {v}."
+            ],
+            "nao_gosta": [
+                "Jogo que eu nao curto: {v}.",
+                "{v} nao me fisgou.",
+                "Passo de {v}."
+            ]
         },
         "comida": {
-            "gosta": "Minha comida de sempre e {v}!",
-            "nao_gosta": "Comida que eu nao curto: {v}."
+            "gosta": [
+                "Minha comida de sempre e {v}!",
+                "{v} me ganha de qualquer jeito.",
+                "Prato favorito: {v}."
+            ],
+            "nao_gosta": [
+                "Comida que eu nao curto: {v}.",
+                "{v} eu deixo no prato.",
+                "Passo de {v}."
+            ]
         },
         "hobby": {
-            "gosta": "O meu hobby e {v}!",
-            "nao_gosta": "Hobby que eu nao curto: {v}."
+            "gosta": [
+                "O meu hobby e {v}!",
+                "{v} e onde meu tempo some.",
+                "Meu programa favorito: {v}."
+            ],
+            "nao_gosta": [
+                "Hobby que eu nao curto: {v}.",
+                "{v} nao me chama.",
+                "De {v} eu passo."
+            ]
         }
     }
 }

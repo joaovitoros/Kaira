@@ -147,7 +147,9 @@ public class FatosModeloV2Test {
 
 		assertNotNull(resposta);
 		assertTrue("o valor de nao_gosta", resposta.contains("cinza"));
-		assertTrue("a moldura da relacao negativa", resposta.contains("nao curto"));
+		assertTrue("a resposta e' uma das molduras da relacao negativa",
+				ControleKaira.moldurasNaoGosta("cor").stream()
+						.anyMatch(m -> resposta.contains(m.replace("{v}", "cinza"))));
 	}
 
 	/** Negativa sem valor na lista: honesto, nunca inventa. */

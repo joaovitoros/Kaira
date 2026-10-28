@@ -2,8 +2,8 @@
 
 > Consulta rápida pra não esquecer os mecanismos do projeto. Tudo abaixo foi
 > conferido no código (não é de memória). Última revisão: out/2026, head
-> `e4b199e` — suíte **63 classes verde**, avaliador **44/44**, replay do corpus
-> **5,3 / GRAVE 0**. As inteligências da leva #50–#59 e da #41 reaberta estão
+> `e4b199e` — suíte **64 classes verde**, avaliador **44/44**, replay do corpus
+> **5,3 / GRAVE 0**. As inteligências da leva #50–#60 e da #41 reaberta estão
 > aqui (as seções marcadas com ⭐ são as desta leva).
 >
 > Pra detalhes de planejamento/decisões: `PLANO_DE_EVOLUCAO.md` e
@@ -285,10 +285,17 @@ O que ela sabe **sobre si** — relações com listas, não valores soltos:
   (delegados de 2 args para compat), a não-contradição é **simétrica** (dizer
   que não gosta de um valor que está em `gosta` é recusado com o ack próprio)
   e o segredo é checado **antes** da escrita.
+- **⭐ Moldura vira POOL (#60, Ideia 2 v1):** cada relação tem **2-3 molduras
+  curadas** com `{v}` (kaira.json v0.0.3), sorteadas com **anti-repetição** por
+  chave+relação (padrão #35); a moldura do usuário varia o **prefixo** ("pelo
+  que voce me contou" / "como voce me disse" / "voce me contou que") na
+  positiva **e** na negativa, com o artigo do #55 intocado. O motor é
+  **moldura curada + slot** — não o `CriarResposta` (a roleta antiga).
 - Specs: `TriagemPerguntaTest` (7), `IntegridadeFatoTest` (9),
   `TriagemVariacoesTest` (15), `EnsinoSegredoTest` (5),
   `PortaUsuarioPolimentoTest` (6), `FatosModeloV2Test` (7),
-  `OpcoesMemoriaTest` (8), `EnsinoNegativoTest` (6).
+  `OpcoesMemoriaTest` (8), `EnsinoNegativoTest` (6),
+  `MoldurasSorteadasTest` (7).
 
 ---
 
@@ -426,8 +433,11 @@ Tudo em `conversas.log` (gitignored) + tela ao vivo no botão **Log** (#29).
   avaliador 44/44, replay **5,3 / GRAVE 0**.
 - **Ideia 1 COMPLETA (26–27/10):** triagem/memória com portas (#50/#52), integridade
   (#51), segredo (#53), modelo v2 dos **dois lados** (#56/#58), fluxo de opções
-  (#57) e a captura negativa do ensino dela (#59). **Fila:** Ideia 2 (molduras
-  sorteadas + slot), C3 escala, G6 (`Executar`) e P7.1 (podar `agradecimento`).
+  (#57) e a captura negativa do ensino dela (#59).
+- **Ideia 2 v1 ENTREGUE (#60):** molduras em pool + sorteio com anti-repetição
+  (dela e do usuário, positiva e negativa). **Fila:** a composição
+  `[saudação]+[reação]+[followup]` (v2), C3 escala, G6 (`Executar`) e P7.1
+  (podar `agradecimento`); **Markov (§8.2) em aberto** por decisão.
 - Classificador: **negação é cega** ("não" é stopword) — causa raiz dos empates
   `{gosto}/{entende}`; fix de código, não de dados. **Fila:** colisão `fala/fale`
   ("fale mais sobre isso" → `convite_conversa` por token-set `[fale, sobre]` —

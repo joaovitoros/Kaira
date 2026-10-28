@@ -216,7 +216,8 @@ public class TriagemVariacoesTest {
 		String resposta = responde("qual minha cor favorita?");
 		assertNotNull(resposta);
 		assertTrue("responde o valor que ele contou", resposta.contains("azul"));
-		assertTrue("pela moldura honesta", resposta.contains("pelo que voce me contou"));
+		assertTrue("pela moldura honesta (prefixo do pool)",
+				ControleResposta.moldurasUsuario().stream().anyMatch(resposta::contains));
 	}
 
 	// ================= D) sanidade (nao pode regredir) =================

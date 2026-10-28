@@ -123,7 +123,9 @@ public class EnsinoNegativoTest {
 
 		assertNotNull(resposta);
 		assertTrue("responde o dislike capturado", resposta.contains("roxo"));
-		assertTrue("moldura da relacao negativa", resposta.contains("nao curto"));
+		assertTrue("a resposta e' uma das molduras da relacao negativa",
+				ControleKaira.moldurasNaoGosta("cor").stream()
+						.anyMatch(m -> resposta.contains(m.replace("{v}", "roxo"))));
 	}
 
 	/**

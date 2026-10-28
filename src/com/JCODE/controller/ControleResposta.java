@@ -111,6 +111,29 @@ public class ControleResposta {
 		return FRASES_FALLBACK;
 	}
 
+	// #60 - prefixos das molduras do usuario (o sufixo com o artigo do #55 vem depois)
+	private static final List<String> MOLDURAS_USUARIO = List.of(
+			"pelo que voce me contou",
+			"como voce me disse",
+			"voce me contou que");
+	private static String ultimaMolduraUsuario = null;
+	static IntUnaryOperator semeadorMolduraUsuario = n -> (int) (Math.random() * n);
+
+	public static List<String> moldurasUsuario() {
+		return MOLDURAS_USUARIO;
+	}
+
+	private static String sorteiaMolduraUsuario() {
+		List<String> livres = new java.util.ArrayList<>(MOLDURAS_USUARIO);
+		if (ultimaMolduraUsuario != null)
+			livres.remove(ultimaMolduraUsuario);
+		if (livres.isEmpty())
+			livres = new java.util.ArrayList<>(MOLDURAS_USUARIO);
+		String escolhida = livres.get(semeadorMolduraUsuario.applyAsInt(livres.size()));
+		ultimaMolduraUsuario = escolhida;
+		return escolhida;
+	}
+
 	public static String respostaPorTriagem(String fala) {
 		if (fala == null || !ehPergunta(fala))
 			return null;
@@ -181,7 +204,7 @@ public class ControleResposta {
 				String artigo = chave.toLowerCase(java.util.Locale.ROOT).endsWith("favorita")
 						|| chave.toLowerCase(java.util.Locale.ROOT).endsWith("preferida")
 						? "a sua" : "o seu";
-				return "pelo que voce me contou, " + artigo + " " + chave + " e "
+				return sorteiaMolduraUsuario() + ", " + artigo + " " + chave + " e "
 						+ fatos.get(chave) + "!";
 			}
 			String pedaco = usu.group(3) != null
@@ -207,7 +230,7 @@ public class ControleResposta {
 				FatoSessao fato = e.getValue();
 				if (fato.getNaoGosta() != null && !fato.getNaoGosta().isEmpty()) {
 					Registro.linha("TRIAGEM   : fato usuario (nao_gosta) chave=" + e.getKey());
-					return "Pelo que voce me contou, " + fato.getNaoGosta().get(0)
+					return sorteiaMolduraUsuario() + ", " + fato.getNaoGosta().get(0)
 							+ " nao e muito a sua praia!";
 				}
 				Registro.linha("TRIAGEM   : miss usuario (nao_gosta vazia) chave=" + e.getKey());
