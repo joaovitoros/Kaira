@@ -18697,6 +18697,120 @@
             ],
             "followups": [],
             "acoes": []
+        },
+        {
+            "intento": "calculo",
+            "exemplos": [
+                {
+                    "texto": "quanto e 7 vezes 8",
+                    "origem": "curadoria higiene out/2026"
+                },
+                {
+                    "texto": "quanto e 144 dividido por 12",
+                    "origem": "curadoria higiene out/2026"
+                },
+                {
+                    "texto": "quanto e 3 vezes 4",
+                    "origem": "curadoria higiene out/2026"
+                },
+                {
+                    "texto": "quanto e 5 vezes 6",
+                    "origem": "curadoria higiene out/2026"
+                },
+                {
+                    "texto": "quanto e 6 vezes 7",
+                    "origem": "curadoria higiene out/2026"
+                },
+                {
+                    "texto": "quanto e 8 vezes 9",
+                    "origem": "curadoria higiene out/2026"
+                },
+                {
+                    "texto": "quanto e 9 vezes 3",
+                    "origem": "curadoria higiene out/2026"
+                },
+                {
+                    "texto": "quanto e 12 dividido por 3",
+                    "origem": "curadoria higiene out/2026"
+                },
+                {
+                    "texto": "quanto e 20 dividido por 5",
+                    "origem": "curadoria higiene out/2026"
+                },
+                {
+                    "texto": "quanto e 100 dividido por 4",
+                    "origem": "curadoria higiene out/2026"
+                },
+                {
+                    "texto": "quanto e 2 mais 2",
+                    "origem": "curadoria higiene out/2026"
+                },
+                {
+                    "texto": "quanto e 5 mais 7",
+                    "origem": "curadoria higiene out/2026"
+                },
+                {
+                    "texto": "quanto e 9 mais 6",
+                    "origem": "curadoria higiene out/2026"
+                },
+                {
+                    "texto": "quanto e 10 menos 3",
+                    "origem": "curadoria higiene out/2026"
+                },
+                {
+                    "texto": "quanto e 15 menos 8",
+                    "origem": "curadoria higiene out/2026"
+                },
+                {
+                    "texto": "qual e a raiz quadrada de 9",
+                    "origem": "curadoria higiene out/2026"
+                },
+                {
+                    "texto": "qual e a raiz quadrada de 16",
+                    "origem": "curadoria higiene out/2026"
+                }
+            ],
+            "palavrasChave": [],
+            "respostas": [
+                {
+                    "texto": "Conta de cabeça eu não faço - mas meu forte é conversar! Me conta o que mais te intriga.",
+                    "origem": "curadoria higiene out/2026",
+                    "humorMin": 0,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Essa conta eu deixo pra calculadora, confesso. Mas posso raciocinar junto com você!",
+                    "origem": "curadoria higiene out/2026",
+                    "humorMin": 0,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Matemática não é o meu forte, viu? Mas aposto que você sabe a resposta.",
+                    "origem": "curadoria higiene out/2026",
+                    "humorMin": 0,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Hmm, números... eu prefiro as palavras! Mas por que essa conta te veio à cabeça?",
+                    "origem": "curadoria higiene out/2026",
+                    "humorMin": 0,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Não sei calcular de cabeça - e prefiro ser honesta com você. Quer tentar junto?",
+                    "origem": "curadoria higiene out/2026",
+                    "humorMin": 0,
+                    "humorMax": 10
+                },
+                {
+                    "texto": "Essa eu passo! Calculadora é com você, conversa é comigo.",
+                    "origem": "curadoria higiene out/2026",
+                    "humorMin": 0,
+                    "humorMax": 10
+                }
+            ],
+            "followups": [],
+            "acoes": []
         }
     ],
     "_doc": "Banco de intencoes do KAIRA - gerado de intencoes_draft.json pela ferramenta GeraIntencoes (Secao 5.1, schema do Apendice A). Substitui respostas.json, que fica em KAIRA/resources/curadoria/ como backup (fora da pasta de runtime). Cada exemplo e resposta carrega 'origem' item a item (respostas.json = original do projeto; RichardSakaguchiMS/... (Apache-2.0) e Tatoeba (CC BY 2.0 FR) = datasets externos com licenca; autor = aprendizado em runtime). acoes substituem os assuntos magicos: MOSTRAR_HUMOR, MOSTRAR_VERSAO, DESLIGAR. humorMin/humorMax (0-10) preparam o filtro da Fase 3; followups alimentam a Fase 3; palavrasChave ficam para a curadoria da Secao 5.2. Expansao CONSULTORIA out/2026: 33 intenções novas (conversa diária: trabalho, rotina, emoções, família, amigos, namoro, saúde, dinheiro, tecnologia, planos, fds, transporte, cozinha, café, horário, aparência, redes, idiomas, semana, sonhos, filosofia, motivação, procrastinação, notícias, apoio) + expansão das intenções existentes fracas, gerada pelo merge_intencoes_consultoria.py a partir dos patches intencoes-consultoria-*.json (origem 'curadoria consultoria out/2026' item a item; git guarda a base anterior). Leva DIALOGO out/2026 (mesma ferramenta, patches intencoes-dialogo-*.json; origem 'curadoria dialogo out/2026', com literais de match exato em origem 'autor'): 3 intenções novas de fluxo de diálogo (pergunta_kaaira, reacao_curta, casa_usuario), expansão de trabalho_usuario/atividades_usuario e pools de resposta por faixa de humor (o mínimo de 3 respostas em cada faixa das intenções de conversa diária)."
