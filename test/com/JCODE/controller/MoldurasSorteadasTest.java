@@ -206,7 +206,8 @@ public class MoldurasSorteadasTest {
 		assertTrue("valor do dislike", r2.contains("cinza"));
 		assertTrue("sufixo da relacao negativa", r1.contains("nao e muito"));
 		assertTrue("prefixo do pool",
-				ControleResposta.moldurasUsuario().stream().anyMatch(r1::contains));
+				ControleResposta.moldurasUsuario().stream()
+						.anyMatch(p -> r1.toLowerCase().contains(p)));
 		assertFalse("o prefixo nao variou", r1.equals(r2));
 	}
 

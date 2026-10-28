@@ -2,8 +2,8 @@
 
 > Consulta rápida pra não esquecer os mecanismos do projeto. Tudo abaixo foi
 > conferido no código (não é de memória). Última revisão: out/2026, head
-> `e4b199e` — suíte **64 classes verde**, avaliador **44/44**, replay do corpus
-> **5,3 / GRAVE 0**. As inteligências da leva #50–#60 e da #41 reaberta estão
+> `e4b199e` — suíte **65 classes verde**, avaliador **44/44**, replay do corpus
+> **5,3 / GRAVE 0**. As inteligências da leva #50–#61 e da #41 reaberta estão
 > aqui (as seções marcadas com ⭐ são as desta leva).
 >
 > Pra detalhes de planejamento/decisões: `PLANO_DE_EVOLUCAO.md` e
@@ -291,11 +291,16 @@ O que ela sabe **sobre si** — relações com listas, não valores soltos:
   que voce me contou" / "como voce me disse" / "voce me contou que") na
   positiva **e** na negativa, com o artigo do #55 intocado. O motor é
   **moldura curada + slot** — não o `CriarResposta` (a roleta antiga).
+- **⭐ Composição (#61, Ideia 2 v2):** as respostas de memória (as quatro
+  portas) podem vir com uma **abertura curada** ("Ah, essa eu sei;" / "Essa e
+  facil;" / "Deixa comigo;" / "Boa pergunta;") sorteada (~metade) com
+  anti-repetição — a emenda usa o `;` pra não mexer na caixa do fato; no
+  máximo 1 `?` por resposta (o followup do #25); misses/honestos não compõem.
 - Specs: `TriagemPerguntaTest` (7), `IntegridadeFatoTest` (9),
   `TriagemVariacoesTest` (15), `EnsinoSegredoTest` (5),
   `PortaUsuarioPolimentoTest` (6), `FatosModeloV2Test` (7),
   `OpcoesMemoriaTest` (8), `EnsinoNegativoTest` (6),
-  `MoldurasSorteadasTest` (7).
+  `MoldurasSorteadasTest` (7), `ComposicaoRespostaTest` (7).
 
 ---
 
@@ -435,9 +440,10 @@ Tudo em `conversas.log` (gitignored) + tela ao vivo no botão **Log** (#29).
   (#51), segredo (#53), modelo v2 dos **dois lados** (#56/#58), fluxo de opções
   (#57) e a captura negativa do ensino dela (#59).
 - **Ideia 2 v1 ENTREGUE (#60):** molduras em pool + sorteio com anti-repetição
-  (dela e do usuário, positiva e negativa). **Fila:** a composição
-  `[saudação]+[reação]+[followup]` (v2), C3 escala, G6 (`Executar`) e P7.1
-  (podar `agradecimento`); **Markov (§8.2) em aberto** por decisão.
+  (dela e do usuário, positiva e negativa). **v2 ENTREGUE (#61):** a composição
+  `[abertura] + [fato] + [followup]` nas quatro portas de memória. **Fila:** a
+  reação ao tópico (era do C3), C3 escala, G6 (`Executar`) e P7.1 (podar
+  `agradecimento`); **Markov (§8.2) em aberto** por decisão.
 - Classificador: **negação é cega** ("não" é stopword) — causa raiz dos empates
   `{gosto}/{entende}`; fix de código, não de dados. **Fila:** colisão `fala/fale`
   ("fale mais sobre isso" → `convite_conversa` por token-set `[fale, sobre]` —

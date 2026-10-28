@@ -119,6 +119,35 @@ public class ControleResposta {
 	private static String ultimaMolduraUsuario = null;
 	static IntUnaryOperator semeadorMolduraUsuario = n -> (int) (Math.random() * n);
 
+	// #61 - a composicao: abertura curada (nunca pergunta) + o fato capitalizado
+	private static final List<String> ABERTURAS = List.of(
+			"Ah, essa eu sei;",
+			"Essa e facil;",
+			"Deixa comigo;",
+			"Boa pergunta;");
+	static IntUnaryOperator semeadorAbertura = n -> (int) (Math.random() * n);
+	private static String ultimaAbertura = null;
+
+	public static List<String> aberturas() {
+		return ABERTURAS;
+	}
+
+	/** #61 - embrulha o fato com a abertura (as vezes); o fato vem capitalizado. */
+	private static String compoe(String fato) {
+		if (fato == null || fato.isBlank())
+			return fato;
+		if (semeadorAbertura.applyAsInt(2) != 0)
+			return fato;
+		List<String> livres = new ArrayList<>(ABERTURAS);
+		if (ultimaAbertura != null)
+			livres.remove(ultimaAbertura);
+		if (livres.isEmpty())
+			livres = new ArrayList<>(ABERTURAS);
+		String abertura = livres.get(semeadorAbertura.applyAsInt(livres.size()));
+		ultimaAbertura = abertura;
+		return abertura + " " + fato;
+	}
+
 	public static List<String> moldurasUsuario() {
 		return MOLDURAS_USUARIO;
 	}
@@ -147,7 +176,8 @@ public class ControleResposta {
 					continue;
 				String moldura = ControleKaira.molduraDe(chave);
 				Registro.linha("TRIAGEM   : memoria dela chave=" + chave);
-				return moldura != null ? moldura.replace("{v}", valor) : valor;
+				// porta DELA positiva
+				return compoe(moldura != null ? moldura.replace("{v}", valor) : valor);
 			}
 			// MISS dela: se o USUARIO contou o mesmo fato, responde espelho -
 			// o pipeline nunca le o "seu" como sendo do usuario (#52/B1)
@@ -188,7 +218,8 @@ public class ControleResposta {
 				}
 				String moldura = ControleKaira.molduraNaoGosta(chave);
 				Registro.linha("TRIAGEM   : memoria dela (nao_gosta) chave=" + chave);
-				return moldura != null ? moldura.replace("{v}", valor) : valor;
+				// porta DELA negativa
+				return compoe(moldura != null ? moldura.replace("{v}", valor) : valor);
 			}
 		}
 
@@ -204,8 +235,9 @@ public class ControleResposta {
 				String artigo = chave.toLowerCase(java.util.Locale.ROOT).endsWith("favorita")
 						|| chave.toLowerCase(java.util.Locale.ROOT).endsWith("preferida")
 						? "a sua" : "o seu";
-				return sorteiaMolduraUsuario() + ", " + artigo + " " + chave + " e "
-						+ fatos.get(chave) + "!";
+				// porta USUARIO positiva
+				return compoe(sorteiaMolduraUsuario() + ", " + artigo + " " + chave + " e "
+						+ fatos.get(chave) + "!");
 			}
 			String pedaco = usu.group(3) != null
 					? usu.group(2) + " " + usu.group(3) : usu.group(2);
@@ -230,8 +262,9 @@ public class ControleResposta {
 				FatoSessao fato = e.getValue();
 				if (fato.getNaoGosta() != null && !fato.getNaoGosta().isEmpty()) {
 					Registro.linha("TRIAGEM   : fato usuario (nao_gosta) chave=" + e.getKey());
-					return sorteiaMolduraUsuario() + ", " + fato.getNaoGosta().get(0)
-							+ " nao e muito a sua praia!";
+					// porta USUARIO negativa
+					return compoe(sorteiaMolduraUsuario() + ", " + fato.getNaoGosta().get(0)
+							+ " nao e muito a sua praia!");
 				}
 				Registro.linha("TRIAGEM   : miss usuario (nao_gosta vazia) chave=" + e.getKey());
 				return "Voce ainda nao me contou do que voce nao gosta nisso!";

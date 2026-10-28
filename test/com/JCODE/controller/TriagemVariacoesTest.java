@@ -217,7 +217,8 @@ public class TriagemVariacoesTest {
 		assertNotNull(resposta);
 		assertTrue("responde o valor que ele contou", resposta.contains("azul"));
 		assertTrue("pela moldura honesta (prefixo do pool)",
-				ControleResposta.moldurasUsuario().stream().anyMatch(resposta::contains));
+				ControleResposta.moldurasUsuario().stream()
+						.anyMatch(p -> resposta.toLowerCase().contains(p)));
 	}
 
 	// ================= D) sanidade (nao pode regredir) =================

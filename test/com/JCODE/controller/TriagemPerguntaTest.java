@@ -228,7 +228,7 @@ public class TriagemPerguntaTest {
 				ControleFace.resposta.contains("minecraft"));
 		assertTrue("pela moldura honesta (prefixo do pool)",
 				ControleResposta.moldurasUsuario().stream()
-						.anyMatch(ControleFace.resposta::contains));
+						.anyMatch(p -> ControleFace.resposta.toLowerCase().contains(p)));
 	}
 
 	/**
