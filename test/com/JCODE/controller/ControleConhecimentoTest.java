@@ -41,7 +41,7 @@ public class ControleConhecimentoTest {
 	/** Contrato das entradas: completas, licenciadas e mapeadas em intents reais. */
 	@Test
 	public void pilotoTemEntradasCompletasEMapeadas() {
-		assertTrue("menos de 15 entradas no dicionario piloto", ControleConhecimento.todos().size() >= 15);
+		assertTrue("menos de 25 entradas no dicionario (curadoria #66)", ControleConhecimento.todos().size() >= 25);
 
 		for (Conhecimento c : ControleConhecimento.todos()) {
 			assertNotNull("entrada sem termo", c.getTermo());
@@ -56,10 +56,32 @@ public class ControleConhecimentoTest {
 		}
 	}
 
+	/** Cobertura da curadoria (#66): os temas mais falados no corpus tem entrada. */
+	@Test
+	public void temasFrequentesGanharamEntrada() {
+		String[] temas = {
+				"familia_usuario", "amigos_usuario", "saude_usuario", "namoro_usuario",
+				"serie", "atividades_usuario", "redes_sociais", "transito_transporte",
+				"fim_de_semana", "auto_aprendizado"
+		};
+		for (String tema : temas)
+			assertNotNull("tema frequente sem entrada no C3: " + tema, ControleConhecimento.resumo(tema));
+	}
+
+	/** O texto (futuro "explica melhor") e maior que o resumo, e o resumo cabe na fala. */
+	@Test
+	public void textoMaiorQueResumoEResumoFalavel() {
+		for (Conhecimento c : ControleConhecimento.todos()) {
+			assertTrue(c.getTermo() + ": texto nao e mais longo que o resumo",
+					c.getTexto().length() > c.getResumo().length());
+			assertTrue(c.getTermo() + ": resumo longo demais pra falar (" + c.getResumo().length() + ")",
+					c.getResumo().length() <= 220);
+		}
+	}
+
 	/** Topico conhecido devolve resumo e texto. */
 	@Test
-	public void topicoConhecidoDevolveResumoETexto() {
-		String resumo = ControleConhecimento.resumo("trabalho_usuario");
+	public void topicoConhecidoDevolveResumoETexto() {		String resumo = ControleConhecimento.resumo("trabalho_usuario");
 		assertNotNull("trabalho_usuario deveria ter entrada no piloto", resumo);
 		assertTrue("resumo curto demais (e pra falar em voz alta)", resumo.length() > 30);
 		assertNotNull("texto (futuro explica melhor) ausente", ControleConhecimento.texto("trabalho_usuario"));

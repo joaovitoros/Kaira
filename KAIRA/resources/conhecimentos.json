@@ -89,6 +89,66 @@
       "resumo": "História é o estudo e a documentação do passado humano - e o que é anterior à escrita chama pré-história.",
       "texto": "História é o estudo e a documentação sistemática do passado humano: o período anterior à invenção dos sistemas de escrita é pré-história. O termo é abrangente - eventos passados, memória, descoberta, coleção, organização, apresentação e interpretação - e os historiadores buscam esse conhecimento em fontes: documentos, relatos orais, arte e artefatos.",
       "origem": "Wikipédia PT (CC BY-SA 3.0) - verbete 'História' - pt.wikipedia.org/wiki/História - adaptado out/2026"
+    },
+    {
+      "termo": "familia_usuario",
+      "resumo": "Família é um agrupamento de duas ou mais pessoas ligadas por laços biológicos, ancestrais, legais ou afetivos - e é uma das unidades básicas da sociedade.",
+      "texto": "Família é um agrupamento humano formado por duas ou mais pessoas com ligações biológicas, ancestrais, legais ou afetivas, que geralmente vivem ou viveram sob o mesmo teto. Pode ser formada por pessoas solteiras, casais heterossexuais, casais homossexuais e outras constituições presentes em diferentes contextos sociais.",
+      "origem": "Wikipédia PT (CC BY-SA 3.0) - verbete 'Família' - pt.wikipedia.org/wiki/Família - adaptado out/2026"
+    },
+    {
+      "termo": "amigos_usuario",
+      "resumo": "Amizade é uma relação afetiva entre duas pessoas, em geral sem caráter romântico - com conhecimento mútuo, afeição e lealdade.",
+      "texto": "Amizade é uma relação afetiva, a princípio sem características romântico-sexuais, entre duas pessoas. Em sentido amplo, é um relacionamento humano que envolve conhecimento mútuo, afeição e lealdade - podendo chegar ao altruísmo. Laços de amizade também podem aparecer entre pais e filhos, irmãos, familiares, cônjuges ou namorados.",
+      "origem": "Wikipédia PT (CC BY-SA 3.0) - verbete 'Amizade' - pt.wikipedia.org/wiki/Amizade - adaptado out/2026"
+    },
+    {
+      "termo": "saude_usuario",
+      "resumo": "Saúde é um estado de completo bem-estar físico, mental e social - não só a ausência de doença, segundo a Organização Mundial da Saúde.",
+      "texto": "A definição de saúde tem implicações legais, sociais e econômicas. A mais difundida é a da Organização Mundial da Saúde: saúde é um estado de completo bem-estar físico, mental e social, e não apenas a ausência de doenças.",
+      "origem": "Wikipédia PT (CC BY-SA 3.0) - verbete 'Saúde' - pt.wikipedia.org/wiki/Saúde - adaptado out/2026"
+    },
+    {
+      "termo": "namoro_usuario",
+      "resumo": "Namoro é uma relação afetiva entre duas ou mais pessoas, com comprometimento menor que o casamento - muitas vezes o caminho pro noivado.",
+      "texto": "Namoro é uma relação interpessoal afetiva que pode envolver sentimentos e/ou intimidade entre duas ou mais pessoas, com um grau de comprometimento menor que o do casamento. Para a maioria, funciona como pré-condição para o noivado ou para o matrimônio - o vínculo romântico reconhecido pela sociedade.",
+      "origem": "Wikipédia PT (CC BY-SA 3.0) - verbete 'Namoro' - pt.wikipedia.org/wiki/Namoro - adaptado out/2026"
+    },
+    {
+      "termo": "serie",
+      "resumo": "Série de televisão é um programa com número pré-definido de capítulos por temporada - os episódios - na TV ou no streaming.",
+      "texto": "Série de televisão - também chamada de série televisiva, série de TV, telessérie ou série de streaming - é um tipo de programa televisivo ou online com um número pré-definido de capítulos por temporada, chamados episódios. O formato vai de comédias curtas a dramas de várias temporadas.",
+      "origem": "Wikipédia PT (CC BY-SA 3.0) - verbete 'Série de televisão' - pt.wikipedia.org/wiki/Série_de_televisão - adaptado out/2026"
+    },
+    {
+      "termo": "atividades_usuario",
+      "resumo": "Lazer é o tempo de folga, de descanso e de entretenimento de uma pessoa - o que a gente faz quando não está trabalhando.",
+      "texto": "Lazer corresponde ao tempo de folga, de passatempo, de ócio, de descanso, de distração ou de entretenimento de uma pessoa. É o intervalo em que a gente escolhe o que fazer sem a obrigação do trabalho - e o que é lazer para um pode ser trabalho para outro.",
+      "origem": "Wikipédia PT (CC BY-SA 3.0) - verbete 'Lazer' - pt.wikipedia.org/wiki/Lazer - adaptado out/2026"
+    },
+    {
+      "termo": "redes_sociais",
+      "resumo": "Rede social é uma estrutura de relações entre pessoas, grupos ou organizações - e as relações variam em intensidade, duração e função.",
+      "texto": "Rede social é uma estrutura de relações sociais composta por pessoas, grupos ou organizações conectadas por um ou vários tipos de relação, que variam em intensidade, duração e função. O conceito vem da sociologia; na internet, virou plataformas de conexão, conteúdo e conversa.",
+      "origem": "Wikipédia PT (CC BY-SA 3.0) - verbete 'Rede social' - pt.wikipedia.org/wiki/Rede_social - adaptado out/2026"
+    },
+    {
+      "termo": "transito_transporte",
+      "resumo": "Trânsito é o uso das vias por veículos, pedestres e animais - para circular, parar ou estacionar.",
+      "texto": "Trânsito é a utilização das vias por veículos motorizados, veículos não motorizados, pedestres e animais de tração, para fins de circulação, parada passageira ou estacionamento. As regras de trânsito organizam esse encontro de todo mundo na rua - e as regras mudam de país para país.",
+      "origem": "Wikipédia PT (CC BY-SA 3.0) - verbete 'Trânsito' - pt.wikipedia.org/wiki/Trânsito - adaptado out/2026"
+    },
+    {
+      "termo": "fim_de_semana",
+      "resumo": "Fim de semana é a parte da semana que compreende sábado e domingo - quando a maioria dos assalariados não trabalha.",
+      "texto": "O fim de semana é a parte da semana que compreende o sábado e o domingo. Nesses dias a maioria dos assalariados não trabalha e grande parte das empresas fecha - com exceção do comércio e das atividades recreativas e de lazer. Escolas também têm funcionamento diferente.",
+      "origem": "Wikipédia PT (CC BY-SA 3.0) - verbete 'Fim de semana' - pt.wikipedia.org/wiki/Fim_de_semana - adaptado out/2026"
+    },
+    {
+      "termo": "auto_aprendizado",
+      "resumo": "Aprendizagem é o processo pelo qual a gente adquire ou modifica competências, conhecimentos, comportamento e valores.",
+      "texto": "Aprendizagem é o processo pelo qual competências, habilidades, conhecimentos, comportamento ou valores são adquiridos ou modificados - como resultado de estudo, experiência, formação, raciocínio e observação. É uma das funções mentais mais importantes nos humanos e nos animais, e também se aplica a sistemas artificiais.",
+      "origem": "Wikipédia PT (CC BY-SA 3.0) - verbete 'Aprendizagem' - pt.wikipedia.org/wiki/Aprendizagem - adaptado out/2026"
     }
   ]
 }
