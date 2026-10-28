@@ -2,10 +2,10 @@
 
 > Consulta rápida pra não esquecer os mecanismos do projeto. Tudo abaixo foi
 > conferido no código (não é de memória). Última revisão: out/2026, head
-> `bc3b486` — suíte **68 classes verde (380 testes)**, avaliador **44/44**,
-> replay do corpus **5,4 / GRAVE 0**. As inteligências da leva #50–#63, da #41
-> reaberta e da leva de dados (#64 `fala/fale`, #65 cálculo, #66 C3) estão aqui (as
-> seções marcadas com ⭐ são as desta leva).
+> `9d298a0` — suíte **69 classes verde (387 testes)**, avaliador **44/44**,
+> replay do corpus **5,4 / GRAVE 0 (74 regressões)**. As inteligências da leva #50–#63, da #41
+> reaberta, da leva de dados (#64 `fala/fale`, #65 cálculo, #66 C3) e da #67 (negação
+> curta) estão aqui (as seções marcadas com ⭐ são as desta leva).
 >
 > Pra detalhes de planejamento/decisões: `PLANO_DE_EVOLUCAO.md` e
 > `BRIEFING_EXPANSAO_DIALOGO.md`. Pra rodar: `run_tests.ps1` (fim do arquivo).
@@ -461,8 +461,14 @@ Tudo em `conversas.log` (gitignored) + tela ao vivo no botão **Log** (#29).
   gênero do miss do usuário pelo possessivo (e o trecho da fala preserva o
   plural) e o teto de 50 palavras no ensino. Replay: **GERAL 5,4** — a
   blocklist converteu 9 turnos de `resposta-nome`.
-- Classificador: **negação é cega** ("não" é stopword) — causa raiz dos empates
-  `{gosto}/{entende}`; fix de código, não de dados. **Colisão `fala/fale`
+- Classificador: **negacao da reacao curta RESOLVIDA (#67, codigo):** a porta
+  curada `respostaDeNegacao` roda antes do classificador e responde o reparo
+  ("não gostei" → o que não agradou; "não entendi" → reformulo; "não quero
+  falar disso" → mudamos de assunto; "não" seco), sem ancorar tópico nem
+  gravar fato. Guardas: adversativa com positiva e declaração longa não disparam.
+  **Segue aberta a declaração de preferência** ("eu não gosto de X" ainda casa
+  `lembra_musica`) — causa raiz: o "não" é stopword e a triagem só responde
+  `ehPergunta`. **Colisão `fala/fale`
   RESOLVIDA (#64, dado puro):** "fale mais sobre isso"/"fale mais disso" são
   literais do `continuacao_topico` (a frase exata manda) e o exemplo
   "me fale sobre voce" saiu do `convite_conversa` - o vazamento e a troca de

@@ -5,6 +5,7 @@
 > **Atualização out/2026 (leva das baterias — §5):** **51 classes · 251 testes · avaliador 44/44** — 30 casos de **frase real** colhidos das 2 rodadas de bateria + `SensibilidadeTest`.
 > **Atualização out/2026 (leva da memória/triagem — §6):** **67 classes · 371 testes · avaliador 44/44 · replay 5,4/0 graves** — as inteligências das issues #50–#63 (triagem, memória v2, opções, molduras/composição, comando seguro, higiene) com specs na base real isolada. Contagens **medidas** (contagem de `@Test` por arquivo).
 > **Atualização out/2026 (leva de dados — §6):** **68 classes · 380 testes** — a colisão `fala/fale` (#64, literais do `continuacao_topico` + saída do exemplo do `convite_conversa`), a rota de cálculo honesta (#65, intento `calculo`) e a curadoria do C3 (#66, 15 → 25 entradas com verbete e licença), todas de **dado puro** — `CalculoHonestoTest` e `ControleConhecimentoTest` guardam.
+> **Atualização out/2026 (volta ao código — #67):** **69 classes · 387 testes** — a negação curta de reação (o "não gostei"/"não entendi"/"não quero falar disso"/"não" que viravam `aparencia_usuario`/`reacao_curta`/`continuacao_topico`/`procrastinacao`) ganhou a porta curada de reparo (`NegacaoCurtaTest`, 7 casos) — replay **454,0 / GRAVE 0 / 74 regressões** (era 453,3/75).
 
 ---
 
@@ -19,10 +20,10 @@
 | **Empatia / segurança** | `SensibilidadeTest` (tema sensível nunca cai em intento alegre; luto/crise/desabafo no intento de acolhimento; pool mínimo) | 3 | **base real** |
 | **Matcher / classificador** | `ControleRespostaMelhorIntencaoTest`, `ControleRespostaMatcherUnificadoTest`, `ControleRespostaPesosIdfTest`, `ControleRespostaStemStopwordsTest`, `ControleRespostaSinonimoGruposTest`, `ControleRespostaFaixaConfiancaTest`, `ControleRespostaFraseExataTest`, `ControleRespostaCarregaCacheTest`, `ControleRespostaCacheIdfTest`, `ControlePreAnaliseTest`, **`GateTokensPesoTest` (#49)** | 50 | base real + fixtures |
 | **Sessão / contexto** | `ControleSessaoTest`, `ControleSessaoPersistenciaTest`, `ControleSessaoNomeTest`, `FatosNovosTest`, `AncoraTopicoTest`, `DesempateContextoTest`, `ContinuacaoTopicoTest`, `IniciativaPropriaTest`, `ApostaPendenteTest`, **`FatosModeloV2Test` (#56), `FatosSessaoV2Test` (#58), `MaquinaContextoTest` (#41 reaberta)** | 83 | base real + fixtures |
-| **Resposta / comportamento** | `ControleRespostaFallbackTest`, `ControleRespostaSlotsTest`, `ControleRespostaCriarRespostaTest`, `ControleRespostaAprendizadoTest`, `EnsinoTurbinadoTest`, `AntiRepeticaoTurnoTest`, `SistemaDeHumorTest`, `LogMatchTest`, `ControleConhecimentoTest` + a **leva da memória**: `TriagemPerguntaTest`, `IntegridadeFatoTest`, `TriagemVariacoesTest`, `EnsinoSegredoTest`, `ExplicaMelhorTest`, `PortaUsuarioPolimentoTest`, `OpcoesMemoriaTest`, `EnsinoNegativoTest`, `MoldurasSorteadasTest`, `ComposicaoRespostaTest`, `ComandoSeguroTest`, `HigieneBateriasTest` + **`CalculoHonestoTest` (#65)** | 145 | base real + fixtures |
+| **Resposta / comportamento** | `ControleRespostaFallbackTest`, `ControleRespostaSlotsTest`, `ControleRespostaCriarRespostaTest`, `ControleRespostaAprendizadoTest`, `EnsinoTurbinadoTest`, `AntiRepeticaoTurnoTest`, `SistemaDeHumorTest`, `LogMatchTest`, `ControleConhecimentoTest` + a **leva da memória**: `TriagemPerguntaTest`, `IntegridadeFatoTest`, `TriagemVariacoesTest`, `EnsinoSegredoTest`, `ExplicaMelhorTest`, `PortaUsuarioPolimentoTest`, `OpcoesMemoriaTest`, `EnsinoNegativoTest`, `MoldurasSorteadasTest`, `ComposicaoRespostaTest`, `ComandoSeguroTest`, `HigieneBateriasTest` + **`CalculoHonestoTest` (#65)** + **`NegacaoCurtaTest` (#67)** | 152 | base real + fixtures |
 | **Fluxo fim-a-fim** | `FluxoConversaRealTest`, `EnsinoFluxoTest`, `EnsinoOrganicoTest`, `FluxoConversaReal18Test` | 12 | **base real** + base isolada |
 | **UI** | `ControleFaceTest` | 10 | HTML interno da Face |
-| | **68 classes** | **380** | |
+| | **69 classes** | **387** | |
 
 > **Nota de rastreio:** o `CuradoriaConsultoriaTest` **não lê os patches de curadoria** — ele filtra a base carregada pelos rótulos de `origem`, ou seja, depende do `intencoes.json` **versionado** conter as levas. Os patches vivem em **`KAIRA/resources/curadoria/`** (material de passagem; entrada do `merge_intencoes_consultoria.py`; nada em `src/`, `test/` ou no app os lê). *(a nota anterior dizia que o teste dependia dos `intencoes-consultoria-*.json`: impreciso — medido out/2026 ao arquivar os patches)*
 
@@ -65,6 +66,7 @@ O bug da âncora do tópico (frase **exata** não gravava o tópico → "qual se
 | **Comando seguro (#62)** | ✅ `ComandoSeguroTest` | ✅ | — |
 | **Rota de cálculo (#65)** | ✅ `CalculoHonestoTest` | ✅ | — (dado puro; número fora da base cai na aposta sem ancorar tópico) |
 | **Dicionário C3 (#66)** | ✅ `ControleConhecimentoTest` (7) | ✅ | — (dado puro; o resumo é falado no "conta mais") |
+| **Negação curta (#67)** | ✅ `NegacaoCurtaTest` (7) | ✅ | — (porta antes do classificador; reparo por família) |
 | UI (Face) | ✅ | ✅ (as specs da leva dirigem o `decifrar` e assertam a `ControleFace.resposta`) | ⚠ (o render Swing não é coberto) |
 | **Empatia / segurança** | — | ✅ `SensibilidadeTest` (#5) | — |
 
@@ -151,5 +153,6 @@ As baterias T01/T02 da triagem (`logs/baterias/triagem/` + RELATORIO §TRIAGEM) 
 | **`ContinuacaoTopicoTest` (+2 literais, #64)** | a colisão `fala/fale` nos dois caminhos (exato e fuzzy) | "fale mais sobre isso" virava `convite_conversa` |
 | **`CalculoHonestoTest` (6, #65)** | a rota de cálculo honesta (literais do corpus + variantes + aposta) | "quanto é 7 vezes 8" pedia ensino |
 | **`ControleConhecimentoTest` (+2, #66)** | 10 temas novos no C3 com verbete + licença (família, amigos, saúde, namoro, série…) | "conta mais" sem substância nesses temas |
+| **`NegacaoCurtaTest` (7, #67)** | o reparo da negação curta (5 famílias + guardas) | "não gostei" virava tatuagem, "não entendi" virava "Sério?" |
 
-**A régua do ciclo (as 4 portas):** spec da issue → suíte (**68 classes**) → avaliador (**44/44**) → **replay do corpus** (`ReplayBaterias` + `score_replay.ps1`; alvo **GERAL ≥ 5,2 / GRAVE = 0**). O replay tem a régua documentada (BOM=1 / PARCIAL=0,3 / RUIM=0 / GRAVE=−1; `triagem`=BOM) e o proxy **não vê o texto** — mede **direção**, não valor absoluto.
+**A régua do ciclo (as 4 portas):** spec da issue → suíte (**69 classes**) → avaliador (**44/44**) → **replay do corpus** (`ReplayBaterias` + `score_replay.ps1`; alvo **GERAL ≥ 5,2 / GRAVE = 0**). O replay tem a régua documentada (BOM=1 / PARCIAL=0,3 / RUIM=0 / GRAVE=−1; `triagem`/`reparo`=BOM) e o proxy **não vê o texto** — mede **direção**, não valor absoluto.
