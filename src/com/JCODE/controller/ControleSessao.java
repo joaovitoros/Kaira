@@ -122,6 +122,15 @@ public class ControleSessao {
     private static String chaveOpcoes = null;
     private static int falhasOpcoes = 0;
 
+    // #68 - o fato gravado NESTE turno {chave, valor, "gosta"/"nao_gosta"};
+    // a porta de declaracao confirma o registro e o classificador nao responde por cima
+    private static String[] fatoDoTurno = null;
+
+    /** #68 - o fato gravado neste turno, ou null. */
+    public static String[] getFatoDoTurno() {
+        return fatoDoTurno;
+    }
+
     public static void armaOpcoes(String chave) {
         chaveOpcoes = chave;
         falhasOpcoes = 0;
@@ -188,6 +197,7 @@ public class ControleSessao {
         // #28 - a flag do pedido vive so o turno atual
         turnoDeContinuacao = false;
         turnoDeExplicacao = false;   // #54 - a explicacao tambem vive so o turno
+        fatoDoTurno = null;          // #68 - so o fato do turno atual confirma
         turnosDesdePergunta++;
         detectaNome(falaUsuario);
         detectaFato(falaUsuario);
@@ -402,6 +412,10 @@ public class ControleSessao {
     private static void guardaFato(String chave, String valor, boolean gosta) {
         if (chave == null || chave.isBlank() || valor == null || valor.isBlank())
             return;
+
+        // #68 - valor-pessoa nao e fato de preferencia ("gosto de voce")
+        if (valor.matches("(?i)^(?:voce|vc|tu|ele|ela|alguem|ninguem|mim|eu|isso|aquilo|tudo|nada)\\b.*"))
+            return;
         if (PERGUNTA_DISFARCADA.matcher(valor).matches())
             return;
         if (ControleKaira.ehSegredo(chave + " " + valor)) {
@@ -423,13 +437,14 @@ public class ControleSessao {
             }
         if (!alvo.isEmpty()) {
             for (String v : alvo)
-                if (compara(v).equals(norm))
+                if (compara(v).equals(norm)) {
+                    fatoDoTurno = new String[] { chave, valor, gosta ? "gosta" : "nao_gosta" };
                     return;
-            Registro.linha("SESSAO    : fato " + chave + " preservado (ja tem "
-                    + alvo.get(0) + "; ignorado=" + valor + ")");
+                }
             return;
         }
         alvo.add(valor);
+        fatoDoTurno = new String[] { chave, valor, gosta ? "gosta" : "nao_gosta" };
         Registro.linha("SESSAO    : fato " + chave + (gosta ? "=" : " nao_gosta=") + valor);
     }
 

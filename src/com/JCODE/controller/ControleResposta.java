@@ -1135,6 +1135,76 @@ public class ControleResposta {
 		return frameEntrada.equals(ControlePreAnalise.preAnalise(candidata).getFrame());
 	}
 
+	// #68 - confirmacao da declaracao de fato: o registro vira resposta (em vez
+	// de o classificador responder "me ensina" no lembra_*). 2 molduras por
+	// familia, anti-repeticao (#35) e genero do artigo pelo sufixo (#55).
+	private static final List<String> CONFIRMA_GOSTA = List.of(
+			"Anotei: voce gosta de {v}! O que mais voce gosta?",
+			"Guardado: {v} e coisa que voce gosta! Me conta mais.");
+	private static final List<String> CONFIRMA_NAO_GOSTA = List.of(
+			"Anotei: voce nao gosta de {v}. Melhor eu nao sugerir! O que voce prefere?",
+			"Guardado: {v} fica fora das minhas sugestoes! Me diz o que entra.");
+	private static final List<String> CONFIRMA_VERBO = List.of(
+			"Anotei: voce {chave} {v}! Me conta mais?",
+			"Guardado: voce {chave} {v}! Vou lembrar disso.");
+	private static final List<String> CONFIRMA_ATRIBUTO = List.of(
+			"Anotei: {artigo} {chave} e {v}! Me conta mais?",
+			"Guardado: {artigo} {chave} e {v}! Vou lembrar disso.");
+	private static String ultimaConfirmacao = null;
+	static IntUnaryOperator semeadorConfirmacao = n -> (int) (Math.random() * n);
+
+	/** #68 - a declaracao gravou um fato neste turno? Confirma (ou null). */
+	public static String respostaDeDeclaracao(String fala) {
+		String[] fato = ControleSessao.getFatoDoTurno();
+		if (fato == null || fala == null)
+			return null;
+		String n = Normalizador.texto(fala);
+		if (n.isEmpty())
+			return null;
+		// guarda: fala curta, sem adversativa e sem interrogativo (pergunta tem porta propria)
+		if (n.matches("^(?:mas|porem|so que)\\b.*"))
+			return null;
+		if (n.matches(".*\\b(?:qual|quais|quem|quando|onde|como|quanto|quantos|mesmo)\\b.*"))
+			return null;
+		if (n.split("\\s+").length > 8)
+			return null;
+
+		String chave = fato[0];
+		String valor = fato[1];
+		if ("nao_gosta".equals(fato[2])) {
+			List<String> pool = "gosta de".equals(chave) ? CONFIRMA_NAO_GOSTA : CONFIRMA_ATRIBUTO;
+			return escolheConfirmacao(pool).replace("{v}", valor)
+					.replace("{chave}", chave).replace("{artigo}", artigoDe(chave));
+		}
+		if (chave.equals("gosta de") || chave.equals("mora em")
+				|| chave.equals("trabalha com") || chave.equals("nasceu em"))
+			return escolheConfirmacao(CONFIRMA_VERBO)
+					.replace("{chave}", chave).replace("{v}", valor);
+		return escolheConfirmacao(CONFIRMA_ATRIBUTO)
+				.replace("{artigo}", artigoDe(chave)).replace("{chave}", chave).replace("{v}", valor);
+	}
+
+	private static String artigoDe(String chave) {
+		String c = chave.toLowerCase(java.util.Locale.ROOT);
+		return c.endsWith("favorita") || c.endsWith("preferida") ? "sua" : "seu";
+	}
+
+	private static String escolheConfirmacao(List<String> pool) {
+		List<String> livres = new ArrayList<>(pool);
+		if (ultimaConfirmacao != null)
+			livres.remove(ultimaConfirmacao);
+		if (livres.isEmpty())
+			livres = new ArrayList<>(pool);
+		String escolhida = livres.get(semeadorConfirmacao.applyAsInt(livres.size()));
+		ultimaConfirmacao = escolhida;
+		return escolhida;
+	}
+
+	public static List<String> confirmacoesGosta() { return CONFIRMA_GOSTA; }
+	public static List<String> confirmacoesNaoGosta() { return CONFIRMA_NAO_GOSTA; }
+	public static List<String> confirmacoesVerbo() { return CONFIRMA_VERBO; }
+	public static List<String> confirmacoesAtributo() { return CONFIRMA_ATRIBUTO; }
+
 	public static String respostaAposta(String entradaNormalizada) {
 		if (intencoesCache == null)
 			carregaCache();

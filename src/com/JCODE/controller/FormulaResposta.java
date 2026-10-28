@@ -300,6 +300,14 @@ public class FormulaResposta {
                 degrau = "triagem";
             }
 
+            // #68 - declaracao de fato: confirma o registro em vez de deixar o
+            // classificador responder o "me ensina" (lembra_*)
+            if(respostaVariavel==null){
+                respostaVariavel = ControleResposta.respostaDeDeclaracao(falaUsuario);
+                if(respostaVariavel!=null)
+                    degrau = "declaracao";
+            }
+
             // #67 - negacao curta de reacao: nao deixa o classificador responder
             // o oposto ("nao gostei" -> aparencia, "nao entendi" -> reacao_curta)
             if(respostaVariavel==null){
