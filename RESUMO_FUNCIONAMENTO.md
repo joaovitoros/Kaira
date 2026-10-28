@@ -458,9 +458,11 @@ Tudo em `conversas.log` (gitignored) + tela ao vivo no botão **Log** (#29).
   plural) e o teto de 50 palavras no ensino. Replay: **GERAL 5,4** — a
   blocklist converteu 9 turnos de `resposta-nome`.
 - Classificador: **negação é cega** ("não" é stopword) — causa raiz dos empates
-  `{gosto}/{entende}`; fix de código, não de dados. **Fila:** colisão `fala/fale`
-  ("fale mais sobre isso" → `convite_conversa` por token-set `[fale, sobre]` —
-  vaza do `continuacao_topico`).
+  `{gosto}/{entende}`; fix de código, não de dados. **Colisão `fala/fale`
+  RESOLVIDA (#64, dado puro):** "fale mais sobre isso"/"fale mais disso" são
+  literais do `continuacao_topico` (a frase exata manda) e o exemplo
+  "me fale sobre voce" saiu do `convite_conversa` — o vazamento e a troca de
+  tópico morreram nos dois caminhos (exato e fuzzy).
 - §7.3 restante: degrau médio com `{palavrasChave}` + followup (issue #16
   parcial); frame reconhecido/slot novo (§5.7).
 - **O que o replay ainda mede como RUIM (245→207):** o fallback honesto ("me

@@ -4164,10 +4164,6 @@
                     "origem": "respostas.json"
                 },
                 {
-                    "texto": "me fale sobre voce",
-                    "origem": "respostas.json"
-                },
-                {
                     "texto": "bora conversar mais",
                     "origem": "curadoria consultoria out/2026"
                 },
@@ -5608,6 +5604,14 @@
                 },
                 {
                     "texto": "fala mais sobre isso",
+                    "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "fale mais sobre isso",
+                    "origem": "curadoria out/2026"
+                },
+                {
+                    "texto": "fale mais disso",
                     "origem": "curadoria out/2026"
                 },
                 {

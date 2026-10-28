@@ -71,6 +71,18 @@ public class ContinuacaoTopicoTest {
 		assertIntencao("me fale mais", "continuacao_topico");
 	}
 
+	/**
+	 * #64 - a colisao fala/fale: "fale mais sobre isso" (subjuntivo) vazava pro
+	 * convite_conversa pela frase "me fale sobre voce" (tokens fale+sobre,
+	 * score 1.00) e ainda trocava o topico. O literal no continuacao_topico
+	 * (frase exata) manda.
+	 */
+	@Test
+	public void faleMaisSobreIssoSeguenaContinuacao() {
+		assertIntencao("fale mais sobre isso", "continuacao_topico");
+		assertIntencao("fale mais disso", "continuacao_topico");
+	}
+
 	/** Guarda: o que E de mudar assunto nao migra. */
 	@Test
 	public void mudarAssuntoNaoPerdeAsFrasesDele() {
