@@ -56,6 +56,10 @@ $DOMAINS = @(
 
 function Classifica([string]$entrada, [string]$degrau, [string]$intento, [double]$score) {
     $nE = Norm $entrada
+    # #67 - o reparo e resposta curada: vale BOM mesmo quando o palpite do
+    # classificador (intento do log) nao combina com a entrada ("ah, nao gostei"
+    # registra piada/aparencia - o que importa e a resposta de reparo)
+    if ($degrau -eq 'reparo') { return 'BOM' }
     if ($intento) {
         if ($intento -eq 'agradecimento' -and $nE -notmatch $THX) { return 'RUIM' }
         if ($intento -eq 'despedida'     -and $nE -notmatch $BYE) { return 'RUIM' }
@@ -73,6 +77,7 @@ function Classifica([string]$entrada, [string]$degrau, [string]$intento, [double
     if ($degrau -eq 'aprender') { return 'RUIM' }
     if ($degrau -eq 'aposta') { return 'PARCIAL' }
     if ($degrau -eq 'triagem') { return 'BOM' }   # #50/#54: memoria dela / fato do usuario (mesma regua do score_baterias.ps1)
+    if ($degrau -eq 'reparo') { return 'BOM' }    # #67: negacao curta respondida com reparo (melhor que o positivo errado)
     if ($degrau -match 'direto|corrigida') { if ($score -ge 0.6) { return 'BOM' } else { return 'PARCIAL' } }
     return 'PARCIAL'
 }

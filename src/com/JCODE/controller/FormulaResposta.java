@@ -299,6 +299,14 @@ public class FormulaResposta {
                 respostaVariavel = triada;
                 degrau = "triagem";
             }
+
+            // #67 - negacao curta de reacao: nao deixa o classificador responder
+            // o oposto ("nao gostei" -> aparencia, "nao entendi" -> reacao_curta)
+            if(respostaVariavel==null){
+                respostaVariavel = ControleResposta.respostaDeNegacao(falaUsuario);
+                if(respostaVariavel!=null)
+                    degrau = "reparo";
+            }
             if(respostaVariavel==null){
                 respostaVariavel = ControleResposta.lerResposta(falaUsuario);
                 if(respostaVariavel!=null)

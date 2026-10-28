@@ -128,6 +128,74 @@ public class ControleResposta {
 	static IntUnaryOperator semeadorAbertura = n -> (int) (Math.random() * n);
 	private static String ultimaAbertura = null;
 
+	// #67 - reparo de negacao curta: a fala nega a resposta/entendimento e o
+	// classificador responderia o positivo ("nao gostei" -> aparencia_usuario,
+	// "nao entendi" -> reacao_curta). Porta curada, roda antes do classificador.
+	private static final List<String> REPARO_GOSTEI = List.of(
+			"Poxa, o que nao te agradou? Me diz que eu ajusto.",
+			"Anotado: nao foi dessa vez. O que faltou?",
+			"Entendi, errei a mao. Como voce queria que fosse?");
+	private static final List<String> REPARO_ENTENDI = List.of(
+			"Deixa eu explicar de outro jeito: o que ficou confuso?",
+			"Tudo bem, eu reformulo. Qual parte travou?",
+			"Sem problema, vou mais devagar: o que nao ficou claro?");
+	private static final List<String> REPARO_QUERO = List.of(
+			"Tudo bem, mudamos de assunto. Do que voce quer falar?",
+			"Sem problema, deixo esse tema de lado. Me diz o que te interessa.");
+	private static final List<String> REPARO_SEI = List.of(
+			"Tudo bem nao saber. Quer pensar junto?",
+			"Sem pressa. O que voce sabe ate agora?");
+	private static final List<String> REPARO_SECO = List.of(
+			"Tudo bem! Me diz o que voce precisa.",
+			"Ok! Por onde voce quer comecar?");
+
+	private static final Pattern INTERJEICAO_INICIAL = Pattern.compile(
+			"^(?:ah|ai|nossa|poxa|eita|uai|hm+|ok|bom|bem|ta|tipo|olha|so)\\s+");
+	static IntUnaryOperator semeadorReparo = n -> (int) (Math.random() * n);
+	private static String ultimoReparo = null;
+
+	/** #67 - a fala e uma negacao curta de reacao? Devolve o reparo ou null. */
+	public static String respostaDeNegacao(String fala) {
+		if (fala == null || fala.isBlank())
+			return null;
+		String n = Normalizador.texto(fala);
+		n = INTERJEICAO_INICIAL.matcher(n).replaceFirst("").trim();
+		if (n.isEmpty())
+			return null;
+		// guarda: adversativa com positiva depois nao e reparo ("nao, fiquei feliz...")
+		if (n.matches(".*\\b(?:mas|porem|so que)\\b.*"))
+			return null;
+
+		List<String> pool;
+		if (n.matches("^(?:nao|nunca|nem)\\s+(?:gostei|gostou|gostamos)\\b(?!\\s+de\\b).*"))
+			pool = REPARO_GOSTEI;
+		else if (n.matches("^(?:nao|nunca)\\s+(?:entendi|entendeu)\\b.*"))
+			pool = REPARO_ENTENDI;
+		else if (n.matches("^(?:nao|nunca)\\s+(?:quero|queria)\\s+(?:falar|saber|continuar|mais)\\b.*"))
+			pool = REPARO_QUERO;
+		else if (n.matches("^(?:nem\\s+)?sei$"))
+			pool = REPARO_SEI;
+		else if (n.matches("^(?:nao|nunca|nem)$") || n.matches("^(?:nao|nunca)\\s+(?:mesmo|nada)$"))
+			pool = REPARO_SECO;
+		else
+			return null;
+
+		List<String> livres = new ArrayList<>(pool);
+		if (ultimoReparo != null)
+			livres.remove(ultimoReparo);
+		if (livres.isEmpty())
+			livres = new ArrayList<>(pool);
+		String escolhido = livres.get(semeadorReparo.applyAsInt(livres.size()));
+		ultimoReparo = escolhido;
+		return escolhido;
+	}
+
+	public static List<String> reparosGostei() { return REPARO_GOSTEI; }
+	public static List<String> reparosEntendi() { return REPARO_ENTENDI; }
+	public static List<String> reparosQuero() { return REPARO_QUERO; }
+	public static List<String> reparosSei() { return REPARO_SEI; }
+	public static List<String> reparosSeco() { return REPARO_SECO; }
+
 	public static List<String> aberturas() {
 		return ABERTURAS;
 	}
