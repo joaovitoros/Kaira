@@ -2,8 +2,8 @@
 
 > Consulta rápida pra não esquecer os mecanismos do projeto. Tudo abaixo foi
 > conferido no código (não é de memória). Última revisão: out/2026, head
-> `e4b199e` — suíte **65 classes verde**, avaliador **44/44**, replay do corpus
-> **5,3 / GRAVE 0**. As inteligências da leva #50–#61 e da #41 reaberta estão
+> `e4b199e` — suíte **66 classes verde**, avaliador **44/44**, replay do corpus
+> **5,3 / GRAVE 0**. As inteligências da leva #50–#62 e da #41 reaberta estão
 > aqui (as seções marcadas com ⭐ são as desta leva).
 >
 > Pra detalhes de planejamento/decisões: `PLANO_DE_EVOLUCAO.md` e
@@ -58,8 +58,10 @@
    ≥ 0,6) cancela com ack transparente; **resposta vaga** (0,10–0,60, a banda
    da aposta) **absorve na família que perguntou**; **lixo** (score < 0,10) vai
    pro P2 do #48. Comando também cancela (o pipeline responde).
-8. **Comando** (`ControleComandos`): "Executar <programa>" roda direto e pula
-   tudo (DEGRAU `comando`). Legado — o `if (false)` do TODO está ali.
+8. **Comando** (`ControleComandos`): **#62 (G6) — neutralizado**: a frase que
+   começa com "executar" recebe a recusa curada ("Essa eu nao faco…") e o turno
+   é consumido (DEGRAU `comando`) — **nada roda no PC**, sem popup; "executar"
+   no meio da frase segue o pipeline normal.
 9. **Cascata de degraus** (o primeiro que achar resposta vence):
 
    | DEGRAU | O que roda | Regra |
@@ -139,7 +141,7 @@
 | **Resposta com fato pendente descarta** | template com `{fato:X}` e fato incompleto → fora do pool → fallback | `comandosResposta` |
 | **Ações do JSON** | `acoes` na resposta: `MOSTRAR_HUMOR` (anexa "nivel de humor em X de 10"), `MOSTRAR_VERSAO`, `DESLIGAR` (fecha o app!) | `comandosResposta` |
 | **"Conta mais / e depois?"** | literais → intento `continuacao_topico`; o hook **não** troca o `topicoAtual` por ele; no turno dela o pool de interesse fica de fora | `melhorIntencaoDetalhado` + `pedeContinuacao` |
-| **Comando de SO** | mensagem começa com "Executar" → roda o programa, pula o classificador | `ControleComandos` |
+| **Comando de SO (neutralizado, #62)** | mensagem que **começa** com "executar" → **recusa curada** e turno consumido (**nada executa**, sem popup); "executar" no meio segue o pipeline | `ControleComandos` |
 | **⭐ Pergunta sobre ela** | fala-pergunta + possessivo dela ("qual sua cor favorita?") → responde da **memória dela** (`kaira.json`, relações `gosta`/`nao_gosta`) com a moldura | `respostaPorTriagem` (porta DELA) |
 | **⭐ Pergunta sobre o usuário** | pergunta + `meu/minha` + o fato existe na sessão → "pelo que você me contou, o/a seu/sua CHAVE é VALOR!" (artigo pelo gênero da chave, #55) | porta USUÁRIO |
 | **⭐ "O que ela NÃO gosta?"** | "qual cor você não gosta?" → lê `nao_gosta` (#56); lista vazia → "Ainda não tenho nenhuma nessa lista!" | porta DELA negativa |
@@ -380,15 +382,16 @@ Tudo em `conversas.log` (gitignored) + tela ao vivo no botão **Log** (#29).
   pra `%TEMP%\kaira_suites_conversas.log` (#36) — o `conversas.log` nunca é
   tocado por teste.
 - **⭐ O aceite completo (ciclo da casa) tem 4 portas:** spec da issue → suíte
-  inteira (**63 classes verde**) → avaliador **44/44** → **replay do corpus**
+  inteira (**66 classes verde**) → avaliador **44/44** → **replay do corpus**
   (`ReplayBaterias` + `score_replay.ps1`) com o alvo **GERAL ≥ 5,2 / GRAVE = 0**,
   comparando antes×agora turno a turno. Os scripts de validação vivem em
   `%TEMP%\validate_*.ps1`.
-- Specs por issue vivem em `test/com/JCODE/...` — as da leva #50–#59:
+- Specs por issue vivem em `test/com/JCODE/...` — as da leva #50–#62:
   `TriagemPerguntaTest`, `IntegridadeFatoTest`, `TriagemVariacoesTest`,
   `EnsinoSegredoTest`, `ExplicaMelhorTest`, `PortaUsuarioPolimentoTest`,
   `MaquinaContextoTest`, `FatosModeloV2Test`, `OpcoesMemoriaTest`,
-  `FatosSessaoV2Test`, `EnsinoNegativoTest` (+ anteriores: `FatosNovosTest`,
+  `FatosSessaoV2Test`, `EnsinoNegativoTest`, `MoldurasSorteadasTest`,
+  `ComposicaoRespostaTest`, `ComandoSeguroTest` (+ anteriores: `FatosNovosTest`,
   `EnsinoTurbinadoTest`, `EnsinoOrganicoTest`, `DesempateContextoTest`,
   `AncoraTopicoTest`, `ContinuacaoTopicoTest`, …).
 - Fluxo da casa: issue → **sonda (medir antes)** → spec vermelho → receita em
@@ -442,7 +445,7 @@ Tudo em `conversas.log` (gitignored) + tela ao vivo no botão **Log** (#29).
 - **Ideia 2 v1 ENTREGUE (#60):** molduras em pool + sorteio com anti-repetição
   (dela e do usuário, positiva e negativa). **v2 ENTREGUE (#61):** a composição
   `[abertura] + [fato] + [followup]` nas quatro portas de memória. **Fila:** a
-  reação ao tópico (era do C3), C3 escala, G6 (`Executar`) e P7.1 (podar
+  reação ao tópico (era do C3), C3 escala e P7.1 (podar
   `agradecimento`); **Markov (§8.2) em aberto** por decisão.
 - Classificador: **negação é cega** ("não" é stopword) — causa raiz dos empates
   `{gosto}/{entende}`; fix de código, não de dados. **Fila:** colisão `fala/fale`

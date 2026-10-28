@@ -120,7 +120,7 @@ FormulaResposta.enviarResposta()
 
 ### 2.2 Gargalos (em ordem de impacto)
 
-> **Status (out/2026):** G1 resolvido · G2 resolvido · G3 resolvido · G4 resolvido · G5 resolvido · G6 pendente · G7 resolvido · G8 resolvido · G9 parcial · G10 parcial
+> **Status (out/2026):** G1 resolvido · G2 resolvido · G3 resolvido · G4 resolvido · G5 resolvido · G6 **resolvido (#62)** · G7 resolvido · G8 resolvido · G9 parcial · G10 parcial
 
 | Gargalo | Status | Resolvido em |
 |---|---|---|
@@ -129,7 +129,7 @@ FormulaResposta.enviarResposta()
 | G3 sem normalização | resolvido | Normalizador.texto + stem de 12 regras + 54 stopwords nos dois lados (issues #2, #12) |
 | G4 sem memória | resolvido | sessão em memória + `sessao.json` persistente (issues #19/#20) |
 | G5 UI apaga conversa | resolvido | histórico acumula via append (issue #1); separador de turnos e auto-scroll entregues (issue #22) |
-| G6 Runtime.exec | pendente | backlog de segurança |
+| G6 Runtime.exec | resolvido (#62) | executado removido; recusa curada no lugar |
 | G7 caminhos relativos | resolvido | Caminhos.recurso() resolve a base de qualquer diretório (issue #4, CaminhosTest) |
 | G8 similaridades frágeis | resolvido | Levenshtein + frase palavra-a-palavra (issue #15) |
 | G9 código morto/NPE | parcial | decisao passou a ser usado; placeholder do humor virou valor real (#23); prints seguem vivos |
@@ -207,7 +207,7 @@ Todos os controllers usam `"KAIRA/resources/..."` relativo ao diretório de exec
   - lowercase, remover acentos (`Normalizer.NFD`), remover pontuação, colapsar espaços, trim
   - aplicar também nos dados ao carregar (base e entrada ficam no mesmo "idioma")
 - [x] **Mover os dados para pasta fixa** — `%APPDATA%/KAIRA/` (via `System.getenv("APPDATA")`) ou ao lado do `.jar`. Trocar todas as strings `"KAIRA/resources/..."` (G7). Migração: se existir pasta antiga, copiar antes — *(solução adotada: `Caminhos.recurso()` resolve a base via `kaira.home`/`KAIRA_HOME`/code source — roda de qualquer pasta sem %APPDATA%; issue #4)*
-- [ ] **Neutralizar o comando "Executar"** (G6): pedir confirmação via dialog OU remover por enquanto. Se mantiver: whitelist de programas + juntar todas as palavras do caminho (não só `fraseComando[1]`) — *(G6 segue pendente)*
+- [ ] **Neutralizar o comando "Executar"** (G6): pedir confirmação via dialog OU remover por enquanto. Se mantiver: whitelist de programas + juntar todas as palavras do caminho (não só `fraseComando[1]`) - **CONCLUÍDA na #62**: a execução foi REMOVIDA (sem `Runtime.exec`, sem popup); a frase que começa com "executar" recebe a recusa curada e o turno é consumido; spec `ComandoSeguroTest` (6).
 - [ ] Limpar código morto (G9): `decisao` não usada, branch `verificarCriarResp`, prints de debug → um `Logger` simples ou `System.Logger` — *(parcial: `decisao` virou uso real na geração; placeholder do humor consertado na #23; prints de debug ainda vivos)*
 - [ ] (Opcional) Adotar Gradle: `gradle init` + mover os jars para dependências declaradas; pacote `com.JCODE` → `com.jcode` (rename automático no IntelliJ)
 - [x] (Opcional) Primeiro teste JUnit: `NormalizadorTest` (entrada "  Olá, Tudo bem? " → "ola tudo bem") — *(issue #2; hoje são 21 classes de teste + avaliador)*
