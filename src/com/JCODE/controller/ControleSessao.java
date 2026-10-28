@@ -48,6 +48,12 @@ public class ControleSessao {
             Pattern.compile("(?i)^(?:eu\\s+)?sou\\s+(?:o\\s+|a\\s+)?([\\p{L}]+(?:\\s+[\\p{L}]+){0,2}?)(?=\\s*(?:$|[.!?])|\\s*,|\\s+(?:e|que|com|pra|para|vou|quero)\\b)")
     };
 
+    /** #63 - profissao nao e' nome ("sou enfermeira" nao vira "Prazer, enfermeira!"). */
+    private static final String PROFISSOES =
+            "(?i)(?:enfermeir[ao]|motorista|caminhoneir[ao]|professor[a]?|medic[oa]"
+                    + "|estudante|programador[a]?|designer|corinthian[oa]|apaixonad[oa]"
+                    + "|dev|pessoa)";
+
     private static final String[][] PADROES_FATO = {
             {"gosta de",     "(?i).*\\bgosto de\\s+([\\p{L}\\s]+?)(?:[.!?]|$)"},
             {"mora em",      "(?i).*\\bmor[oa]\\s+em\\s+([\\p{L}\\s]+?)(?:[.!?]|$)"},
@@ -75,7 +81,9 @@ public class ControleSessao {
     };
 
     private static final String NOME_PURO =
-            "(?i)^(?!(?:oi|ola|eai|lol|kkk|nao|não|n|sei|bem|obrigad[oa]|la|executar)\\b"
+            "(?i)^(?!(?:oi|ola|eai|lol|kkk|nao|não|n|sei|bem|obrigad[oa]|la|executar"
+                    + "|tudo|esquece|bom|boa|dia|tarde|noite|haha|rsrs|risos|show|legal"
+                    + "|beleza|tranquilo|nada)\\b"
                     + "|(tudo bem|td bem|nao sei|não sei|quem eu sou|de nada)\\s*$)"
                     + "[\\p{L}]{2,}(?:\\s+[\\p{L}]{2,}){0,2}$";
 
@@ -333,7 +341,13 @@ public class ControleSessao {
         for (Pattern p : PADROES_NOME) {
             Matcher m = p.matcher(t);
             if (m.find()) {
-                sessao.setNomeUsuario(m.group(1).trim());
+                String candidato = m.group(1).trim();
+                // #63 - profissao nao e' nome
+                if (candidato.matches(PROFISSOES)) {
+                    Registro.linha("SESSAO    : nome ignorado (profissao: " + candidato + ")");
+                    return;
+                }
+                sessao.setNomeUsuario(candidato);
                 nomeCapturado = true;
                 Registro.linha("SESSAO    : nome=" + sessao.getNomeUsuario());
                 return;

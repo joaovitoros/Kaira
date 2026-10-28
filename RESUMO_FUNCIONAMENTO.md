@@ -2,8 +2,8 @@
 
 > Consulta rápida pra não esquecer os mecanismos do projeto. Tudo abaixo foi
 > conferido no código (não é de memória). Última revisão: out/2026, head
-> `e4b199e` — suíte **66 classes verde**, avaliador **44/44**, replay do corpus
-> **5,3 / GRAVE 0**. As inteligências da leva #50–#62 e da #41 reaberta estão
+> `e4b199e` — suíte **67 classes verde**, avaliador **44/44**, replay do corpus
+> **5,4 / GRAVE 0**. As inteligências da leva #50–#63 e da #41 reaberta estão
 > aqui (as seções marcadas com ⭐ são as desta leva).
 >
 > Pra detalhes de planejamento/decisões: `PLANO_DE_EVOLUCAO.md` e
@@ -222,7 +222,11 @@ robô com timer**. Mecanismo real:
 
 - **Nome**: 4 padrões (`meu nome é`, `me chamo`, `pode me chamar de`,
   `sou o/a`), até 3 palavras com lookahead (para em "e/que/com/pra/vou/quero").
-  Captura → `tiraNome` remove da fala → turno vira só o agradecimento.
+  **#63 (higiene das baterias):** o nome **pelado** (janela da pergunta) tem
+  blocklist (`tudo`, `esquece`, saudações, risos, `show/legal/beleza`…) e os
+  padrões rejeitam **profissões** ("sou enfermeira" não vira *"Prazer,
+  enfermeira!"*). Captura → `tiraNome` remove da fala → turno vira só o
+  agradecimento.
 - **Fatos**: `PADROES_FATO` — `gosta de`, `mora em`, `trabalha com`,
   `nasceu em`, `meu X favorito é Y` (genérico: grava `"X favorito"`),
   os fixos do #32: **`time`** (2 variantes), **`musica favorita`**,
@@ -328,7 +332,10 @@ O que ela sabe **sobre si** — relações com listas, não valores soltos:
    (#50, que grava em `kaira.json` com o ack "Anotado…").
 5. Invariante: **nada grava sem confirmação explícita ou porteiro aprovando**;
    fala entendida nunca vira dado silencioso (specs `EnsinoOrganicoTest`,
-   `MaquinaContextoTest`, `EnsinoSegredoTest`).
+   `MaquinaContextoTest`, `EnsinoSegredoTest`). **#63:** par com **> 50
+   palavras** (o teto do banco: max 11/exemplo, 46/resposta) **não é
+   absorvido** — recusa curada ("Calma, isso e' um textao!"); o ensino
+   curto/médio segue.
 - A ordem importa: classificar **antes** do `invalidaCacheIdf` (senão NPE de
   token no ensino em cadeia).
 
@@ -382,18 +389,18 @@ Tudo em `conversas.log` (gitignored) + tela ao vivo no botão **Log** (#29).
   pra `%TEMP%\kaira_suites_conversas.log` (#36) — o `conversas.log` nunca é
   tocado por teste.
 - **⭐ O aceite completo (ciclo da casa) tem 4 portas:** spec da issue → suíte
-  inteira (**66 classes verde**) → avaliador **44/44** → **replay do corpus**
+  inteira (**67 classes verde**) → avaliador **44/44** → **replay do corpus**
   (`ReplayBaterias` + `score_replay.ps1`) com o alvo **GERAL ≥ 5,2 / GRAVE = 0**,
   comparando antes×agora turno a turno. Os scripts de validação vivem em
   `%TEMP%\validate_*.ps1`.
-- Specs por issue vivem em `test/com/JCODE/...` — as da leva #50–#62:
+- Specs por issue vivem em `test/com/JCODE/...` — as da leva #50–#63:
   `TriagemPerguntaTest`, `IntegridadeFatoTest`, `TriagemVariacoesTest`,
   `EnsinoSegredoTest`, `ExplicaMelhorTest`, `PortaUsuarioPolimentoTest`,
   `MaquinaContextoTest`, `FatosModeloV2Test`, `OpcoesMemoriaTest`,
   `FatosSessaoV2Test`, `EnsinoNegativoTest`, `MoldurasSorteadasTest`,
-  `ComposicaoRespostaTest`, `ComandoSeguroTest` (+ anteriores: `FatosNovosTest`,
-  `EnsinoTurbinadoTest`, `EnsinoOrganicoTest`, `DesempateContextoTest`,
-  `AncoraTopicoTest`, `ContinuacaoTopicoTest`, …).
+  `ComposicaoRespostaTest`, `ComandoSeguroTest`, `HigieneBateriasTest`
+  (+ anteriores: `FatosNovosTest`, `EnsinoTurbinadoTest`, `EnsinoOrganicoTest`,
+  `DesempateContextoTest`, `AncoraTopicoTest`, `ContinuacaoTopicoTest`, …).
 - Fluxo da casa: issue → **sonda (medir antes)** → spec vermelho → receita em
   código real → verde → `closes #N` → docs (PLANO §12.3 / RELATORIO).
 - **⭐ O instrumento do replay:** `score_replay.ps1` mede antes×agora com a
@@ -447,6 +454,10 @@ Tudo em `conversas.log` (gitignored) + tela ao vivo no botão **Log** (#29).
   `[abertura] + [fato] + [followup]` nas quatro portas de memória. **Fila:** a
   reação ao tópico (era do C3), C3 escala e P7.1 (podar
   `agradecimento`); **Markov (§8.2) em aberto** por decisão.
+- **Leva de higiene das baterias ENTREGUE (#63):** nome blocklist + profissões,
+  gênero do miss do usuário pelo possessivo (e o trecho da fala preserva o
+  plural) e o teto de 50 palavras no ensino. Replay: **GERAL 5,4** — a
+  blocklist converteu 9 turnos de `resposta-nome`.
 - Classificador: **negação é cega** ("não" é stopword) — causa raiz dos empates
   `{gosto}/{entende}`; fix de código, não de dados. **Fila:** colisão `fala/fale`
   ("fale mais sobre isso" → `convite_conversa` por token-set `[fale, sobre]` —

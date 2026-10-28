@@ -58,6 +58,12 @@ public class FormulaResposta {
     private static final String TEXTO_OPCOES_REJEITA =
             "Isso nao me parece uma lista de opcoes - me diz tipo 'verde, azul, vermelho'?";
 
+    // #63 - teto do ensino: o banco vai a 11 palavras por exemplo e 46 por
+    // resposta (2.475 exemplos) - 50 corta o textao sem podar o legitimo.
+    private static final int LIMITE_ENSINO_PALAVRAS = 50;
+    private static final String TEXTO_TEXTao =
+            "Calma, isso e' um textao! Me diz em poucas palavras que eu anoto.";
+
     // #49 - limpa o estado do ensino (P1/P2) e desarma o brilho do botao
     private static void limpaEnsino() {
         bufferFrases = null;
@@ -87,6 +93,11 @@ public class FormulaResposta {
     private static void absorve(String resposta) {
         String pergunta = bufferFrases;
         limpaEnsino();
+        if (longoDemais(pergunta) || longoDemais(resposta)) {
+            Registro.linha("ENSINO    : par descartado (textao)");
+            bolha(TEXTO_TEXTao);
+            return;
+        }
         if (ControleKaira.ehSegredo(pergunta) || ControleKaira.ehSegredo(resposta)) {
             Registro.linha("ENSINO    : par descartado (segredo)");
             bolha(TEXTO_SEGREDO);
@@ -95,6 +106,11 @@ public class FormulaResposta {
         ControleResposta.chamadaFrase(pergunta, resposta);
         Registro.linha("ENSINO    : absorvido");
         bolha(ackAbsorvido(resposta));
+    }
+
+    private static boolean longoDemais(String texto) {
+        return texto != null
+                && texto.trim().split("\\s+").length > LIMITE_ENSINO_PALAVRAS;
     }
 
     private static String ackAbsorvido(String fala) {

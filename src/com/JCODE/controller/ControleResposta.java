@@ -239,8 +239,7 @@ public class ControleResposta {
 				return compoe(sorteiaMolduraUsuario() + ", " + artigo + " " + chave + " e "
 						+ fatos.get(chave) + "!");
 			}
-			String pedaco = usu.group(3) != null
-					? usu.group(2) + " " + usu.group(3) : usu.group(2);
+			String pedaco = fala.substring(usu.start() + usu.group(1).length()).trim();
 			// #55 - "qual meu nome?" com o nome ja conhecido: ela SABE - nunca o honesto falso
 			if ("nome".equals(pedaco) || "nome completo".equals(pedaco)) {
 				String nome = ControleSessao.get().getNomeUsuario();
@@ -248,7 +247,15 @@ public class ControleResposta {
 					return "Seu nome e " + nome + "!";
 			}
 			Registro.linha("TRIAGEM   : miss usuario chave=" + pedaco);
-			return "Voce ainda nao me contou " + "seu" + " " + pedaco + "!";
+			String possessivo = usu.group(1).toLowerCase(java.util.Locale.ROOT);
+			String seu;
+			switch (possessivo) {
+				case "meu": seu = "seu"; break;
+				case "meus": seu = "seus"; break;
+				case "minhas": seu = "suas"; break;
+				default: seu = "sua"; break;   // "minha"
+			}
+			return "Voce ainda nao me contou " + seu + " " + pedaco + "!";
 		}
 
 		// #58 - porta USUARIO negativa (1a pessoa): "qual cor eu nao gosto?"
