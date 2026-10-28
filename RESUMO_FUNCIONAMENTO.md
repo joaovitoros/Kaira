@@ -2,9 +2,9 @@
 
 > Consulta rápida pra não esquecer os mecanismos do projeto. Tudo abaixo foi
 > conferido no código (não é de memória). Última revisão: out/2026, head
-> `28e5d77` — suíte **68 classes verde (378 testes)**, avaliador **44/44**,
+> `bc3b486` — suíte **68 classes verde (380 testes)**, avaliador **44/44**,
 > replay do corpus **5,4 / GRAVE 0**. As inteligências da leva #50–#63, da #41
-> reaberta e da leva de dados (#64 `fala/fale`, #65 cálculo) estão aqui (as
+> reaberta e da leva de dados (#64 `fala/fale`, #65 cálculo, #66 C3) estão aqui (as
 > seções marcadas com ⭐ são as desta leva).
 >
 > Pra detalhes de planejamento/decisões: `PLANO_DE_EVOLUCAO.md` e
@@ -31,7 +31,7 @@
 | `util/Caminhos.java` | `recurso(nome)` → `KAIRA/resources/`. **Nunca escreva o caminho literal** (teste `SemCaminhoHardcodedTest` flagra, inclusive em comentário). |
 | `util/Registro.java` | `linha(evento)` → `Registro.arquivo()` (gitignored). **#36 (higiene):** `-Dkaira.log.destino` redireciona — a suíte grava em arquivo de teste e o `conversas.log` fica **só com uso real** (insumo de curadoria: fallback, aposta, temas repetidos). À prova de falha: log nunca derruba o fluxo. |
 | `KAIRA/resources/intencoes.json` | **O banco** (UTF-8 sem BOM): 98 intents com exemplos/respostas/followups/acoes. |
-| `KAIRA/resources/conhecimentos.json` | **#37 (C3 piloto):** dicionário — termo (= nome de intent) → `resumo` (falado em "conta mais") / `texto` (reserva "explica melhor"), `origem` com fonte+licença por item (Wikipédia PT CC BY-SA, adaptado). Lookup `ControleConhecimento.resumo()` — null-seguro. |
+| `KAIRA/resources/conhecimentos.json` | **#37 (C3 piloto) + #66 (escala):** dicionário com **25 entradas** — termo (= nome de intent) → `resumo` (falado em "conta mais") / `texto` (reserva "explica melhor"), `origem` com fonte+licença por item (Wikipédia PT CC BY-SA, adaptado; verbetes lidos da API). Lookup `ControleConhecimento.resumo()` — null-seguro. |
 | `KAIRA/resources/kaira.json` | **⭐ #56 (modelo v2):** os fatos da persona com **relações** — `"cor": {"gosta": ["verde"], "nao_gosta": ["cinza"]}` — e moldura por relação (`{v}`). Arquivo plano antigo (v0.0.1) **migra no load**; o primeiro `gravaFato` salva em v2 (0.0.2). |
 | `KAIRA/resources/avatar/` | `kaira_conversa`, `kaira_idle`, `kaira_baixa`, `kaira_alta` (+ `avatar_01..09` arquivadas). |
 | `sessao.json` | Persistência da sessão (nome, humor, tópico, turnos, fatos do usuário — ainda no formato plano; o **v2 da sessão** é fila). |
@@ -441,8 +441,11 @@ Tudo em `conversas.log` (gitignored) + tela ao vivo no botão **Log** (#29).
   P7.5 parcial ✅ (`{nome}` em pools), P7.3 parcial (3 empates dissolvidos; 5 aceitos/documentados).
   **P7.1: EXECUTADO e REVISADO** — a poda por *subconjunto* foi revertida (removia os âncoras canônicos: `obrigado`/`valeu`/`de nada` caíam em `elogio`); mantida a curadoria semântica (12 falsos amigos do `obrigado` adjetivo; ~607 exemplos).
 - **#35/#36/#37/#38 — CONCLUÍDAS** (anti-repetição, higiene do log, C3 piloto, âncora de
-  tópico). **C3: piloto (#37) + "explica melhor" (#54)** entregues — próximas fatias:
-  extrator automático de resumo (stopwords/IDF) e escala + OpenWordnet-PT (CC BY 4.0).
+  tópico). **C3: piloto (#37) + "explica melhor" (#54) + escala por curadoria
+  (#66 — 15 → 25 entradas: família, amigos, saúde, namoro, série, lazer, redes
+  sociais, trânsito, fim de semana, aprendizagem)** — próximas fatias: extrator
+  automático de resumo (stopwords/IDF) e OpenWordnet-PT (CC BY 4.0) para os
+  sinônimos dos termos.
 - **Leva #50–#56 + #41 ENTREGUE (26/10)** — triagem + memória dela (modelo v2 com
   relações), integridade do fato, triagem v2, segredo no ensino, explica melhor,
   polimento da porta e a máquina da pergunta pendente. Estado: suíte 60 classes,
@@ -453,7 +456,7 @@ Tudo em `conversas.log` (gitignored) + tela ao vivo no botão **Log** (#29).
 - **Ideia 2 v1 ENTREGUE (#60):** molduras em pool + sorteio com anti-repetição
   (dela e do usuário, positiva e negativa). **v2 ENTREGUE (#61):** a composição
   `[abertura] + [fato] + [followup]` nas quatro portas de memória. **Fila:** a
-  reação ao tópico (era do C3), C3 escala; **Markov (§8.2) em aberto** por decisão.
+  reação ao tópico (era do C3); **Markov (§8.2) em aberto** por decisão.
 - **Leva de higiene das baterias ENTREGUE (#63):** nome blocklist + profissões,
   gênero do miss do usuário pelo possessivo (e o trecho da fala preserva o
   plural) e o teto de 50 palavras no ensino. Replay: **GERAL 5,4** — a
