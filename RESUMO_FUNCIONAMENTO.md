@@ -2,10 +2,10 @@
 
 > Consulta rápida pra não esquecer os mecanismos do projeto. Tudo abaixo foi
 > conferido no código (não é de memória). Última revisão: out/2026, head
-> `9d298a0` — suíte **69 classes verde (387 testes)**, avaliador **44/44**,
-> replay do corpus **5,4 / GRAVE 0 (74 regressões)**. As inteligências da leva #50–#63, da #41
-> reaberta, da leva de dados (#64 `fala/fale`, #65 cálculo, #66 C3) e da #67 (negação
-> curta) estão aqui (as seções marcadas com ⭐ são as desta leva).
+> `0153867` — suíte **70 classes verde (394 testes)**, avaliador **44/44**,
+> replay do corpus **5,5 / GRAVE 0 (74 regressões)**. As inteligências da leva #50–#63, da #41
+> reaberta, da leva de dados (#64 `fala/fale`, #65 cálculo, #66 C3) e das #67/#68
+> (negação curta e declaração de fato) estão aqui (as seções marcadas com ⭐ são as desta leva).
 >
 > Pra detalhes de planejamento/decisões: `PLANO_DE_EVOLUCAO.md` e
 > `BRIEFING_EXPANSAO_DIALOGO.md`. Pra rodar: `run_tests.ps1` (fim do arquivo).
@@ -466,9 +466,14 @@ Tudo em `conversas.log` (gitignored) + tela ao vivo no botão **Log** (#29).
   ("não gostei" → o que não agradou; "não entendi" → reformulo; "não quero
   falar disso" → mudamos de assunto; "não" seco), sem ancorar tópico nem
   gravar fato. Guardas: adversativa com positiva e declaração longa não disparam.
-  **Segue aberta a declaração de preferência** ("eu não gosto de X" ainda casa
-  `lembra_musica`) — causa raiz: o "não" é stopword e a triagem só responde
-  `ehPergunta`. **Colisão `fala/fale`
+  **Declaração de fato RESOLVIDA (#68, codigo):** quando a fala grava um fato
+  (gosta/nao_gosta/favorito/time/pet/sonho/mora/trabalha/nasceu), a porta
+  `respostaDeDeclaracao` confirma o registro com followup (2 molduras por
+  família, anti-repetição) em vez de o classificador responder "me ensina"
+  no `lembra_*`; valor-pessoa ("gosto de você") não vira fato; fala longa,
+  adversativa ou interrogativa não confirma. **Segue aberta a negação
+  *dentro* da declaração longa** ("eu não gosto de filme porque…") — a
+  reação curta e a declaração canônica estão cobertas. **Colisão `fala/fale`
   RESOLVIDA (#64, dado puro):** "fale mais sobre isso"/"fale mais disso" são
   literais do `continuacao_topico` (a frase exata manda) e o exemplo
   "me fale sobre voce" saiu do `convite_conversa` - o vazamento e a troca de
