@@ -304,7 +304,7 @@ O que ela sabe **sobre si** — relações com listas, não valores soltos:
   máximo 1 `?` por resposta (o followup do #25); misses/honestos não compõem.
 - Specs: `TriagemPerguntaTest` (7), `IntegridadeFatoTest` (9),
   `TriagemVariacoesTest` (15), `EnsinoSegredoTest` (5),
-  `PortaUsuarioPolimentoTest` (6), `FatosModeloV2Test` (7),
+  `PortaUsuarioPolimentoTest` (6), `FatosModeloV2Test` (8),
   `OpcoesMemoriaTest` (8), `EnsinoNegativoTest` (6),
   `MoldurasSorteadasTest` (7), `ComposicaoRespostaTest` (7).
 
@@ -438,7 +438,7 @@ Tudo em `conversas.log` (gitignored) + tela ao vivo no botão **Log** (#29).
   P3 ✅ (reacao_curta), P4 ✅ (trabalho social/marcos), P5 ✅ (casa_usuario), P6 ✅ (hobbies),
   pools de resposta por faixa ✅ (+156 respostas; faixa seca das intenções diárias de 1 → ≥3),
   P7.5 parcial ✅ (`{nome}` em pools), P7.3 parcial (3 empates dissolvidos; 5 aceitos/documentados).
-  **Pendente: P7.1 (podar `agradecimento` de 619 → ~250).**
+  **P7.1: EXECUTADO e REVISADO** — a poda por *subconjunto* foi revertida (removia os âncoras canônicos: `obrigado`/`valeu`/`de nada` caíam em `elogio`); mantida a curadoria semântica (12 falsos amigos do `obrigado` adjetivo; ~607 exemplos).
 - **#35/#36/#37/#38 — CONCLUÍDAS** (anti-repetição, higiene do log, C3 piloto, âncora de
   tópico). **C3: piloto (#37) + "explica melhor" (#54)** entregues — próximas fatias:
   extrator automático de resumo (stopwords/IDF) e escala + OpenWordnet-PT (CC BY 4.0).
@@ -452,8 +452,7 @@ Tudo em `conversas.log` (gitignored) + tela ao vivo no botão **Log** (#29).
 - **Ideia 2 v1 ENTREGUE (#60):** molduras em pool + sorteio com anti-repetição
   (dela e do usuário, positiva e negativa). **v2 ENTREGUE (#61):** a composição
   `[abertura] + [fato] + [followup]` nas quatro portas de memória. **Fila:** a
-  reação ao tópico (era do C3), C3 escala e P7.1 (podar
-  `agradecimento`); **Markov (§8.2) em aberto** por decisão.
+  reação ao tópico (era do C3), C3 escala; **Markov (§8.2) em aberto** por decisão.
 - **Leva de higiene das baterias ENTREGUE (#63):** nome blocklist + profissões,
   gênero do miss do usuário pelo possessivo (e o trecho da fala preserva o
   plural) e o teto de 50 palavras no ensino. Replay: **GERAL 5,4** — a
