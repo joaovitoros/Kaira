@@ -2,9 +2,10 @@
 
 > Consulta rápida pra não esquecer os mecanismos do projeto. Tudo abaixo foi
 > conferido no código (não é de memória). Última revisão: out/2026, head
-> `e4b199e` — suíte **67 classes verde**, avaliador **44/44**, replay do corpus
-> **5,4 / GRAVE 0**. As inteligências da leva #50–#63 e da #41 reaberta estão
-> aqui (as seções marcadas com ⭐ são as desta leva).
+> `28e5d77` — suíte **68 classes verde (378 testes)**, avaliador **44/44**,
+> replay do corpus **5,4 / GRAVE 0**. As inteligências da leva #50–#63, da #41
+> reaberta e da leva de dados (#64 `fala/fale`, #65 cálculo) estão aqui (as
+> seções marcadas com ⭐ são as desta leva).
 >
 > Pra detalhes de planejamento/decisões: `PLANO_DE_EVOLUCAO.md` e
 > `BRIEFING_EXPANSAO_DIALOGO.md`. Pra rodar: `run_tests.ps1` (fim do arquivo).
@@ -389,7 +390,7 @@ Tudo em `conversas.log` (gitignored) + tela ao vivo no botão **Log** (#29).
   pra `%TEMP%\kaira_suites_conversas.log` (#36) — o `conversas.log` nunca é
   tocado por teste.
 - **⭐ O aceite completo (ciclo da casa) tem 4 portas:** spec da issue → suíte
-  inteira (**67 classes verde**) → avaliador **44/44** → **replay do corpus**
+  inteira (**68 classes / 378 testes verde**) → avaliador **44/44** → **replay do corpus**
   (`ReplayBaterias` + `score_replay.ps1`) com o alvo **GERAL ≥ 5,2 / GRAVE = 0**,
   comparando antes×agora turno a turno. Os scripts de validação vivem em
   `%TEMP%\validate_*.ps1`.
@@ -461,8 +462,13 @@ Tudo em `conversas.log` (gitignored) + tela ao vivo no botão **Log** (#29).
   `{gosto}/{entende}`; fix de código, não de dados. **Colisão `fala/fale`
   RESOLVIDA (#64, dado puro):** "fale mais sobre isso"/"fale mais disso" são
   literais do `continuacao_topico` (a frase exata manda) e o exemplo
-  "me fale sobre voce" saiu do `convite_conversa` — o vazamento e a troca de
+  "me fale sobre voce" saiu do `convite_conversa` - o vazamento e a troca de
   tópico morreram nos dois caminhos (exato e fuzzy).
+- **Rota de cálculo RESOLVIDA (#65, dado puro):** intento `calculo` com os
+  literais do corpus ("quanto e 7 vezes 8", "144 dividido por 12") e
+  variantes + 6 respostas honestas ("não sei calcular de cabeça" em vez de
+  pedir para ser ensinada). Números fora da base caem na aposta (palpite
+  certo + confirmação) sem ancorar o tópico; dinheiro e identidade intactos.
 - §7.3 restante: degrau médio com `{palavrasChave}` + followup (issue #16
   parcial); frame reconhecido/slot novo (§5.7).
 - **O que o replay ainda mede como RUIM (245→207):** o fallback honesto ("me
